@@ -1,4 +1,4 @@
-package com.dreamsoftware.instagram_test_flutter
+package com.dreamsoftware.picconnect.pic_connect
 
 import io.flutter.embedding.android.FlutterActivity
 

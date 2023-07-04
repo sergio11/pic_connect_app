@@ -1,6 +1,6 @@
-# instagram_test_flutter
+# pic_connect
 
-A new Flutter project.
+Explore and connect through photography.
 
 ## Getting Started
 

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/instagram_test_flutter.iml" filepath="$PROJECT_DIR$/.idea/instagram_test_flutter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/instagram_test_flutter_android.iml" filepath="$PROJECT_DIR$/android/instagram_test_flutter_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pic_connect.iml" filepath="$PROJECT_DIR$/pic_connect.iml" />
     </modules>
   </component>
 </project>

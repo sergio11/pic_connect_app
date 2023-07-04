@@ -1,11 +1,11 @@
 {
-    "name": "instagram_test_flutter",
-    "short_name": "instagram_test_flutter",
+    "name": "pic_connect",
+    "short_name": "pic_connect",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Explore and connect through photography.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
