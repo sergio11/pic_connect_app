@@ -4,6 +4,7 @@ import 'package:pic_connect/resources/auth_methods.dart';
 import 'package:pic_connect/responsive/mobile_screen_layout.dart';
 import 'package:pic_connect/responsive/responsive_layout.dart';
 import 'package:pic_connect/responsive/web_screen_layout.dart';
+import 'package:pic_connect/screens/signup_screen.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/global_variable.dart';
 import 'package:pic_connect/utils/utils.dart';
@@ -183,7 +184,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ?.copyWith(color: whiteColor)),
                           ),
                           GestureDetector(
-                            onTap: () => {},
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignupScreen(),
+                              ),
+                            ),
                             child: Container(
                               padding: const EdgeInsets.only(bottom: 50),
                               child: Text(
