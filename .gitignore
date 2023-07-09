@@ -10,7 +10,7 @@
 .svn/
 migrate_working_dir/
 
-google-services.json
+android/app/google-services.json
 
 # IntelliJ related
 *.iml
