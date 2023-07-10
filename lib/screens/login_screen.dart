@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: VideoPlayer(_videoController),
                       ))),
               Container(
-                decoration: BoxDecoration(color: primaryColor.withOpacity(0.3)),
+                decoration: BoxDecoration(color: primaryColor.withOpacity(0.4)),
                 child: Padding(
                   padding: MediaQuery.of(context).size.width > webScreenSize
                       ? EdgeInsets.symmetric(
@@ -156,9 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: secondaryColor,
                           ),
                           child: !_isLoading
-                              ? const Text(
+                              ? Text(
                                   'Log in',
-                                  style: TextStyle(color: whiteColor),
+                                  style: Theme.of(context).textTheme.labelLarge?.copyWith(color: primaryColor),
                                 )
                               : const CircularProgressIndicator(
                                   color: whiteColor,
