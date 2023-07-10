@@ -23,8 +23,12 @@ class _SearchScreenState extends State<SearchScreen> {
         title: Form(
           child: TextFormField(
             controller: searchController,
-            decoration:
-                const InputDecoration(labelText: 'Search for a user...'),
+            decoration: InputDecoration(
+                labelText: 'Search for a user...',
+                labelStyle: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: accentColor)),
             onFieldSubmitted: (String _) {
               setState(() {
                 isShowUsers = true;

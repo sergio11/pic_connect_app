@@ -21,7 +21,7 @@ class TextFieldInput extends StatelessWidget {
   Widget build(BuildContext context) {
     const inputBorder = OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(7.0)),
-        borderSide: BorderSide(color: secondaryColor, width: 1));
+        borderSide: BorderSide(color: accentColor, width: 1));
     return TextField(
       controller: textEditingController,
       decoration: InputDecoration(
@@ -29,10 +29,10 @@ class TextFieldInput extends StatelessWidget {
         hintStyle: Theme.of(context)
             .textTheme
             .labelMedium
-            ?.copyWith(color: secondaryColor),
+            ?.copyWith(color: accentColor),
         prefixIcon: icon,
         border: inputBorder,
-        prefixIconColor: secondaryColor,
+        prefixIconColor: accentColor,
         focusedBorder: inputBorder,
         enabledBorder: inputBorder,
         filled: true,

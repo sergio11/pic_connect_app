@@ -46,45 +46,29 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: homeScreenItems,
       ),
       bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
-        items: <BottomNavigationBarItem>[
+        activeColor: secondaryColor,
+        inactiveColor: accentColor,
+        backgroundColor: primaryColor,
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: (_page == 0) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+            icon: Icon(Icons.home),
+            label: 'Home'
           ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: (_page == 1) ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_circle,
-                color: (_page == 2) ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite,
-              color: (_page == 3) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+              icon: Icon(Icons.search),
+              label: 'Discover'
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 4) ? primaryColor : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: primaryColor,
+              icon: Icon(Icons.add_circle),
+              label: 'Add'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         onTap: navigationTapped,
