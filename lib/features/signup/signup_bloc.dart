@@ -28,10 +28,20 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   FutureOr<void> onSignUpCalled(
       OnDoSignUpEvent event, Emitter<SignUpState> emit) async {
-    try {
-      //emit(SignUpLoadingState());
-    } catch (e) {
-      //emit(SignUpErrorState("Something Went Wrong"));
+    if (state.image != null) {
+      emit(state.copyWith(isLoading: true));
+      final response = await signUpUserUseCase(SignUpParams(event.email,
+          event.password, event.username, event.bio, state.image!));
+      response.fold(
+          (fail) => emit(
+              state.copyWith(isLoading: false, errorMessage: fail.message)),
+          (success) => emit(state.copyWith(
+                isLoading: false,
+                isSignUpSuccess: true,
+              )));
+    } else {
+      emit(state.copyWith(
+          isLoading: true, errorMessage: "You must select a profile picture!"));
     }
   }
 }
