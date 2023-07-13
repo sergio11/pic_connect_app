@@ -4,8 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
-import 'package:pic_connect/features/signup/signup_event.dart';
-import 'package:pic_connect/features/signup/signup_state.dart';
 import 'package:pic_connect/routes/app_router.dart';
 import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -13,7 +11,11 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+
+  final VoidCallback onSignUpSuccess;
+  final VoidCallback onSignInPressed;
+
+  const SignupScreen({Key? key, required this.onSignUpSuccess, required this.onSignInPressed}) : super(key: key);
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -60,13 +62,19 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void onPickUpImageFromGallery(BuildContext context) async {
-    context.read<SignUpBloc>().add(OnPickUpImageEvent(ImageSource.gallery));
+    context.read<SignUpBloc>().add(const OnPickUpImageEvent(ImageSource.gallery));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignUpBloc, SignUpState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(context.mounted) {
+            if(state.isSignUpSuccess) {
+              widget.onSignUpSuccess();
+            }
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -138,7 +146,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         ?.copyWith(color: whiteColor)),
               ),
               GestureDetector(
-                onTap: () => AppRouter.router.go(AppRoutesEnum.login.screenPath),
+                onTap: () => {
+                  widget.onSignInPressed()
+                },
                 child: Container(
                   padding: const EdgeInsets.only(bottom: 40),
                   child: Text(

@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pic_connect/domain/usecase/is_logged_in_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_in_user_use_case.dart';
-import 'package:pic_connect/features/signin/signin_event.dart';
-import 'package:pic_connect/features/signin/signin_state.dart';
+
+part 'signin_event.dart';
+part 'signin_state.dart';
+part 'signin_bloc.freezed.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
 

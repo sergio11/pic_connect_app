@@ -2,10 +2,14 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/domain/usecase/sign_up_user_use_case.dart';
-import 'package:pic_connect/features/signup/signup_event.dart';
-import 'package:pic_connect/features/signup/signup_state.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'signup_event.dart';
+part 'signup_state.dart';
+part 'signup_bloc.freezed.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUpUserUseCase signUpUserUseCase;

@@ -50,7 +50,11 @@ class AppRouter {
         builder: (context, state) =>
             BlocProvider(
               create: (context) => serviceLocator<SignUpBloc>(),
-              child: const SignupScreen(),
+              child: SignupScreen(onSignUpSuccess: () {
+                context.go(AppRoutesEnum.home.screenPath);
+              }, onSignInPressed: () {
+                context.go(AppRoutesEnum.login.screenPath);
+              },),
             ),
       ),
       StatefulShellRoute.indexedStack(

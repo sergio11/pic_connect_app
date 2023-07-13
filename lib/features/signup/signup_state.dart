@@ -1,7 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part 'signup_state.freezed.dart';
+part of 'signup_bloc.dart';
 
 @freezed
 class SignUpState with _$SignUpState {
