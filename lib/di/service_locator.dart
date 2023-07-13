@@ -15,8 +15,11 @@ import 'package:pic_connect/domain/usecase/is_logged_in_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_in_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_out_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_up_user_use_case.dart';
+import 'package:pic_connect/features/add/add_post_bloc.dart';
+import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
+import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 
@@ -61,4 +64,7 @@ setupServiceLocator() async {
       SignUpBloc(signUpUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FeedBloc());
   serviceLocator.registerFactory(() => ProfileBloc());
+  serviceLocator.registerFactory(() => SearchBloc());
+  serviceLocator.registerFactory(() => AddPostBloc());
+  serviceLocator.registerFactory(() => FavoritesBloc());
 }

@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/di/service_locator.dart';
+import 'package:pic_connect/features/add/add_post_bloc.dart';
+import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/core/widgets/mobile_screen_layout.dart';
 import 'package:pic_connect/features/core/widgets/responsive_layout.dart';
+import 'package:pic_connect/features/favorites/favorites_bloc.dart';
+import 'package:pic_connect/features/favorites/favorites_screen.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/feed/feed_screen.dart';
 import 'package:pic_connect/features/notfound/not_found_page.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/features/profile/profile_screen.dart';
+import 'package:pic_connect/features/search/search_bloc.dart';
+import 'package:pic_connect/features/search/search_screen.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:pic_connect/features/signin/signin_screen.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
@@ -62,8 +68,46 @@ class AppRouter {
                   BlocProvider(
                     create: (context) => serviceLocator<FeedBloc>(),
                     child: const FeedScreen(),
-                  ),
-                routes: <RouteBase>[],
+                  )
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: AppRoutesEnum.search.screenPath,
+                name: AppRoutesEnum.search.screenName,
+                builder: (BuildContext context, GoRouterState state) =>
+                    BlocProvider(
+                      create: (context) => serviceLocator<SearchBloc>(),
+                      child: const SearchScreen(),
+                    )
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: AppRoutesEnum.add.screenPath,
+                name: AppRoutesEnum.add.screenName,
+                builder: (BuildContext context, GoRouterState state) =>
+                    BlocProvider(
+                      create: (context) => serviceLocator<AddPostBloc>(),
+                      child: const AddPostScreen(),
+                    )
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: AppRoutesEnum.favorites.screenPath,
+                name: AppRoutesEnum.favorites.screenName,
+                builder: (BuildContext context, GoRouterState state) =>
+                    BlocProvider(
+                      create: (context) => serviceLocator<FavoritesBloc>(),
+                      child: const FavoritesScreen(),
+                    )
               ),
             ],
           ),
@@ -76,8 +120,7 @@ class AppRouter {
                   BlocProvider(
                     create: (context) => serviceLocator<ProfileBloc>(),
                     child: const ProfileScreen(),
-                  ),
-                routes: <RouteBase>[],
+                  )
               ),
             ],
           ),

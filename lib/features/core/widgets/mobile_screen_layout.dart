@@ -22,8 +22,8 @@ class MobileScreenLayout extends StatelessWidget {
         onTap: (int tappedIndex) {
           navigationShell.goBranch(tappedIndex);
         },
-        activeColor: primaryColor,
-        inactiveColor: secondaryColor,
+        activeColor: secondaryColor,
+        inactiveColor: accentColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

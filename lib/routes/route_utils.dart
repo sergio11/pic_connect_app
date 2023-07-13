@@ -1,4 +1,4 @@
-enum AppRoutesEnum { login, signup, home, error, profile }
+enum AppRoutesEnum { login, signup, home, error, profile, search, add, favorites }
 
 extension AppRouteExtension on AppRoutesEnum {
   String get screenPath {
@@ -13,6 +13,12 @@ extension AppRouteExtension on AppRoutesEnum {
         return "/error";
       case AppRoutesEnum.profile:
         return "/profile";
+      case AppRoutesEnum.search:
+        return "/search";
+      case AppRoutesEnum.add:
+        return "/add";
+      case AppRoutesEnum.favorites:
+        return "/favorites";
       default:
         return "/";
     }
@@ -30,6 +36,12 @@ extension AppRouteExtension on AppRoutesEnum {
         return "ERROR";
       case AppRoutesEnum.profile:
         return "PROFILE";
+      case AppRoutesEnum.search:
+        return "SEARCH";
+      case AppRoutesEnum.add:
+        return "ADD";
+      case AppRoutesEnum.favorites:
+        return "FAVORITES";
       default:
         return "HOME";
     }
@@ -47,6 +59,12 @@ extension AppRouteExtension on AppRoutesEnum {
         return "Signup";
       case AppRoutesEnum.profile:
         return "Profile";
+      case AppRoutesEnum.search:
+        return "Search";
+      case AppRoutesEnum.add:
+        return "Add";
+      case AppRoutesEnum.favorites:
+        return "Favorites";
       default:
         return "Home";
     }

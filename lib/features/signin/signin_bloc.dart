@@ -18,7 +18,10 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   }
 
   FutureOr<void> onSignInEventHandler(OnDoSignInEvent event, Emitter<SignInState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(
+        isLoading: true,
+        errorMessage: null
+    ));
     final response = await signInUserUseCase(SignInParams(event.email, event.password));
     response.fold(
             (fail) => emit(state.copyWith(
@@ -28,6 +31,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             (success) => emit(state.copyWith(
                 isLoading: false,
                 isLoggedIn: true,
+                errorMessage: null
             ))
         );
   }
