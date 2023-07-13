@@ -1,22 +1,18 @@
-enum PagesEnum {
-  login,
-  signup,
-  home,
-  error,
-}
+enum AppRoutesEnum { login, signup, home, error, profile }
 
-extension AppPageExtension on PagesEnum {
-
+extension AppRouteExtension on AppRoutesEnum {
   String get screenPath {
     switch (this) {
-      case PagesEnum.home:
+      case AppRoutesEnum.home:
+        return "/home";
+      case AppRoutesEnum.login:
         return "/";
-      case PagesEnum.login:
-        return "/";
-      case PagesEnum.signup:
+      case AppRoutesEnum.signup:
         return "/signup";
-      case PagesEnum.error:
+      case AppRoutesEnum.error:
         return "/error";
+      case AppRoutesEnum.profile:
+        return "/profile";
       default:
         return "/";
     }
@@ -24,14 +20,16 @@ extension AppPageExtension on PagesEnum {
 
   String get screenName {
     switch (this) {
-      case PagesEnum.home:
+      case AppRoutesEnum.home:
         return "HOME";
-      case PagesEnum.login:
+      case AppRoutesEnum.login:
         return "LOGIN";
-      case PagesEnum.signup:
+      case AppRoutesEnum.signup:
         return "SIGNUP";
-      case PagesEnum.error:
+      case AppRoutesEnum.error:
         return "ERROR";
+      case AppRoutesEnum.profile:
+        return "PROFILE";
       default:
         return "HOME";
     }
@@ -39,17 +37,18 @@ extension AppPageExtension on PagesEnum {
 
   String get screenTitle {
     switch (this) {
-      case PagesEnum.home:
+      case AppRoutesEnum.home:
         return "Home";
-      case PagesEnum.login:
+      case AppRoutesEnum.login:
         return "Login";
-      case PagesEnum.error:
+      case AppRoutesEnum.error:
         return "Error";
-      case PagesEnum.signup:
+      case AppRoutesEnum.signup:
         return "Signup";
+      case AppRoutesEnum.profile:
+        return "Profile";
       default:
         return "Home";
     }
   }
-
 }

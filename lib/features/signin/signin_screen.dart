@@ -14,7 +14,11 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+
+  final VoidCallback onSigInSuccess;
+  final VoidCallback onSignUpPressed;
+
+  const LoginScreen({Key? key, required this.onSigInSuccess, required this.onSignUpPressed}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -58,8 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<SignInBloc, SignInState>(
         listener: (context, state) {
-          if(state.errorMessage != null && context.mounted) {
-            showSnackBar(context, state.errorMessage!);
+          if(context.mounted) {
+            if(state.errorMessage != null) {
+              showSnackBar(context, state.errorMessage!);
+            } else if (state.isLoggedIn) {
+              widget.onSigInSuccess();
+            }
           }
         },
         builder: (context, state) {
@@ -143,7 +151,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ?.copyWith(color: whiteColor)),
         ),
         GestureDetector(
-          onTap: () => AppRouter.router.go(PagesEnum.signup.screenPath),
+          onTap: () => {
+            widget.onSignUpPressed()
+          },
           child: Container(
             padding: const EdgeInsets.only(bottom: 50),
             child: Text(

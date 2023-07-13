@@ -138,7 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ?.copyWith(color: whiteColor)),
               ),
               GestureDetector(
-                onTap: () => AppRouter.router.go(PagesEnum.login.screenPath),
+                onTap: () => AppRouter.router.go(AppRoutesEnum.login.screenPath),
                 child: Container(
                   padding: const EdgeInsets.only(bottom: 40),
                   child: Text(
