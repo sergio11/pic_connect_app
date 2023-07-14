@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
-import 'package:pic_connect/routes/app_router.dart';
-import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/services.dart';
 
 class SignupScreen extends StatefulWidget {
 
-  final VoidCallback onSignUpSuccess;
   final VoidCallback onSignInPressed;
 
-  const SignupScreen({Key? key, required this.onSignUpSuccess, required this.onSignInPressed}) : super(key: key);
+  const SignupScreen({Key? key, required this.onSignInPressed}) : super(key: key);
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -61,6 +59,11 @@ class _SignupScreenState extends State<SignupScreen> {
     ));
   }
 
+  void onSignUpSuccess() async {
+    context.read<AppBloc>()
+        .add(const OnVerifySession());
+  }
+
   void onPickUpImageFromGallery(BuildContext context) async {
     context.read<SignUpBloc>().add(const OnPickUpImageEvent(ImageSource.gallery));
   }
@@ -71,7 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
         listener: (context, state) {
           if(context.mounted) {
             if(state.isSignUpSuccess) {
-              widget.onSignUpSuccess();
+              onSignUpSuccess();
             }
           }
         },

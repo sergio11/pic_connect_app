@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,10 +12,9 @@ import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
 
-  final VoidCallback onSigInSuccess;
   final VoidCallback onSignUpPressed;
 
-  const LoginScreen({Key? key, required this.onSigInSuccess, required this.onSignUpPressed}) : super(key: key);
+  const LoginScreen({Key? key, required this.onSignUpPressed}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -48,10 +48,16 @@ class _LoginScreenState extends State<LoginScreen> {
     _videoController.dispose();
   }
 
-  void onLoginClicked(BuildContext context) async {
+  void onLoginClicked() async {
     context
         .read<SignInBloc>()
         .add(OnDoSignInEvent(_emailController.text, _passwordController.text));
+  }
+
+  void onLoginSuccess() async {
+    context
+        .read<AppBloc>()
+        .add(const OnVerifySession());
   }
 
   @override
@@ -61,8 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
           if(context.mounted) {
             if(state.errorMessage != null) {
               showSnackBar(context, state.errorMessage!);
-            } else if (state.isLoggedIn) {
-              widget.onSigInSuccess();
+            } else if (state.isLoginSuccess) {
+              onLoginSuccess();
             }
           }
         },
@@ -111,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignInButton(BuildContext context, SignInState state) {
     return InkWell(
-      onTap: () => {onLoginClicked(context)},
+      onTap: () => { onLoginClicked() },
       child: Container(
           width: double.infinity,
           alignment: Alignment.center,

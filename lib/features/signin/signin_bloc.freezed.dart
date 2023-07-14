@@ -252,7 +252,7 @@ abstract class OnDoSignInEvent implements SignInEvent {
 mixin _$SignInState {
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
-  bool get isLoggedIn => throw _privateConstructorUsedError;
+  bool get isLoginSuccess => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -270,7 +270,7 @@ abstract class $SignInStateCopyWith<$Res> {
   $Res call(
       {String? email,
       String? password,
-      bool isLoggedIn,
+      bool isLoginSuccess,
       bool isLoading,
       String? errorMessage});
 }
@@ -290,7 +290,7 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
-    Object? isLoggedIn = null,
+    Object? isLoginSuccess = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
@@ -303,9 +303,9 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
+      isLoginSuccess: null == isLoginSuccess
+          ? _value.isLoginSuccess
+          : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -330,7 +330,7 @@ abstract class _$$_SignUpStateCopyWith<$Res>
   $Res call(
       {String? email,
       String? password,
-      bool isLoggedIn,
+      bool isLoginSuccess,
       bool isLoading,
       String? errorMessage});
 }
@@ -348,7 +348,7 @@ class __$$_SignUpStateCopyWithImpl<$Res>
   $Res call({
     Object? email = freezed,
     Object? password = freezed,
-    Object? isLoggedIn = null,
+    Object? isLoginSuccess = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
@@ -361,9 +361,9 @@ class __$$_SignUpStateCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
+      isLoginSuccess: null == isLoginSuccess
+          ? _value.isLoginSuccess
+          : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -383,7 +383,7 @@ class _$_SignUpState with DiagnosticableTreeMixin implements _SignUpState {
   const _$_SignUpState(
       {this.email,
       this.password,
-      this.isLoggedIn = false,
+      this.isLoginSuccess = false,
       this.isLoading = false,
       this.errorMessage});
 
@@ -393,7 +393,7 @@ class _$_SignUpState with DiagnosticableTreeMixin implements _SignUpState {
   final String? password;
   @override
   @JsonKey()
-  final bool isLoggedIn;
+  final bool isLoginSuccess;
   @override
   @JsonKey()
   final bool isLoading;
@@ -402,7 +402,7 @@ class _$_SignUpState with DiagnosticableTreeMixin implements _SignUpState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignInState(email: $email, password: $password, isLoggedIn: $isLoggedIn, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'SignInState(email: $email, password: $password, isLoginSuccess: $isLoginSuccess, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -412,7 +412,7 @@ class _$_SignUpState with DiagnosticableTreeMixin implements _SignUpState {
       ..add(DiagnosticsProperty('type', 'SignInState'))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('password', password))
-      ..add(DiagnosticsProperty('isLoggedIn', isLoggedIn))
+      ..add(DiagnosticsProperty('isLoginSuccess', isLoginSuccess))
       ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
@@ -425,8 +425,8 @@ class _$_SignUpState with DiagnosticableTreeMixin implements _SignUpState {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.isLoggedIn, isLoggedIn) ||
-                other.isLoggedIn == isLoggedIn) &&
+            (identical(other.isLoginSuccess, isLoginSuccess) ||
+                other.isLoginSuccess == isLoginSuccess) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -435,7 +435,7 @@ class _$_SignUpState with DiagnosticableTreeMixin implements _SignUpState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, email, password, isLoggedIn, isLoading, errorMessage);
+      runtimeType, email, password, isLoginSuccess, isLoading, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -448,7 +448,7 @@ abstract class _SignUpState implements SignInState {
   const factory _SignUpState(
       {final String? email,
       final String? password,
-      final bool isLoggedIn,
+      final bool isLoginSuccess,
       final bool isLoading,
       final String? errorMessage}) = _$_SignUpState;
 
@@ -457,7 +457,7 @@ abstract class _SignUpState implements SignInState {
   @override
   String? get password;
   @override
-  bool get isLoggedIn;
+  bool get isLoginSuccess;
   @override
   bool get isLoading;
   @override

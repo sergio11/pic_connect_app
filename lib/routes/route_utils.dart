@@ -4,9 +4,9 @@ extension AppRouteExtension on AppRoutesEnum {
   String get screenPath {
     switch (this) {
       case AppRoutesEnum.home:
-        return "/home";
-      case AppRoutesEnum.login:
         return "/";
+      case AppRoutesEnum.login:
+        return "/login";
       case AppRoutesEnum.signup:
         return "/signup";
       case AppRoutesEnum.error:

@@ -114,7 +114,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, bool>> isLoggedIn() async {
-    // TODO: implement isLoggedIn
-    throw UnimplementedError();
+    Either<Failure, bool> result;
+    try {
+      result = Right(_auth.currentUser != null);
+    } catch (err) {
+      result = Left(Failure(message: err.toString()));
+    }
+    return result;
   }
 }
