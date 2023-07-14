@@ -167,6 +167,12 @@ abstract class OnLoadProfileEvent implements ProfileEvent {
 /// @nodoc
 mixin _$ProfileState {
   bool get isLoading => throw _privateConstructorUsedError;
+  int get postLen => throw _privateConstructorUsedError;
+  int get followers => throw _privateConstructorUsedError;
+  int get following => throw _privateConstructorUsedError;
+  bool get isFollowing => throw _privateConstructorUsedError;
+  UserBO? get userBO => throw _privateConstructorUsedError;
+  List<PostBO> get postList => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -180,7 +186,15 @@ abstract class $ProfileStateCopyWith<$Res> {
           ProfileState value, $Res Function(ProfileState) then) =
       _$ProfileStateCopyWithImpl<$Res, ProfileState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {bool isLoading,
+      int postLen,
+      int followers,
+      int following,
+      bool isFollowing,
+      UserBO? userBO,
+      List<PostBO> postList,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -197,6 +211,12 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? postLen = null,
+    Object? followers = null,
+    Object? following = null,
+    Object? isFollowing = null,
+    Object? userBO = freezed,
+    Object? postList = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -204,6 +224,30 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      postLen: null == postLen
+          ? _value.postLen
+          : postLen // ignore: cast_nullable_to_non_nullable
+              as int,
+      followers: null == followers
+          ? _value.followers
+          : followers // ignore: cast_nullable_to_non_nullable
+              as int,
+      following: null == following
+          ? _value.following
+          : following // ignore: cast_nullable_to_non_nullable
+              as int,
+      isFollowing: null == isFollowing
+          ? _value.isFollowing
+          : isFollowing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      userBO: freezed == userBO
+          ? _value.userBO
+          : userBO // ignore: cast_nullable_to_non_nullable
+              as UserBO?,
+      postList: null == postList
+          ? _value.postList
+          : postList // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -220,7 +264,15 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       __$$_ProfileStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {bool isLoading,
+      int postLen,
+      int followers,
+      int following,
+      bool isFollowing,
+      UserBO? userBO,
+      List<PostBO> postList,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -235,6 +287,12 @@ class __$$_ProfileStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? postLen = null,
+    Object? followers = null,
+    Object? following = null,
+    Object? isFollowing = null,
+    Object? userBO = freezed,
+    Object? postList = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ProfileState(
@@ -242,6 +300,30 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      postLen: null == postLen
+          ? _value.postLen
+          : postLen // ignore: cast_nullable_to_non_nullable
+              as int,
+      followers: null == followers
+          ? _value.followers
+          : followers // ignore: cast_nullable_to_non_nullable
+              as int,
+      following: null == following
+          ? _value.following
+          : following // ignore: cast_nullable_to_non_nullable
+              as int,
+      isFollowing: null == isFollowing
+          ? _value.isFollowing
+          : isFollowing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      userBO: freezed == userBO
+          ? _value.userBO
+          : userBO // ignore: cast_nullable_to_non_nullable
+              as UserBO?,
+      postList: null == postList
+          ? _value._postList
+          : postList // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -253,17 +335,49 @@ class __$$_ProfileStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ProfileState implements _ProfileState {
-  const _$_ProfileState({this.isLoading = false, this.errorMessage});
+  const _$_ProfileState(
+      {this.isLoading = false,
+      this.postLen = 0,
+      this.followers = 0,
+      this.following = 0,
+      this.isFollowing = false,
+      this.userBO,
+      final List<PostBO> postList = const [],
+      this.errorMessage})
+      : _postList = postList;
 
   @override
   @JsonKey()
   final bool isLoading;
   @override
+  @JsonKey()
+  final int postLen;
+  @override
+  @JsonKey()
+  final int followers;
+  @override
+  @JsonKey()
+  final int following;
+  @override
+  @JsonKey()
+  final bool isFollowing;
+  @override
+  final UserBO? userBO;
+  final List<PostBO> _postList;
+  @override
+  @JsonKey()
+  List<PostBO> get postList {
+    if (_postList is EqualUnmodifiableListView) return _postList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_postList);
+  }
+
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, isFollowing: $isFollowing, userBO: $userBO, postList: $postList, errorMessage: $errorMessage)';
   }
 
   @override
@@ -273,12 +387,30 @@ class _$_ProfileState implements _ProfileState {
             other is _$_ProfileState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.postLen, postLen) || other.postLen == postLen) &&
+            (identical(other.followers, followers) ||
+                other.followers == followers) &&
+            (identical(other.following, following) ||
+                other.following == following) &&
+            (identical(other.isFollowing, isFollowing) ||
+                other.isFollowing == isFollowing) &&
+            (identical(other.userBO, userBO) || other.userBO == userBO) &&
+            const DeepCollectionEquality().equals(other._postList, _postList) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      postLen,
+      followers,
+      following,
+      isFollowing,
+      userBO,
+      const DeepCollectionEquality().hash(_postList),
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -289,10 +421,29 @@ class _$_ProfileState implements _ProfileState {
 
 abstract class _ProfileState implements ProfileState {
   const factory _ProfileState(
-      {final bool isLoading, final String? errorMessage}) = _$_ProfileState;
+      {final bool isLoading,
+      final int postLen,
+      final int followers,
+      final int following,
+      final bool isFollowing,
+      final UserBO? userBO,
+      final List<PostBO> postList,
+      final String? errorMessage}) = _$_ProfileState;
 
   @override
   bool get isLoading;
+  @override
+  int get postLen;
+  @override
+  int get followers;
+  @override
+  int get following;
+  @override
+  bool get isFollowing;
+  @override
+  UserBO? get userBO;
+  @override
+  List<PostBO> get postList;
   @override
   String? get errorMessage;
   @override
