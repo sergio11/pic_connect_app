@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/follow_button.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -15,7 +16,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state.isLogout) {
+            context.read<AppBloc>()
+                .add(const OnVerifySession());
+          }
+        },
         builder: (context, state) {
           return state.isLoading ? _buildLoadingScreen()
               : _buildScreenContent(context, state);
@@ -74,8 +80,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   state.isAuthUser
                       ? _buildSignOutButton()
                       : state.isFollowing
-                        ? _buildUnFollowButton()
-                        : _buildFollowButton()
+                        ? _buildUnFollowButton(state)
+                        : _buildFollowButton(state)
                 ],
               ),
             ],
@@ -92,31 +98,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
       textColor: primaryColor,
       borderColor: Colors.grey,
       onPressed: () async {
-
+        context.read<ProfileBloc>().add(const OnSignOutEvent());
       },
     );
   }
 
-  Widget _buildUnFollowButton() {
+  Widget _buildUnFollowButton(ProfileState state) {
     return FollowButton(
       text: 'Unfollow',
       backgroundColor: Colors.white,
       textColor: Colors.black,
       borderColor: Colors.grey,
       onPressed: () async {
-
+        context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid!));
       },
     );
   }
 
-  Widget _buildFollowButton() {
+  Widget _buildFollowButton(ProfileState state) {
     return FollowButton(
       text: 'Follow',
       backgroundColor: Colors.blue,
       textColor: Colors.white,
       borderColor: Colors.blue,
       onPressed: () async {
-
+        context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid!));
       },
     );
   }

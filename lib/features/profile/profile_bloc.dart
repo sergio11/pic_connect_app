@@ -8,6 +8,7 @@ import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 import 'package:pic_connect/domain/usecase/get_auth_user_uid_use_case.dart';
 import 'package:pic_connect/domain/usecase/get_user_details_use_case.dart';
+import 'package:pic_connect/domain/usecase/sign_out_use_case.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -16,12 +17,30 @@ part 'profile_bloc.freezed.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetUserDetailsUseCase getUserDetailsUseCase;
   final GetAuthUserUidUseCase getAuthUserUidUseCase;
+  final SignOutUseCase signOutUseCase;
 
-  ProfileBloc(
-      {required this.getUserDetailsUseCase,
-      required this.getAuthUserUidUseCase})
-      : super(const ProfileState()) {
+  ProfileBloc({
+    required this.getUserDetailsUseCase,
+    required this.getAuthUserUidUseCase,
+    required this.signOutUseCase
+  }) : super(const ProfileState()) {
     on<OnLoadProfileEvent>(onLoadProfileEventHandler);
+    on<OnSignOutEvent>(onSignOutEventHandler);
+    on<OnFollowUserEvent>(onFollowUserEvent);
+    on<OnUnFollowUserEvent>(onUnFollowUserEvent);
+  }
+
+  FutureOr<void> onSignOutEventHandler(OnSignOutEvent event, Emitter<ProfileState> emit) async {
+    final response = await signOutUseCase(const DefaultParams());
+    response.forEach((r) => emit(state.copyWith(isLogout: true)));
+  }
+
+  FutureOr<void> onFollowUserEvent(OnFollowUserEvent event, Emitter<ProfileState> emit) async {
+
+  }
+
+  FutureOr<void> onUnFollowUserEvent(OnUnFollowUserEvent event, Emitter<ProfileState> emit) async {
+
   }
 
   FutureOr<void> onLoadProfileEventHandler(

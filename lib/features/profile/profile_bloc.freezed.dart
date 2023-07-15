@@ -16,42 +16,55 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProfileEvent {
-  String get uid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uid) loadProfile,
+    required TResult Function() signOut,
+    required TResult Function(String uid) followUser,
+    required TResult Function(String uid) unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uid)? loadProfile,
+    TResult? Function()? signOut,
+    TResult? Function(String uid)? followUser,
+    TResult? Function(String uid)? unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uid)? loadProfile,
+    TResult Function()? signOut,
+    TResult Function(String uid)? followUser,
+    TResult Function(String uid)? unFollowUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadProfileEvent value) loadProfile,
+    required TResult Function(OnSignOutEvent value) signOut,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadProfileEvent value)? loadProfile,
+    TResult? Function(OnSignOutEvent value)? signOut,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadProfileEvent value)? loadProfile,
+    TResult Function(OnSignOutEvent value)? signOut,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ProfileEventCopyWith<ProfileEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +73,6 @@ abstract class $ProfileEventCopyWith<$Res> {
   factory $ProfileEventCopyWith(
           ProfileEvent value, $Res Function(ProfileEvent) then) =
       _$ProfileEventCopyWithImpl<$Res, ProfileEvent>;
-  @useResult
-  $Res call({String uid});
 }
 
 /// @nodoc
@@ -73,28 +84,13 @@ class _$ProfileEventCopyWithImpl<$Res, $Val extends ProfileEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? uid = null,
-  }) {
-    return _then(_value.copyWith(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnLoadProfileEventCopyWith<$Res>
-    implements $ProfileEventCopyWith<$Res> {
+abstract class _$$OnLoadProfileEventCopyWith<$Res> {
   factory _$$OnLoadProfileEventCopyWith(_$OnLoadProfileEvent value,
           $Res Function(_$OnLoadProfileEvent) then) =
       __$$OnLoadProfileEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String uid});
 }
@@ -156,6 +152,9 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uid) loadProfile,
+    required TResult Function() signOut,
+    required TResult Function(String uid) followUser,
+    required TResult Function(String uid) unFollowUser,
   }) {
     return loadProfile(uid);
   }
@@ -164,6 +163,9 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uid)? loadProfile,
+    TResult? Function()? signOut,
+    TResult? Function(String uid)? followUser,
+    TResult? Function(String uid)? unFollowUser,
   }) {
     return loadProfile?.call(uid);
   }
@@ -172,6 +174,9 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uid)? loadProfile,
+    TResult Function()? signOut,
+    TResult Function(String uid)? followUser,
+    TResult Function(String uid)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadProfile != null) {
@@ -184,6 +189,9 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadProfileEvent value) loadProfile,
+    required TResult Function(OnSignOutEvent value) signOut,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) {
     return loadProfile(this);
   }
@@ -192,6 +200,9 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadProfileEvent value)? loadProfile,
+    TResult? Function(OnSignOutEvent value)? signOut,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) {
     return loadProfile?.call(this);
   }
@@ -200,6 +211,9 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadProfileEvent value)? loadProfile,
+    TResult Function(OnSignOutEvent value)? signOut,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadProfile != null) {
@@ -212,11 +226,414 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
 abstract class OnLoadProfileEvent implements ProfileEvent {
   const factory OnLoadProfileEvent(final String uid) = _$OnLoadProfileEvent;
 
-  @override
   String get uid;
-  @override
   @JsonKey(ignore: true)
   _$$OnLoadProfileEventCopyWith<_$OnLoadProfileEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnSignOutEventCopyWith<$Res> {
+  factory _$$OnSignOutEventCopyWith(
+          _$OnSignOutEvent value, $Res Function(_$OnSignOutEvent) then) =
+      __$$OnSignOutEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OnSignOutEventCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res, _$OnSignOutEvent>
+    implements _$$OnSignOutEventCopyWith<$Res> {
+  __$$OnSignOutEventCopyWithImpl(
+      _$OnSignOutEvent _value, $Res Function(_$OnSignOutEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OnSignOutEvent implements OnSignOutEvent {
+  const _$OnSignOutEvent();
+
+  @override
+  String toString() {
+    return 'ProfileEvent.signOut()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$OnSignOutEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uid) loadProfile,
+    required TResult Function() signOut,
+    required TResult Function(String uid) followUser,
+    required TResult Function(String uid) unFollowUser,
+  }) {
+    return signOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uid)? loadProfile,
+    TResult? Function()? signOut,
+    TResult? Function(String uid)? followUser,
+    TResult? Function(String uid)? unFollowUser,
+  }) {
+    return signOut?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uid)? loadProfile,
+    TResult Function()? signOut,
+    TResult Function(String uid)? followUser,
+    TResult Function(String uid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (signOut != null) {
+      return signOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadProfileEvent value) loadProfile,
+    required TResult Function(OnSignOutEvent value) signOut,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return signOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadProfileEvent value)? loadProfile,
+    TResult? Function(OnSignOutEvent value)? signOut,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return signOut?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadProfileEvent value)? loadProfile,
+    TResult Function(OnSignOutEvent value)? signOut,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (signOut != null) {
+      return signOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnSignOutEvent implements ProfileEvent {
+  const factory OnSignOutEvent() = _$OnSignOutEvent;
+}
+
+/// @nodoc
+abstract class _$$OnFollowUserEventCopyWith<$Res> {
+  factory _$$OnFollowUserEventCopyWith(
+          _$OnFollowUserEvent value, $Res Function(_$OnFollowUserEvent) then) =
+      __$$OnFollowUserEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String uid});
+}
+
+/// @nodoc
+class __$$OnFollowUserEventCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res, _$OnFollowUserEvent>
+    implements _$$OnFollowUserEventCopyWith<$Res> {
+  __$$OnFollowUserEventCopyWithImpl(
+      _$OnFollowUserEvent _value, $Res Function(_$OnFollowUserEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+  }) {
+    return _then(_$OnFollowUserEvent(
+      null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnFollowUserEvent implements OnFollowUserEvent {
+  const _$OnFollowUserEvent(this.uid);
+
+  @override
+  final String uid;
+
+  @override
+  String toString() {
+    return 'ProfileEvent.followUser(uid: $uid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnFollowUserEvent &&
+            (identical(other.uid, uid) || other.uid == uid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, uid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
+      __$$OnFollowUserEventCopyWithImpl<_$OnFollowUserEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uid) loadProfile,
+    required TResult Function() signOut,
+    required TResult Function(String uid) followUser,
+    required TResult Function(String uid) unFollowUser,
+  }) {
+    return followUser(uid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uid)? loadProfile,
+    TResult? Function()? signOut,
+    TResult? Function(String uid)? followUser,
+    TResult? Function(String uid)? unFollowUser,
+  }) {
+    return followUser?.call(uid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uid)? loadProfile,
+    TResult Function()? signOut,
+    TResult Function(String uid)? followUser,
+    TResult Function(String uid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (followUser != null) {
+      return followUser(uid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadProfileEvent value) loadProfile,
+    required TResult Function(OnSignOutEvent value) signOut,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return followUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadProfileEvent value)? loadProfile,
+    TResult? Function(OnSignOutEvent value)? signOut,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return followUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadProfileEvent value)? loadProfile,
+    TResult Function(OnSignOutEvent value)? signOut,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (followUser != null) {
+      return followUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnFollowUserEvent implements ProfileEvent {
+  const factory OnFollowUserEvent(final String uid) = _$OnFollowUserEvent;
+
+  String get uid;
+  @JsonKey(ignore: true)
+  _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnUnFollowUserEventCopyWith<$Res> {
+  factory _$$OnUnFollowUserEventCopyWith(_$OnUnFollowUserEvent value,
+          $Res Function(_$OnUnFollowUserEvent) then) =
+      __$$OnUnFollowUserEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String uid});
+}
+
+/// @nodoc
+class __$$OnUnFollowUserEventCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res, _$OnUnFollowUserEvent>
+    implements _$$OnUnFollowUserEventCopyWith<$Res> {
+  __$$OnUnFollowUserEventCopyWithImpl(
+      _$OnUnFollowUserEvent _value, $Res Function(_$OnUnFollowUserEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+  }) {
+    return _then(_$OnUnFollowUserEvent(
+      null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
+  const _$OnUnFollowUserEvent(this.uid);
+
+  @override
+  final String uid;
+
+  @override
+  String toString() {
+    return 'ProfileEvent.unFollowUser(uid: $uid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUnFollowUserEvent &&
+            (identical(other.uid, uid) || other.uid == uid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, uid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
+      __$$OnUnFollowUserEventCopyWithImpl<_$OnUnFollowUserEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uid) loadProfile,
+    required TResult Function() signOut,
+    required TResult Function(String uid) followUser,
+    required TResult Function(String uid) unFollowUser,
+  }) {
+    return unFollowUser(uid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uid)? loadProfile,
+    TResult? Function()? signOut,
+    TResult? Function(String uid)? followUser,
+    TResult? Function(String uid)? unFollowUser,
+  }) {
+    return unFollowUser?.call(uid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uid)? loadProfile,
+    TResult Function()? signOut,
+    TResult Function(String uid)? followUser,
+    TResult Function(String uid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (unFollowUser != null) {
+      return unFollowUser(uid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadProfileEvent value) loadProfile,
+    required TResult Function(OnSignOutEvent value) signOut,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return unFollowUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadProfileEvent value)? loadProfile,
+    TResult? Function(OnSignOutEvent value)? signOut,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return unFollowUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadProfileEvent value)? loadProfile,
+    TResult Function(OnSignOutEvent value)? signOut,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (unFollowUser != null) {
+      return unFollowUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUnFollowUserEvent implements ProfileEvent {
+  const factory OnUnFollowUserEvent(final String uid) = _$OnUnFollowUserEvent;
+
+  String get uid;
+  @JsonKey(ignore: true)
+  _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -226,9 +643,12 @@ mixin _$ProfileState {
   int get postLen => throw _privateConstructorUsedError;
   int get followers => throw _privateConstructorUsedError;
   int get following => throw _privateConstructorUsedError;
+  String? get userUid => throw _privateConstructorUsedError;
+  String? get authUserUid => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
   String? get bio => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
+  bool get isLogout => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
   bool get isAuthUser => throw _privateConstructorUsedError;
   List<PostBO> get postList => throw _privateConstructorUsedError;
@@ -250,9 +670,12 @@ abstract class $ProfileStateCopyWith<$Res> {
       int postLen,
       int followers,
       int following,
+      String? userUid,
+      String? authUserUid,
       String? photoUrl,
       String? bio,
       String? username,
+      bool isLogout,
       bool isFollowing,
       bool isAuthUser,
       List<PostBO> postList,
@@ -276,9 +699,12 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? postLen = null,
     Object? followers = null,
     Object? following = null,
+    Object? userUid = freezed,
+    Object? authUserUid = freezed,
     Object? photoUrl = freezed,
     Object? bio = freezed,
     Object? username = freezed,
+    Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
     Object? postList = null,
@@ -301,6 +727,14 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as int,
+      userUid: freezed == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      authUserUid: freezed == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String?,
       photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
@@ -313,6 +747,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
+      isLogout: null == isLogout
+          ? _value.isLogout
+          : isLogout // ignore: cast_nullable_to_non_nullable
+              as bool,
       isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
@@ -346,9 +784,12 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       int postLen,
       int followers,
       int following,
+      String? userUid,
+      String? authUserUid,
       String? photoUrl,
       String? bio,
       String? username,
+      bool isLogout,
       bool isFollowing,
       bool isAuthUser,
       List<PostBO> postList,
@@ -370,9 +811,12 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? postLen = null,
     Object? followers = null,
     Object? following = null,
+    Object? userUid = freezed,
+    Object? authUserUid = freezed,
     Object? photoUrl = freezed,
     Object? bio = freezed,
     Object? username = freezed,
+    Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
     Object? postList = null,
@@ -395,6 +839,14 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as int,
+      userUid: freezed == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      authUserUid: freezed == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String?,
       photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
@@ -407,6 +859,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String?,
+      isLogout: null == isLogout
+          ? _value.isLogout
+          : isLogout // ignore: cast_nullable_to_non_nullable
+              as bool,
       isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
@@ -435,9 +891,12 @@ class _$_ProfileState implements _ProfileState {
       this.postLen = 0,
       this.followers = 0,
       this.following = 0,
+      this.userUid,
+      this.authUserUid,
       this.photoUrl,
       this.bio,
       this.username,
+      this.isLogout = false,
       this.isFollowing = false,
       this.isAuthUser = false,
       final List<PostBO> postList = const [],
@@ -457,11 +916,18 @@ class _$_ProfileState implements _ProfileState {
   @JsonKey()
   final int following;
   @override
+  final String? userUid;
+  @override
+  final String? authUserUid;
+  @override
   final String? photoUrl;
   @override
   final String? bio;
   @override
   final String? username;
+  @override
+  @JsonKey()
+  final bool isLogout;
   @override
   @JsonKey()
   final bool isFollowing;
@@ -482,7 +948,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, photoUrl: $photoUrl, bio: $bio, username: $username, isFollowing: $isFollowing, isAuthUser: $isAuthUser, postList: $postList, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, postList: $postList, errorMessage: $errorMessage)';
   }
 
   @override
@@ -497,11 +963,16 @@ class _$_ProfileState implements _ProfileState {
                 other.followers == followers) &&
             (identical(other.following, following) ||
                 other.following == following) &&
+            (identical(other.userUid, userUid) || other.userUid == userUid) &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid) &&
             (identical(other.photoUrl, photoUrl) ||
                 other.photoUrl == photoUrl) &&
             (identical(other.bio, bio) || other.bio == bio) &&
             (identical(other.username, username) ||
                 other.username == username) &&
+            (identical(other.isLogout, isLogout) ||
+                other.isLogout == isLogout) &&
             (identical(other.isFollowing, isFollowing) ||
                 other.isFollowing == isFollowing) &&
             (identical(other.isAuthUser, isAuthUser) ||
@@ -518,9 +989,12 @@ class _$_ProfileState implements _ProfileState {
       postLen,
       followers,
       following,
+      userUid,
+      authUserUid,
       photoUrl,
       bio,
       username,
+      isLogout,
       isFollowing,
       isAuthUser,
       const DeepCollectionEquality().hash(_postList),
@@ -539,9 +1013,12 @@ abstract class _ProfileState implements ProfileState {
       final int postLen,
       final int followers,
       final int following,
+      final String? userUid,
+      final String? authUserUid,
       final String? photoUrl,
       final String? bio,
       final String? username,
+      final bool isLogout,
       final bool isFollowing,
       final bool isAuthUser,
       final List<PostBO> postList,
@@ -556,11 +1033,17 @@ abstract class _ProfileState implements ProfileState {
   @override
   int get following;
   @override
+  String? get userUid;
+  @override
+  String? get authUserUid;
+  @override
   String? get photoUrl;
   @override
   String? get bio;
   @override
   String? get username;
+  @override
+  bool get isLogout;
   @override
   bool get isFollowing;
   @override

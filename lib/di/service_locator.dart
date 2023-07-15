@@ -103,7 +103,7 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() =>
       SignUpBloc(signUpUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FeedBloc());
-  serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc());
   serviceLocator.registerFactory(() => AddPostBloc());
   serviceLocator.registerFactory(() => FavoritesBloc());
