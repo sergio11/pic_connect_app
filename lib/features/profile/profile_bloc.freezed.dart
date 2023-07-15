@@ -651,6 +651,7 @@ mixin _$ProfileState {
   bool get isLogout => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
   bool get isAuthUser => throw _privateConstructorUsedError;
+  bool get isPostGridLoading => throw _privateConstructorUsedError;
   List<PostBO> get postList => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -678,6 +679,7 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
+      bool isPostGridLoading,
       List<PostBO> postList,
       String? errorMessage});
 }
@@ -707,6 +709,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
+    Object? isPostGridLoading = null,
     Object? postList = null,
     Object? errorMessage = freezed,
   }) {
@@ -759,6 +762,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isAuthUser
           : isAuthUser // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPostGridLoading: null == isPostGridLoading
+          ? _value.isPostGridLoading
+          : isPostGridLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value.postList
           : postList // ignore: cast_nullable_to_non_nullable
@@ -792,6 +799,7 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
+      bool isPostGridLoading,
       List<PostBO> postList,
       String? errorMessage});
 }
@@ -819,6 +827,7 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
+    Object? isPostGridLoading = null,
     Object? postList = null,
     Object? errorMessage = freezed,
   }) {
@@ -871,6 +880,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.isAuthUser
           : isAuthUser // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPostGridLoading: null == isPostGridLoading
+          ? _value.isPostGridLoading
+          : isPostGridLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value._postList
           : postList // ignore: cast_nullable_to_non_nullable
@@ -899,6 +912,7 @@ class _$_ProfileState implements _ProfileState {
       this.isLogout = false,
       this.isFollowing = false,
       this.isAuthUser = false,
+      this.isPostGridLoading = true,
       final List<PostBO> postList = const [],
       this.errorMessage})
       : _postList = postList;
@@ -934,6 +948,9 @@ class _$_ProfileState implements _ProfileState {
   @override
   @JsonKey()
   final bool isAuthUser;
+  @override
+  @JsonKey()
+  final bool isPostGridLoading;
   final List<PostBO> _postList;
   @override
   @JsonKey()
@@ -948,7 +965,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, postList: $postList, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, postList: $postList, errorMessage: $errorMessage)';
   }
 
   @override
@@ -977,6 +994,8 @@ class _$_ProfileState implements _ProfileState {
                 other.isFollowing == isFollowing) &&
             (identical(other.isAuthUser, isAuthUser) ||
                 other.isAuthUser == isAuthUser) &&
+            (identical(other.isPostGridLoading, isPostGridLoading) ||
+                other.isPostGridLoading == isPostGridLoading) &&
             const DeepCollectionEquality().equals(other._postList, _postList) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -997,6 +1016,7 @@ class _$_ProfileState implements _ProfileState {
       isLogout,
       isFollowing,
       isAuthUser,
+      isPostGridLoading,
       const DeepCollectionEquality().hash(_postList),
       errorMessage);
 
@@ -1021,6 +1041,7 @@ abstract class _ProfileState implements ProfileState {
       final bool isLogout,
       final bool isFollowing,
       final bool isAuthUser,
+      final bool isPostGridLoading,
       final List<PostBO> postList,
       final String? errorMessage}) = _$_ProfileState;
 
@@ -1048,6 +1069,8 @@ abstract class _ProfileState implements ProfileState {
   bool get isFollowing;
   @override
   bool get isAuthUser;
+  @override
+  bool get isPostGridLoading;
   @override
   List<PostBO> get postList;
   @override

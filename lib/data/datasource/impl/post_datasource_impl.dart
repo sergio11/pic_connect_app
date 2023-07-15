@@ -94,7 +94,7 @@ class PostDatasourceImpl extends PostDatasource {
   Future<List<PostDTO>> findAllByUserUid(String userUi) async {
     final postByUser = await firestore
         .collection('posts')
-        .where('uid', isEqualTo: userUi)
+        .where('authorUid', isEqualTo: userUi)
         .get();
     return postByUser.docs
         .map((doc) => postMapper(doc))

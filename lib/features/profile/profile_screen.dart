@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         },
         builder: (context, state) {
-          return state.isLoading ? _buildLoadingScreen()
+          return state.isLoading ? _buildProgressIndicator()
               : _buildScreenContent(context, state);
         });
   }
@@ -39,21 +39,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Padding(
               padding: const EdgeInsets.all(16),
               child: Column(children: [
-                _buildProfileHeader(context, state),
-                _buildUserNameRow(context, state),
-                _buildUserBioRow(context, state)
+                _buildProfileHeader(state),
+                _buildUserNameRow(state),
+                _buildUserBioRow(state),
+                const Divider(),
+                _buildPostsGrid(state)
               ])
           )
         ]));
   }
 
-  Widget _buildLoadingScreen() {
+  Widget _buildProgressIndicator() {
     return const Center(
       child: CircularProgressIndicator(),
     );
   }
 
-  Widget _buildProfileHeader(BuildContext context, ProfileState state) {
+  Widget _buildProfileHeader(ProfileState state) {
     return Row(
       children: [
         CircleAvatar(
@@ -69,9 +71,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildStatColumn(state.postLen, "posts"),
-                  buildStatColumn(state.followers, "followers"),
-                  buildStatColumn(state.following, "following"),
+                  _buildStatColumn(state.postLen, "posts"),
+                  _buildStatColumn(state.followers, "followers"),
+                  _buildStatColumn(state.following, "following"),
                 ],
               ),
               Row(
@@ -127,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildUserNameRow(BuildContext context, ProfileState state) {
+  Widget _buildUserNameRow(ProfileState state) {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(
@@ -142,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildUserBioRow(BuildContext context, ProfileState state) {
+  Widget _buildUserBioRow(ProfileState state) {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(
@@ -154,9 +156,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildPostsGrid(ProfileState state) {
+    return GridView.builder(
+      shrinkWrap: true,
+      itemCount: state.postList.length,
+      gridDelegate:
+      const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 1.5,
+        childAspectRatio: 1,
+      ),
+      itemBuilder: (context, index) {
+        return state.isPostGridLoading ?
+            _buildProgressIndicator() : SizedBox(
+          child: Image(
+            image: NetworkImage(state.postList[index].postUrl),
+            fit: BoxFit.cover,
+          ),
+        );
+      },
+    );
+  }
 
 
-  Column buildStatColumn(int num, String label) {
+  Column _buildStatColumn(int num, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
