@@ -5,7 +5,14 @@ import 'package:pic_connect/utils/mapper.dart';
 class UserBoMapper extends Mapper<UserDTO, UserBO> {
   @override
   UserBO call(UserDTO object) {
-    // TODO: implement call
-    throw UnimplementedError();
+    return UserBO(
+        username: object.username,
+        uid: object.uid,
+        photoUrl: object.photoUrl,
+        email: object.email,
+        bio: object.bio,
+        followers: object.followers,
+        following: object.following
+    );
   }
 }

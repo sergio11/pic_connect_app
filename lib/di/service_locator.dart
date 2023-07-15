@@ -35,7 +35,7 @@ import 'package:pic_connect/domain/respository/auth_repository.dart';
 import 'package:pic_connect/domain/respository/post_repository.dart';
 import 'package:pic_connect/domain/respository/user_repository.dart';
 import 'package:pic_connect/domain/usecase/get_user_details_use_case.dart';
-import 'package:pic_connect/domain/usecase/is_logged_in_use_case.dart';
+import 'package:pic_connect/domain/usecase/get_auth_user_uid_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_in_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_out_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_up_user_use_case.dart';
@@ -86,7 +86,7 @@ setupServiceLocator() async {
 
   /// UseCase ///
   serviceLocator.registerLazySingleton(() =>
-      IsLoggedInUseCase(authRepository: serviceLocator()));
+      GetAuthUserUidUseCase(authRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() =>
       SignInUserUseCase(authRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() =>
@@ -97,13 +97,13 @@ setupServiceLocator() async {
       GetUserDetailsUseCase(authRepository: serviceLocator()));
 
   /// BloC ///
-  serviceLocator.registerFactory(() => AppBloc(isLoggedInUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
       SignInBloc(signInUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
       SignUpBloc(signUpUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FeedBloc());
-  serviceLocator.registerFactory(() => ProfileBloc());
+  serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc());
   serviceLocator.registerFactory(() => AddPostBloc());
   serviceLocator.registerFactory(() => FavoritesBloc());

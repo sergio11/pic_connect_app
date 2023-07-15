@@ -165,7 +165,7 @@ abstract class OnVerifySession implements AppEvent {
 
 /// @nodoc
 mixin _$AppState {
-  bool get isLoggedIn => throw _privateConstructorUsedError;
+  String? get authUserUid => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -177,7 +177,7 @@ abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
-  $Res call({bool isLoggedIn});
+  $Res call({String? authUserUid});
 }
 
 /// @nodoc
@@ -193,13 +193,13 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoggedIn = null,
+    Object? authUserUid = freezed,
   }) {
     return _then(_value.copyWith(
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
-              as bool,
+      authUserUid: freezed == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -211,7 +211,7 @@ abstract class _$$_AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
       __$$_AppStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoggedIn});
+  $Res call({String? authUserUid});
 }
 
 /// @nodoc
@@ -225,13 +225,13 @@ class __$$_AppStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isLoggedIn = null,
+    Object? authUserUid = freezed,
   }) {
     return _then(_$_AppState(
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
-              as bool,
+      authUserUid: freezed == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -239,15 +239,14 @@ class __$$_AppStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AppState implements _AppState {
-  const _$_AppState({this.isLoggedIn = false});
+  const _$_AppState({this.authUserUid});
 
   @override
-  @JsonKey()
-  final bool isLoggedIn;
+  final String? authUserUid;
 
   @override
   String toString() {
-    return 'AppState(isLoggedIn: $isLoggedIn)';
+    return 'AppState(authUserUid: $authUserUid)';
   }
 
   @override
@@ -255,12 +254,12 @@ class _$_AppState implements _AppState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppState &&
-            (identical(other.isLoggedIn, isLoggedIn) ||
-                other.isLoggedIn == isLoggedIn));
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoggedIn);
+  int get hashCode => Object.hash(runtimeType, authUserUid);
 
   @JsonKey(ignore: true)
   @override
@@ -270,10 +269,10 @@ class _$_AppState implements _AppState {
 }
 
 abstract class _AppState implements AppState {
-  const factory _AppState({final bool isLoggedIn}) = _$_AppState;
+  const factory _AppState({final String? authUserUid}) = _$_AppState;
 
   @override
-  bool get isLoggedIn;
+  String? get authUserUid;
   @override
   @JsonKey(ignore: true)
   _$$_AppStateCopyWith<_$_AppState> get copyWith =>

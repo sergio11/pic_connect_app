@@ -16,37 +16,42 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProfileEvent {
+  String get uid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() load,
+    required TResult Function(String uid) loadProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
+    TResult? Function(String uid)? loadProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
+    TResult Function(String uid)? loadProfile,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadProfileEvent value) load,
+    required TResult Function(OnLoadProfileEvent value) loadProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadProfileEvent value)? load,
+    TResult? Function(OnLoadProfileEvent value)? loadProfile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadProfileEvent value)? load,
+    TResult Function(OnLoadProfileEvent value)? loadProfile,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ProfileEventCopyWith<ProfileEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -55,6 +60,8 @@ abstract class $ProfileEventCopyWith<$Res> {
   factory $ProfileEventCopyWith(
           ProfileEvent value, $Res Function(ProfileEvent) then) =
       _$ProfileEventCopyWithImpl<$Res, ProfileEvent>;
+  @useResult
+  $Res call({String uid});
 }
 
 /// @nodoc
@@ -66,13 +73,30 @@ class _$ProfileEventCopyWithImpl<$Res, $Val extends ProfileEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+  }) {
+    return _then(_value.copyWith(
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$OnLoadProfileEventCopyWith<$Res> {
+abstract class _$$OnLoadProfileEventCopyWith<$Res>
+    implements $ProfileEventCopyWith<$Res> {
   factory _$$OnLoadProfileEventCopyWith(_$OnLoadProfileEvent value,
           $Res Function(_$OnLoadProfileEvent) then) =
       __$$OnLoadProfileEventCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String uid});
 }
 
 /// @nodoc
@@ -82,51 +106,76 @@ class __$$OnLoadProfileEventCopyWithImpl<$Res>
   __$$OnLoadProfileEventCopyWithImpl(
       _$OnLoadProfileEvent _value, $Res Function(_$OnLoadProfileEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uid = null,
+  }) {
+    return _then(_$OnLoadProfileEvent(
+      null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$OnLoadProfileEvent implements OnLoadProfileEvent {
-  const _$OnLoadProfileEvent();
+  const _$OnLoadProfileEvent(this.uid);
+
+  @override
+  final String uid;
 
   @override
   String toString() {
-    return 'ProfileEvent.load()';
+    return 'ProfileEvent.loadProfile(uid: $uid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OnLoadProfileEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$OnLoadProfileEvent &&
+            (identical(other.uid, uid) || other.uid == uid));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, uid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLoadProfileEventCopyWith<_$OnLoadProfileEvent> get copyWith =>
+      __$$OnLoadProfileEventCopyWithImpl<_$OnLoadProfileEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() load,
+    required TResult Function(String uid) loadProfile,
   }) {
-    return load();
+    return loadProfile(uid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
+    TResult? Function(String uid)? loadProfile,
   }) {
-    return load?.call();
+    return loadProfile?.call(uid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
+    TResult Function(String uid)? loadProfile,
     required TResult orElse(),
   }) {
-    if (load != null) {
-      return load();
+    if (loadProfile != null) {
+      return loadProfile(uid);
     }
     return orElse();
   }
@@ -134,34 +183,41 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadProfileEvent value) load,
+    required TResult Function(OnLoadProfileEvent value) loadProfile,
   }) {
-    return load(this);
+    return loadProfile(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadProfileEvent value)? load,
+    TResult? Function(OnLoadProfileEvent value)? loadProfile,
   }) {
-    return load?.call(this);
+    return loadProfile?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadProfileEvent value)? load,
+    TResult Function(OnLoadProfileEvent value)? loadProfile,
     required TResult orElse(),
   }) {
-    if (load != null) {
-      return load(this);
+    if (loadProfile != null) {
+      return loadProfile(this);
     }
     return orElse();
   }
 }
 
 abstract class OnLoadProfileEvent implements ProfileEvent {
-  const factory OnLoadProfileEvent() = _$OnLoadProfileEvent;
+  const factory OnLoadProfileEvent(final String uid) = _$OnLoadProfileEvent;
+
+  @override
+  String get uid;
+  @override
+  @JsonKey(ignore: true)
+  _$$OnLoadProfileEventCopyWith<_$OnLoadProfileEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -170,8 +226,11 @@ mixin _$ProfileState {
   int get postLen => throw _privateConstructorUsedError;
   int get followers => throw _privateConstructorUsedError;
   int get following => throw _privateConstructorUsedError;
+  String? get photoUrl => throw _privateConstructorUsedError;
+  String? get bio => throw _privateConstructorUsedError;
+  String? get username => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
-  UserBO? get userBO => throw _privateConstructorUsedError;
+  bool get isAuthUser => throw _privateConstructorUsedError;
   List<PostBO> get postList => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -191,8 +250,11 @@ abstract class $ProfileStateCopyWith<$Res> {
       int postLen,
       int followers,
       int following,
+      String? photoUrl,
+      String? bio,
+      String? username,
       bool isFollowing,
-      UserBO? userBO,
+      bool isAuthUser,
       List<PostBO> postList,
       String? errorMessage});
 }
@@ -214,8 +276,11 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? postLen = null,
     Object? followers = null,
     Object? following = null,
+    Object? photoUrl = freezed,
+    Object? bio = freezed,
+    Object? username = freezed,
     Object? isFollowing = null,
-    Object? userBO = freezed,
+    Object? isAuthUser = null,
     Object? postList = null,
     Object? errorMessage = freezed,
   }) {
@@ -236,14 +301,26 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as int,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bio: freezed == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String?,
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String?,
       isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
               as bool,
-      userBO: freezed == userBO
-          ? _value.userBO
-          : userBO // ignore: cast_nullable_to_non_nullable
-              as UserBO?,
+      isAuthUser: null == isAuthUser
+          ? _value.isAuthUser
+          : isAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value.postList
           : postList // ignore: cast_nullable_to_non_nullable
@@ -269,8 +346,11 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       int postLen,
       int followers,
       int following,
+      String? photoUrl,
+      String? bio,
+      String? username,
       bool isFollowing,
-      UserBO? userBO,
+      bool isAuthUser,
       List<PostBO> postList,
       String? errorMessage});
 }
@@ -290,8 +370,11 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? postLen = null,
     Object? followers = null,
     Object? following = null,
+    Object? photoUrl = freezed,
+    Object? bio = freezed,
+    Object? username = freezed,
     Object? isFollowing = null,
-    Object? userBO = freezed,
+    Object? isAuthUser = null,
     Object? postList = null,
     Object? errorMessage = freezed,
   }) {
@@ -312,14 +395,26 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as int,
+      photoUrl: freezed == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      bio: freezed == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String?,
+      username: freezed == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String?,
       isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
               as bool,
-      userBO: freezed == userBO
-          ? _value.userBO
-          : userBO // ignore: cast_nullable_to_non_nullable
-              as UserBO?,
+      isAuthUser: null == isAuthUser
+          ? _value.isAuthUser
+          : isAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value._postList
           : postList // ignore: cast_nullable_to_non_nullable
@@ -336,12 +431,15 @@ class __$$_ProfileStateCopyWithImpl<$Res>
 
 class _$_ProfileState implements _ProfileState {
   const _$_ProfileState(
-      {this.isLoading = false,
+      {this.isLoading = true,
       this.postLen = 0,
       this.followers = 0,
       this.following = 0,
+      this.photoUrl,
+      this.bio,
+      this.username,
       this.isFollowing = false,
-      this.userBO,
+      this.isAuthUser = false,
       final List<PostBO> postList = const [],
       this.errorMessage})
       : _postList = postList;
@@ -359,10 +457,17 @@ class _$_ProfileState implements _ProfileState {
   @JsonKey()
   final int following;
   @override
+  final String? photoUrl;
+  @override
+  final String? bio;
+  @override
+  final String? username;
+  @override
   @JsonKey()
   final bool isFollowing;
   @override
-  final UserBO? userBO;
+  @JsonKey()
+  final bool isAuthUser;
   final List<PostBO> _postList;
   @override
   @JsonKey()
@@ -377,7 +482,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, isFollowing: $isFollowing, userBO: $userBO, postList: $postList, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, photoUrl: $photoUrl, bio: $bio, username: $username, isFollowing: $isFollowing, isAuthUser: $isAuthUser, postList: $postList, errorMessage: $errorMessage)';
   }
 
   @override
@@ -392,9 +497,15 @@ class _$_ProfileState implements _ProfileState {
                 other.followers == followers) &&
             (identical(other.following, following) ||
                 other.following == following) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl) &&
+            (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.isFollowing, isFollowing) ||
                 other.isFollowing == isFollowing) &&
-            (identical(other.userBO, userBO) || other.userBO == userBO) &&
+            (identical(other.isAuthUser, isAuthUser) ||
+                other.isAuthUser == isAuthUser) &&
             const DeepCollectionEquality().equals(other._postList, _postList) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -407,8 +518,11 @@ class _$_ProfileState implements _ProfileState {
       postLen,
       followers,
       following,
+      photoUrl,
+      bio,
+      username,
       isFollowing,
-      userBO,
+      isAuthUser,
       const DeepCollectionEquality().hash(_postList),
       errorMessage);
 
@@ -425,8 +539,11 @@ abstract class _ProfileState implements ProfileState {
       final int postLen,
       final int followers,
       final int following,
+      final String? photoUrl,
+      final String? bio,
+      final String? username,
       final bool isFollowing,
-      final UserBO? userBO,
+      final bool isAuthUser,
       final List<PostBO> postList,
       final String? errorMessage}) = _$_ProfileState;
 
@@ -439,9 +556,15 @@ abstract class _ProfileState implements ProfileState {
   @override
   int get following;
   @override
+  String? get photoUrl;
+  @override
+  String? get bio;
+  @override
+  String? get username;
+  @override
   bool get isFollowing;
   @override
-  UserBO? get userBO;
+  bool get isAuthUser;
   @override
   List<PostBO> get postList;
   @override

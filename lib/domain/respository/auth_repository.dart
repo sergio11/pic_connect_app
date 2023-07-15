@@ -1,13 +1,14 @@
 import 'dart:typed_data';
 import 'package:pic_connect/domain/models/failure.dart';
-
 import '../models/user.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, bool>> isLoggedIn();
+  Future<Either<Failure, String>> getAuthUserUid();
 
-  Future<Either<Failure, UserBO>> getUserDetails();
+  Future<Either<Failure, UserBO>> getUserDetails({
+    required String userUid
+  });
 
   Future<Either<Failure, bool>> signUpUser({
     required String email,

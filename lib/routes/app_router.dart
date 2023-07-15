@@ -40,7 +40,7 @@ class AppRouter {
     refreshListenable: RouterRefreshStream(serviceLocator<AppBloc>().stream),
     redirect: (BuildContext context, GoRouterState state) async {
       final appState = context.read<AppBloc>().state;
-      final bool loggedIn = appState.isLoggedIn;
+      final bool loggedIn = appState.authUserUid != null;
       debugPrint("redirect - loggedIn: $loggedIn  - state.matchedLocation: ${state.matchedLocation}");
       if (!loggedIn && state.matchedLocation != AppRoutesEnum.signup.screenPath) {
         return AppRoutesEnum.login.screenPath;
@@ -141,7 +141,8 @@ class AppRouter {
                 name: AppRoutesEnum.profile.screenName,
                 builder: (BuildContext context, GoRouterState state) =>
                   BlocProvider(
-                    create: (context) => serviceLocator<ProfileBloc>(),
+                    create: (context) => serviceLocator<ProfileBloc>()
+                      ..add(OnLoadProfileEvent(context.read<AppBloc>().state.authUserUid!)),
                     child: const ProfileScreen(),
                   )
               ),

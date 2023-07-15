@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pic_connect/data/datasource/auth_datasource.dart';
 import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
@@ -26,13 +27,15 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, UserBO>> getUserDetails() async {
+  Future<Either<Failure, UserBO>> getUserDetails({
+    required String userUid
+  }) async {
     try {
-      final currentUserUid = await authDatasource.getCurrentAuthUserUid();
-      final user = await userDatasource.findByUid(currentUserUid);
+      final user = await userDatasource.findByUid(userUid);
       return Right(userBoMapper(user));
-    } catch (err) {
-      return Left(Failure(message: err.toString()));
+    } catch (ex) {
+      debugPrint("getUserDetails - ex - ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
     }
   }
 
@@ -84,12 +87,14 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
+
   @override
-  Future<Either<Failure, bool>> isLoggedIn() async {
+  Future<Either<Failure, String>> getAuthUserUid() async {
     try {
-      return Right(await authDatasource.isLoggedIn());
-    } catch (err) {
-      return Left(Failure(message: err.toString()));
+      return Right(await authDatasource.getCurrentAuthUserUid());
+    } catch (ex) {
+      debugPrint("getAuthUserUid - ex - ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
     }
   }
 }

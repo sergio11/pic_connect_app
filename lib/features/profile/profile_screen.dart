@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/features/core/widgets/follow_button.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 
@@ -25,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: mobileBackgroundColor,
-          title: Text(state.userBO!.username),
+          title: Text(state.username != null ? state.username! : "Empty"),
           centerTitle: false,
         ),
         body: ListView(children: [
@@ -51,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         CircleAvatar(
           backgroundColor: Colors.grey,
-          backgroundImage: NetworkImage(state.userBO!.photoUrl),
+          backgroundImage: NetworkImage(state.photoUrl != null ? state.photoUrl! : 'https://i.stack.imgur.com/l60Hf.png'),
           radius: 40,
         ),
         Expanded(
@@ -69,12 +70,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [],
+                children: [
+                  state.isAuthUser
+                      ? _buildSignOutButton()
+                      : state.isFollowing
+                        ? _buildUnFollowButton()
+                        : _buildFollowButton()
+                ],
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSignOutButton() {
+    return FollowButton(
+      text: 'Sign Out',
+      backgroundColor: mobileBackgroundColor,
+      textColor: primaryColor,
+      borderColor: Colors.grey,
+      onPressed: () async {
+
+      },
+    );
+  }
+
+  Widget _buildUnFollowButton() {
+    return FollowButton(
+      text: 'Unfollow',
+      backgroundColor: Colors.white,
+      textColor: Colors.black,
+      borderColor: Colors.grey,
+      onPressed: () async {
+
+      },
+    );
+  }
+
+  Widget _buildFollowButton() {
+    return FollowButton(
+      text: 'Follow',
+      backgroundColor: Colors.blue,
+      textColor: Colors.white,
+      borderColor: Colors.blue,
+      onPressed: () async {
+
+      },
     );
   }
 
@@ -85,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         top: 15,
       ),
       child: Text(
-        state.userBO!.username,
+        state.username != null ? state.username! : "Empty",
         style: const TextStyle(
           fontWeight: FontWeight.bold,
         ),
@@ -100,10 +143,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         top: 1,
       ),
       child: Text(
-        state.userBO!.bio,
+        state.bio != null ? state.bio! : "Empty",
       ),
     );
   }
+
+
 
   Column buildStatColumn(int num, String label) {
     return Column(
