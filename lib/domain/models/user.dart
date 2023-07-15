@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserBO {
   final String email;
@@ -18,28 +17,4 @@ class UserBO {
     required this.followers,
     required this.following
   });
-
-  static UserBO fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
-
-    return UserBO(
-      username: snapshot["username"],
-      uid: snapshot["uid"],
-      email: snapshot["email"],
-      photoUrl: snapshot["photoUrl"],
-      bio: snapshot["bio"],
-      followers: snapshot["followers"],
-      following: snapshot["following"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "username": username,
-        "uid": uid,
-        "email": email,
-        "photoUrl": photoUrl,
-        "bio": bio,
-        "followers": followers,
-        "following": following,
-      };
 }

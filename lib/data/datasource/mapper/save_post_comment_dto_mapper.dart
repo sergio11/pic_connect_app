@@ -6,6 +6,7 @@ class SavePostCommentDTOMapper extends Mapper<SavePostCommentDTO, Map<String, dy
   @override
   Map<String, dynamic> call(SavePostCommentDTO object) {
     return {
+      'postId': object.postId,
       'authorUid': object.authorUid,
       'text': object.text,
       'commentId': const Uuid().v1(),

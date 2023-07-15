@@ -1,25 +1,40 @@
 import 'dart:typed_data';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:pic_connect/data/datasource/dto/comment_dto.dart';
+import 'package:pic_connect/data/datasource/dto/post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
+import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 import 'package:pic_connect/data/datasource/post_datasource.dart';
 import 'package:pic_connect/data/datasource/storage_datasource.dart';
+import 'package:pic_connect/data/datasource/user_datasource.dart';
+import 'package:pic_connect/data/mapper/comment_bo_mapper.dart';
+import 'package:pic_connect/data/mapper/post_bo_mapper.dart';
+import 'package:pic_connect/domain/models/comment.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/post.dart';
+import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/respository/post_repository.dart';
-import 'package:pic_connect/domain/respository/storage_repository.dart';
+import 'package:pic_connect/utils/mapper.dart';
 import 'package:uuid/uuid.dart';
 
 class PostRepositoryImpl implements PostRepository {
 
   final PostDatasource postDatasource;
+  final UserDatasource userDatasource;
   final StorageDatasource storageDatasource;
+  final Mapper<UserDTO, UserBO> userBoMapper;
+  final Mapper<PostBoMapperData, PostBO> postBoMapper;
+  final Mapper<CommentBoMapperData, CommentBO> commentBoMapper;
 
   PostRepositoryImpl({
     required this.postDatasource,
-    required this.storageDatasource
+    required this.userDatasource,
+    required this.storageDatasource,
+    required this.userBoMapper,
+    required this.postBoMapper,
+    required this.commentBoMapper
   });
 
   @override
@@ -83,8 +98,42 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<PostBO>>> findAllByUserUid(String userUi) {
-    // TODO: implement findAllByUserUid
-    throw UnimplementedError();
+  Future<Either<Failure, List<PostBO>>> findAllByUserUid(String userUi) async {
+    try {
+      final postsByUser = await postDatasource.findAllByUserUid(userUi);
+      final posts = await Future.wait(postsByUser.map((post) async => mapToPostBO(post)));
+      return Right(posts);
+    }  catch(ex) {
+      debugPrint("findAllCommentsByPostId - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CommentBO>>> findAllCommentsByPostId(String postId) async {
+    try {
+      final commentsByPost = await postDatasource.findAllCommentsByPostId(postId);
+      final comments = await Future.wait(commentsByPost.map((comment) async  => mapToCommentBO(comment)));
+      return Right(comments);
+    } catch(ex) {
+      debugPrint("findAllCommentsByPostId - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
+  Future<PostBO> mapToPostBO(PostDTO post) async {
+    final author = await userDatasource.findByUid(post.authorUid);
+    return postBoMapper(PostBoMapperData(
+        postDTO: post,
+        userDTO: author
+    ));
+  }
+
+  Future<CommentBO> mapToCommentBO(CommentDTO comment) async {
+    final author = await userDatasource.findByUid(comment.authorUid);
+    return commentBoMapper(CommentBoMapperData(
+        commentDTO: comment,
+        userDTO: author
+    ));
   }
 }

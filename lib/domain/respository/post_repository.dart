@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
+import 'package:pic_connect/domain/models/comment.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/post.dart';
 
@@ -27,4 +28,5 @@ abstract class PostRepository {
 
   Future<Either<Failure, List<PostBO>>> findAllByUserUid(String userUi);
 
+  Future<Either<Failure, List<CommentBO>>> findAllCommentsByPostId(String postId);
 }

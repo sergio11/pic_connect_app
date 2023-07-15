@@ -8,5 +8,4 @@ class UserBoMapper extends Mapper<UserDTO, UserBO> {
     // TODO: implement call
     throw UnimplementedError();
   }
-
 }
