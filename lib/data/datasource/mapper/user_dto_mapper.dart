@@ -1,0 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pic_connect/data/datasource/dto/user_dto.dart';
+import 'package:pic_connect/utils/mapper.dart';
+
+class UserDtoMapper extends Mapper<DocumentSnapshot, UserDTO> {
+  @override
+  UserDTO call(DocumentSnapshot<Object?> object) {
+    var snapshot = object.data() as Map<String, dynamic>;
+    return UserDTO(
+      username: snapshot["username"],
+      uid: snapshot["uid"],
+      email: snapshot["email"],
+      photoUrl: snapshot["photoUrl"],
+      bio: snapshot["bio"],
+      followers: snapshot["followers"],
+      following: snapshot["following"],
+    );
+  }
+}

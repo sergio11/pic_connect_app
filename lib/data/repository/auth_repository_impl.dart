@@ -1,32 +1,39 @@
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pic_connect/data/datasource/auth_datasource.dart';
+import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
+import 'package:pic_connect/data/datasource/dto/user_dto.dart';
+import 'package:pic_connect/data/datasource/storage_datasource.dart';
+import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/respository/auth_repository.dart';
-import 'package:pic_connect/domain/respository/storage_repository.dart';
+import 'package:pic_connect/utils/mapper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final FirebaseFirestore _firestore;
-  final FirebaseAuth _auth;
-  final StorageRepository _storageRepository;
 
-  AuthRepositoryImpl(this._firestore, this._auth, this._storageRepository);
+  final AuthDatasource authDatasource;
+  final UserDatasource userDatasource;
+  final StorageDatasource storageDatasource;
+  final Mapper<UserDTO, UserBO> userBoMapper;
+
+  AuthRepositoryImpl({
+    required this.authDatasource,
+    required this.userDatasource,
+    required this.storageDatasource,
+    required this.userBoMapper
+  });
 
   @override
   Future<Either<Failure, UserBO>> getUserDetails() async {
-    Either<Failure, UserBO> result;
     try {
-      User currentUser = _auth.currentUser!;
-      DocumentSnapshot documentSnapshot =
-          await _firestore.collection('users').doc(currentUser.uid).get();
-      result = Right(UserBO.fromSnap(documentSnapshot));
+      final currentUserUid = await authDatasource.getCurrentAuthUserUid();
+      final user = await userDatasource.findByUid(currentUserUid);
+      return Right(userBoMapper(user));
     } catch (err) {
-      result = Left(Failure(message: err.toString()));
+      return Left(Failure(message: err.toString()));
     }
-    return result;
   }
 
   @override
@@ -34,92 +41,55 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password
   }) async {
-    Either<Failure, bool> result;
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
-        // logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        result = const Right(true);
-      } else {
-        result = const Left(Failure(message: "Please enter all the fields"));
-      }
+      // logging in user with email and password
+      await authDatasource.signInUser(email: email, password: password);
+      return const Right(true);
     } catch (err) {
-      result = Left(Failure(message: err.toString()));
+      return Left(Failure(message: err.toString()));
     }
-    return result;
   }
 
   @override
   Future<Either<Failure, bool>> signOut() async {
-    Either<Failure, bool> result;
     try {
-      await _auth.signOut();
-      result = const Right(true);
+      await authDatasource.signOut();
+      return const Right(true);
     } catch(err) {
-      result = Left(Failure(message: err.toString()));
+      return Left(Failure(message: err.toString()));
     }
-    return result;
   }
 
   @override
-  Future<Either<Failure, bool>> signUpUser(
-      {required String email,
+  Future<Either<Failure, bool>> signUpUser({
+    required String email,
       required String password,
       required String username,
       required String bio,
-      required Uint8List file}) async {
-    Either<Failure, bool> result;
+      required Uint8List file
+  }) async {
     try {
-      if (email.isNotEmpty ||
-          password.isNotEmpty ||
-          username.isNotEmpty ||
-          bio.isNotEmpty) {
-        // registering user in auth with email and password
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-
-        Either<Failure, String> uploadImageResult = await _storageRepository
-            .uploadImageToStorage('profilePics', file, false);
-
-        UserBO user = UserBO(
+      final userUid = await authDatasource.signUpUser(email: email, password: password);
+      final userPhotoUrl = await storageDatasource.uploadFileToStorage(folderName: 'profilePics', id: userUid, file: file);
+      await userDatasource.save(SaveUserDTO(
+          uid: userUid,
           username: username,
-          uid: cred.user!.uid,
-          photoUrl: uploadImageResult.fold((err) => "", (url) => url),
           email: email,
-          bio: bio,
-          followers: [],
-          following: [],
-        );
-
-        // adding user in our database
-        await _firestore
-            .collection("users")
-            .doc(cred.user!.uid)
-            .set(user.toJson());
-
-        result = const Right(true);
-      } else {
-        result = const Left(Failure(message: "Please enter all the fields"));
-      }
+          photoUrl: userPhotoUrl,
+          bio: bio
+      ));
+      return const Right(true);
     } catch (err) {
-      result = Left(Failure(message: err.toString()));
+      return Left(Failure(message: err.toString()));
     }
-    return result;
   }
 
   @override
   Future<Either<Failure, bool>> isLoggedIn() async {
-    Either<Failure, bool> result;
     try {
-      result = Right(_auth.currentUser != null);
+      return Right(await authDatasource.isLoggedIn());
     } catch (err) {
-      result = Left(Failure(message: err.toString()));
+      return Left(Failure(message: err.toString()));
     }
-    return result;
   }
 }

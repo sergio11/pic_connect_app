@@ -1,3 +1,9 @@
+import 'package:dartz/dartz.dart';
+import 'package:pic_connect/domain/models/failure.dart';
+import 'package:pic_connect/domain/models/user.dart';
+
 abstract class UserRepository {
-  Future<void> followUser(String uid, String followId);
+  Future<Either<Failure, bool>> followUser(String uid, String followId);
+
+  Future<Either<Failure, UserBO>> findByUid(String uid);
 }

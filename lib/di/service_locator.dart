@@ -2,13 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pic_connect/data/datasource/auth_datasource.dart';
+import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
+import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
+import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
+import 'package:pic_connect/data/datasource/dto/user_dto.dart';
+import 'package:pic_connect/data/datasource/impl/auth_datasource_impl.dart';
+import 'package:pic_connect/data/datasource/impl/post_datasource_impl.dart';
+import 'package:pic_connect/data/datasource/impl/storage_datasource_impl.dart';
+import 'package:pic_connect/data/datasource/impl/user_datasource_impl.dart';
+import 'package:pic_connect/data/datasource/mapper/save_post_comment_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/save_post_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/save_user_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/user_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/post_datasource.dart';
+import 'package:pic_connect/data/datasource/storage_datasource.dart';
+import 'package:pic_connect/data/datasource/user_datasource.dart';
+import 'package:pic_connect/data/mapper/user_bo_mapper.dart';
 import 'package:pic_connect/data/repository/auth_repository_impl.dart';
 import 'package:pic_connect/data/repository/post_repository_impl.dart';
-import 'package:pic_connect/data/repository/storage_repository_impl.dart';
 import 'package:pic_connect/data/repository/user_repository_impl.dart';
+import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/respository/auth_repository.dart';
 import 'package:pic_connect/domain/respository/post_repository.dart';
-import 'package:pic_connect/domain/respository/storage_repository.dart';
 import 'package:pic_connect/domain/respository/user_repository.dart';
 import 'package:pic_connect/domain/usecase/get_user_details_use_case.dart';
 import 'package:pic_connect/domain/usecase/is_logged_in_use_case.dart';
@@ -23,12 +39,13 @@ import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
+import 'package:pic_connect/utils/mapper.dart';
 
 final serviceLocator = GetIt.instance;
 
 setupServiceLocator() async {
 
-  /// Data Source ///
+  /// Firebase ///
   serviceLocator.registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance);
   serviceLocator
@@ -36,15 +53,25 @@ setupServiceLocator() async {
   serviceLocator
       .registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
 
+  // Mappers //
+  serviceLocator.registerFactory<Mapper<DocumentSnapshot, UserDTO>>(() => UserDtoMapper());
+  serviceLocator.registerFactory<Mapper<SaveUserDTO, Map<String, dynamic>>>(() => SaveUserDtoMapper());
+  serviceLocator.registerFactory<Mapper<SavePostCommentDTO, Map<String, dynamic>>>(() => SavePostCommentDTOMapper());
+  serviceLocator.registerFactory<Mapper<SavePostDTO, Map<String, dynamic>>>(() => SavePostDtoMapper());
+  serviceLocator.registerFactory<Mapper<UserDTO, UserBO>>(() => UserBoMapper());
+
+  // DataSources //
+  serviceLocator.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(firestore: serviceLocator(), userDtoMapper: serviceLocator(), saveUserDtoMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<AuthDatasource>(() => AuthDatasourceImpl(auth: serviceLocator()));
+  serviceLocator.registerLazySingleton<PostDatasource>(() => PostDatasourceImpl(firestore: serviceLocator(), savePostCommentMapper: serviceLocator(), savePostMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<StorageDatasource>(() => StorageDatasourceImpl(storage: serviceLocator()));
   /// Repository ///
   serviceLocator.registerLazySingleton<UserRepository>(
-      () => UserRepositoryImpl(serviceLocator()));
+      () => UserRepositoryImpl(userDatasource: serviceLocator(), userBoMapper: serviceLocator()));
   serviceLocator.registerLazySingleton<AuthRepository>(() =>
-      AuthRepositoryImpl(serviceLocator(), serviceLocator(), serviceLocator()));
+      AuthRepositoryImpl(authDatasource: serviceLocator(), userDatasource: serviceLocator(), storageDatasource: serviceLocator(), userBoMapper: serviceLocator()));
   serviceLocator.registerLazySingleton<PostRepository>(
-      () => PostRepositoryImpl(serviceLocator(), serviceLocator()));
-  serviceLocator.registerLazySingleton<StorageRepository>(
-      () => StorageRepositoryImpl(serviceLocator(), serviceLocator()));
+      () => PostRepositoryImpl(postDatasource: serviceLocator(), storageDatasource: serviceLocator()));
 
   /// UseCase ///
   serviceLocator.registerLazySingleton(() =>

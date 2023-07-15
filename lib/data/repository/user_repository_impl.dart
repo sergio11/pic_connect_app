@@ -1,38 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pic_connect/data/datasource/dto/user_dto.dart';
+import 'package:pic_connect/data/datasource/user_datasource.dart';
+import 'package:pic_connect/domain/models/failure.dart';
+import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/respository/user_repository.dart';
+import 'package:pic_connect/utils/mapper.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  final FirebaseFirestore _firestore;
 
-  UserRepositoryImpl(this._firestore);
+  final UserDatasource userDatasource;
+  final Mapper<UserDTO, UserBO> userBoMapper;
+
+  UserRepositoryImpl({
+    required this.userDatasource,
+    required this.userBoMapper
+  });
 
   @override
-  Future<void> followUser(String uid, String followId) async {
+  Future<Either<Failure, bool>> followUser(String uid, String followId) async {
     try {
-      DocumentSnapshot snap =
-          await _firestore.collection('users').doc(uid).get();
-      List following = (snap.data()! as dynamic)['following'];
-
-      if (following.contains(followId)) {
-        await _firestore.collection('users').doc(followId).update({
-          'followers': FieldValue.arrayRemove([uid])
-        });
-
-        await _firestore.collection('users').doc(uid).update({
-          'following': FieldValue.arrayRemove([followId])
-        });
-      } else {
-        await _firestore.collection('users').doc(followId).update({
-          'followers': FieldValue.arrayUnion([uid])
-        });
-
-        await _firestore.collection('users').doc(uid).update({
-          'following': FieldValue.arrayUnion([followId])
-        });
-      }
-    } catch (e) {
-      if (kDebugMode) print(e.toString());
+      await userDatasource.followUser(uid, followId);
+      return const Right(true);
+    } catch (ex) {
+      debugPrint("followUser - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, UserBO>> findByUid(String uid) async {
+     try {
+       final user = await userDatasource.findByUid(uid);
+       return Right(userBoMapper(user));
+     } catch (ex) {
+       debugPrint("findByUid - ex -> ${ex.toString()}");
+       return Left(Failure(message: ex.toString()));
+     }
   }
 }
