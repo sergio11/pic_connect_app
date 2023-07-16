@@ -111,4 +111,16 @@ class PostDatasourceImpl extends PostDatasource {
         .map((doc) => postMapper(doc))
         .toList();
   }
+
+  @override
+  Future<List<PostDTO>> findAllByUserUidListOrderByDatePublished(List<String> userUidList) async {
+    final postByUser = await firestore
+        .collection('posts')
+        .where('authorUid', whereIn: userUidList)
+        .orderBy('datePublished')
+        .get();
+    return postByUser.docs
+        .map((doc) => postMapper(doc))
+        .toList();
+  }
 }

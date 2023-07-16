@@ -8,4 +8,6 @@ abstract class UserRepository {
   Future<Either<Failure, UserBO>> findByUid(String uid);
 
   Future<Either<Failure, List<UserBO>>> findByName(String username);
+
+  Future<Either<Failure, List<UserBO>>> findAllThatUserIsFollowingBy(String uid);
 }

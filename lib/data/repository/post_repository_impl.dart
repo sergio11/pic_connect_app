@@ -133,6 +133,18 @@ class PostRepositoryImpl implements PostRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, List<PostBO>>> findAllByUserUidListOrderByDatePublished(List<String> userUidList) async {
+    try {
+      final postListDTO = await postDatasource.findAllByUserUidListOrderByDatePublished(userUidList);
+      final posts = await Future.wait(postListDTO.map((postDTO) async  => mapToPostBO(postDTO)));
+      return Right(posts);
+    } catch(ex) {
+      debugPrint("findAllByUserUidListOrderByDatePublished - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
   Future<PostBO> mapToPostBO(PostDTO post) async {
     final author = await userDatasource.findByUid(post.authorUid);
     return postBoMapper(PostBoMapperData(

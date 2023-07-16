@@ -18,33 +18,33 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$FeedEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loadLastPosts,
+    required TResult Function() loadHomePosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loadLastPosts,
+    TResult? Function()? loadHomePosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loadLastPosts,
+    TResult Function()? loadHomePosts,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadLastPostsEvent value) loadLastPosts,
+    required TResult Function(OnLoadHomePostsEvent value) loadHomePosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadLastPostsEvent value)? loadLastPosts,
+    TResult? Function(OnLoadHomePostsEvent value)? loadHomePosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadLastPostsEvent value)? loadLastPosts,
+    TResult Function(OnLoadHomePostsEvent value)? loadHomePosts,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -68,35 +68,35 @@ class _$FeedEventCopyWithImpl<$Res, $Val extends FeedEvent>
 }
 
 /// @nodoc
-abstract class _$$OnLoadLastPostsEventCopyWith<$Res> {
-  factory _$$OnLoadLastPostsEventCopyWith(_$OnLoadLastPostsEvent value,
-          $Res Function(_$OnLoadLastPostsEvent) then) =
-      __$$OnLoadLastPostsEventCopyWithImpl<$Res>;
+abstract class _$$OnLoadHomePostsEventCopyWith<$Res> {
+  factory _$$OnLoadHomePostsEventCopyWith(_$OnLoadHomePostsEvent value,
+          $Res Function(_$OnLoadHomePostsEvent) then) =
+      __$$OnLoadHomePostsEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$OnLoadLastPostsEventCopyWithImpl<$Res>
-    extends _$FeedEventCopyWithImpl<$Res, _$OnLoadLastPostsEvent>
-    implements _$$OnLoadLastPostsEventCopyWith<$Res> {
-  __$$OnLoadLastPostsEventCopyWithImpl(_$OnLoadLastPostsEvent _value,
-      $Res Function(_$OnLoadLastPostsEvent) _then)
+class __$$OnLoadHomePostsEventCopyWithImpl<$Res>
+    extends _$FeedEventCopyWithImpl<$Res, _$OnLoadHomePostsEvent>
+    implements _$$OnLoadHomePostsEventCopyWith<$Res> {
+  __$$OnLoadHomePostsEventCopyWithImpl(_$OnLoadHomePostsEvent _value,
+      $Res Function(_$OnLoadHomePostsEvent) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$OnLoadLastPostsEvent implements OnLoadLastPostsEvent {
-  const _$OnLoadLastPostsEvent();
+class _$OnLoadHomePostsEvent implements OnLoadHomePostsEvent {
+  const _$OnLoadHomePostsEvent();
 
   @override
   String toString() {
-    return 'FeedEvent.loadLastPosts()';
+    return 'FeedEvent.loadHomePosts()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OnLoadLastPostsEvent);
+        (other.runtimeType == runtimeType && other is _$OnLoadHomePostsEvent);
   }
 
   @override
@@ -105,27 +105,27 @@ class _$OnLoadLastPostsEvent implements OnLoadLastPostsEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loadLastPosts,
+    required TResult Function() loadHomePosts,
   }) {
-    return loadLastPosts();
+    return loadHomePosts();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loadLastPosts,
+    TResult? Function()? loadHomePosts,
   }) {
-    return loadLastPosts?.call();
+    return loadHomePosts?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loadLastPosts,
+    TResult Function()? loadHomePosts,
     required TResult orElse(),
   }) {
-    if (loadLastPosts != null) {
-      return loadLastPosts();
+    if (loadHomePosts != null) {
+      return loadHomePosts();
     }
     return orElse();
   }
@@ -133,38 +133,39 @@ class _$OnLoadLastPostsEvent implements OnLoadLastPostsEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadLastPostsEvent value) loadLastPosts,
+    required TResult Function(OnLoadHomePostsEvent value) loadHomePosts,
   }) {
-    return loadLastPosts(this);
+    return loadHomePosts(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadLastPostsEvent value)? loadLastPosts,
+    TResult? Function(OnLoadHomePostsEvent value)? loadHomePosts,
   }) {
-    return loadLastPosts?.call(this);
+    return loadHomePosts?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadLastPostsEvent value)? loadLastPosts,
+    TResult Function(OnLoadHomePostsEvent value)? loadHomePosts,
     required TResult orElse(),
   }) {
-    if (loadLastPosts != null) {
-      return loadLastPosts(this);
+    if (loadHomePosts != null) {
+      return loadHomePosts(this);
     }
     return orElse();
   }
 }
 
-abstract class OnLoadLastPostsEvent implements FeedEvent {
-  const factory OnLoadLastPostsEvent() = _$OnLoadLastPostsEvent;
+abstract class OnLoadHomePostsEvent implements FeedEvent {
+  const factory OnLoadHomePostsEvent() = _$OnLoadHomePostsEvent;
 }
 
 /// @nodoc
 mixin _$FeedState {
+  List<PostBO> get posts => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -178,7 +179,7 @@ abstract class $FeedStateCopyWith<$Res> {
   factory $FeedStateCopyWith(FeedState value, $Res Function(FeedState) then) =
       _$FeedStateCopyWithImpl<$Res, FeedState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call({List<PostBO> posts, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
@@ -194,10 +195,15 @@ class _$FeedStateCopyWithImpl<$Res, $Val extends FeedState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? posts = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
+      posts: null == posts
+          ? _value.posts
+          : posts // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -217,7 +223,7 @@ abstract class _$$_FeedStateCopyWith<$Res> implements $FeedStateCopyWith<$Res> {
       __$$_FeedStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call({List<PostBO> posts, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
@@ -231,10 +237,15 @@ class __$$_FeedStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? posts = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_FeedState(
+      posts: null == posts
+          ? _value._posts
+          : posts // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -250,7 +261,20 @@ class __$$_FeedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_FeedState implements _FeedState {
-  const _$_FeedState({this.isLoading = false, this.errorMessage});
+  const _$_FeedState(
+      {final List<PostBO> posts = const [],
+      this.isLoading = false,
+      this.errorMessage})
+      : _posts = posts;
+
+  final List<PostBO> _posts;
+  @override
+  @JsonKey()
+  List<PostBO> get posts {
+    if (_posts is EqualUnmodifiableListView) return _posts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_posts);
+  }
 
   @override
   @JsonKey()
@@ -260,7 +284,7 @@ class _$_FeedState implements _FeedState {
 
   @override
   String toString() {
-    return 'FeedState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'FeedState(posts: $posts, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -268,6 +292,7 @@ class _$_FeedState implements _FeedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FeedState &&
+            const DeepCollectionEquality().equals(other._posts, _posts) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -275,7 +300,8 @@ class _$_FeedState implements _FeedState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_posts), isLoading, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -285,9 +311,13 @@ class _$_FeedState implements _FeedState {
 }
 
 abstract class _FeedState implements FeedState {
-  const factory _FeedState({final bool isLoading, final String? errorMessage}) =
-      _$_FeedState;
+  const factory _FeedState(
+      {final List<PostBO> posts,
+      final bool isLoading,
+      final String? errorMessage}) = _$_FeedState;
 
+  @override
+  List<PostBO> get posts;
   @override
   bool get isLoading;
   @override

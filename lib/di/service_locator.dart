@@ -34,6 +34,7 @@ import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/repository/user_repository.dart';
+import 'package:pic_connect/domain/usecase/fetch_user_home_feed_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_comments_by_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
@@ -107,13 +108,14 @@ setupServiceLocator() async {
   serviceLocator.registerLazySingleton(() => FindUsersByNameUseCase(userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindPostsOrderByDatePublishedUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindAllCommentsByPostUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FetchUserHomeFeedUseCase(authRepository: serviceLocator(), postRepository: serviceLocator(), userRepository: serviceLocator()));
   /// BloC ///
   serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
       SignInBloc(signInUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
       SignUpBloc(signUpUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => FeedBloc());
+  serviceLocator.registerFactory(() => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator(), findPostsByUserUseCase: serviceLocator(), followUserUseCase: serviceLocator(), unFollowUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc(findUsersByNameUseCase: serviceLocator(), findPostsOrderByDatePublishedUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => AddPostBloc());

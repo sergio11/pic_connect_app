@@ -65,4 +65,10 @@ class UserDatasourceImpl extends UserDatasource {
         .map((doc) => userDtoMapper(doc))
         .toList();
   }
+
+  @override
+  Future<List<UserDTO>> findAllThatUserIsFollowingBy(String uid) {
+    // TODO: implement findAllThatUserIsFollowingBy
+    throw UnimplementedError();
+  }
 }

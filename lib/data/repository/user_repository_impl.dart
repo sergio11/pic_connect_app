@@ -49,4 +49,15 @@ class UserRepositoryImpl implements UserRepository {
       return Left(Failure(message: ex.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<UserBO>>> findAllThatUserIsFollowingBy(String uid) async {
+    try {
+      final userList = await userDatasource.findAllThatUserIsFollowingBy(uid);
+      return Right(userList.map((e) => userBoMapper(e)).toList());
+    } catch (ex) {
+      debugPrint("findAllThatUserIsFollowingBy - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
 }
