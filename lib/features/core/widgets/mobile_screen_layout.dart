@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pic_connect/features/core/widgets/fab_bottom_app_bar.dart';
+import 'package:pic_connect/features/core/widgets/fab_with_icons.dart';
+import 'package:pic_connect/features/core/widgets/layout.dart';
 import 'package:pic_connect/utils/colors.dart';
 
 class MobileScreenLayout extends StatelessWidget {
@@ -16,34 +19,49 @@ class MobileScreenLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int tappedIndex) {
+      bottomNavigationBar: FABBottomAppBar(
+        centerItemText: '',
+        color: accentColor,
+        selectedColor: secondaryColor,
+        notchedShape: const CircularNotchedRectangle(),
+        onTabSelected: (int tappedIndex) {
           navigationShell.goBranch(tappedIndex);
         },
-        activeColor: secondaryColor,
-        inactiveColor: accentColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
+        backgroundColor: bottomBarBackgroundColor,
+        items: [
+          FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
+          FABBottomAppBarItem(iconData: Icons.search, text: 'Search'),
+          FABBottomAppBarItem(iconData: Icons.favorite, text: 'Favorites'),
+          FABBottomAppBarItem(iconData: Icons.person, text: 'Profile'),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: _buildFab(context),
+    );
+  }
+
+  Widget _buildFab(BuildContext context) {
+    final icons = [ Icons.camera, Icons.file_open ];
+    return AnchoredOverlay(
+      showOverlay: true,
+      overlayBuilder: (context, offset) {
+        return CenterAbout(
+          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+          child: FabWithIcons(
+            icons: icons,
+            onIconTapped: (int tappedIndex) {
+
+            },
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle),
-              label: 'Add'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile'
-          ),
-        ]
+        );
+      },
+      child: FloatingActionButton(
+        onPressed: () { },
+        tooltip: 'Add Post',
+        elevation: 2.0,
+        backgroundColor: secondaryColor,
+        foregroundColor: accentColor,
+        child: const Icon(Icons.add),
       ),
     );
   }

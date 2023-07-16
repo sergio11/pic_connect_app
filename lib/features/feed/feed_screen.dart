@@ -40,18 +40,18 @@ class _FeedScreenState extends State<FeedScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: mobileBackgroundColor,
+      backgroundColor: appBarBackgroundColor,
       centerTitle: false,
       title: SvgPicture.asset(
         'assets/pic_connect_logo.svg',
-        color: primaryColor,
+        color: accentColor,
         height: 32,
       ),
       actions: [
         IconButton(
           icon: const Icon(
             Icons.messenger_outline,
-            color: primaryColor,
+            color: secondaryColor,
           ),
           onPressed: () {},
         ),

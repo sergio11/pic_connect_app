@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildScreenContent(BuildContext context, ProfileState state) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: appBarBackgroundColor,
           title: Text(state.username != null ? state.username! : "Empty"),
           centerTitle: false,
         ),

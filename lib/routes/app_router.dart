@@ -93,6 +93,15 @@ class AppRouter {
                     child: const FeedScreen(),
                   )
               ),
+              GoRoute(
+                  path: AppRoutesEnum.add.screenPath,
+                  name: AppRoutesEnum.add.screenName,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      BlocProvider(
+                        create: (context) => serviceLocator<AddPostBloc>(),
+                        child: const AddPostScreen(),
+                      )
+              )
             ],
           ),
           StatefulShellBranch(
@@ -105,19 +114,6 @@ class AppRouter {
                       create: (context) => serviceLocator<SearchBloc>()
                         ..add(const OnLoadLastPostsPublishedEvent()),
                       child: const SearchScreen(),
-                    )
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: AppRoutesEnum.add.screenPath,
-                name: AppRoutesEnum.add.screenName,
-                builder: (BuildContext context, GoRouterState state) =>
-                    BlocProvider(
-                      create: (context) => serviceLocator<AddPostBloc>(),
-                      child: const AddPostScreen(),
                     )
               ),
             ],
