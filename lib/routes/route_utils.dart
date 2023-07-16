@@ -1,6 +1,11 @@
 enum AppRoutesEnum { login, signup, home, error, profile, search, add, favorites }
 
 extension AppRouteExtension on AppRoutesEnum {
+
+  bool get requireImmersiveMode {
+    return [AppRoutesEnum.login, AppRoutesEnum.signup].contains(this);
+  }
+
   String get screenPath {
     switch (this) {
       case AppRoutesEnum.home:

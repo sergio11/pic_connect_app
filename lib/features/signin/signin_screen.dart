@@ -8,7 +8,6 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/global_variable.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -28,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     _videoController =
         VideoPlayerController.asset("assets/pic_connect_login_video.mp4")
           ..initialize().then((_) {

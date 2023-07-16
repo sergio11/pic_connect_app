@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,13 +42,19 @@ class AppRouter {
     redirect: (BuildContext context, GoRouterState state) async {
       final appState = context.read<AppBloc>().state;
       final bool loggedIn = appState.authUserUid != null;
+      final matchedLocation = AppRoutesEnum.values.firstWhere((route) => route.screenPath == state.matchedLocation);
+      if(matchedLocation.requireImmersiveMode) {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+      } else {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+      }
       debugPrint("redirect - loggedIn: $loggedIn  - state.matchedLocation: ${state.matchedLocation}");
-      if (!loggedIn && state.matchedLocation != AppRoutesEnum.signup.screenPath) {
+      if (!loggedIn && matchedLocation != AppRoutesEnum.signup) {
         return AppRoutesEnum.login.screenPath;
       }
       // if the user is logged in but still on the login page, send them to
       // the home page
-      if (state.matchedLocation == AppRoutesEnum.login.screenPath) {
+      if (matchedLocation == AppRoutesEnum.login) {
         return AppRoutesEnum.home.screenPath;
       }
       // no need to redirect at all

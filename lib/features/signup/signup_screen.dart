@@ -7,7 +7,6 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter/services.dart';
 
 class SignupScreen extends StatefulWidget {
 
@@ -29,7 +28,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     _videoController =
         VideoPlayerController.asset("assets/pic_connect_signup_video.mp4")
           ..initialize().then((_) {
