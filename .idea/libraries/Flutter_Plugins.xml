@@ -24,6 +24,10 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/video_player_avfoundation-2.4.6" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/video_player_android-2.4.9" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/camera_avfoundation-0.9.13+2" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/camera_android-0.10.8+3" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/camera-0.10.5+2" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/camera_web-0.3.1+4" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
