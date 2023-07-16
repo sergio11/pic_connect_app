@@ -23,4 +23,6 @@ abstract class PostDatasource {
 
   Future<List<PostDTO>> findAllByUserUid(String userUi);
 
+  Future<List<PostDTO>> findAllOrderByDatePublished();
+
 }

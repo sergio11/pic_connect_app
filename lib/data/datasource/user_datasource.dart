@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 
@@ -9,5 +8,7 @@ abstract class UserDatasource {
   Future<void> save(SaveUserDTO user);
 
   Future<void> followUser(String uid, String followId);
+
+  Future<List<UserDTO>> findByName(String username);
 
 }

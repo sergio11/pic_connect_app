@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/post.dart';
-import 'package:pic_connect/domain/respository/post_repository.dart';
+import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 
 class FindPostsByUserUseCase extends BaseUseCase<List<PostBO>, FindPostsByUserParams> {

@@ -9,7 +9,7 @@ import 'package:pic_connect/data/datasource/storage_datasource.dart';
 import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/user.dart';
-import 'package:pic_connect/domain/respository/auth_repository.dart';
+import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {

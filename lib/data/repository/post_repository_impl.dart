@@ -15,7 +15,7 @@ import 'package:pic_connect/domain/models/comment.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/user.dart';
-import 'package:pic_connect/domain/respository/post_repository.dart';
+import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/utils/mapper.dart';
 import 'package:uuid/uuid.dart';
 
@@ -117,6 +117,18 @@ class PostRepositoryImpl implements PostRepository {
       return Right(comments);
     } catch(ex) {
       debugPrint("findAllCommentsByPostId - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PostBO>>> findAllOrderByDatePublished() async {
+    try {
+        final postListDTO = await postDatasource.findAllOrderByDatePublished();
+        final posts = await Future.wait(postListDTO.map((postDTO) async  => mapToPostBO(postDTO)));
+        return Right(posts);
+    }  catch(ex) {
+      debugPrint("findAllOrderByDatePublished - ex -> ${ex.toString()}");
       return Left(Failure(message: ex.toString()));
     }
   }

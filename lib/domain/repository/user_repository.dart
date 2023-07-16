@@ -6,4 +6,6 @@ abstract class UserRepository {
   Future<Either<Failure, bool>> followUser(String uid, String followId);
 
   Future<Either<Failure, UserBO>> findByUid(String uid);
+
+  Future<Either<Failure, List<UserBO>>> findByName(String username);
 }

@@ -102,7 +102,8 @@ class AppRouter {
                 name: AppRoutesEnum.search.screenName,
                 builder: (BuildContext context, GoRouterState state) =>
                     BlocProvider(
-                      create: (context) => serviceLocator<SearchBloc>(),
+                      create: (context) => serviceLocator<SearchBloc>()
+                        ..add(const OnLoadLastPostsPublishedEvent()),
                       child: const SearchScreen(),
                     )
               ),

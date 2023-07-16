@@ -5,30 +5,24 @@ import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class UserDatasourceImpl extends UserDatasource {
-
   final FirebaseFirestore firestore;
   final Mapper<DocumentSnapshot, UserDTO> userDtoMapper;
   final Mapper<SaveUserDTO, Map<String, dynamic>> saveUserDtoMapper;
 
-  UserDatasourceImpl({
-    required this.firestore,
-    required this.userDtoMapper,
-    required this.saveUserDtoMapper
-  });
+  UserDatasourceImpl(
+      {required this.firestore,
+      required this.userDtoMapper,
+      required this.saveUserDtoMapper});
 
   @override
   Future<UserDTO> findByUid(String uid) async {
-    final docSnap = await firestore
-        .collection('users')
-        .doc(uid)
-        .get();
+    final docSnap = await firestore.collection('users').doc(uid).get();
     return userDtoMapper(docSnap);
   }
 
   @override
   Future<void> followUser(String uid, String followId) async {
-    DocumentSnapshot snap =
-        await firestore.collection('users').doc(uid).get();
+    DocumentSnapshot snap = await firestore.collection('users').doc(uid).get();
     List following = (snap.data()! as dynamic)['following'];
 
     if (following.contains(followId)) {
@@ -56,5 +50,19 @@ class UserDatasourceImpl extends UserDatasource {
         .collection("users")
         .doc(user.uid)
         .set(saveUserDtoMapper(user));
+  }
+
+  @override
+  Future<List<UserDTO>> findByName(String username) async {
+    final docSnap = await firestore
+        .collection('users')
+        .where(
+          'username',
+          isGreaterThanOrEqualTo: username,
+        )
+        .get();
+    return docSnap.docs
+        .map((doc) => userDtoMapper(doc))
+        .toList();
   }
 }

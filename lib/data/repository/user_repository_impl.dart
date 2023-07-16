@@ -4,7 +4,7 @@ import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/user.dart';
-import 'package:pic_connect/domain/respository/user_repository.dart';
+import 'package:pic_connect/domain/repository/user_repository.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -37,5 +37,16 @@ class UserRepositoryImpl implements UserRepository {
        debugPrint("findByUid - ex -> ${ex.toString()}");
        return Left(Failure(message: ex.toString()));
      }
+  }
+
+  @override
+  Future<Either<Failure, List<UserBO>>> findByName(String username) async {
+    try {
+      final userList = await userDatasource.findByName(username);
+      return Right(userList.map((e) => userBoMapper(e)).toList());
+    } catch (ex) {
+      debugPrint("findByName - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:pic_connect/domain/models/failure.dart';
-import 'package:pic_connect/domain/respository/auth_repository.dart';
+import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'base_use_case.dart';
 
 class GetAuthUserUidUseCase extends BaseUseCase<String, DefaultParams>{

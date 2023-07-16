@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchEvent {
-  String get term => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String term) search,
+    required TResult Function(String term) searchUsers,
+    required TResult Function() loadPosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String term)? search,
+    TResult? Function(String term)? searchUsers,
+    TResult? Function()? loadPosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String term)? search,
+    TResult Function(String term)? searchUsers,
+    TResult Function()? loadPosts,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnSearchFired value) search,
+    required TResult Function(OnSearchUsersEvent value) searchUsers,
+    required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnSearchFired value)? search,
+    TResult? Function(OnSearchUsersEvent value)? searchUsers,
+    TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnSearchFired value)? search,
+    TResult Function(OnSearchUsersEvent value)? searchUsers,
+    TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $SearchEventCopyWith<SearchEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +61,6 @@ abstract class $SearchEventCopyWith<$Res> {
   factory $SearchEventCopyWith(
           SearchEvent value, $Res Function(SearchEvent) then) =
       _$SearchEventCopyWithImpl<$Res, SearchEvent>;
-  @useResult
-  $Res call({String term});
 }
 
 /// @nodoc
@@ -73,38 +72,23 @@ class _$SearchEventCopyWithImpl<$Res, $Val extends SearchEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? term = null,
-  }) {
-    return _then(_value.copyWith(
-      term: null == term
-          ? _value.term
-          : term // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnSearchFiredCopyWith<$Res>
-    implements $SearchEventCopyWith<$Res> {
-  factory _$$OnSearchFiredCopyWith(
-          _$OnSearchFired value, $Res Function(_$OnSearchFired) then) =
-      __$$OnSearchFiredCopyWithImpl<$Res>;
-  @override
+abstract class _$$OnSearchUsersEventCopyWith<$Res> {
+  factory _$$OnSearchUsersEventCopyWith(_$OnSearchUsersEvent value,
+          $Res Function(_$OnSearchUsersEvent) then) =
+      __$$OnSearchUsersEventCopyWithImpl<$Res>;
   @useResult
   $Res call({String term});
 }
 
 /// @nodoc
-class __$$OnSearchFiredCopyWithImpl<$Res>
-    extends _$SearchEventCopyWithImpl<$Res, _$OnSearchFired>
-    implements _$$OnSearchFiredCopyWith<$Res> {
-  __$$OnSearchFiredCopyWithImpl(
-      _$OnSearchFired _value, $Res Function(_$OnSearchFired) _then)
+class __$$OnSearchUsersEventCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$OnSearchUsersEvent>
+    implements _$$OnSearchUsersEventCopyWith<$Res> {
+  __$$OnSearchUsersEventCopyWithImpl(
+      _$OnSearchUsersEvent _value, $Res Function(_$OnSearchUsersEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -112,7 +96,7 @@ class __$$OnSearchFiredCopyWithImpl<$Res>
   $Res call({
     Object? term = null,
   }) {
-    return _then(_$OnSearchFired(
+    return _then(_$OnSearchUsersEvent(
       null == term
           ? _value.term
           : term // ignore: cast_nullable_to_non_nullable
@@ -123,22 +107,22 @@ class __$$OnSearchFiredCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnSearchFired implements OnSearchFired {
-  const _$OnSearchFired(this.term);
+class _$OnSearchUsersEvent implements OnSearchUsersEvent {
+  const _$OnSearchUsersEvent(this.term);
 
   @override
   final String term;
 
   @override
   String toString() {
-    return 'SearchEvent.search(term: $term)';
+    return 'SearchEvent.searchUsers(term: $term)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OnSearchFired &&
+            other is _$OnSearchUsersEvent &&
             (identical(other.term, term) || other.term == term));
   }
 
@@ -148,33 +132,37 @@ class _$OnSearchFired implements OnSearchFired {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OnSearchFiredCopyWith<_$OnSearchFired> get copyWith =>
-      __$$OnSearchFiredCopyWithImpl<_$OnSearchFired>(this, _$identity);
+  _$$OnSearchUsersEventCopyWith<_$OnSearchUsersEvent> get copyWith =>
+      __$$OnSearchUsersEventCopyWithImpl<_$OnSearchUsersEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String term) search,
+    required TResult Function(String term) searchUsers,
+    required TResult Function() loadPosts,
   }) {
-    return search(term);
+    return searchUsers(term);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String term)? search,
+    TResult? Function(String term)? searchUsers,
+    TResult? Function()? loadPosts,
   }) {
-    return search?.call(term);
+    return searchUsers?.call(term);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String term)? search,
+    TResult Function(String term)? searchUsers,
+    TResult Function()? loadPosts,
     required TResult orElse(),
   }) {
-    if (search != null) {
-      return search(term);
+    if (searchUsers != null) {
+      return searchUsers(term);
     }
     return orElse();
   }
@@ -182,46 +170,156 @@ class _$OnSearchFired implements OnSearchFired {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnSearchFired value) search,
+    required TResult Function(OnSearchUsersEvent value) searchUsers,
+    required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
   }) {
-    return search(this);
+    return searchUsers(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnSearchFired value)? search,
+    TResult? Function(OnSearchUsersEvent value)? searchUsers,
+    TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
   }) {
-    return search?.call(this);
+    return searchUsers?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnSearchFired value)? search,
+    TResult Function(OnSearchUsersEvent value)? searchUsers,
+    TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
     required TResult orElse(),
   }) {
-    if (search != null) {
-      return search(this);
+    if (searchUsers != null) {
+      return searchUsers(this);
     }
     return orElse();
   }
 }
 
-abstract class OnSearchFired implements SearchEvent {
-  const factory OnSearchFired(final String term) = _$OnSearchFired;
+abstract class OnSearchUsersEvent implements SearchEvent {
+  const factory OnSearchUsersEvent(final String term) = _$OnSearchUsersEvent;
+
+  String get term;
+  @JsonKey(ignore: true)
+  _$$OnSearchUsersEventCopyWith<_$OnSearchUsersEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnLoadLastPostsPublishedEventCopyWith<$Res> {
+  factory _$$OnLoadLastPostsPublishedEventCopyWith(
+          _$OnLoadLastPostsPublishedEvent value,
+          $Res Function(_$OnLoadLastPostsPublishedEvent) then) =
+      __$$OnLoadLastPostsPublishedEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OnLoadLastPostsPublishedEventCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$OnLoadLastPostsPublishedEvent>
+    implements _$$OnLoadLastPostsPublishedEventCopyWith<$Res> {
+  __$$OnLoadLastPostsPublishedEventCopyWithImpl(
+      _$OnLoadLastPostsPublishedEvent _value,
+      $Res Function(_$OnLoadLastPostsPublishedEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OnLoadLastPostsPublishedEvent implements OnLoadLastPostsPublishedEvent {
+  const _$OnLoadLastPostsPublishedEvent();
 
   @override
-  String get term;
+  String toString() {
+    return 'SearchEvent.loadPosts()';
+  }
+
   @override
-  @JsonKey(ignore: true)
-  _$$OnSearchFiredCopyWith<_$OnSearchFired> get copyWith =>
-      throw _privateConstructorUsedError;
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnLoadLastPostsPublishedEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String term) searchUsers,
+    required TResult Function() loadPosts,
+  }) {
+    return loadPosts();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String term)? searchUsers,
+    TResult? Function()? loadPosts,
+  }) {
+    return loadPosts?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String term)? searchUsers,
+    TResult Function()? loadPosts,
+    required TResult orElse(),
+  }) {
+    if (loadPosts != null) {
+      return loadPosts();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnSearchUsersEvent value) searchUsers,
+    required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
+  }) {
+    return loadPosts(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnSearchUsersEvent value)? searchUsers,
+    TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+  }) {
+    return loadPosts?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnSearchUsersEvent value)? searchUsers,
+    TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    required TResult orElse(),
+  }) {
+    if (loadPosts != null) {
+      return loadPosts(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnLoadLastPostsPublishedEvent implements SearchEvent {
+  const factory OnLoadLastPostsPublishedEvent() =
+      _$OnLoadLastPostsPublishedEvent;
 }
 
 /// @nodoc
 mixin _$SearchState {
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isShowUsers => throw _privateConstructorUsedError;
+  List<UserBO> get users => throw _privateConstructorUsedError;
+  List<PostBO> get posts => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -235,7 +333,12 @@ abstract class $SearchStateCopyWith<$Res> {
           SearchState value, $Res Function(SearchState) then) =
       _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {bool isLoading,
+      bool isShowUsers,
+      List<UserBO> users,
+      List<PostBO> posts,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -252,6 +355,9 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isShowUsers = null,
+    Object? users = null,
+    Object? posts = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -259,6 +365,18 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isShowUsers: null == isShowUsers
+          ? _value.isShowUsers
+          : isShowUsers // ignore: cast_nullable_to_non_nullable
+              as bool,
+      users: null == users
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<UserBO>,
+      posts: null == posts
+          ? _value.posts
+          : posts // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -275,7 +393,12 @@ abstract class _$$_SearchStateCopyWith<$Res>
       __$$_SearchStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {bool isLoading,
+      bool isShowUsers,
+      List<UserBO> users,
+      List<PostBO> posts,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -290,6 +413,9 @@ class __$$_SearchStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isShowUsers = null,
+    Object? users = null,
+    Object? posts = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_SearchState(
@@ -297,6 +423,18 @@ class __$$_SearchStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isShowUsers: null == isShowUsers
+          ? _value.isShowUsers
+          : isShowUsers // ignore: cast_nullable_to_non_nullable
+              as bool,
+      users: null == users
+          ? _value._users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<UserBO>,
+      posts: null == posts
+          ? _value._posts
+          : posts // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -308,17 +446,45 @@ class __$$_SearchStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SearchState implements _SearchState {
-  const _$_SearchState({this.isLoading = false, this.errorMessage});
+  const _$_SearchState(
+      {this.isLoading = false,
+      this.isShowUsers = false,
+      final List<UserBO> users = const [],
+      final List<PostBO> posts = const [],
+      this.errorMessage})
+      : _users = users,
+        _posts = posts;
 
   @override
   @JsonKey()
   final bool isLoading;
   @override
+  @JsonKey()
+  final bool isShowUsers;
+  final List<UserBO> _users;
+  @override
+  @JsonKey()
+  List<UserBO> get users {
+    if (_users is EqualUnmodifiableListView) return _users;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_users);
+  }
+
+  final List<PostBO> _posts;
+  @override
+  @JsonKey()
+  List<PostBO> get posts {
+    if (_posts is EqualUnmodifiableListView) return _posts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_posts);
+  }
+
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'SearchState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'SearchState(isLoading: $isLoading, isShowUsers: $isShowUsers, users: $users, posts: $posts, errorMessage: $errorMessage)';
   }
 
   @override
@@ -328,12 +494,22 @@ class _$_SearchState implements _SearchState {
             other is _$_SearchState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isShowUsers, isShowUsers) ||
+                other.isShowUsers == isShowUsers) &&
+            const DeepCollectionEquality().equals(other._users, _users) &&
+            const DeepCollectionEquality().equals(other._posts, _posts) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      isShowUsers,
+      const DeepCollectionEquality().hash(_users),
+      const DeepCollectionEquality().hash(_posts),
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -344,10 +520,20 @@ class _$_SearchState implements _SearchState {
 
 abstract class _SearchState implements SearchState {
   const factory _SearchState(
-      {final bool isLoading, final String? errorMessage}) = _$_SearchState;
+      {final bool isLoading,
+      final bool isShowUsers,
+      final List<UserBO> users,
+      final List<PostBO> posts,
+      final String? errorMessage}) = _$_SearchState;
 
   @override
   bool get isLoading;
+  @override
+  bool get isShowUsers;
+  @override
+  List<UserBO> get users;
+  @override
+  List<PostBO> get posts;
   @override
   String? get errorMessage;
   @override

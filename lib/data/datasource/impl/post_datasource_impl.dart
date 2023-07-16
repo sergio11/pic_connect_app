@@ -100,4 +100,15 @@ class PostDatasourceImpl extends PostDatasource {
         .map((doc) => postMapper(doc))
         .toList();
   }
+
+  @override
+  Future<List<PostDTO>> findAllOrderByDatePublished() async {
+    final posts = await firestore
+        .collection('posts')
+        .orderBy('datePublished')
+        .get();
+    return posts.docs
+        .map((doc) => postMapper(doc))
+        .toList();
+  }
 }

@@ -29,4 +29,6 @@ abstract class PostRepository {
   Future<Either<Failure, List<PostBO>>> findAllByUserUid(String userUi);
 
   Future<Either<Failure, List<CommentBO>>> findAllCommentsByPostId(String postId);
+
+  Future<Either<Failure, List<PostBO>>> findAllOrderByDatePublished();
 }
