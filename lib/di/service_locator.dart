@@ -34,6 +34,7 @@ import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/repository/user_repository.dart';
+import 'package:pic_connect/domain/usecase/find_all_comments_by_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_users_by_name_use_case.dart';
@@ -105,6 +106,7 @@ setupServiceLocator() async {
   serviceLocator.registerLazySingleton(() => UnFollowUserUseCase(authRepository: serviceLocator(), userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindUsersByNameUseCase(userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindPostsOrderByDatePublishedUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FindAllCommentsByPostUseCase(postRepository: serviceLocator()));
   /// BloC ///
   serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>

@@ -16,37 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CommentsEvent {
+  String get postId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() load,
+    required TResult Function(String postId) loadCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
+    TResult? Function(String postId)? loadCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
+    TResult Function(String postId)? loadCommentsByPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadComments value) load,
+    required TResult Function(OnLoadCommentsByPostEvent value)
+        loadCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadComments value)? load,
+    TResult? Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadComments value)? load,
+    TResult Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CommentsEventCopyWith<CommentsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -55,6 +61,8 @@ abstract class $CommentsEventCopyWith<$Res> {
   factory $CommentsEventCopyWith(
           CommentsEvent value, $Res Function(CommentsEvent) then) =
       _$CommentsEventCopyWithImpl<$Res, CommentsEvent>;
+  @useResult
+  $Res call({String postId});
 }
 
 /// @nodoc
@@ -66,67 +74,110 @@ class _$CommentsEventCopyWithImpl<$Res, $Val extends CommentsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_value.copyWith(
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$OnLoadCommentsCopyWith<$Res> {
-  factory _$$OnLoadCommentsCopyWith(
-          _$OnLoadComments value, $Res Function(_$OnLoadComments) then) =
-      __$$OnLoadCommentsCopyWithImpl<$Res>;
+abstract class _$$OnLoadCommentsByPostEventCopyWith<$Res>
+    implements $CommentsEventCopyWith<$Res> {
+  factory _$$OnLoadCommentsByPostEventCopyWith(
+          _$OnLoadCommentsByPostEvent value,
+          $Res Function(_$OnLoadCommentsByPostEvent) then) =
+      __$$OnLoadCommentsByPostEventCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String postId});
 }
 
 /// @nodoc
-class __$$OnLoadCommentsCopyWithImpl<$Res>
-    extends _$CommentsEventCopyWithImpl<$Res, _$OnLoadComments>
-    implements _$$OnLoadCommentsCopyWith<$Res> {
-  __$$OnLoadCommentsCopyWithImpl(
-      _$OnLoadComments _value, $Res Function(_$OnLoadComments) _then)
+class __$$OnLoadCommentsByPostEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$OnLoadCommentsByPostEvent>
+    implements _$$OnLoadCommentsByPostEventCopyWith<$Res> {
+  __$$OnLoadCommentsByPostEventCopyWithImpl(_$OnLoadCommentsByPostEvent _value,
+      $Res Function(_$OnLoadCommentsByPostEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnLoadCommentsByPostEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$OnLoadComments implements OnLoadComments {
-  const _$OnLoadComments();
+class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
+  const _$OnLoadCommentsByPostEvent(this.postId);
+
+  @override
+  final String postId;
 
   @override
   String toString() {
-    return 'CommentsEvent.load()';
+    return 'CommentsEvent.loadCommentsByPost(postId: $postId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OnLoadComments);
+        (other.runtimeType == runtimeType &&
+            other is _$OnLoadCommentsByPostEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLoadCommentsByPostEventCopyWith<_$OnLoadCommentsByPostEvent>
+      get copyWith => __$$OnLoadCommentsByPostEventCopyWithImpl<
+          _$OnLoadCommentsByPostEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() load,
+    required TResult Function(String postId) loadCommentsByPost,
   }) {
-    return load();
+    return loadCommentsByPost(postId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
+    TResult? Function(String postId)? loadCommentsByPost,
   }) {
-    return load?.call();
+    return loadCommentsByPost?.call(postId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
+    TResult Function(String postId)? loadCommentsByPost,
     required TResult orElse(),
   }) {
-    if (load != null) {
-      return load();
+    if (loadCommentsByPost != null) {
+      return loadCommentsByPost(postId);
     }
     return orElse();
   }
@@ -134,38 +185,48 @@ class _$OnLoadComments implements OnLoadComments {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadComments value) load,
+    required TResult Function(OnLoadCommentsByPostEvent value)
+        loadCommentsByPost,
   }) {
-    return load(this);
+    return loadCommentsByPost(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadComments value)? load,
+    TResult? Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
   }) {
-    return load?.call(this);
+    return loadCommentsByPost?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadComments value)? load,
+    TResult Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     required TResult orElse(),
   }) {
-    if (load != null) {
-      return load(this);
+    if (loadCommentsByPost != null) {
+      return loadCommentsByPost(this);
     }
     return orElse();
   }
 }
 
-abstract class OnLoadComments implements CommentsEvent {
-  const factory OnLoadComments() = _$OnLoadComments;
+abstract class OnLoadCommentsByPostEvent implements CommentsEvent {
+  const factory OnLoadCommentsByPostEvent(final String postId) =
+      _$OnLoadCommentsByPostEvent;
+
+  @override
+  String get postId;
+  @override
+  @JsonKey(ignore: true)
+  _$$OnLoadCommentsByPostEventCopyWith<_$OnLoadCommentsByPostEvent>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$CommentsState {
+  List<CommentBO> get commentsByPost => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -180,7 +241,8 @@ abstract class $CommentsStateCopyWith<$Res> {
           CommentsState value, $Res Function(CommentsState) then) =
       _$CommentsStateCopyWithImpl<$Res, CommentsState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {List<CommentBO> commentsByPost, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
@@ -196,10 +258,15 @@ class _$CommentsStateCopyWithImpl<$Res, $Val extends CommentsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? commentsByPost = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
+      commentsByPost: null == commentsByPost
+          ? _value.commentsByPost
+          : commentsByPost // ignore: cast_nullable_to_non_nullable
+              as List<CommentBO>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -220,7 +287,8 @@ abstract class _$$_CommentsStateCopyWith<$Res>
       __$$_CommentsStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {List<CommentBO> commentsByPost, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
@@ -234,10 +302,15 @@ class __$$_CommentsStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? commentsByPost = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_CommentsState(
+      commentsByPost: null == commentsByPost
+          ? _value._commentsByPost
+          : commentsByPost // ignore: cast_nullable_to_non_nullable
+              as List<CommentBO>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -253,7 +326,20 @@ class __$$_CommentsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CommentsState implements _CommentsState {
-  const _$_CommentsState({this.isLoading = false, this.errorMessage});
+  const _$_CommentsState(
+      {final List<CommentBO> commentsByPost = const [],
+      this.isLoading = false,
+      this.errorMessage})
+      : _commentsByPost = commentsByPost;
+
+  final List<CommentBO> _commentsByPost;
+  @override
+  @JsonKey()
+  List<CommentBO> get commentsByPost {
+    if (_commentsByPost is EqualUnmodifiableListView) return _commentsByPost;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_commentsByPost);
+  }
 
   @override
   @JsonKey()
@@ -263,7 +349,7 @@ class _$_CommentsState implements _CommentsState {
 
   @override
   String toString() {
-    return 'CommentsState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'CommentsState(commentsByPost: $commentsByPost, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -271,6 +357,8 @@ class _$_CommentsState implements _CommentsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CommentsState &&
+            const DeepCollectionEquality()
+                .equals(other._commentsByPost, _commentsByPost) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -278,7 +366,11 @@ class _$_CommentsState implements _CommentsState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_commentsByPost),
+      isLoading,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -289,8 +381,12 @@ class _$_CommentsState implements _CommentsState {
 
 abstract class _CommentsState implements CommentsState {
   const factory _CommentsState(
-      {final bool isLoading, final String? errorMessage}) = _$_CommentsState;
+      {final List<CommentBO> commentsByPost,
+      final bool isLoading,
+      final String? errorMessage}) = _$_CommentsState;
 
+  @override
+  List<CommentBO> get commentsByPost;
   @override
   bool get isLoading;
   @override
