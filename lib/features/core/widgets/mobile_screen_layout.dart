@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/core/widgets/fab_bottom_app_bar.dart';
 import 'package:pic_connect/features/core/widgets/fab_with_icons.dart';
 import 'package:pic_connect/features/core/widgets/layout.dart';
+import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/utils/colors.dart';
 
 class MobileScreenLayout extends StatelessWidget {
@@ -50,7 +52,8 @@ class MobileScreenLayout extends StatelessWidget {
           child: FabWithIcons(
             icons: icons,
             onIconTapped: (int tappedIndex) {
-
+              final imageSource = icons[tappedIndex] == Icons.camera ? ImageSource.camera : ImageSource.gallery;
+              context.go(AppRoutesEnum.add.screenPath, extra: imageSource);
             },
           ),
         );

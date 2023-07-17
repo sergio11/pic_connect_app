@@ -18,33 +18,39 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AddPostEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() addPost,
+    required TResult Function(ImageSource imageSource) addNewPostFrom,
+    required TResult Function(String filePath) takePhoto,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? addPost,
+    TResult? Function(ImageSource imageSource)? addNewPostFrom,
+    TResult? Function(String filePath)? takePhoto,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? addPost,
+    TResult Function(ImageSource imageSource)? addNewPostFrom,
+    TResult Function(String filePath)? takePhoto,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnAddPostEvent value) addPost,
+    required TResult Function(OnAddNewPostFromEvent value) addNewPostFrom,
+    required TResult Function(OnTakePhotoEvent value) takePhoto,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnAddPostEvent value)? addPost,
+    TResult? Function(OnAddNewPostFromEvent value)? addNewPostFrom,
+    TResult? Function(OnTakePhotoEvent value)? takePhoto,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnAddPostEvent value)? addPost,
+    TResult Function(OnAddNewPostFromEvent value)? addNewPostFrom,
+    TResult Function(OnTakePhotoEvent value)? takePhoto,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,64 +75,95 @@ class _$AddPostEventCopyWithImpl<$Res, $Val extends AddPostEvent>
 }
 
 /// @nodoc
-abstract class _$$OnAddPostEventCopyWith<$Res> {
-  factory _$$OnAddPostEventCopyWith(
-          _$OnAddPostEvent value, $Res Function(_$OnAddPostEvent) then) =
-      __$$OnAddPostEventCopyWithImpl<$Res>;
+abstract class _$$OnAddNewPostFromEventCopyWith<$Res> {
+  factory _$$OnAddNewPostFromEventCopyWith(_$OnAddNewPostFromEvent value,
+          $Res Function(_$OnAddNewPostFromEvent) then) =
+      __$$OnAddNewPostFromEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ImageSource imageSource});
 }
 
 /// @nodoc
-class __$$OnAddPostEventCopyWithImpl<$Res>
-    extends _$AddPostEventCopyWithImpl<$Res, _$OnAddPostEvent>
-    implements _$$OnAddPostEventCopyWith<$Res> {
-  __$$OnAddPostEventCopyWithImpl(
-      _$OnAddPostEvent _value, $Res Function(_$OnAddPostEvent) _then)
+class __$$OnAddNewPostFromEventCopyWithImpl<$Res>
+    extends _$AddPostEventCopyWithImpl<$Res, _$OnAddNewPostFromEvent>
+    implements _$$OnAddNewPostFromEventCopyWith<$Res> {
+  __$$OnAddNewPostFromEventCopyWithImpl(_$OnAddNewPostFromEvent _value,
+      $Res Function(_$OnAddNewPostFromEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? imageSource = null,
+  }) {
+    return _then(_$OnAddNewPostFromEvent(
+      null == imageSource
+          ? _value.imageSource
+          : imageSource // ignore: cast_nullable_to_non_nullable
+              as ImageSource,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$OnAddPostEvent implements OnAddPostEvent {
-  const _$OnAddPostEvent();
+class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
+  const _$OnAddNewPostFromEvent(this.imageSource);
+
+  @override
+  final ImageSource imageSource;
 
   @override
   String toString() {
-    return 'AddPostEvent.addPost()';
+    return 'AddPostEvent.addNewPostFrom(imageSource: $imageSource)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OnAddPostEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$OnAddNewPostFromEvent &&
+            (identical(other.imageSource, imageSource) ||
+                other.imageSource == imageSource));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, imageSource);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnAddNewPostFromEventCopyWith<_$OnAddNewPostFromEvent> get copyWith =>
+      __$$OnAddNewPostFromEventCopyWithImpl<_$OnAddNewPostFromEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() addPost,
+    required TResult Function(ImageSource imageSource) addNewPostFrom,
+    required TResult Function(String filePath) takePhoto,
   }) {
-    return addPost();
+    return addNewPostFrom(imageSource);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? addPost,
+    TResult? Function(ImageSource imageSource)? addNewPostFrom,
+    TResult? Function(String filePath)? takePhoto,
   }) {
-    return addPost?.call();
+    return addNewPostFrom?.call(imageSource);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? addPost,
+    TResult Function(ImageSource imageSource)? addNewPostFrom,
+    TResult Function(String filePath)? takePhoto,
     required TResult orElse(),
   }) {
-    if (addPost != null) {
-      return addPost();
+    if (addNewPostFrom != null) {
+      return addNewPostFrom(imageSource);
     }
     return orElse();
   }
@@ -134,38 +171,185 @@ class _$OnAddPostEvent implements OnAddPostEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnAddPostEvent value) addPost,
+    required TResult Function(OnAddNewPostFromEvent value) addNewPostFrom,
+    required TResult Function(OnTakePhotoEvent value) takePhoto,
   }) {
-    return addPost(this);
+    return addNewPostFrom(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnAddPostEvent value)? addPost,
+    TResult? Function(OnAddNewPostFromEvent value)? addNewPostFrom,
+    TResult? Function(OnTakePhotoEvent value)? takePhoto,
   }) {
-    return addPost?.call(this);
+    return addNewPostFrom?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnAddPostEvent value)? addPost,
+    TResult Function(OnAddNewPostFromEvent value)? addNewPostFrom,
+    TResult Function(OnTakePhotoEvent value)? takePhoto,
     required TResult orElse(),
   }) {
-    if (addPost != null) {
-      return addPost(this);
+    if (addNewPostFrom != null) {
+      return addNewPostFrom(this);
     }
     return orElse();
   }
 }
 
-abstract class OnAddPostEvent implements AddPostEvent {
-  const factory OnAddPostEvent() = _$OnAddPostEvent;
+abstract class OnAddNewPostFromEvent implements AddPostEvent {
+  const factory OnAddNewPostFromEvent(final ImageSource imageSource) =
+      _$OnAddNewPostFromEvent;
+
+  ImageSource get imageSource;
+  @JsonKey(ignore: true)
+  _$$OnAddNewPostFromEventCopyWith<_$OnAddNewPostFromEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnTakePhotoEventCopyWith<$Res> {
+  factory _$$OnTakePhotoEventCopyWith(
+          _$OnTakePhotoEvent value, $Res Function(_$OnTakePhotoEvent) then) =
+      __$$OnTakePhotoEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String filePath});
+}
+
+/// @nodoc
+class __$$OnTakePhotoEventCopyWithImpl<$Res>
+    extends _$AddPostEventCopyWithImpl<$Res, _$OnTakePhotoEvent>
+    implements _$$OnTakePhotoEventCopyWith<$Res> {
+  __$$OnTakePhotoEventCopyWithImpl(
+      _$OnTakePhotoEvent _value, $Res Function(_$OnTakePhotoEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? filePath = null,
+  }) {
+    return _then(_$OnTakePhotoEvent(
+      null == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnTakePhotoEvent implements OnTakePhotoEvent {
+  const _$OnTakePhotoEvent(this.filePath);
+
+  @override
+  final String filePath;
+
+  @override
+  String toString() {
+    return 'AddPostEvent.takePhoto(filePath: $filePath)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnTakePhotoEvent &&
+            (identical(other.filePath, filePath) ||
+                other.filePath == filePath));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, filePath);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnTakePhotoEventCopyWith<_$OnTakePhotoEvent> get copyWith =>
+      __$$OnTakePhotoEventCopyWithImpl<_$OnTakePhotoEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ImageSource imageSource) addNewPostFrom,
+    required TResult Function(String filePath) takePhoto,
+  }) {
+    return takePhoto(filePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ImageSource imageSource)? addNewPostFrom,
+    TResult? Function(String filePath)? takePhoto,
+  }) {
+    return takePhoto?.call(filePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ImageSource imageSource)? addNewPostFrom,
+    TResult Function(String filePath)? takePhoto,
+    required TResult orElse(),
+  }) {
+    if (takePhoto != null) {
+      return takePhoto(filePath);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnAddNewPostFromEvent value) addNewPostFrom,
+    required TResult Function(OnTakePhotoEvent value) takePhoto,
+  }) {
+    return takePhoto(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnAddNewPostFromEvent value)? addNewPostFrom,
+    TResult? Function(OnTakePhotoEvent value)? takePhoto,
+  }) {
+    return takePhoto?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnAddNewPostFromEvent value)? addNewPostFrom,
+    TResult Function(OnTakePhotoEvent value)? takePhoto,
+    required TResult orElse(),
+  }) {
+    if (takePhoto != null) {
+      return takePhoto(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnTakePhotoEvent implements AddPostEvent {
+  const factory OnTakePhotoEvent(final String filePath) = _$OnTakePhotoEvent;
+
+  String get filePath;
+  @JsonKey(ignore: true)
+  _$$OnTakePhotoEventCopyWith<_$OnTakePhotoEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$AddPostState {
+  ImageSource get imageSource => throw _privateConstructorUsedError;
+  String? get authorPhotoUrl => throw _privateConstructorUsedError;
+  String? get postFilePath => throw _privateConstructorUsedError;
+  bool get isPostUploading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -180,7 +364,13 @@ abstract class $AddPostStateCopyWith<$Res> {
           AddPostState value, $Res Function(AddPostState) then) =
       _$AddPostStateCopyWithImpl<$Res, AddPostState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {ImageSource imageSource,
+      String? authorPhotoUrl,
+      String? postFilePath,
+      bool isPostUploading,
+      bool isLoading,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -196,10 +386,30 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? imageSource = null,
+    Object? authorPhotoUrl = freezed,
+    Object? postFilePath = freezed,
+    Object? isPostUploading = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
+      imageSource: null == imageSource
+          ? _value.imageSource
+          : imageSource // ignore: cast_nullable_to_non_nullable
+              as ImageSource,
+      authorPhotoUrl: freezed == authorPhotoUrl
+          ? _value.authorPhotoUrl
+          : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postFilePath: freezed == postFilePath
+          ? _value.postFilePath
+          : postFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPostUploading: null == isPostUploading
+          ? _value.isPostUploading
+          : isPostUploading // ignore: cast_nullable_to_non_nullable
+              as bool,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -220,7 +430,13 @@ abstract class _$$_AddPostStateCopyWith<$Res>
       __$$_AddPostStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call(
+      {ImageSource imageSource,
+      String? authorPhotoUrl,
+      String? postFilePath,
+      bool isPostUploading,
+      bool isLoading,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -234,10 +450,30 @@ class __$$_AddPostStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? imageSource = null,
+    Object? authorPhotoUrl = freezed,
+    Object? postFilePath = freezed,
+    Object? isPostUploading = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_AddPostState(
+      imageSource: null == imageSource
+          ? _value.imageSource
+          : imageSource // ignore: cast_nullable_to_non_nullable
+              as ImageSource,
+      authorPhotoUrl: freezed == authorPhotoUrl
+          ? _value.authorPhotoUrl
+          : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postFilePath: freezed == postFilePath
+          ? _value.postFilePath
+          : postFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPostUploading: null == isPostUploading
+          ? _value.isPostUploading
+          : isPostUploading // ignore: cast_nullable_to_non_nullable
+              as bool,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -253,8 +489,24 @@ class __$$_AddPostStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AddPostState implements _AddPostState {
-  const _$_AddPostState({this.isLoading = false, this.errorMessage});
+  const _$_AddPostState(
+      {this.imageSource = ImageSource.gallery,
+      this.authorPhotoUrl,
+      this.postFilePath,
+      this.isPostUploading = false,
+      this.isLoading = false,
+      this.errorMessage});
 
+  @override
+  @JsonKey()
+  final ImageSource imageSource;
+  @override
+  final String? authorPhotoUrl;
+  @override
+  final String? postFilePath;
+  @override
+  @JsonKey()
+  final bool isPostUploading;
   @override
   @JsonKey()
   final bool isLoading;
@@ -263,7 +515,7 @@ class _$_AddPostState implements _AddPostState {
 
   @override
   String toString() {
-    return 'AddPostState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, postFilePath: $postFilePath, isPostUploading: $isPostUploading, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -271,6 +523,14 @@ class _$_AddPostState implements _AddPostState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AddPostState &&
+            (identical(other.imageSource, imageSource) ||
+                other.imageSource == imageSource) &&
+            (identical(other.authorPhotoUrl, authorPhotoUrl) ||
+                other.authorPhotoUrl == authorPhotoUrl) &&
+            (identical(other.postFilePath, postFilePath) ||
+                other.postFilePath == postFilePath) &&
+            (identical(other.isPostUploading, isPostUploading) ||
+                other.isPostUploading == isPostUploading) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -278,7 +538,8 @@ class _$_AddPostState implements _AddPostState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode => Object.hash(runtimeType, imageSource, authorPhotoUrl,
+      postFilePath, isPostUploading, isLoading, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -289,8 +550,21 @@ class _$_AddPostState implements _AddPostState {
 
 abstract class _AddPostState implements AddPostState {
   const factory _AddPostState(
-      {final bool isLoading, final String? errorMessage}) = _$_AddPostState;
+      {final ImageSource imageSource,
+      final String? authorPhotoUrl,
+      final String? postFilePath,
+      final bool isPostUploading,
+      final bool isLoading,
+      final String? errorMessage}) = _$_AddPostState;
 
+  @override
+  ImageSource get imageSource;
+  @override
+  String? get authorPhotoUrl;
+  @override
+  String? get postFilePath;
+  @override
+  bool get isPostUploading;
   @override
   bool get isLoading;
   @override

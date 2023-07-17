@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
@@ -83,6 +84,16 @@ class AppRouter {
               }),
             ),
       ),
+      GoRoute(
+          path: AppRoutesEnum.add.screenPath,
+          name: AppRoutesEnum.add.screenName,
+          builder: (BuildContext context, GoRouterState state) =>
+              BlocProvider(
+                create: (context) => serviceLocator<AddPostBloc>()
+                  ..add(OnAddNewPostFromEvent(state.extra as ImageSource)),
+                child: const AddPostScreen(),
+              )
+      ),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
@@ -99,15 +110,6 @@ class AppRouter {
                     create: (context) => serviceLocator<FeedBloc>(),
                     child: const FeedScreen(),
                   )
-              ),
-              GoRoute(
-                  path: AppRoutesEnum.add.screenPath,
-                  name: AppRoutesEnum.add.screenName,
-                  builder: (BuildContext context, GoRouterState state) =>
-                      BlocProvider(
-                        create: (context) => serviceLocator<AddPostBloc>(),
-                        child: const AddPostScreen(),
-                      )
               )
             ],
           ),
