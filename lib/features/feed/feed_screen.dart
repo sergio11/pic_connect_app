@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/features/postcard/post_card.dart';
+import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/global_variable.dart';
 
@@ -62,13 +65,17 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget _buildPostsList(FeedState state) {
     final width = MediaQuery.of(context).size.width;
     return ListView.builder(
+      physics: const BouncingScrollPhysics(),
       itemCount: state.posts.length,
       itemBuilder: (ctx, index) => Container(
         margin: EdgeInsets.symmetric(
           horizontal: width > webScreenSize ? width * 0.3 : 0,
           vertical: width > webScreenSize ? 15 : 0,
         ),
-        child: Text(state.posts[index].username),
+        child: BlocProvider(
+            create: (context) => serviceLocator<PostCardBloc>(),
+            child: const PostCard()
+        ),
       ),
     );
   }

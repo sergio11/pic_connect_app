@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: AppBar(
           backgroundColor: appBarBackgroundColor,
           title: Text(
-              state.username != null ? state.username! : "Empty",
+              state.username ?? "Empty",
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -80,9 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           decoration: BoxDecoration(color: secondaryColor.withOpacity(0.5), shape: BoxShape.circle),
           child: CircleAvatar(
             backgroundColor: accentColor,
-            backgroundImage: NetworkImage(state.photoUrl != null
-                ? state.photoUrl!
-                : 'https://i.stack.imgur.com/l60Hf.png'),
+            backgroundImage: NetworkImage(state.photoUrl ?? 'https://i.stack.imgur.com/l60Hf.png'),
             radius: 40,
           ),
         ),
@@ -174,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         top: 1,
       ),
       child: Text(
-        state.bio != null ? state.bio! : "Empty",
+        state.bio ?? "Empty",
       ),
     );
   }
