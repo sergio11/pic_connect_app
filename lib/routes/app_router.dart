@@ -91,13 +91,19 @@ class AppRouter {
               BlocProvider(
                 create: (context) => serviceLocator<AddPostBloc>()
                   ..add(OnAddNewPostFromEvent(state.extra as ImageSource)),
-                child: const AddPostScreen(),
+                child: AddPostScreen(onBackPressed: () {
+                  context.pop();
+                },),
               )
       ),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
-          return ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(navigationShell: navigationShell));
+          return ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(
+                  navigationShell: navigationShell
+              )
+          );
         },
         branches: <StatefulShellBranch>[
           StatefulShellBranch(

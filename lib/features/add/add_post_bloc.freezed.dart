@@ -19,38 +19,38 @@ mixin _$AddPostEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ImageSource imageSource) addNewPostFrom,
-    required TResult Function(String filePath) takePhoto,
+    required TResult Function(String filePath) selectFile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ImageSource imageSource)? addNewPostFrom,
-    TResult? Function(String filePath)? takePhoto,
+    TResult? Function(String filePath)? selectFile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageSource imageSource)? addNewPostFrom,
-    TResult Function(String filePath)? takePhoto,
+    TResult Function(String filePath)? selectFile,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnAddNewPostFromEvent value) addNewPostFrom,
-    required TResult Function(OnTakePhotoEvent value) takePhoto,
+    required TResult Function(OnFileSelectedEvent value) selectFile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnAddNewPostFromEvent value)? addNewPostFrom,
-    TResult? Function(OnTakePhotoEvent value)? takePhoto,
+    TResult? Function(OnFileSelectedEvent value)? selectFile,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnAddNewPostFromEvent value)? addNewPostFrom,
-    TResult Function(OnTakePhotoEvent value)? takePhoto,
+    TResult Function(OnFileSelectedEvent value)? selectFile,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,7 +141,7 @@ class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ImageSource imageSource) addNewPostFrom,
-    required TResult Function(String filePath) takePhoto,
+    required TResult Function(String filePath) selectFile,
   }) {
     return addNewPostFrom(imageSource);
   }
@@ -150,7 +150,7 @@ class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ImageSource imageSource)? addNewPostFrom,
-    TResult? Function(String filePath)? takePhoto,
+    TResult? Function(String filePath)? selectFile,
   }) {
     return addNewPostFrom?.call(imageSource);
   }
@@ -159,7 +159,7 @@ class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageSource imageSource)? addNewPostFrom,
-    TResult Function(String filePath)? takePhoto,
+    TResult Function(String filePath)? selectFile,
     required TResult orElse(),
   }) {
     if (addNewPostFrom != null) {
@@ -172,7 +172,7 @@ class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnAddNewPostFromEvent value) addNewPostFrom,
-    required TResult Function(OnTakePhotoEvent value) takePhoto,
+    required TResult Function(OnFileSelectedEvent value) selectFile,
   }) {
     return addNewPostFrom(this);
   }
@@ -181,7 +181,7 @@ class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnAddNewPostFromEvent value)? addNewPostFrom,
-    TResult? Function(OnTakePhotoEvent value)? takePhoto,
+    TResult? Function(OnFileSelectedEvent value)? selectFile,
   }) {
     return addNewPostFrom?.call(this);
   }
@@ -190,7 +190,7 @@ class _$OnAddNewPostFromEvent implements OnAddNewPostFromEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnAddNewPostFromEvent value)? addNewPostFrom,
-    TResult Function(OnTakePhotoEvent value)? takePhoto,
+    TResult Function(OnFileSelectedEvent value)? selectFile,
     required TResult orElse(),
   }) {
     if (addNewPostFrom != null) {
@@ -211,20 +211,20 @@ abstract class OnAddNewPostFromEvent implements AddPostEvent {
 }
 
 /// @nodoc
-abstract class _$$OnTakePhotoEventCopyWith<$Res> {
-  factory _$$OnTakePhotoEventCopyWith(
-          _$OnTakePhotoEvent value, $Res Function(_$OnTakePhotoEvent) then) =
-      __$$OnTakePhotoEventCopyWithImpl<$Res>;
+abstract class _$$OnFileSelectedEventCopyWith<$Res> {
+  factory _$$OnFileSelectedEventCopyWith(_$OnFileSelectedEvent value,
+          $Res Function(_$OnFileSelectedEvent) then) =
+      __$$OnFileSelectedEventCopyWithImpl<$Res>;
   @useResult
   $Res call({String filePath});
 }
 
 /// @nodoc
-class __$$OnTakePhotoEventCopyWithImpl<$Res>
-    extends _$AddPostEventCopyWithImpl<$Res, _$OnTakePhotoEvent>
-    implements _$$OnTakePhotoEventCopyWith<$Res> {
-  __$$OnTakePhotoEventCopyWithImpl(
-      _$OnTakePhotoEvent _value, $Res Function(_$OnTakePhotoEvent) _then)
+class __$$OnFileSelectedEventCopyWithImpl<$Res>
+    extends _$AddPostEventCopyWithImpl<$Res, _$OnFileSelectedEvent>
+    implements _$$OnFileSelectedEventCopyWith<$Res> {
+  __$$OnFileSelectedEventCopyWithImpl(
+      _$OnFileSelectedEvent _value, $Res Function(_$OnFileSelectedEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -232,7 +232,7 @@ class __$$OnTakePhotoEventCopyWithImpl<$Res>
   $Res call({
     Object? filePath = null,
   }) {
-    return _then(_$OnTakePhotoEvent(
+    return _then(_$OnFileSelectedEvent(
       null == filePath
           ? _value.filePath
           : filePath // ignore: cast_nullable_to_non_nullable
@@ -243,22 +243,22 @@ class __$$OnTakePhotoEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnTakePhotoEvent implements OnTakePhotoEvent {
-  const _$OnTakePhotoEvent(this.filePath);
+class _$OnFileSelectedEvent implements OnFileSelectedEvent {
+  const _$OnFileSelectedEvent(this.filePath);
 
   @override
   final String filePath;
 
   @override
   String toString() {
-    return 'AddPostEvent.takePhoto(filePath: $filePath)';
+    return 'AddPostEvent.selectFile(filePath: $filePath)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OnTakePhotoEvent &&
+            other is _$OnFileSelectedEvent &&
             (identical(other.filePath, filePath) ||
                 other.filePath == filePath));
   }
@@ -269,36 +269,37 @@ class _$OnTakePhotoEvent implements OnTakePhotoEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OnTakePhotoEventCopyWith<_$OnTakePhotoEvent> get copyWith =>
-      __$$OnTakePhotoEventCopyWithImpl<_$OnTakePhotoEvent>(this, _$identity);
+  _$$OnFileSelectedEventCopyWith<_$OnFileSelectedEvent> get copyWith =>
+      __$$OnFileSelectedEventCopyWithImpl<_$OnFileSelectedEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ImageSource imageSource) addNewPostFrom,
-    required TResult Function(String filePath) takePhoto,
+    required TResult Function(String filePath) selectFile,
   }) {
-    return takePhoto(filePath);
+    return selectFile(filePath);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ImageSource imageSource)? addNewPostFrom,
-    TResult? Function(String filePath)? takePhoto,
+    TResult? Function(String filePath)? selectFile,
   }) {
-    return takePhoto?.call(filePath);
+    return selectFile?.call(filePath);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageSource imageSource)? addNewPostFrom,
-    TResult Function(String filePath)? takePhoto,
+    TResult Function(String filePath)? selectFile,
     required TResult orElse(),
   }) {
-    if (takePhoto != null) {
-      return takePhoto(filePath);
+    if (selectFile != null) {
+      return selectFile(filePath);
     }
     return orElse();
   }
@@ -307,40 +308,41 @@ class _$OnTakePhotoEvent implements OnTakePhotoEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnAddNewPostFromEvent value) addNewPostFrom,
-    required TResult Function(OnTakePhotoEvent value) takePhoto,
+    required TResult Function(OnFileSelectedEvent value) selectFile,
   }) {
-    return takePhoto(this);
+    return selectFile(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnAddNewPostFromEvent value)? addNewPostFrom,
-    TResult? Function(OnTakePhotoEvent value)? takePhoto,
+    TResult? Function(OnFileSelectedEvent value)? selectFile,
   }) {
-    return takePhoto?.call(this);
+    return selectFile?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnAddNewPostFromEvent value)? addNewPostFrom,
-    TResult Function(OnTakePhotoEvent value)? takePhoto,
+    TResult Function(OnFileSelectedEvent value)? selectFile,
     required TResult orElse(),
   }) {
-    if (takePhoto != null) {
-      return takePhoto(this);
+    if (selectFile != null) {
+      return selectFile(this);
     }
     return orElse();
   }
 }
 
-abstract class OnTakePhotoEvent implements AddPostEvent {
-  const factory OnTakePhotoEvent(final String filePath) = _$OnTakePhotoEvent;
+abstract class OnFileSelectedEvent implements AddPostEvent {
+  const factory OnFileSelectedEvent(final String filePath) =
+      _$OnFileSelectedEvent;
 
   String get filePath;
   @JsonKey(ignore: true)
-  _$$OnTakePhotoEventCopyWith<_$OnTakePhotoEvent> get copyWith =>
+  _$$OnFileSelectedEventCopyWith<_$OnFileSelectedEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

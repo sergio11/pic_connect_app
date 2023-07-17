@@ -22,7 +22,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   FutureOr<void> onPickUpImageCalled(
       OnPickUpImageEvent event, Emitter<SignUpState> emit) async {
     try {
-      Uint8List im = await pickImage(event.imageSource);
+      Uint8List im = await pickImageAsBytes(event.imageSource);
       emit(state.copyWith(image: im));
     } catch (e) {
       emit(state.copyWith(

@@ -13,14 +13,14 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
 
   AddPostBloc(): super(const AddPostState()) {
     on<OnAddNewPostFromEvent>(onAddNewPostFromEventHandler);
-    on<OnTakePhotoEvent>(onTakePhotoEventHandler);
+    on<OnFileSelectedEvent>(onOnFileSelectedEventHandler);
   }
 
   FutureOr<void> onAddNewPostFromEventHandler(OnAddNewPostFromEvent event, Emitter<AddPostState> emit) async {
       emit(state.copyWith(imageSource: event.imageSource));
   }
 
-  FutureOr<void> onTakePhotoEventHandler(OnTakePhotoEvent event, Emitter<AddPostState> emit) async {
+  FutureOr<void> onOnFileSelectedEventHandler(OnFileSelectedEvent event, Emitter<AddPostState> emit) async {
     emit(state.copyWith(postFilePath: event.filePath));
   }
 
