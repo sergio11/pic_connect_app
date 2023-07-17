@@ -69,7 +69,7 @@ class AppRouter {
             BlocProvider(
               create: (context) => serviceLocator<SignInBloc>(),
               child: LoginScreen(onSignUpPressed: () {
-                context.go(AppRoutesEnum.signup.screenPath);
+                context.push(AppRoutesEnum.signup.screenPath);
               }),
             ),
       ),
@@ -80,7 +80,7 @@ class AppRouter {
             BlocProvider(
               create: (context) => serviceLocator<SignUpBloc>(),
               child: SignupScreen(onSignInPressed: () {
-                context.go(AppRoutesEnum.login.screenPath);
+                context.pop();
               }),
             ),
       ),
@@ -90,7 +90,10 @@ class AppRouter {
           builder: (BuildContext context, GoRouterState state) =>
               BlocProvider(
                 create: (context) => serviceLocator<AddPostBloc>()
-                  ..add(OnAddNewPostFromEvent(state.extra as ImageSource)),
+                  ..add(OnAddNewPostEvent(
+                      state.extra as ImageSource,
+                      context.read<AppBloc>().state.authUserUid!
+                  )),
                 child: AddPostScreen(onBackPressed: () {
                   context.pop();
                 },),

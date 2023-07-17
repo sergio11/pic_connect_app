@@ -15,37 +15,54 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {
-          if(state.isLogout) {
-            context.read<AppBloc>()
-                .add(const OnVerifySession());
-          }
-        },
-        builder: (context, state) {
-          return state.isLoading ? _buildProgressIndicator()
-              : _buildScreenContent(context, state);
-        });
+    return BlocConsumer<ProfileBloc, ProfileState>(listener: (context, state) {
+      if (state.isLogout) {
+        context.read<AppBloc>().add(const OnVerifySession());
+      }
+    }, builder: (context, state) {
+      return state.isLoading
+          ? _buildProgressIndicator()
+          : _buildScreenContent(context, state);
+    });
   }
 
   Widget _buildScreenContent(BuildContext context, ProfileState state) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: appBarBackgroundColor,
-          title: Text(state.username != null ? state.username! : "Empty"),
+          title: Text(
+              state.username != null ? state.username! : "Empty",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: accentColor)
+          ),
           centerTitle: false,
         ),
         body: ListView(children: [
           Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               child: Column(children: [
-                _buildProfileHeader(state),
-                _buildUserNameRow(state),
-                _buildUserBioRow(state),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: primaryColor,
+                    boxShadow: [
+                      BoxShadow(color: secondaryColor.withOpacity(0.2), spreadRadius: 2),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      _buildProfileHeader(state),
+                      _buildUserNameRow(state),
+                      _buildUserBioRow(state)
+                    ],
+                  ),
+                ),
                 const Divider(),
                 _buildPostsGrid(state)
-              ])
-          )
+              ]))
         ]));
   }
 
@@ -58,10 +75,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileHeader(ProfileState state) {
     return Row(
       children: [
-        CircleAvatar(
-          backgroundColor: Colors.grey,
-          backgroundImage: NetworkImage(state.photoUrl != null ? state.photoUrl! : 'https://i.stack.imgur.com/l60Hf.png'),
-          radius: 40,
+        Container(
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(color: secondaryColor.withOpacity(0.5), shape: BoxShape.circle),
+          child: CircleAvatar(
+            backgroundColor: accentColor,
+            backgroundImage: NetworkImage(state.photoUrl != null
+                ? state.photoUrl!
+                : 'https://i.stack.imgur.com/l60Hf.png'),
+            radius: 40,
+          ),
         ),
         Expanded(
           flex: 1,
@@ -82,8 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   state.isAuthUser
                       ? _buildSignOutButton()
                       : state.isFollowing
-                        ? _buildUnFollowButton(state)
-                        : _buildFollowButton(state)
+                          ? _buildUnFollowButton(state)
+                          : _buildFollowButton(state)
                 ],
               ),
             ],
@@ -96,9 +119,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildSignOutButton() {
     return FollowButton(
       text: 'Sign Out',
-      backgroundColor: mobileBackgroundColor,
-      textColor: primaryColor,
-      borderColor: Colors.grey,
+      backgroundColor: secondaryColor,
+      textColor: accentColor,
+      borderColor: secondaryColor,
       onPressed: () async {
         context.read<ProfileBloc>().add(const OnSignOutEvent());
       },
@@ -160,25 +183,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GridView.builder(
       shrinkWrap: true,
       itemCount: state.postList.length,
-      gridDelegate:
-      const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 5,
         mainAxisSpacing: 1.5,
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
-        return state.isPostGridLoading ?
-            _buildProgressIndicator() : SizedBox(
-          child: Image(
-            image: NetworkImage(state.postList[index].postUrl),
-            fit: BoxFit.cover,
-          ),
-        );
+        return state.isPostGridLoading
+            ? _buildProgressIndicator()
+            : SizedBox(
+                child: Image(
+                  image: NetworkImage(state.postList[index].postUrl),
+                  fit: BoxFit.cover,
+                ),
+              );
       },
     );
   }
-
 
   Column _buildStatColumn(int num, String label) {
     return Column(

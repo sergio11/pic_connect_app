@@ -118,6 +118,6 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator(), findPostsByUserUseCase: serviceLocator(), followUserUseCase: serviceLocator(), unFollowUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc(findUsersByNameUseCase: serviceLocator(), findPostsOrderByDatePublishedUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => AddPostBloc());
+  serviceLocator.registerFactory(() => AddPostBloc(getUserDetailsUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FavoritesBloc());
 }
