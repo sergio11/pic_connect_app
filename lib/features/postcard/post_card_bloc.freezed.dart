@@ -17,20 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PostCardEvent {
   PostBO get post => throw _privateConstructorUsedError;
-  String get authUserUid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(PostBO post) showPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(PostBO post)? showPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(PostBO post)? showPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +61,7 @@ abstract class $PostCardEventCopyWith<$Res> {
           PostCardEvent value, $Res Function(PostCardEvent) then) =
       _$PostCardEventCopyWithImpl<$Res, PostCardEvent>;
   @useResult
-  $Res call({PostBO post, String authUserUid});
+  $Res call({PostBO post});
 }
 
 /// @nodoc
@@ -79,17 +78,12 @@ class _$PostCardEventCopyWithImpl<$Res, $Val extends PostCardEvent>
   @override
   $Res call({
     Object? post = null,
-    Object? authUserUid = null,
   }) {
     return _then(_value.copyWith(
       post: null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as PostBO,
-      authUserUid: null == authUserUid
-          ? _value.authUserUid
-          : authUserUid // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -102,7 +96,7 @@ abstract class _$$OnShowPostEventCopyWith<$Res>
       __$$OnShowPostEventCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PostBO post, String authUserUid});
+  $Res call({PostBO post});
 }
 
 /// @nodoc
@@ -117,17 +111,12 @@ class __$$OnShowPostEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? post = null,
-    Object? authUserUid = null,
   }) {
     return _then(_$OnShowPostEvent(
       null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as PostBO,
-      null == authUserUid
-          ? _value.authUserUid
-          : authUserUid // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -135,16 +124,14 @@ class __$$OnShowPostEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OnShowPostEvent implements OnShowPostEvent {
-  const _$OnShowPostEvent(this.post, this.authUserUid);
+  const _$OnShowPostEvent(this.post);
 
   @override
   final PostBO post;
-  @override
-  final String authUserUid;
 
   @override
   String toString() {
-    return 'PostCardEvent.showPost(post: $post, authUserUid: $authUserUid)';
+    return 'PostCardEvent.showPost(post: $post)';
   }
 
   @override
@@ -152,13 +139,11 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnShowPostEvent &&
-            (identical(other.post, post) || other.post == post) &&
-            (identical(other.authUserUid, authUserUid) ||
-                other.authUserUid == authUserUid));
+            (identical(other.post, post) || other.post == post));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post, authUserUid);
+  int get hashCode => Object.hash(runtimeType, post);
 
   @JsonKey(ignore: true)
   @override
@@ -169,27 +154,27 @@ class _$OnShowPostEvent implements OnShowPostEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(PostBO post) showPost,
   }) {
-    return showPost(post, authUserUid);
+    return showPost(post);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(PostBO post)? showPost,
   }) {
-    return showPost?.call(post, authUserUid);
+    return showPost?.call(post);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(PostBO post)? showPost,
     required TResult orElse(),
   }) {
     if (showPost != null) {
-      return showPost(post, authUserUid);
+      return showPost(post);
     }
     return orElse();
   }
@@ -224,13 +209,10 @@ class _$OnShowPostEvent implements OnShowPostEvent {
 }
 
 abstract class OnShowPostEvent implements PostCardEvent {
-  const factory OnShowPostEvent(final PostBO post, final String authUserUid) =
-      _$OnShowPostEvent;
+  const factory OnShowPostEvent(final PostBO post) = _$OnShowPostEvent;
 
   @override
   PostBO get post;
-  @override
-  String get authUserUid;
   @override
   @JsonKey(ignore: true)
   _$$OnShowPostEventCopyWith<_$OnShowPostEvent> get copyWith =>

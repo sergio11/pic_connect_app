@@ -21,18 +21,21 @@ mixin _$AddPostEvent {
     required TResult Function(ImageSource imageSource, String userUid)
         addNewPost,
     required TResult Function(String filePath) selectFile,
+    required TResult Function(String description) uploadPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
+    TResult? Function(String description)? uploadPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
+    TResult Function(String description)? uploadPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -40,18 +43,21 @@ mixin _$AddPostEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
+    required TResult Function(OnUploadPostEvent value) uploadPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
+    TResult? Function(OnUploadPostEvent value)? uploadPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
+    TResult Function(OnUploadPostEvent value)? uploadPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -151,6 +157,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
     required TResult Function(ImageSource imageSource, String userUid)
         addNewPost,
     required TResult Function(String filePath) selectFile,
+    required TResult Function(String description) uploadPost,
   }) {
     return addNewPost(imageSource, userUid);
   }
@@ -160,6 +167,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
+    TResult? Function(String description)? uploadPost,
   }) {
     return addNewPost?.call(imageSource, userUid);
   }
@@ -169,6 +177,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
+    TResult Function(String description)? uploadPost,
     required TResult orElse(),
   }) {
     if (addNewPost != null) {
@@ -182,6 +191,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
+    required TResult Function(OnUploadPostEvent value) uploadPost,
   }) {
     return addNewPost(this);
   }
@@ -191,6 +201,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
+    TResult? Function(OnUploadPostEvent value)? uploadPost,
   }) {
     return addNewPost?.call(this);
   }
@@ -200,6 +211,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
+    TResult Function(OnUploadPostEvent value)? uploadPost,
     required TResult orElse(),
   }) {
     if (addNewPost != null) {
@@ -290,6 +302,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
     required TResult Function(ImageSource imageSource, String userUid)
         addNewPost,
     required TResult Function(String filePath) selectFile,
+    required TResult Function(String description) uploadPost,
   }) {
     return selectFile(filePath);
   }
@@ -299,6 +312,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
+    TResult? Function(String description)? uploadPost,
   }) {
     return selectFile?.call(filePath);
   }
@@ -308,6 +322,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
+    TResult Function(String description)? uploadPost,
     required TResult orElse(),
   }) {
     if (selectFile != null) {
@@ -321,6 +336,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
+    required TResult Function(OnUploadPostEvent value) uploadPost,
   }) {
     return selectFile(this);
   }
@@ -330,6 +346,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
+    TResult? Function(OnUploadPostEvent value)? uploadPost,
   }) {
     return selectFile?.call(this);
   }
@@ -339,6 +356,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
+    TResult Function(OnUploadPostEvent value)? uploadPost,
     required TResult orElse(),
   }) {
     if (selectFile != null) {
@@ -359,12 +377,155 @@ abstract class OnFileSelectedEvent implements AddPostEvent {
 }
 
 /// @nodoc
+abstract class _$$OnUploadPostEventCopyWith<$Res> {
+  factory _$$OnUploadPostEventCopyWith(
+          _$OnUploadPostEvent value, $Res Function(_$OnUploadPostEvent) then) =
+      __$$OnUploadPostEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String description});
+}
+
+/// @nodoc
+class __$$OnUploadPostEventCopyWithImpl<$Res>
+    extends _$AddPostEventCopyWithImpl<$Res, _$OnUploadPostEvent>
+    implements _$$OnUploadPostEventCopyWith<$Res> {
+  __$$OnUploadPostEventCopyWithImpl(
+      _$OnUploadPostEvent _value, $Res Function(_$OnUploadPostEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? description = null,
+  }) {
+    return _then(_$OnUploadPostEvent(
+      null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUploadPostEvent implements OnUploadPostEvent {
+  const _$OnUploadPostEvent(this.description);
+
+  @override
+  final String description;
+
+  @override
+  String toString() {
+    return 'AddPostEvent.uploadPost(description: $description)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUploadPostEvent &&
+            (identical(other.description, description) ||
+                other.description == description));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, description);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUploadPostEventCopyWith<_$OnUploadPostEvent> get copyWith =>
+      __$$OnUploadPostEventCopyWithImpl<_$OnUploadPostEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ImageSource imageSource, String userUid)
+        addNewPost,
+    required TResult Function(String filePath) selectFile,
+    required TResult Function(String description) uploadPost,
+  }) {
+    return uploadPost(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
+    TResult? Function(String filePath)? selectFile,
+    TResult? Function(String description)? uploadPost,
+  }) {
+    return uploadPost?.call(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ImageSource imageSource, String userUid)? addNewPost,
+    TResult Function(String filePath)? selectFile,
+    TResult Function(String description)? uploadPost,
+    required TResult orElse(),
+  }) {
+    if (uploadPost != null) {
+      return uploadPost(description);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnAddNewPostEvent value) addNewPost,
+    required TResult Function(OnFileSelectedEvent value) selectFile,
+    required TResult Function(OnUploadPostEvent value) uploadPost,
+  }) {
+    return uploadPost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnAddNewPostEvent value)? addNewPost,
+    TResult? Function(OnFileSelectedEvent value)? selectFile,
+    TResult? Function(OnUploadPostEvent value)? uploadPost,
+  }) {
+    return uploadPost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnAddNewPostEvent value)? addNewPost,
+    TResult Function(OnFileSelectedEvent value)? selectFile,
+    TResult Function(OnUploadPostEvent value)? uploadPost,
+    required TResult orElse(),
+  }) {
+    if (uploadPost != null) {
+      return uploadPost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUploadPostEvent implements AddPostEvent {
+  const factory OnUploadPostEvent(final String description) =
+      _$OnUploadPostEvent;
+
+  String get description;
+  @JsonKey(ignore: true)
+  _$$OnUploadPostEventCopyWith<_$OnUploadPostEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$AddPostState {
-  ImageSource get imageSource => throw _privateConstructorUsedError;
+  ImageSource? get imageSource => throw _privateConstructorUsedError;
   String? get authorPhotoUrl => throw _privateConstructorUsedError;
   String? get postFilePath => throw _privateConstructorUsedError;
   bool get isPostUploading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isPostUploadedSuccessfully => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -379,11 +540,12 @@ abstract class $AddPostStateCopyWith<$Res> {
       _$AddPostStateCopyWithImpl<$Res, AddPostState>;
   @useResult
   $Res call(
-      {ImageSource imageSource,
+      {ImageSource? imageSource,
       String? authorPhotoUrl,
       String? postFilePath,
       bool isPostUploading,
       bool isLoading,
+      bool isPostUploadedSuccessfully,
       String? errorMessage});
 }
 
@@ -400,18 +562,19 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imageSource = null,
+    Object? imageSource = freezed,
     Object? authorPhotoUrl = freezed,
     Object? postFilePath = freezed,
     Object? isPostUploading = null,
     Object? isLoading = null,
+    Object? isPostUploadedSuccessfully = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      imageSource: null == imageSource
+      imageSource: freezed == imageSource
           ? _value.imageSource
           : imageSource // ignore: cast_nullable_to_non_nullable
-              as ImageSource,
+              as ImageSource?,
       authorPhotoUrl: freezed == authorPhotoUrl
           ? _value.authorPhotoUrl
           : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
@@ -427,6 +590,10 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPostUploadedSuccessfully: null == isPostUploadedSuccessfully
+          ? _value.isPostUploadedSuccessfully
+          : isPostUploadedSuccessfully // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -445,11 +612,12 @@ abstract class _$$_AddPostStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ImageSource imageSource,
+      {ImageSource? imageSource,
       String? authorPhotoUrl,
       String? postFilePath,
       bool isPostUploading,
       bool isLoading,
+      bool isPostUploadedSuccessfully,
       String? errorMessage});
 }
 
@@ -464,18 +632,19 @@ class __$$_AddPostStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imageSource = null,
+    Object? imageSource = freezed,
     Object? authorPhotoUrl = freezed,
     Object? postFilePath = freezed,
     Object? isPostUploading = null,
     Object? isLoading = null,
+    Object? isPostUploadedSuccessfully = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_AddPostState(
-      imageSource: null == imageSource
+      imageSource: freezed == imageSource
           ? _value.imageSource
           : imageSource // ignore: cast_nullable_to_non_nullable
-              as ImageSource,
+              as ImageSource?,
       authorPhotoUrl: freezed == authorPhotoUrl
           ? _value.authorPhotoUrl
           : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
@@ -492,6 +661,10 @@ class __$$_AddPostStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPostUploadedSuccessfully: null == isPostUploadedSuccessfully
+          ? _value.isPostUploadedSuccessfully
+          : isPostUploadedSuccessfully // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -504,16 +677,17 @@ class __$$_AddPostStateCopyWithImpl<$Res>
 
 class _$_AddPostState implements _AddPostState {
   const _$_AddPostState(
-      {this.imageSource = ImageSource.gallery,
+      {this.imageSource = null,
       this.authorPhotoUrl,
       this.postFilePath,
       this.isPostUploading = false,
       this.isLoading = false,
+      this.isPostUploadedSuccessfully = false,
       this.errorMessage});
 
   @override
   @JsonKey()
-  final ImageSource imageSource;
+  final ImageSource? imageSource;
   @override
   final String? authorPhotoUrl;
   @override
@@ -525,11 +699,14 @@ class _$_AddPostState implements _AddPostState {
   @JsonKey()
   final bool isLoading;
   @override
+  @JsonKey()
+  final bool isPostUploadedSuccessfully;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, postFilePath: $postFilePath, isPostUploading: $isPostUploading, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, postFilePath: $postFilePath, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
   }
 
   @override
@@ -547,13 +724,24 @@ class _$_AddPostState implements _AddPostState {
                 other.isPostUploading == isPostUploading) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isPostUploadedSuccessfully,
+                    isPostUploadedSuccessfully) ||
+                other.isPostUploadedSuccessfully ==
+                    isPostUploadedSuccessfully) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, imageSource, authorPhotoUrl,
-      postFilePath, isPostUploading, isLoading, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      imageSource,
+      authorPhotoUrl,
+      postFilePath,
+      isPostUploading,
+      isLoading,
+      isPostUploadedSuccessfully,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -564,15 +752,16 @@ class _$_AddPostState implements _AddPostState {
 
 abstract class _AddPostState implements AddPostState {
   const factory _AddPostState(
-      {final ImageSource imageSource,
+      {final ImageSource? imageSource,
       final String? authorPhotoUrl,
       final String? postFilePath,
       final bool isPostUploading,
       final bool isLoading,
+      final bool isPostUploadedSuccessfully,
       final String? errorMessage}) = _$_AddPostState;
 
   @override
-  ImageSource get imageSource;
+  ImageSource? get imageSource;
   @override
   String? get authorPhotoUrl;
   @override
@@ -581,6 +770,8 @@ abstract class _AddPostState implements AddPostState {
   bool get isPostUploading;
   @override
   bool get isLoading;
+  @override
+  bool get isPostUploadedSuccessfully;
   @override
   String? get errorMessage;
   @override

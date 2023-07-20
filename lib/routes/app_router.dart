@@ -96,6 +96,8 @@ class AppRouter {
                   )),
                 child: AddPostScreen(onBackPressed: () {
                   context.pop();
+                }, onPostUploaded: () {
+                  context.push(AppRoutesEnum.home.screenPath);
                 },),
               )
       ),
@@ -116,7 +118,8 @@ class AppRouter {
                 name: AppRoutesEnum.home.screenName,
                 builder: (BuildContext context, GoRouterState state) =>
                   BlocProvider(
-                    create: (context) => serviceLocator<FeedBloc>(),
+                    create: (context) => serviceLocator<FeedBloc>()
+                      ..add(const OnLoadHomePostsEvent()),
                     child: const FeedScreen(),
                   )
               )

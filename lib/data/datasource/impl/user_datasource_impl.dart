@@ -67,8 +67,16 @@ class UserDatasourceImpl extends UserDatasource {
   }
 
   @override
-  Future<List<UserDTO>> findAllThatUserIsFollowingBy(String uid) {
-    // TODO: implement findAllThatUserIsFollowingBy
-    throw UnimplementedError();
+  Future<List<UserDTO>> findAllThatUserIsFollowingBy(String uid) async {
+    final userSnap = await firestore.collection('users').doc(uid).get();
+    final userDTO = userDtoMapper(userSnap);
+    final followingSnap = await firestore
+        .collection('users')
+        .where('followers', arrayContains: uid)
+        .get();
+    final followingDTOList = followingSnap.docs
+        .map((doc) => userDtoMapper(doc))
+        .toList();
+    return followingDTOList..add(userDTO);
   }
 }

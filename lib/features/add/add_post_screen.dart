@@ -10,10 +10,12 @@ import 'package:pic_connect/utils/utils.dart';
 
 class AddPostScreen extends StatefulWidget {
 
+  final VoidCallback onPostUploaded;
   final VoidCallback onBackPressed;
 
   const AddPostScreen({
     Key? key,
+    required this.onPostUploaded,
     required this.onBackPressed
   }) : super(key: key);
 
@@ -31,12 +33,18 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
+  void _onUploadPost() {
+    context.read<AddPostBloc>().add(OnUploadPostEvent(_descriptionController.text));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddPostBloc, AddPostState>(listener: (context, state) {
       if (state.imageSource == ImageSource.gallery &&
           state.postFilePath == null) {
         _onPickImageFromGallery();
+      } else if(state.isPostUploadedSuccessfully) {
+        widget.onPostUploaded();
       }
     }, builder: (context, state) {
       return _buildScreenContent(state);
@@ -64,7 +72,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         centerTitle: false,
         actions: <Widget>[
           TextButton(
-            onPressed: () => {},
+            onPressed: () => _onUploadPost(),
             child: Text(
               "Post",
               style: Theme.of(context)

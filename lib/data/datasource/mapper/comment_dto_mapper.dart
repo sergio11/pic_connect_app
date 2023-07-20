@@ -11,7 +11,7 @@ class CommentDtoMapper extends Mapper<DocumentSnapshot, CommentDTO> {
         postId: snapshot['postId'],
         text: snapshot['text'],
         authorUid: snapshot['authorUid'],
-        datePublished: snapshot['datePublished']
+        datePublished: (snapshot['datePublished'] as Timestamp).toDate()
     );
   }
 }

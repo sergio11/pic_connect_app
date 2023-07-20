@@ -73,7 +73,8 @@ class _FeedScreenState extends State<FeedScreen> {
           vertical: width > webScreenSize ? 15 : 0,
         ),
         child: BlocProvider(
-            create: (context) => serviceLocator<PostCardBloc>(),
+            create: (context) => serviceLocator<PostCardBloc>()
+              ..add(OnShowPostEvent(state.posts[index])),
             child: const PostCard()
         ),
       ),
