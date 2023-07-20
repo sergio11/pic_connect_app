@@ -28,42 +28,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildScreenContent(BuildContext context, ProfileState state) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: appBarBackgroundColor,
-          title: Text(
-              state.username ?? "Empty",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: accentColor)
-          ),
-          centerTitle: false,
-        ),
-        body: ListView(children: [
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-              child: Column(children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: primaryColor,
-                    boxShadow: [
-                      BoxShadow(color: secondaryColor.withOpacity(0.2), spreadRadius: 2),
-                    ],
+      appBar: AppBar(
+        backgroundColor: appBarBackgroundColor,
+        title: Text(state.username ?? "Empty",
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: accentColor)),
+        centerTitle: false,
+      ),
+      body: RefreshIndicator(
+          onRefresh: () {
+            return Future.delayed(
+              const Duration(seconds: 1),
+              () {
+                //context.read<ProfileBloc>().add(const OnLoadProfileEvent());
+              },
+            );
+          },
+          child: ListView(children: [
+            Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: secondaryColor.withOpacity(0.2),
+                              spreadRadius: 2),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          _buildProfileHeader(state),
+                          _buildUserNameRow(state),
+                          _buildUserBioRow(state)
+                        ],
+                      ),
+                    ),
                   ),
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      _buildProfileHeader(state),
-                      _buildUserNameRow(state),
-                      _buildUserBioRow(state)
-                    ],
-                  ),
-                ),
-                const Divider(),
-                _buildPostsGrid(state)
-              ]))
-        ]));
+                  const Divider(height: 20,),
+                  _buildPostsGrid(state)
+                ])
+          ])),
+    );
   }
 
   Widget _buildProgressIndicator() {
@@ -77,10 +92,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Container(
           padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(color: secondaryColor.withOpacity(0.5), shape: BoxShape.circle),
+          decoration: BoxDecoration(
+              color: secondaryColor.withOpacity(0.5), shape: BoxShape.circle),
           child: CircleAvatar(
             backgroundColor: accentColor,
-            backgroundImage: NetworkImage(state.photoUrl ?? 'https://i.stack.imgur.com/l60Hf.png'),
+            backgroundImage: NetworkImage(
+                state.photoUrl ?? 'https://i.stack.imgur.com/l60Hf.png'),
             radius: 40,
           ),
         ),
@@ -178,25 +195,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildPostsGrid(ProfileState state) {
-    return GridView.builder(
-      shrinkWrap: true,
-      itemCount: state.postList.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 1.5,
-        childAspectRatio: 1,
+    return Container(
+      height: 500,
+      color: primaryColor,
+      child: GridView.builder(
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        itemCount: state.postList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 1,
+          mainAxisSpacing: 1.5,
+          childAspectRatio: 1,
+        ),
+        itemBuilder: (context, index) {
+          return state.isPostGridLoading
+              ? _buildProgressIndicator()
+              : Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: primaryColor),
+                  child: SizedBox(
+                    child: Image(
+                      image: NetworkImage(state.postList[index].postUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+        },
       ),
-      itemBuilder: (context, index) {
-        return state.isPostGridLoading
-            ? _buildProgressIndicator()
-            : SizedBox(
-                child: Image(
-                  image: NetworkImage(state.postList[index].postUrl),
-                  fit: BoxFit.cover,
-                ),
-              );
-      },
     );
   }
 

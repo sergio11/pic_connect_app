@@ -95,9 +95,9 @@ class AppRouter {
                       context.read<AppBloc>().state.authUserUid!
                   )),
                 child: AddPostScreen(onBackPressed: () {
-                  context.pop();
+                  context.go(AppRoutesEnum.home.screenPath);
                 }, onPostUploaded: () {
-                  context.push(AppRoutesEnum.home.screenPath);
+                  context.go(AppRoutesEnum.home.screenPath);
                 },),
               )
       ),

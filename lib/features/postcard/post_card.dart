@@ -68,10 +68,8 @@ class _PostCardState extends State<PostCard> {
                 children: <Widget>[
                   Text(
                     state.postBO?.username ?? "Empty",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: accentColor, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -107,7 +105,10 @@ class _PostCardState extends State<PostCard> {
                       },
                     );
                   },
-                  icon: const Icon(Icons.more_vert, color: accentColor,),
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: accentColor,
+                  ),
                 )
               : Container(),
         ],
@@ -121,12 +122,16 @@ class _PostCardState extends State<PostCard> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: double.infinity,
-            child: Image.network(
-              state.postBO?.postUrl ?? 'https://i.stack.imgur.com/l60Hf.png',
-              fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15), // Image border
+            child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.35,
+                width: double.infinity,
+              child: Image.network(
+                state.postBO?.postUrl ??
+                    'https://i.stack.imgur.com/l60Hf.png',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           AnimatedOpacity(
@@ -222,10 +227,8 @@ class _PostCardState extends State<PostCard> {
                 children: [
                   TextSpan(
                     text: state.postBO?.username ?? "",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: accentColor, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
                       text: ' ${state.postBO?.description ?? ""}',

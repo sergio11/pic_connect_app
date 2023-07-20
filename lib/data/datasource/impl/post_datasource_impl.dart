@@ -117,7 +117,7 @@ class PostDatasourceImpl extends PostDatasource {
     final postByUser = await firestore
         .collection('posts')
         .where('authorUid', whereIn: userUidList)
-        .orderBy('datePublished')
+        .orderBy('datePublished', descending: true)
         .get();
     return postByUser.docs
         .map((doc) => postMapper(doc))

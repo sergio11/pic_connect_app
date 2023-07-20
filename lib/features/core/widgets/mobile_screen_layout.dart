@@ -53,7 +53,7 @@ class MobileScreenLayout extends StatelessWidget {
             icons: icons,
             onIconTapped: (int tappedIndex) {
               final imageSource = icons[tappedIndex] == Icons.camera ? ImageSource.camera : ImageSource.gallery;
-              context.push(AppRoutesEnum.add.screenPath, extra: imageSource);
+              context.go(AppRoutesEnum.add.screenPath, extra: imageSource);
             },
           ),
         );

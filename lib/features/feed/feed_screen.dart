@@ -16,7 +16,6 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FeedBloc, FeedState>(
@@ -29,10 +28,12 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget _buildScreenContent(FeedState state) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
+        backgroundColor:
+            width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
         appBar: width > webScreenSize ? null : _buildAppBar(),
-        body: state.isLoading ? _buildProgressIndicator() : _buildPostsList(state)
-    );
+        body: state.isLoading
+            ? _buildProgressIndicator()
+            : _buildPostsList(state));
   }
 
   Widget _buildProgressIndicator() {
@@ -63,18 +64,29 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget _buildPostsList(FeedState state) {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      itemCount: state.posts.length,
-      itemBuilder: (ctx, index) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5,),
-        child: BlocProvider(
-            create: (context) => serviceLocator<PostCardBloc>()
-              ..add(OnShowPostEvent(state.posts[index])),
-            child: const PostCard()
+    return RefreshIndicator(
+      onRefresh: () {
+        return Future.delayed(
+          const Duration(seconds: 1),
+          () {
+            context.read<FeedBloc>().add(const OnLoadHomePostsEvent());
+          },
+        );
+      },
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: state.posts.length,
+        itemBuilder: (ctx, index) => Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          child: BlocProvider(
+              create: (context) => serviceLocator<PostCardBloc>()
+                ..add(OnShowPostEvent(state.posts[index])),
+              child: const PostCard()),
         ),
       ),
     );
   }
-
 }
