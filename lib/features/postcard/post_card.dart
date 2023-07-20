@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:pic_connect/features/core/widgets/like_animation.dart';
 import 'package:pic_connect/utils/colors.dart';
-import 'package:pic_connect/utils/global_variable.dart';
 
 import 'post_card_bloc.dart';
 
@@ -15,7 +14,6 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-
   bool isLikeAnimating = false;
 
   @override
@@ -28,18 +26,15 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildContent(PostCardState state) {
-    final width = MediaQuery.of(context).size.width;
     return Container(
-        // boundary needed for web
         decoration: BoxDecoration(
-          border: Border.all(
-            color: width > webScreenSize ? secondaryColor : mobileBackgroundColor,
-          ),
-          color: mobileBackgroundColor,
+          borderRadius: BorderRadius.circular(10),
+          color: primaryColor,
+          boxShadow: [
+            BoxShadow(color: accentColor.withOpacity(0.2), spreadRadius: 1),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(children: [
           _buildPostHeaderSection(state),
           _buildPostBodySection(state),
@@ -73,9 +68,10 @@ class _PostCardState extends State<PostCard> {
                 children: <Widget>[
                   Text(
                     state.postBO?.username ?? "Empty",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -111,7 +107,7 @@ class _PostCardState extends State<PostCard> {
                       },
                     );
                   },
-                  icon: const Icon(Icons.more_vert),
+                  icon: const Icon(Icons.more_vert, color: accentColor,),
                 )
               : Container(),
         ],
@@ -148,7 +144,7 @@ class _PostCardState extends State<PostCard> {
               },
               child: const Icon(
                 Icons.favorite,
-                color: Colors.white,
+                color: accentColor,
                 size: 100,
               ),
             ),
@@ -159,7 +155,8 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildPostActionsSection(PostCardState state) {
-    final isLikedByAuthUser = state.postBO?.likes.contains(state.authUserUid ?? "") ?? false;
+    final isLikedByAuthUser =
+        state.postBO?.likes.contains(state.authUserUid ?? "") ?? false;
     return Row(
       children: <Widget>[
         LikeAnimation(
@@ -168,32 +165,32 @@ class _PostCardState extends State<PostCard> {
           child: IconButton(
             icon: isLikedByAuthUser
                 ? const Icon(
-              Icons.favorite,
-              color: Colors.red,
-            )
+                    Icons.favorite,
+                    color: Colors.red,
+                  )
                 : const Icon(
-              Icons.favorite_border,
-            ),
+                    Icons.favorite_border,
+                    color: accentColor,
+                  ),
             onPressed: () => {},
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.comment_outlined,),
+          icon: const Icon(Icons.comment_outlined, color: accentColor),
           onPressed: () => {},
         ),
         IconButton(
-            icon: const Icon(Icons.send,),
-            onPressed: () {}),
+            icon: const Icon(Icons.send, color: accentColor), onPressed: () {}),
         Expanded(
             child: Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                  icon: const Icon(Icons.bookmark_border), onPressed: () {}),
-            ))
+          alignment: Alignment.bottomRight,
+          child: IconButton(
+              icon: const Icon(Icons.bookmark_border, color: accentColor),
+              onPressed: () {}),
+        ))
       ],
     );
   }
-
 
   Widget _buildPostBottomSection(PostCardState state) {
     return Container(
@@ -209,24 +206,33 @@ class _PostCardState extends State<PostCard> {
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
                 '${state.postBO?.likes.length ?? 0} likes',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall
+                    ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
               )),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.only(top: 8,),
+            padding: const EdgeInsets.only(
+              top: 8,
+            ),
             child: RichText(
               text: TextSpan(
                 style: const TextStyle(color: primaryColor),
                 children: [
                   TextSpan(
                     text: state.postBO?.username ?? "",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                    text: ' ${state.postBO?.description ?? ""}',
-                  ),
+                      text: ' ${state.postBO?.description ?? ""}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: accentColor)),
                 ],
               ),
             ),
@@ -236,10 +242,10 @@ class _PostCardState extends State<PostCard> {
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Text(
                 'View all ${0} comments',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: secondaryColor,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: accentColor),
               ),
             ),
             onTap: () => {},
@@ -247,17 +253,17 @@ class _PostCardState extends State<PostCard> {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
-               state.postBO?.datePublished != null ?
-               DateFormat.yMMMd()
-                   .format(state.postBO!.datePublished) : "",
-              style: const TextStyle(
-                color: secondaryColor,
-              ),
+              state.postBO?.datePublished != null
+                  ? DateFormat.yMMMd().format(state.postBO!.datePublished)
+                  : "",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: accentColor),
             ),
           ),
         ],
       ),
     );
   }
-
 }

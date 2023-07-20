@@ -63,15 +63,11 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget _buildPostsList(FeedState state) {
-    final width = MediaQuery.of(context).size.width;
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       itemCount: state.posts.length,
       itemBuilder: (ctx, index) => Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: width > webScreenSize ? width * 0.3 : 0,
-          vertical: width > webScreenSize ? 15 : 0,
-        ),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5,),
         child: BlocProvider(
             create: (context) => serviceLocator<PostCardBloc>()
               ..add(OnShowPostEvent(state.posts[index])),
