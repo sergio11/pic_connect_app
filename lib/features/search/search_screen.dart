@@ -12,41 +12,49 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SearchBloc, SearchState>(
-        listener: (context, state) {
-
-        },
+        listener: (context, state) {},
         builder: (context, state) {
-          return state.isLoading ? _buildProgressIndicator()
+          return state.isLoading
+              ? _buildProgressIndicator()
               : _buildScreenContent(state);
         });
   }
 
-
   Widget _buildScreenContent(SearchState state) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
+          backgroundColor: primaryColor,
           title: Form(
             child: _buildTextSearchView(),
           ),
         ),
         body: state.isShowUsers
             ? _buildUsersGridView(state)
-            : _buildPostsGridView(state)
-    );
+            : _buildPostsGridView(state));
   }
 
   Widget _buildTextSearchView() {
     return TextFormField(
       controller: searchController,
-      decoration:
-      const InputDecoration(labelText: 'Search for a user...'),
+      decoration: InputDecoration(
+        labelText: 'Search for a user...',
+        labelStyle: Theme.of(context)
+            .textTheme
+            .labelMedium
+            ?.copyWith(color: accentColor),
+        prefixIcon: const Icon(
+          Icons.search,
+          color: accentColor,
+        ),
+        prefixIconColor: accentColor,
+        filled: true,
+        fillColor: whiteColor,
+      ),
       onFieldSubmitted: (String term) {
         context.read<SearchBloc>().add(OnSearchUsersEvent(term));
       },
@@ -64,9 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
       itemCount: state.users.length,
       itemBuilder: (context, index) {
         return InkWell(
-          onTap: () => {
-
-          },
+          onTap: () => {},
           child: ListTile(
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
@@ -83,18 +89,19 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-
   Widget _buildPostsGridView(SearchState state) {
-    return MasonryGridView.count(
-      crossAxisCount: 3,
-      itemCount: state.posts.length,
-      itemBuilder: (context, index) => Image.network(
-        state.posts[index].postUrl,
-        fit: BoxFit.cover,
+    return Container(
+      color: primaryColor,
+      child: MasonryGridView.count(
+        crossAxisCount: 3,
+        itemCount: state.posts.length,
+        itemBuilder: (context, index) => Image.network(
+          state.posts[index].postUrl,
+          fit: BoxFit.cover,
+        ),
+        mainAxisSpacing: 1,
+        crossAxisSpacing: 1,
       ),
-      mainAxisSpacing: 8.0,
-      crossAxisSpacing: 8.0,
     );
   }
-
 }

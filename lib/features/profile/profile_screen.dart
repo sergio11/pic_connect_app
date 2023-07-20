@@ -200,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       color: primaryColor,
       child: GridView.builder(
         shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        padding: const EdgeInsets.symmetric(vertical: 2),
         itemCount: state.postList.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
