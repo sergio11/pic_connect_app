@@ -16,6 +16,11 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+
+  void onRefresh(FeedState state) async {
+    context.read<FeedBloc>().add(OnLoadHomePostsEvent(state.authUserUid));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FeedBloc, FeedState>(
@@ -69,7 +74,7 @@ class _FeedScreenState extends State<FeedScreen> {
         return Future.delayed(
           const Duration(seconds: 1),
           () {
-            context.read<FeedBloc>().add(const OnLoadHomePostsEvent());
+            onRefresh(state);
           },
         );
       },
@@ -83,7 +88,7 @@ class _FeedScreenState extends State<FeedScreen> {
           ),
           child: BlocProvider(
               create: (context) => serviceLocator<PostCardBloc>()
-                ..add(OnShowPostEvent(state.posts[index])),
+                ..add(OnShowPostEvent(state.posts[index], state.authUserUid)),
               child: const PostCard()),
         ),
       ),

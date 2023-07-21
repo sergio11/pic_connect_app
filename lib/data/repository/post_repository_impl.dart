@@ -53,8 +53,8 @@ class PostRepositoryImpl implements PostRepository {
     required String userUid
   }) async {
     try {
-      await postDatasource.likePost(postId: postId, uid: userUid);
-      return const Right(true);
+      final isLikedByUser = await postDatasource.likePost(postId: postId, uid: userUid);
+      return Right(isLikedByUser);
     } catch (err) {
       return Left(Failure(message: err.toString()));
     }

@@ -8,13 +8,14 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
   PostBO call(PostBoMapperData object) {
     return PostBO(
         description: object.postDTO.description,
-        uid: object.userDTO.uid,
         username: object.userDTO.username,
         likes: object.postDTO.likes,
         postId: object.postDTO.postId,
         datePublished: object.postDTO.datePublished,
         postUrl: object.postDTO.postUrl,
-        profImage: object.userDTO.photoUrl
+        postAuthorUid: object.userDTO.uid,
+        profImage: object.userDTO.photoUrl,
+        commentCount: object.postDTO.commentCount
     );
   }
 }

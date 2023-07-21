@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:pic_connect/features/core/widgets/like_animation.dart';
 import 'package:pic_connect/utils/colors.dart';
 
@@ -15,6 +14,14 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+
+  void onDeletePost(String postId) async {
+    context.read<PostCardBloc>().add(OnDeletePostEvent(postId));
+  } 
+  
+  void onLikePost(String postId) async {
+    context.read<PostCardBloc>().add(OnLikePostEvent(postId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +60,17 @@ class _PostCardState extends State<PostCard> {
         children: <Widget>[
           CircleAvatar(
             radius: 16,
-            backgroundImage: NetworkImage(
-              state.postBO?.profImage ?? 'https://i.stack.imgur.com/l60Hf.png',
-            ),
+            backgroundImage: NetworkImage(state.authorImageUrl,),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: 8,
-              ),
+              padding: const EdgeInsets.only(left: 8,),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    state.postBO?.username ?? "Empty",
+                    state.username,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: accentColor, fontWeight: FontWeight.bold),
                   ),
@@ -96,9 +99,7 @@ class _PostCardState extends State<PostCard> {
                                               vertical: 12, horizontal: 16),
                                           child: Text(e),
                                         ),
-                                        onTap: () {
-                                          // Delete Post
-                                        }),
+                                        onTap: () => onDeletePost(state.postId)),
                                   )
                                   .toList()),
                         );
@@ -127,11 +128,7 @@ class _PostCardState extends State<PostCard> {
             child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.35,
                 width: double.infinity,
-              child: Image.network(
-                state.postBO?.postUrl ??
-                    'https://i.stack.imgur.com/l60Hf.png',
-                fit: BoxFit.cover,
-              ),
+              child: Image.network(state.postImageUrl, fit: BoxFit.cover,),
             ),
           ),
           AnimatedOpacity(
@@ -160,15 +157,13 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildPostActionsSection(PostCardState state) {
-    final isLikedByAuthUser =
-        state.postBO?.likes.contains(state.authUserUid ?? "") ?? false;
     return Row(
       children: <Widget>[
         LikeAnimation(
-          isAnimating: isLikedByAuthUser,
+          isAnimating: state.isLikedByAuthUser,
           smallLike: true,
           child: IconButton(
-            icon: isLikedByAuthUser
+            icon: state.isLikedByAuthUser
                 ? const Icon(
                     Icons.favorite,
                     color: Colors.red,
@@ -177,7 +172,7 @@ class _PostCardState extends State<PostCard> {
                     Icons.favorite_border,
                     color: accentColor,
                   ),
-            onPressed: () => {},
+            onPressed: () => onLikePost(state.postId),
           ),
         ),
         IconButton(
@@ -210,7 +205,7 @@ class _PostCardState extends State<PostCard> {
                   .titleSmall!
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
-                '${state.postBO?.likes.length ?? 0} likes',
+                '${state.likes} likes',
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -226,12 +221,12 @@ class _PostCardState extends State<PostCard> {
                 style: const TextStyle(color: primaryColor),
                 children: [
                   TextSpan(
-                    text: state.postBO?.username ?? "",
+                    text: state.username,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: accentColor, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                      text: ' ${state.postBO?.description ?? ""}',
+                      text: ' ${state.description}',
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
@@ -242,13 +237,13 @@ class _PostCardState extends State<PostCard> {
           ),
           InkWell(
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'View all ${0} comments',
+                'View all ${state.commentCount} comments',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: accentColor),
+                    .bodySmall
+                    ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
               ),
             ),
             onTap: () => {},
@@ -256,12 +251,10 @@ class _PostCardState extends State<PostCard> {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
-              state.postBO?.datePublished != null
-                  ? DateFormat.yMMMd().format(state.postBO!.datePublished)
-                  : "",
+              state.datePublished,
               style: Theme.of(context)
                   .textTheme
-                  .bodyMedium
+                  .bodySmall
                   ?.copyWith(color: accentColor),
             ),
           ),

@@ -31,23 +31,27 @@ class PostDatasourceImpl extends PostDatasource {
   }
 
   @override
-  Future<void> likePost({
+  Future<bool> likePost({
     required String postId,
     required String uid
   }) async {
     final DocumentSnapshot snap = await firestore.collection('posts').doc(postId).get();
     List likes = (snap.data()! as dynamic)['likes'];
+    final bool isLikedByUser;
     if (likes.contains(uid)) {
       // if the likes list contains the user uid, we need to remove it
       firestore.collection('posts').doc(postId).update({
         'likes': FieldValue.arrayRemove([uid])
       });
+      isLikedByUser = false;
     } else {
       // else we need to add uid to the likes array
       firestore.collection('posts').doc(postId).update({
         'likes': FieldValue.arrayUnion([uid])
       });
+      isLikedByUser = true;
     }
+    return isLikedByUser;
   }
 
   @override
@@ -67,6 +71,10 @@ class PostDatasourceImpl extends PostDatasource {
         .collection('comments')
         .doc(commentData['commentId'])
         .set(commentData);
+    await firestore
+        .collection('posts')
+        .doc(commentDTO.postId)
+        .update({ 'commentsCount': FieldValue.increment(1) });
   }
 
   @override

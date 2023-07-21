@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:dartz/dartz.dart';
 import 'package:pic_connect/domain/models/comment.dart';
 import 'package:pic_connect/domain/models/failure.dart';

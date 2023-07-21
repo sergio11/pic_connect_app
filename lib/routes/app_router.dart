@@ -119,7 +119,7 @@ class AppRouter {
                 builder: (BuildContext context, GoRouterState state) =>
                   BlocProvider(
                     create: (context) => serviceLocator<FeedBloc>()
-                      ..add(const OnLoadHomePostsEvent()),
+                      ..add(OnLoadHomePostsEvent(context.read<AppBloc>().state.authUserUid!)),
                     child: const FeedScreen(),
                   )
               )

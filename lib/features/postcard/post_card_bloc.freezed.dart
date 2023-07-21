@@ -16,42 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PostCardEvent {
-  PostBO get post => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PostBO post) showPost,
+    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(String postId) deletePost,
+    required TResult Function(String postId) likePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PostBO post)? showPost,
+    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(String postId)? deletePost,
+    TResult? Function(String postId)? likePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PostBO post)? showPost,
+    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(String postId)? deletePost,
+    TResult Function(String postId)? likePost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnShowPostEvent value) showPost,
+    required TResult Function(OnDeletePostEvent value) deletePost,
+    required TResult Function(OnLikePostEvent value) likePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnShowPostEvent value)? showPost,
+    TResult? Function(OnDeletePostEvent value)? deletePost,
+    TResult? Function(OnLikePostEvent value)? likePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnShowPostEvent value)? showPost,
+    TResult Function(OnDeletePostEvent value)? deletePost,
+    TResult Function(OnLikePostEvent value)? likePost,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $PostCardEventCopyWith<PostCardEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +67,6 @@ abstract class $PostCardEventCopyWith<$Res> {
   factory $PostCardEventCopyWith(
           PostCardEvent value, $Res Function(PostCardEvent) then) =
       _$PostCardEventCopyWithImpl<$Res, PostCardEvent>;
-  @useResult
-  $Res call({PostBO post});
 }
 
 /// @nodoc
@@ -73,30 +78,15 @@ class _$PostCardEventCopyWithImpl<$Res, $Val extends PostCardEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? post = null,
-  }) {
-    return _then(_value.copyWith(
-      post: null == post
-          ? _value.post
-          : post // ignore: cast_nullable_to_non_nullable
-              as PostBO,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnShowPostEventCopyWith<$Res>
-    implements $PostCardEventCopyWith<$Res> {
+abstract class _$$OnShowPostEventCopyWith<$Res> {
   factory _$$OnShowPostEventCopyWith(
           _$OnShowPostEvent value, $Res Function(_$OnShowPostEvent) then) =
       __$$OnShowPostEventCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({PostBO post});
+  $Res call({PostBO post, String authUserUid});
 }
 
 /// @nodoc
@@ -111,12 +101,17 @@ class __$$OnShowPostEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? post = null,
+    Object? authUserUid = null,
   }) {
     return _then(_$OnShowPostEvent(
       null == post
           ? _value.post
           : post // ignore: cast_nullable_to_non_nullable
               as PostBO,
+      null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -124,14 +119,16 @@ class __$$OnShowPostEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OnShowPostEvent implements OnShowPostEvent {
-  const _$OnShowPostEvent(this.post);
+  const _$OnShowPostEvent(this.post, this.authUserUid);
 
   @override
   final PostBO post;
+  @override
+  final String authUserUid;
 
   @override
   String toString() {
-    return 'PostCardEvent.showPost(post: $post)';
+    return 'PostCardEvent.showPost(post: $post, authUserUid: $authUserUid)';
   }
 
   @override
@@ -139,11 +136,13 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnShowPostEvent &&
-            (identical(other.post, post) || other.post == post));
+            (identical(other.post, post) || other.post == post) &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, post);
+  int get hashCode => Object.hash(runtimeType, post, authUserUid);
 
   @JsonKey(ignore: true)
   @override
@@ -154,27 +153,33 @@ class _$OnShowPostEvent implements OnShowPostEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(PostBO post) showPost,
+    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(String postId) deletePost,
+    required TResult Function(String postId) likePost,
   }) {
-    return showPost(post);
+    return showPost(post, authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PostBO post)? showPost,
+    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(String postId)? deletePost,
+    TResult? Function(String postId)? likePost,
   }) {
-    return showPost?.call(post);
+    return showPost?.call(post, authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PostBO post)? showPost,
+    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(String postId)? deletePost,
+    TResult Function(String postId)? likePost,
     required TResult orElse(),
   }) {
     if (showPost != null) {
-      return showPost(post);
+      return showPost(post, authUserUid);
     }
     return orElse();
   }
@@ -183,6 +188,8 @@ class _$OnShowPostEvent implements OnShowPostEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnShowPostEvent value) showPost,
+    required TResult Function(OnDeletePostEvent value) deletePost,
+    required TResult Function(OnLikePostEvent value) likePost,
   }) {
     return showPost(this);
   }
@@ -191,6 +198,8 @@ class _$OnShowPostEvent implements OnShowPostEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnShowPostEvent value)? showPost,
+    TResult? Function(OnDeletePostEvent value)? deletePost,
+    TResult? Function(OnLikePostEvent value)? likePost,
   }) {
     return showPost?.call(this);
   }
@@ -199,6 +208,8 @@ class _$OnShowPostEvent implements OnShowPostEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnShowPostEvent value)? showPost,
+    TResult Function(OnDeletePostEvent value)? deletePost,
+    TResult Function(OnLikePostEvent value)? likePost,
     required TResult orElse(),
   }) {
     if (showPost != null) {
@@ -209,20 +220,306 @@ class _$OnShowPostEvent implements OnShowPostEvent {
 }
 
 abstract class OnShowPostEvent implements PostCardEvent {
-  const factory OnShowPostEvent(final PostBO post) = _$OnShowPostEvent;
+  const factory OnShowPostEvent(final PostBO post, final String authUserUid) =
+      _$OnShowPostEvent;
 
-  @override
   PostBO get post;
-  @override
+  String get authUserUid;
   @JsonKey(ignore: true)
   _$$OnShowPostEventCopyWith<_$OnShowPostEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$OnDeletePostEventCopyWith<$Res> {
+  factory _$$OnDeletePostEventCopyWith(
+          _$OnDeletePostEvent value, $Res Function(_$OnDeletePostEvent) then) =
+      __$$OnDeletePostEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String postId});
+}
+
+/// @nodoc
+class __$$OnDeletePostEventCopyWithImpl<$Res>
+    extends _$PostCardEventCopyWithImpl<$Res, _$OnDeletePostEvent>
+    implements _$$OnDeletePostEventCopyWith<$Res> {
+  __$$OnDeletePostEventCopyWithImpl(
+      _$OnDeletePostEvent _value, $Res Function(_$OnDeletePostEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnDeletePostEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnDeletePostEvent implements OnDeletePostEvent {
+  const _$OnDeletePostEvent(this.postId);
+
+  @override
+  final String postId;
+
+  @override
+  String toString() {
+    return 'PostCardEvent.deletePost(postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnDeletePostEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnDeletePostEventCopyWith<_$OnDeletePostEvent> get copyWith =>
+      __$$OnDeletePostEventCopyWithImpl<_$OnDeletePostEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(String postId) deletePost,
+    required TResult Function(String postId) likePost,
+  }) {
+    return deletePost(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(String postId)? deletePost,
+    TResult? Function(String postId)? likePost,
+  }) {
+    return deletePost?.call(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(String postId)? deletePost,
+    TResult Function(String postId)? likePost,
+    required TResult orElse(),
+  }) {
+    if (deletePost != null) {
+      return deletePost(postId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnShowPostEvent value) showPost,
+    required TResult Function(OnDeletePostEvent value) deletePost,
+    required TResult Function(OnLikePostEvent value) likePost,
+  }) {
+    return deletePost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnShowPostEvent value)? showPost,
+    TResult? Function(OnDeletePostEvent value)? deletePost,
+    TResult? Function(OnLikePostEvent value)? likePost,
+  }) {
+    return deletePost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnShowPostEvent value)? showPost,
+    TResult Function(OnDeletePostEvent value)? deletePost,
+    TResult Function(OnLikePostEvent value)? likePost,
+    required TResult orElse(),
+  }) {
+    if (deletePost != null) {
+      return deletePost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnDeletePostEvent implements PostCardEvent {
+  const factory OnDeletePostEvent(final String postId) = _$OnDeletePostEvent;
+
+  String get postId;
+  @JsonKey(ignore: true)
+  _$$OnDeletePostEventCopyWith<_$OnDeletePostEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnLikePostEventCopyWith<$Res> {
+  factory _$$OnLikePostEventCopyWith(
+          _$OnLikePostEvent value, $Res Function(_$OnLikePostEvent) then) =
+      __$$OnLikePostEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String postId});
+}
+
+/// @nodoc
+class __$$OnLikePostEventCopyWithImpl<$Res>
+    extends _$PostCardEventCopyWithImpl<$Res, _$OnLikePostEvent>
+    implements _$$OnLikePostEventCopyWith<$Res> {
+  __$$OnLikePostEventCopyWithImpl(
+      _$OnLikePostEvent _value, $Res Function(_$OnLikePostEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnLikePostEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnLikePostEvent implements OnLikePostEvent {
+  const _$OnLikePostEvent(this.postId);
+
+  @override
+  final String postId;
+
+  @override
+  String toString() {
+    return 'PostCardEvent.likePost(postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnLikePostEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLikePostEventCopyWith<_$OnLikePostEvent> get copyWith =>
+      __$$OnLikePostEventCopyWithImpl<_$OnLikePostEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(String postId) deletePost,
+    required TResult Function(String postId) likePost,
+  }) {
+    return likePost(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(String postId)? deletePost,
+    TResult? Function(String postId)? likePost,
+  }) {
+    return likePost?.call(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(String postId)? deletePost,
+    TResult Function(String postId)? likePost,
+    required TResult orElse(),
+  }) {
+    if (likePost != null) {
+      return likePost(postId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnShowPostEvent value) showPost,
+    required TResult Function(OnDeletePostEvent value) deletePost,
+    required TResult Function(OnLikePostEvent value) likePost,
+  }) {
+    return likePost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnShowPostEvent value)? showPost,
+    TResult? Function(OnDeletePostEvent value)? deletePost,
+    TResult? Function(OnLikePostEvent value)? likePost,
+  }) {
+    return likePost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnShowPostEvent value)? showPost,
+    TResult Function(OnDeletePostEvent value)? deletePost,
+    TResult Function(OnLikePostEvent value)? likePost,
+    required TResult orElse(),
+  }) {
+    if (likePost != null) {
+      return likePost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnLikePostEvent implements PostCardEvent {
+  const factory OnLikePostEvent(final String postId) = _$OnLikePostEvent;
+
+  String get postId;
+  @JsonKey(ignore: true)
+  _$$OnLikePostEventCopyWith<_$OnLikePostEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PostCardState {
-  String? get authUserUid => throw _privateConstructorUsedError;
-  PostBO? get postBO => throw _privateConstructorUsedError;
+  bool get isPostOwner => throw _privateConstructorUsedError;
+  bool get isLikedByAuthUser => throw _privateConstructorUsedError;
+  int get likes => throw _privateConstructorUsedError;
+  int get commentCount => throw _privateConstructorUsedError;
+  String get postId => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String get datePublished => throw _privateConstructorUsedError;
+  String get postImageUrl => throw _privateConstructorUsedError;
+  String get authorImageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PostCardStateCopyWith<PostCardState> get copyWith =>
@@ -235,7 +532,17 @@ abstract class $PostCardStateCopyWith<$Res> {
           PostCardState value, $Res Function(PostCardState) then) =
       _$PostCardStateCopyWithImpl<$Res, PostCardState>;
   @useResult
-  $Res call({String? authUserUid, PostBO? postBO});
+  $Res call(
+      {bool isPostOwner,
+      bool isLikedByAuthUser,
+      int likes,
+      int commentCount,
+      String postId,
+      String username,
+      String description,
+      String datePublished,
+      String postImageUrl,
+      String authorImageUrl});
 }
 
 /// @nodoc
@@ -251,18 +558,58 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? authUserUid = freezed,
-    Object? postBO = freezed,
+    Object? isPostOwner = null,
+    Object? isLikedByAuthUser = null,
+    Object? likes = null,
+    Object? commentCount = null,
+    Object? postId = null,
+    Object? username = null,
+    Object? description = null,
+    Object? datePublished = null,
+    Object? postImageUrl = null,
+    Object? authorImageUrl = null,
   }) {
     return _then(_value.copyWith(
-      authUserUid: freezed == authUserUid
-          ? _value.authUserUid
-          : authUserUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postBO: freezed == postBO
-          ? _value.postBO
-          : postBO // ignore: cast_nullable_to_non_nullable
-              as PostBO?,
+      isPostOwner: null == isPostOwner
+          ? _value.isPostOwner
+          : isPostOwner // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLikedByAuthUser: null == isLikedByAuthUser
+          ? _value.isLikedByAuthUser
+          : isLikedByAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      likes: null == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentCount: null == commentCount
+          ? _value.commentCount
+          : commentCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      datePublished: null == datePublished
+          ? _value.datePublished
+          : datePublished // ignore: cast_nullable_to_non_nullable
+              as String,
+      postImageUrl: null == postImageUrl
+          ? _value.postImageUrl
+          : postImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorImageUrl: null == authorImageUrl
+          ? _value.authorImageUrl
+          : authorImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -275,7 +622,17 @@ abstract class _$$_PostCardStateCopyWith<$Res>
       __$$_PostCardStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? authUserUid, PostBO? postBO});
+  $Res call(
+      {bool isPostOwner,
+      bool isLikedByAuthUser,
+      int likes,
+      int commentCount,
+      String postId,
+      String username,
+      String description,
+      String datePublished,
+      String postImageUrl,
+      String authorImageUrl});
 }
 
 /// @nodoc
@@ -289,18 +646,58 @@ class __$$_PostCardStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? authUserUid = freezed,
-    Object? postBO = freezed,
+    Object? isPostOwner = null,
+    Object? isLikedByAuthUser = null,
+    Object? likes = null,
+    Object? commentCount = null,
+    Object? postId = null,
+    Object? username = null,
+    Object? description = null,
+    Object? datePublished = null,
+    Object? postImageUrl = null,
+    Object? authorImageUrl = null,
   }) {
     return _then(_$_PostCardState(
-      authUserUid: freezed == authUserUid
-          ? _value.authUserUid
-          : authUserUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postBO: freezed == postBO
-          ? _value.postBO
-          : postBO // ignore: cast_nullable_to_non_nullable
-              as PostBO?,
+      isPostOwner: null == isPostOwner
+          ? _value.isPostOwner
+          : isPostOwner // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLikedByAuthUser: null == isLikedByAuthUser
+          ? _value.isLikedByAuthUser
+          : isLikedByAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      likes: null == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentCount: null == commentCount
+          ? _value.commentCount
+          : commentCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      postId: null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      datePublished: null == datePublished
+          ? _value.datePublished
+          : datePublished // ignore: cast_nullable_to_non_nullable
+              as String,
+      postImageUrl: null == postImageUrl
+          ? _value.postImageUrl
+          : postImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      authorImageUrl: null == authorImageUrl
+          ? _value.authorImageUrl
+          : authorImageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -308,16 +705,52 @@ class __$$_PostCardStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_PostCardState implements _PostCardState {
-  const _$_PostCardState({this.authUserUid, this.postBO});
+  const _$_PostCardState(
+      {this.isPostOwner = false,
+      this.isLikedByAuthUser = false,
+      this.likes = 0,
+      this.commentCount = 0,
+      this.postId = "",
+      this.username = "",
+      this.description = "",
+      this.datePublished = "",
+      this.postImageUrl = "",
+      this.authorImageUrl = "https://i.stack.imgur.com/l60Hf.png"});
 
   @override
-  final String? authUserUid;
+  @JsonKey()
+  final bool isPostOwner;
   @override
-  final PostBO? postBO;
+  @JsonKey()
+  final bool isLikedByAuthUser;
+  @override
+  @JsonKey()
+  final int likes;
+  @override
+  @JsonKey()
+  final int commentCount;
+  @override
+  @JsonKey()
+  final String postId;
+  @override
+  @JsonKey()
+  final String username;
+  @override
+  @JsonKey()
+  final String description;
+  @override
+  @JsonKey()
+  final String datePublished;
+  @override
+  @JsonKey()
+  final String postImageUrl;
+  @override
+  @JsonKey()
+  final String authorImageUrl;
 
   @override
   String toString() {
-    return 'PostCardState(authUserUid: $authUserUid, postBO: $postBO)';
+    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, authorImageUrl: $authorImageUrl)';
   }
 
   @override
@@ -325,13 +758,39 @@ class _$_PostCardState implements _PostCardState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PostCardState &&
-            (identical(other.authUserUid, authUserUid) ||
-                other.authUserUid == authUserUid) &&
-            (identical(other.postBO, postBO) || other.postBO == postBO));
+            (identical(other.isPostOwner, isPostOwner) ||
+                other.isPostOwner == isPostOwner) &&
+            (identical(other.isLikedByAuthUser, isLikedByAuthUser) ||
+                other.isLikedByAuthUser == isLikedByAuthUser) &&
+            (identical(other.likes, likes) || other.likes == likes) &&
+            (identical(other.commentCount, commentCount) ||
+                other.commentCount == commentCount) &&
+            (identical(other.postId, postId) || other.postId == postId) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.datePublished, datePublished) ||
+                other.datePublished == datePublished) &&
+            (identical(other.postImageUrl, postImageUrl) ||
+                other.postImageUrl == postImageUrl) &&
+            (identical(other.authorImageUrl, authorImageUrl) ||
+                other.authorImageUrl == authorImageUrl));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, authUserUid, postBO);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isPostOwner,
+      isLikedByAuthUser,
+      likes,
+      commentCount,
+      postId,
+      username,
+      description,
+      datePublished,
+      postImageUrl,
+      authorImageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -342,12 +801,37 @@ class _$_PostCardState implements _PostCardState {
 
 abstract class _PostCardState implements PostCardState {
   const factory _PostCardState(
-      {final String? authUserUid, final PostBO? postBO}) = _$_PostCardState;
+      {final bool isPostOwner,
+      final bool isLikedByAuthUser,
+      final int likes,
+      final int commentCount,
+      final String postId,
+      final String username,
+      final String description,
+      final String datePublished,
+      final String postImageUrl,
+      final String authorImageUrl}) = _$_PostCardState;
 
   @override
-  String? get authUserUid;
+  bool get isPostOwner;
   @override
-  PostBO? get postBO;
+  bool get isLikedByAuthUser;
+  @override
+  int get likes;
+  @override
+  int get commentCount;
+  @override
+  String get postId;
+  @override
+  String get username;
+  @override
+  String get description;
+  @override
+  String get datePublished;
+  @override
+  String get postImageUrl;
+  @override
+  String get authorImageUrl;
   @override
   @JsonKey(ignore: true)
   _$$_PostCardStateCopyWith<_$_PostCardState> get copyWith =>
