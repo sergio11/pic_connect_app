@@ -8,6 +8,8 @@ import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/comments/comments_bloc.dart';
+import 'package:pic_connect/features/comments/comments_screen.dart';
 import 'package:pic_connect/features/core/widgets/mobile_screen_layout.dart';
 import 'package:pic_connect/features/core/widgets/responsive_layout.dart';
 import 'package:pic_connect/features/favorites/favorites_bloc.dart';
@@ -101,6 +103,19 @@ class AppRouter {
                 },),
               )
       ),
+      GoRoute(
+          path: AppRoutesEnum.comments.screenPath,
+          name: AppRoutesEnum.comments.screenName,
+          builder: (BuildContext context, GoRouterState state) =>
+              BlocProvider(
+                create: (context) => serviceLocator<CommentsBloc>()
+                  ..add(OnLoadCommentsByPostEvent(
+                      state.extra as String,
+                      context.read<AppBloc>().state.authUserUid!
+                  )),
+                child: const CommentsScreen(),
+              )
+      ),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
@@ -120,7 +135,9 @@ class AppRouter {
                   BlocProvider(
                     create: (context) => serviceLocator<FeedBloc>()
                       ..add(OnLoadHomePostsEvent(context.read<AppBloc>().state.authUserUid!)),
-                    child: const FeedScreen(),
+                    child: FeedScreen(onShowCommentsByPost: (String postId) {
+                      context.go(AppRoutesEnum.comments.screenPath, extra: postId);
+                    },),
                   )
               )
             ],

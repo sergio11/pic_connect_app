@@ -17,19 +17,21 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CommentsEvent {
   String get postId => throw _privateConstructorUsedError;
+  String get authUserUid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String postId) loadCommentsByPost,
+    required TResult Function(String postId, String authUserUid)
+        loadCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String postId)? loadCommentsByPost,
+    TResult? Function(String postId, String authUserUid)? loadCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String postId)? loadCommentsByPost,
+    TResult Function(String postId, String authUserUid)? loadCommentsByPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +64,7 @@ abstract class $CommentsEventCopyWith<$Res> {
           CommentsEvent value, $Res Function(CommentsEvent) then) =
       _$CommentsEventCopyWithImpl<$Res, CommentsEvent>;
   @useResult
-  $Res call({String postId});
+  $Res call({String postId, String authUserUid});
 }
 
 /// @nodoc
@@ -79,11 +81,16 @@ class _$CommentsEventCopyWithImpl<$Res, $Val extends CommentsEvent>
   @override
   $Res call({
     Object? postId = null,
+    Object? authUserUid = null,
   }) {
     return _then(_value.copyWith(
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+      authUserUid: null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -98,7 +105,7 @@ abstract class _$$OnLoadCommentsByPostEventCopyWith<$Res>
       __$$OnLoadCommentsByPostEventCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String postId});
+  $Res call({String postId, String authUserUid});
 }
 
 /// @nodoc
@@ -113,11 +120,16 @@ class __$$OnLoadCommentsByPostEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? postId = null,
+    Object? authUserUid = null,
   }) {
     return _then(_$OnLoadCommentsByPostEvent(
       null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -126,14 +138,16 @@ class __$$OnLoadCommentsByPostEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
-  const _$OnLoadCommentsByPostEvent(this.postId);
+  const _$OnLoadCommentsByPostEvent(this.postId, this.authUserUid);
 
   @override
   final String postId;
+  @override
+  final String authUserUid;
 
   @override
   String toString() {
-    return 'CommentsEvent.loadCommentsByPost(postId: $postId)';
+    return 'CommentsEvent.loadCommentsByPost(postId: $postId, authUserUid: $authUserUid)';
   }
 
   @override
@@ -141,11 +155,13 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnLoadCommentsByPostEvent &&
-            (identical(other.postId, postId) || other.postId == postId));
+            (identical(other.postId, postId) || other.postId == postId) &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, postId);
+  int get hashCode => Object.hash(runtimeType, postId, authUserUid);
 
   @JsonKey(ignore: true)
   @override
@@ -157,27 +173,28 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String postId) loadCommentsByPost,
+    required TResult Function(String postId, String authUserUid)
+        loadCommentsByPost,
   }) {
-    return loadCommentsByPost(postId);
+    return loadCommentsByPost(postId, authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String postId)? loadCommentsByPost,
+    TResult? Function(String postId, String authUserUid)? loadCommentsByPost,
   }) {
-    return loadCommentsByPost?.call(postId);
+    return loadCommentsByPost?.call(postId, authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String postId)? loadCommentsByPost,
+    TResult Function(String postId, String authUserUid)? loadCommentsByPost,
     required TResult orElse(),
   }) {
     if (loadCommentsByPost != null) {
-      return loadCommentsByPost(postId);
+      return loadCommentsByPost(postId, authUserUid);
     }
     return orElse();
   }
@@ -213,11 +230,14 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
 }
 
 abstract class OnLoadCommentsByPostEvent implements CommentsEvent {
-  const factory OnLoadCommentsByPostEvent(final String postId) =
+  const factory OnLoadCommentsByPostEvent(
+          final String postId, final String authUserUid) =
       _$OnLoadCommentsByPostEvent;
 
   @override
   String get postId;
+  @override
+  String get authUserUid;
   @override
   @JsonKey(ignore: true)
   _$$OnLoadCommentsByPostEventCopyWith<_$OnLoadCommentsByPostEvent>

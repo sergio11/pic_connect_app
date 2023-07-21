@@ -1,4 +1,4 @@
-enum AppRoutesEnum { login, signup, home, error, profile, search, add, favorites }
+enum AppRoutesEnum { login, signup, home, error, profile, search, add, favorites, comments }
 
 extension AppRouteExtension on AppRoutesEnum {
 
@@ -24,6 +24,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "/add";
       case AppRoutesEnum.favorites:
         return "/favorites";
+      case AppRoutesEnum.comments:
+        return "/comments";
       default:
         return "/";
     }
@@ -47,6 +49,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "ADD";
       case AppRoutesEnum.favorites:
         return "FAVORITES";
+      case AppRoutesEnum.comments:
+        return "COMMENTS";
       default:
         return "HOME";
     }
@@ -70,6 +74,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "Add";
       case AppRoutesEnum.favorites:
         return "Favorites";
+      case AppRoutesEnum.comments:
+        return "Comments";
       default:
         return "Home";
     }

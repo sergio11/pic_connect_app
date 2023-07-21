@@ -9,7 +9,13 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/global_variable.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+
+  final Function(String postId) onShowCommentsByPost;
+
+  const FeedScreen({
+    Key? key,
+    required this.onShowCommentsByPost
+  }) : super(key: key);
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -89,7 +95,7 @@ class _FeedScreenState extends State<FeedScreen> {
           child: BlocProvider(
               create: (context) => serviceLocator<PostCardBloc>()
                 ..add(OnShowPostEvent(state.posts[index], state.authUserUid)),
-              child: const PostCard()),
+              child: PostCard(onShowCommentsByPost: (String postId) => widget.onShowCommentsByPost(postId),)),
         ),
       ),
     );

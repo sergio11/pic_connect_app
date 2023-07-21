@@ -6,13 +6,20 @@ import 'package:pic_connect/utils/colors.dart';
 import 'post_card_bloc.dart';
 
 class PostCard extends StatefulWidget {
-  const PostCard({Key? key}) : super(key: key);
+
+  final Function(String postId) onShowCommentsByPost;
+
+  const PostCard({
+    Key? key,
+    required this.onShowCommentsByPost
+  }) : super(key: key);
 
   @override
   State<PostCard> createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
+
   bool isLikeAnimating = false;
 
   void onDeletePost(String postId) async {
@@ -52,10 +59,7 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildPostHeaderSection(PostCardState state) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 4,
-        horizontal: 16,
-      ).copyWith(right: 0),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16,).copyWith(right: 0),
       child: Row(
         children: <Widget>[
           CircleAvatar(
@@ -123,13 +127,16 @@ class _PostCardState extends State<PostCard> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15), // Image border
-            child: SizedBox(
+          GestureDetector(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15), // Image border
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.35,
                 width: double.infinity,
-              child: Image.network(state.postImageUrl, fit: BoxFit.cover,),
+                child: Image.network(state.postImageUrl, fit: BoxFit.cover,),
+              ),
             ),
+            onDoubleTap: () => onLikePost(state.postId),
           ),
           AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
@@ -177,7 +184,7 @@ class _PostCardState extends State<PostCard> {
         ),
         IconButton(
           icon: const Icon(Icons.comment_outlined, color: accentColor),
-          onPressed: () => {},
+          onPressed: () => widget.onShowCommentsByPost(state.postId),
         ),
         IconButton(
             icon: const Icon(Icons.send, color: accentColor), onPressed: () {}),
@@ -246,7 +253,7 @@ class _PostCardState extends State<PostCard> {
                     ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
               ),
             ),
-            onTap: () => {},
+            onTap: () => widget.onShowCommentsByPost(state.postId),
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),

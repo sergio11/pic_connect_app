@@ -51,6 +51,7 @@ import 'package:pic_connect/domain/usecase/sign_up_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/unfollow_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
@@ -128,4 +129,5 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => AddPostBloc(getUserDetailsUseCase: serviceLocator(), publishPostUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FavoritesBloc());
   serviceLocator.registerFactory(() => PostCardBloc(deletePostUseCase: serviceLocator(), likePostUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator()));
 }
