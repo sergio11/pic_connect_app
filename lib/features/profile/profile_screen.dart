@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarBackgroundColor,
-        title: Text(state.username ?? "Empty",
+        title: Text(state.username,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -96,8 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: secondaryColor.withOpacity(0.5), shape: BoxShape.circle),
           child: CircleAvatar(
             backgroundColor: accentColor,
-            backgroundImage: NetworkImage(
-                state.photoUrl ?? 'https://i.stack.imgur.com/l60Hf.png'),
+            backgroundImage: NetworkImage(state.photoUrl),
             radius: 40,
           ),
         ),
@@ -174,10 +173,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         top: 15,
       ),
       child: Text(
-        state.username != null ? state.username! : "Empty",
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+        state.username,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          color: accentColor, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -188,9 +186,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.only(
         top: 1,
       ),
-      child: Text(
-        state.bio ?? "Empty",
-      ),
+      child: Text(state.bio, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: accentColor, fontWeight: FontWeight.w400)),
     );
   }
 
@@ -234,20 +231,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           num.toString(),
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: accentColor, fontWeight: FontWeight.bold),
         ),
         Container(
           margin: const EdgeInsets.only(top: 4),
           child: Text(
             label,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
-            ),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: accentColor, fontWeight: FontWeight.w400),
           ),
         ),
       ],

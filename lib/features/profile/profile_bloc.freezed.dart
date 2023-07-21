@@ -643,11 +643,11 @@ mixin _$ProfileState {
   int get postLen => throw _privateConstructorUsedError;
   int get followers => throw _privateConstructorUsedError;
   int get following => throw _privateConstructorUsedError;
-  String? get userUid => throw _privateConstructorUsedError;
-  String? get authUserUid => throw _privateConstructorUsedError;
-  String? get photoUrl => throw _privateConstructorUsedError;
-  String? get bio => throw _privateConstructorUsedError;
-  String? get username => throw _privateConstructorUsedError;
+  String get userUid => throw _privateConstructorUsedError;
+  String get authUserUid => throw _privateConstructorUsedError;
+  String get photoUrl => throw _privateConstructorUsedError;
+  String get bio => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
   bool get isLogout => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
   bool get isAuthUser => throw _privateConstructorUsedError;
@@ -671,11 +671,11 @@ abstract class $ProfileStateCopyWith<$Res> {
       int postLen,
       int followers,
       int following,
-      String? userUid,
-      String? authUserUid,
-      String? photoUrl,
-      String? bio,
-      String? username,
+      String userUid,
+      String authUserUid,
+      String photoUrl,
+      String bio,
+      String username,
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
@@ -701,11 +701,11 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? postLen = null,
     Object? followers = null,
     Object? following = null,
-    Object? userUid = freezed,
-    Object? authUserUid = freezed,
-    Object? photoUrl = freezed,
-    Object? bio = freezed,
-    Object? username = freezed,
+    Object? userUid = null,
+    Object? authUserUid = null,
+    Object? photoUrl = null,
+    Object? bio = null,
+    Object? username = null,
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
@@ -730,26 +730,26 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as int,
-      userUid: freezed == userUid
+      userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authUserUid: freezed == authUserUid
+              as String,
+      authUserUid: null == authUserUid
           ? _value.authUserUid
           : authUserUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      photoUrl: freezed == photoUrl
+              as String,
+      photoUrl: null == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
+              as String,
+      bio: null == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      username: freezed == username
+              as String,
+      username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       isLogout: null == isLogout
           ? _value.isLogout
           : isLogout // ignore: cast_nullable_to_non_nullable
@@ -791,11 +791,11 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       int postLen,
       int followers,
       int following,
-      String? userUid,
-      String? authUserUid,
-      String? photoUrl,
-      String? bio,
-      String? username,
+      String userUid,
+      String authUserUid,
+      String photoUrl,
+      String bio,
+      String username,
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
@@ -819,11 +819,11 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? postLen = null,
     Object? followers = null,
     Object? following = null,
-    Object? userUid = freezed,
-    Object? authUserUid = freezed,
-    Object? photoUrl = freezed,
-    Object? bio = freezed,
-    Object? username = freezed,
+    Object? userUid = null,
+    Object? authUserUid = null,
+    Object? photoUrl = null,
+    Object? bio = null,
+    Object? username = null,
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
@@ -848,26 +848,26 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as int,
-      userUid: freezed == userUid
+      userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authUserUid: freezed == authUserUid
+              as String,
+      authUserUid: null == authUserUid
           ? _value.authUserUid
           : authUserUid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      photoUrl: freezed == photoUrl
+              as String,
+      photoUrl: null == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bio: freezed == bio
+              as String,
+      bio: null == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
-      username: freezed == username
+              as String,
+      username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       isLogout: null == isLogout
           ? _value.isLogout
           : isLogout // ignore: cast_nullable_to_non_nullable
@@ -904,11 +904,11 @@ class _$_ProfileState implements _ProfileState {
       this.postLen = 0,
       this.followers = 0,
       this.following = 0,
-      this.userUid,
-      this.authUserUid,
-      this.photoUrl,
-      this.bio,
-      this.username,
+      this.userUid = "",
+      this.authUserUid = "",
+      this.photoUrl = "",
+      this.bio = "",
+      this.username = "",
       this.isLogout = false,
       this.isFollowing = false,
       this.isAuthUser = false,
@@ -930,15 +930,20 @@ class _$_ProfileState implements _ProfileState {
   @JsonKey()
   final int following;
   @override
-  final String? userUid;
+  @JsonKey()
+  final String userUid;
   @override
-  final String? authUserUid;
+  @JsonKey()
+  final String authUserUid;
   @override
-  final String? photoUrl;
+  @JsonKey()
+  final String photoUrl;
   @override
-  final String? bio;
+  @JsonKey()
+  final String bio;
   @override
-  final String? username;
+  @JsonKey()
+  final String username;
   @override
   @JsonKey()
   final bool isLogout;
@@ -1033,11 +1038,11 @@ abstract class _ProfileState implements ProfileState {
       final int postLen,
       final int followers,
       final int following,
-      final String? userUid,
-      final String? authUserUid,
-      final String? photoUrl,
-      final String? bio,
-      final String? username,
+      final String userUid,
+      final String authUserUid,
+      final String photoUrl,
+      final String bio,
+      final String username,
       final bool isLogout,
       final bool isFollowing,
       final bool isAuthUser,
@@ -1054,15 +1059,15 @@ abstract class _ProfileState implements ProfileState {
   @override
   int get following;
   @override
-  String? get userUid;
+  String get userUid;
   @override
-  String? get authUserUid;
+  String get authUserUid;
   @override
-  String? get photoUrl;
+  String get photoUrl;
   @override
-  String? get bio;
+  String get bio;
   @override
-  String? get username;
+  String get username;
   @override
   bool get isLogout;
   @override
