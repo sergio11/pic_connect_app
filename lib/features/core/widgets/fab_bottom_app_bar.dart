@@ -4,14 +4,10 @@ class FABBottomAppBarItem {
   final IconData iconData;
   final String text;
 
-  FABBottomAppBarItem({
-    required this.iconData,
-    required this.text
-  });
+  FABBottomAppBarItem({required this.iconData, required this.text});
 }
 
 class FABBottomAppBar extends StatefulWidget {
-
   final List<FABBottomAppBarItem> items;
   final String centerItemText;
   final double height;
@@ -61,15 +57,25 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
       );
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
-    return BottomAppBar(
-      shape: widget.notchedShape,
-      color: widget.backgroundColor,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
-      ),
-    );
+    return Container(
+        decoration: const BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 60,
+            ),
+          ],
+        ),
+        child: BottomAppBar(
+          shape: widget.notchedShape,
+          notchMargin: 12,
+          color: widget.backgroundColor,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: items,
+          ),
+        ));
   }
 
   Widget _buildMiddleTabItem() {

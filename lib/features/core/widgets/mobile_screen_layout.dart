@@ -21,6 +21,7 @@ class MobileScreenLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
+      extendBody: true,
       bottomNavigationBar: FABBottomAppBar(
         centerItemText: '',
         color: accentColor,
@@ -45,7 +46,7 @@ class MobileScreenLayout extends StatelessWidget {
   Widget _buildFab(BuildContext context) {
     final icons = [ Icons.camera, Icons.file_open ];
     return AnchoredOverlay(
-      showOverlay: true,
+      showOverlay: false,
       overlayBuilder: (context, offset) {
         return CenterAbout(
           position: Offset(offset.dx, offset.dy - icons.length * 35.0),
