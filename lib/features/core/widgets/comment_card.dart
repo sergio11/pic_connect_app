@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pic_connect/domain/models/comment.dart';
+import 'package:pic_connect/utils/colors.dart';
 
 class CommentCard extends StatelessWidget {
 
   final CommentBO commentBO;
-  const CommentCard({Key? key, required this.commentBO}) : super(key: key);
+
+  const CommentCard({
+    Key? key,
+    required this.commentBO
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      color: primaryColor,
       child: Row(
         children: [
           CircleAvatar(
@@ -31,10 +37,17 @@ class CommentCard extends StatelessWidget {
                       children: [
                         TextSpan(
                             text: commentBO.author.username,
-                            style: const TextStyle(fontWeight: FontWeight.bold,)
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(color: accentColor, fontWeight: FontWeight.bold)
                         ),
                         TextSpan(
                           text: ' ${commentBO.text}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: accentColor, fontWeight: FontWeight.w500)
                         ),
                       ],
                     ),
@@ -45,8 +58,10 @@ class CommentCard extends StatelessWidget {
                       DateFormat.yMMMd().format(
                         commentBO.datePublished,
                       ),
-                      style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w400,),
+                      style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: accentColor, fontWeight: FontWeight.w400)
                     ),
                   )
                 ],
@@ -58,6 +73,7 @@ class CommentCard extends StatelessWidget {
             child: const Icon(
               Icons.favorite,
               size: 16,
+              color: accentColor,
             ),
           )
         ],

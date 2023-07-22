@@ -99,7 +99,7 @@ class AppRouter {
                 child: AddPostScreen(onBackPressed: () {
                   context.go(AppRoutesEnum.home.screenPath);
                 }, onPostUploaded: () {
-                  context.go(AppRoutesEnum.home.screenPath);
+                  context.go(AppRoutesEnum.profile.screenPath);
                 },),
               )
       ),
@@ -113,7 +113,9 @@ class AppRouter {
                       state.extra as String,
                       context.read<AppBloc>().state.authUserUid!
                   )),
-                child: const CommentsScreen(),
+                child: CommentsScreen(onBackPressed: () {
+                  context.go(AppRoutesEnum.home.screenPath);
+                },),
               )
       ),
       StatefulShellRoute.indexedStack(

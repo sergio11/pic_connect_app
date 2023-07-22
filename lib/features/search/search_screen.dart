@@ -12,7 +12,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
   final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

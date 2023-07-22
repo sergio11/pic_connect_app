@@ -77,7 +77,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               "Post",
               style: Theme.of(context)
                   .textTheme
-                  .bodyMedium
+                  .bodyLarge
                   ?.copyWith(color: secondaryColor),
             ),
           )

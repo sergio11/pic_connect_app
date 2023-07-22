@@ -45,6 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
+    _bioController.dispose();
     _videoController.dispose();
   }
 

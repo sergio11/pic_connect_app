@@ -63,18 +63,19 @@ class PostDatasourceImpl extends PostDatasource {
   }
 
   @override
-  Future<void> postComment(SavePostCommentDTO commentDTO) async {
+  Future<CommentDTO> postComment(SavePostCommentDTO commentDTO) async {
     final commentData = savePostCommentMapper(commentDTO);
-    await firestore
-        .collection('posts')
-        .doc(commentDTO.postId)
+    final postRef = firestore.collection('posts').doc(commentDTO.postId);
+    await postRef
         .collection('comments')
         .doc(commentData['commentId'])
         .set(commentData);
-    await firestore
-        .collection('posts')
-        .doc(commentDTO.postId)
-        .update({ 'commentsCount': FieldValue.increment(1) });
+    await postRef.update({ 'commentsCount': FieldValue.increment(1) });
+    final commentSnap = await postRef
+        .collection('comments')
+        .doc(commentData['commentId'])
+        .get();
+    return commentMapper(commentSnap);
   }
 
   @override
@@ -83,6 +84,7 @@ class PostDatasourceImpl extends PostDatasource {
         .collection('posts')
         .doc(postId)
         .collection('comments')
+        .orderBy('datePublished', descending: true)
         .get();
     return comments.docs
         .map((doc) => commentMapper(doc))

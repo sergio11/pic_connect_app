@@ -17,7 +17,7 @@ abstract class PostRepository {
     required String userUid
   });
 
-  Future<Either<Failure, bool>> postComment({
+  Future<Either<Failure, CommentBO>> postComment({
     required String postId,
     required String text,
     required String authorUid

@@ -61,18 +61,18 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> postComment({
+  Future<Either<Failure, CommentBO>> postComment({
     required String postId,
     required String text,
     required String authorUid
   }) async {
     try {
-      await postDatasource.postComment(SavePostCommentDTO(
+      final comment = await postDatasource.postComment(SavePostCommentDTO(
           postId: postId,
           text: text,
           authorUid: authorUid
       ));
-      return const Right(true);
+      return Right(await mapToCommentBO(comment));
     } catch (err) {
       return Left(Failure(message: err.toString()));
     }

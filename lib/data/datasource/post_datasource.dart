@@ -10,7 +10,7 @@ abstract class PostDatasource {
 
   Future<void> deletePost(String postId);
 
-  Future<void> postComment(SavePostCommentDTO commentDTO);
+  Future<CommentDTO> postComment(SavePostCommentDTO commentDTO);
 
   Future<bool> likePost({
     required String postId,
