@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,8 +9,7 @@ import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/comments/comments_screen.dart';
-import 'package:pic_connect/features/core/widgets/mobile_screen_layout.dart';
-import 'package:pic_connect/features/core/widgets/responsive_layout.dart';
+import 'package:pic_connect/features/core/widgets/navigate_screen.dart';
 import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/favorites/favorites_screen.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
@@ -121,10 +119,8 @@ class AppRouter {
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
-          return ResponsiveLayout(
-              mobileScreenLayout: MobileScreenLayout(
-                  navigationShell: navigationShell
-              )
+          return NavigateScreen(
+              navigationShell: navigationShell
           );
         },
         branches: <StatefulShellBranch>[
