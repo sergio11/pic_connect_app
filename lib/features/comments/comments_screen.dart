@@ -15,14 +15,17 @@ class CommentsScreen extends StatefulWidget {
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
-
   final TextEditingController commentEditingController =
-  TextEditingController();
+      TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     commentEditingController.dispose();
+  }
+
+  void onRefresh(CommentsState state) async {
+    context.read<CommentsBloc>().add(OnRefreshCommentsEvent(state.postId));
   }
 
   void onPublishComment(CommentsState state) async {
@@ -34,13 +37,12 @@ class _CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<CommentsBloc, CommentsState>(
         listener: (context, state) {
-          if (!state.isPublishingComment) {
-            commentEditingController.clear();
-          }
-        },
-        builder: (context, state) {
-          return _buildScreenContent(state);
-        });
+      if (!state.isPublishingComment) {
+        commentEditingController.clear();
+      }
+    }, builder: (context, state) {
+      return _buildScreenContent(state);
+    });
   }
 
   Widget _buildScreenContent(CommentsState state) {
@@ -52,8 +54,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               color: accentColor,
               onPressed: () => widget.onBackPressed()),
           title: Text('Comments',
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .titleLarge
                   ?.copyWith(color: accentColor)),
@@ -72,20 +73,25 @@ class _CommentsScreenState extends State<CommentsScreen> {
   }
 
   Widget _buildCommentsListView(CommentsState state) {
-    return ListView.separated(
-      padding: const EdgeInsets.only(top: 8),
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: state.commentsByPost.length,
-      separatorBuilder: (context, index) =>
-      const SizedBox(
-        height: 8,
-      ),
-      itemBuilder: (ctx, index) =>
-          CommentCard(
+    return RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(
+            const Duration(seconds: 1),
+            () => onRefresh(state),
+          );
+        },
+        child: ListView.separated(
+          padding: const EdgeInsets.only(top: 8),
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: state.commentsByPost.length,
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 8,
+          ),
+          itemBuilder: (ctx, index) => CommentCard(
             commentBO: state.commentsByPost[index],
           ),
-    );
+        ));
   }
 
   Widget _buildTextInput(CommentsState state) {
@@ -100,10 +106,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           ],
         ),
         margin:
-        EdgeInsets.only(bottom: MediaQuery
-            .of(context)
-            .viewInsets
-            .bottom),
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         padding: const EdgeInsets.only(left: 16, right: 8),
         child: Row(
           children: [
@@ -118,36 +121,29 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     controller: commentEditingController,
                     decoration: InputDecoration(
                       hintText: 'Comment as ',
-                      hintStyle: Theme
-                          .of(context)
+                      hintStyle: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(color: accentColor),
                       border: InputBorder.none,
                     ),
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .bodyLarge
                         ?.copyWith(color: accentColor)),
               ),
             ),
             InkWell(
-              onTap: () =>
-              {
-                if(!state.isPublishingComment && commentEditingController.text.isNotEmpty) {
-                  onPublishComment(state)
-                }
+              onTap: () => {
+                if (!state.isPublishingComment &&
+                    commentEditingController.text.isNotEmpty)
+                  {onPublishComment(state)}
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 child: Text(
                   'Post',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: secondaryColor, fontWeight: FontWeight.bold),
                 ),
               ),

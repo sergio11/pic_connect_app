@@ -25,6 +25,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   }): super(const CommentsState()) {
     on<OnLoadCommentsByPostEvent>(onLoadCommentsByPostEventHandler);
     on<OnPublishCommentEvent>(onPublishCommentEventHandler);
+    on<OnRefreshCommentsEvent>(onRefreshCommentsEventHandler);
   }
 
   FutureOr<void> onLoadCommentsByPostEventHandler(OnLoadCommentsByPostEvent event, Emitter<CommentsState> emit) async {
@@ -48,5 +49,13 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
               (failure) => emit(state.copyWith(isPublishingComment: false)),
               (commentSaved) => emit(state.copyWith(isPublishingComment: false, commentsByPost: state.commentsByPost.toList()..insert(0, commentSaved)))
       );
+  }
+
+  FutureOr<void> onRefreshCommentsEventHandler(OnRefreshCommentsEvent event, Emitter<CommentsState> emit) async {
+    final commentsResponse = await findAllCommentsByPostUseCase(FindAllCommentsByPostParams(event.postId));
+    commentsResponse.fold(
+            (failure) => emit(state.copyWith()),
+            (commentsByPost) => emit(state.copyWith(commentsByPost: commentsByPost))
+    );
   }
 }

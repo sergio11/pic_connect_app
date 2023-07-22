@@ -22,18 +22,21 @@ mixin _$CommentsEvent {
     required TResult Function(String postId, String authUserUid)
         loadCommentsByPost,
     required TResult Function(String postId, String text) publishComment,
+    required TResult Function(String postId) refreshCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String postId, String authUserUid)? loadCommentsByPost,
     TResult? Function(String postId, String text)? publishComment,
+    TResult? Function(String postId)? refreshCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId, String authUserUid)? loadCommentsByPost,
     TResult Function(String postId, String text)? publishComment,
+    TResult Function(String postId)? refreshCommentsByPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -42,18 +45,22 @@ mixin _$CommentsEvent {
     required TResult Function(OnLoadCommentsByPostEvent value)
         loadCommentsByPost,
     required TResult Function(OnPublishCommentEvent value) publishComment,
+    required TResult Function(OnRefreshCommentsEvent value)
+        refreshCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     TResult? Function(OnPublishCommentEvent value)? publishComment,
+    TResult? Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     TResult Function(OnPublishCommentEvent value)? publishComment,
+    TResult Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -176,6 +183,7 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
     required TResult Function(String postId, String authUserUid)
         loadCommentsByPost,
     required TResult Function(String postId, String text) publishComment,
+    required TResult Function(String postId) refreshCommentsByPost,
   }) {
     return loadCommentsByPost(postId, authUserUid);
   }
@@ -185,6 +193,7 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String postId, String authUserUid)? loadCommentsByPost,
     TResult? Function(String postId, String text)? publishComment,
+    TResult? Function(String postId)? refreshCommentsByPost,
   }) {
     return loadCommentsByPost?.call(postId, authUserUid);
   }
@@ -194,6 +203,7 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId, String authUserUid)? loadCommentsByPost,
     TResult Function(String postId, String text)? publishComment,
+    TResult Function(String postId)? refreshCommentsByPost,
     required TResult orElse(),
   }) {
     if (loadCommentsByPost != null) {
@@ -208,6 +218,8 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
     required TResult Function(OnLoadCommentsByPostEvent value)
         loadCommentsByPost,
     required TResult Function(OnPublishCommentEvent value) publishComment,
+    required TResult Function(OnRefreshCommentsEvent value)
+        refreshCommentsByPost,
   }) {
     return loadCommentsByPost(this);
   }
@@ -217,6 +229,7 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     TResult? Function(OnPublishCommentEvent value)? publishComment,
+    TResult? Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
   }) {
     return loadCommentsByPost?.call(this);
   }
@@ -226,6 +239,7 @@ class _$OnLoadCommentsByPostEvent implements OnLoadCommentsByPostEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     TResult Function(OnPublishCommentEvent value)? publishComment,
+    TResult Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
     required TResult orElse(),
   }) {
     if (loadCommentsByPost != null) {
@@ -327,6 +341,7 @@ class _$OnPublishCommentEvent implements OnPublishCommentEvent {
     required TResult Function(String postId, String authUserUid)
         loadCommentsByPost,
     required TResult Function(String postId, String text) publishComment,
+    required TResult Function(String postId) refreshCommentsByPost,
   }) {
     return publishComment(postId, text);
   }
@@ -336,6 +351,7 @@ class _$OnPublishCommentEvent implements OnPublishCommentEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String postId, String authUserUid)? loadCommentsByPost,
     TResult? Function(String postId, String text)? publishComment,
+    TResult? Function(String postId)? refreshCommentsByPost,
   }) {
     return publishComment?.call(postId, text);
   }
@@ -345,6 +361,7 @@ class _$OnPublishCommentEvent implements OnPublishCommentEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postId, String authUserUid)? loadCommentsByPost,
     TResult Function(String postId, String text)? publishComment,
+    TResult Function(String postId)? refreshCommentsByPost,
     required TResult orElse(),
   }) {
     if (publishComment != null) {
@@ -359,6 +376,8 @@ class _$OnPublishCommentEvent implements OnPublishCommentEvent {
     required TResult Function(OnLoadCommentsByPostEvent value)
         loadCommentsByPost,
     required TResult Function(OnPublishCommentEvent value) publishComment,
+    required TResult Function(OnRefreshCommentsEvent value)
+        refreshCommentsByPost,
   }) {
     return publishComment(this);
   }
@@ -368,6 +387,7 @@ class _$OnPublishCommentEvent implements OnPublishCommentEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     TResult? Function(OnPublishCommentEvent value)? publishComment,
+    TResult? Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
   }) {
     return publishComment?.call(this);
   }
@@ -377,6 +397,7 @@ class _$OnPublishCommentEvent implements OnPublishCommentEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
     TResult Function(OnPublishCommentEvent value)? publishComment,
+    TResult Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
     required TResult orElse(),
   }) {
     if (publishComment != null) {
@@ -396,6 +417,154 @@ abstract class OnPublishCommentEvent implements CommentsEvent {
   @override
   @JsonKey(ignore: true)
   _$$OnPublishCommentEventCopyWith<_$OnPublishCommentEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnRefreshCommentsEventCopyWith<$Res>
+    implements $CommentsEventCopyWith<$Res> {
+  factory _$$OnRefreshCommentsEventCopyWith(_$OnRefreshCommentsEvent value,
+          $Res Function(_$OnRefreshCommentsEvent) then) =
+      __$$OnRefreshCommentsEventCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String postId});
+}
+
+/// @nodoc
+class __$$OnRefreshCommentsEventCopyWithImpl<$Res>
+    extends _$CommentsEventCopyWithImpl<$Res, _$OnRefreshCommentsEvent>
+    implements _$$OnRefreshCommentsEventCopyWith<$Res> {
+  __$$OnRefreshCommentsEventCopyWithImpl(_$OnRefreshCommentsEvent _value,
+      $Res Function(_$OnRefreshCommentsEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnRefreshCommentsEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnRefreshCommentsEvent implements OnRefreshCommentsEvent {
+  const _$OnRefreshCommentsEvent(this.postId);
+
+  @override
+  final String postId;
+
+  @override
+  String toString() {
+    return 'CommentsEvent.refreshCommentsByPost(postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnRefreshCommentsEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnRefreshCommentsEventCopyWith<_$OnRefreshCommentsEvent> get copyWith =>
+      __$$OnRefreshCommentsEventCopyWithImpl<_$OnRefreshCommentsEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String postId, String authUserUid)
+        loadCommentsByPost,
+    required TResult Function(String postId, String text) publishComment,
+    required TResult Function(String postId) refreshCommentsByPost,
+  }) {
+    return refreshCommentsByPost(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String postId, String authUserUid)? loadCommentsByPost,
+    TResult? Function(String postId, String text)? publishComment,
+    TResult? Function(String postId)? refreshCommentsByPost,
+  }) {
+    return refreshCommentsByPost?.call(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String postId, String authUserUid)? loadCommentsByPost,
+    TResult Function(String postId, String text)? publishComment,
+    TResult Function(String postId)? refreshCommentsByPost,
+    required TResult orElse(),
+  }) {
+    if (refreshCommentsByPost != null) {
+      return refreshCommentsByPost(postId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadCommentsByPostEvent value)
+        loadCommentsByPost,
+    required TResult Function(OnPublishCommentEvent value) publishComment,
+    required TResult Function(OnRefreshCommentsEvent value)
+        refreshCommentsByPost,
+  }) {
+    return refreshCommentsByPost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
+    TResult? Function(OnPublishCommentEvent value)? publishComment,
+    TResult? Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
+  }) {
+    return refreshCommentsByPost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadCommentsByPostEvent value)? loadCommentsByPost,
+    TResult Function(OnPublishCommentEvent value)? publishComment,
+    TResult Function(OnRefreshCommentsEvent value)? refreshCommentsByPost,
+    required TResult orElse(),
+  }) {
+    if (refreshCommentsByPost != null) {
+      return refreshCommentsByPost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnRefreshCommentsEvent implements CommentsEvent {
+  const factory OnRefreshCommentsEvent(final String postId) =
+      _$OnRefreshCommentsEvent;
+
+  @override
+  String get postId;
+  @override
+  @JsonKey(ignore: true)
+  _$$OnRefreshCommentsEventCopyWith<_$OnRefreshCommentsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
