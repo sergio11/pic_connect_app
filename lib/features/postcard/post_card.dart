@@ -44,8 +44,11 @@ class _PostCardState extends State<PostCard> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: primaryColor,
-          boxShadow: [
-            BoxShadow(color: accentColor.withOpacity(0.2), spreadRadius: 1),
+          boxShadow: const [
+            BoxShadow(
+                color: blackColor,
+                blurRadius: 8
+            ),
           ],
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

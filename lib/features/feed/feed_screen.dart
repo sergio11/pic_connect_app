@@ -88,10 +88,7 @@ class _FeedScreenState extends State<FeedScreen> {
         physics: const BouncingScrollPhysics(),
         itemCount: state.posts.length,
         itemBuilder: (ctx, index) => Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 5,
-          ),
+          margin: const EdgeInsets.all(10),
           child: BlocProvider(
               create: (context) => serviceLocator<PostCardBloc>()
                 ..add(OnShowPostEvent(state.posts[index], state.authUserUid)),

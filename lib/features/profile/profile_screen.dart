@@ -29,6 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildScreenContent(BuildContext context, ProfileState state) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: accentColor, //change your color here
+        ),
         backgroundColor: appBarBackgroundColor,
         title: Text(state.username,
             style: Theme.of(context)
@@ -59,10 +62,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: primaryColor,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                              color: secondaryColor.withOpacity(0.2),
-                              spreadRadius: 2),
+                              color: blackColor,
+                              blurRadius: 8
+                          ),
                         ],
                       ),
                       child: Column(
@@ -74,7 +78,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  const Divider(height: 20,),
+                  const Divider(
+                    height: 20,
+                  ),
                   _buildPostsGrid(state)
                 ])
           ])),
@@ -92,8 +98,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Container(
           padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(
-              color: secondaryColor.withOpacity(0.5), shape: BoxShape.circle),
+          decoration: const BoxDecoration(
+              color: secondaryColor, shape: BoxShape.circle),
           child: CircleAvatar(
             backgroundColor: accentColor,
             backgroundImage: NetworkImage(state.photoUrl),
@@ -149,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       textColor: Colors.black,
       borderColor: Colors.grey,
       onPressed: () async {
-        context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid!));
+        context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid));
       },
     );
   }
@@ -161,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       textColor: Colors.white,
       borderColor: Colors.blue,
       onPressed: () async {
-        context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid!));
+        context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid));
       },
     );
   }
@@ -174,8 +180,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       child: Text(
         state.username,
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          color: accentColor, fontWeight: FontWeight.bold),
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -186,41 +194,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.only(
         top: 1,
       ),
-      child: Text(state.bio, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: accentColor, fontWeight: FontWeight.w400)),
+      child: Text(state.bio,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: accentColor, fontWeight: FontWeight.w400)),
     );
   }
 
   Widget _buildPostsGrid(ProfileState state) {
-    return Container(
-      height: 500,
-      color: primaryColor,
-      child: GridView.builder(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        itemCount: state.postList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1.5,
-          childAspectRatio: 1,
-        ),
-        itemBuilder: (context, index) {
-          return state.isPostGridLoading
-              ? _buildProgressIndicator()
-              : Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: primaryColor),
-                  child: SizedBox(
-                    child: Image(
-                      image: NetworkImage(state.postList[index].postUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                );
-        },
+    return GridView.builder(
+      shrinkWrap: true,
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      itemCount: state.postList.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: 1,
       ),
+      itemBuilder: (context, index) {
+        return state.isPostGridLoading
+            ? _buildProgressIndicator()
+            : Container(
+                color: primaryColor,
+                padding: const EdgeInsets.all(1),
+                child: SizedBox(
+                  child: Image(
+                    image: NetworkImage(state.postList[index].postUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+      },
     );
   }
 
@@ -231,15 +235,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           num.toString(),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: accentColor, fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
         ),
         Container(
           margin: const EdgeInsets.only(top: 4),
           child: Text(
             label,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: accentColor, fontWeight: FontWeight.w400),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: accentColor, fontWeight: FontWeight.w400),
           ),
         ),
       ],

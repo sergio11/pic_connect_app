@@ -149,7 +149,9 @@ class AppRouter {
                     BlocProvider(
                       create: (context) => serviceLocator<SearchBloc>()
                         ..add(const OnLoadLastPostsPublishedEvent()),
-                      child: const SearchScreen(),
+                      child: SearchScreen(onShowUserProfile: (String userUid) {
+                        context.push(AppRoutesEnum.profile.screenPath, extra: userUid);
+                      },),
                     )
               ),
             ],
@@ -175,7 +177,7 @@ class AppRouter {
                 builder: (BuildContext context, GoRouterState state) =>
                   BlocProvider(
                     create: (context) => serviceLocator<ProfileBloc>()
-                      ..add(OnLoadProfileEvent(context.read<AppBloc>().state.authUserUid!)),
+                      ..add(OnLoadProfileEvent(state.extra is String ? state.extra as String : context.read<AppBloc>().state.authUserUid!)),
                     child: const ProfileScreen(),
                   )
               ),

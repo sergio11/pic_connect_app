@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/core/widgets/fab_bottom_app_bar.dart';
@@ -21,6 +24,8 @@ class NavigateScreen extends StatefulWidget {
 }
 
 class _NavigateScreenState extends State<NavigateScreen> {
+
+  late StreamSubscription<bool> keyboardSubscription;
   bool isBottomBarVisible = true;
   bool showOverlay = true;
 
@@ -33,6 +38,20 @@ class _NavigateScreenState extends State<NavigateScreen> {
   void showNav() {
     setState(() {
       isBottomBarVisible = true;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
+      if(visible) {
+        hideNav();
+      } else {
+        showNav();
+      }
     });
   }
 
@@ -111,5 +130,11 @@ class _NavigateScreenState extends State<NavigateScreen> {
             child: const Icon(Icons.add),
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    keyboardSubscription.cancel();
+    super.dispose();
   }
 }

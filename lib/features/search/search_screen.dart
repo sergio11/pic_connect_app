@@ -5,7 +5,13 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+
+  final Function(String userUid) onShowUserProfile;
+
+  const SearchScreen({
+    Key? key,
+    required this.onShowUserProfile
+  }) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -49,19 +55,22 @@ class _SearchScreenState extends State<SearchScreen> {
     return TextFormField(
       controller: searchController,
       decoration: InputDecoration(
-        labelText: 'Search for a user...',
-        labelStyle: Theme.of(context)
-            .textTheme
-            .labelMedium
-            ?.copyWith(color: accentColor),
-        prefixIcon: const Icon(
-          Icons.search,
-          color: accentColor,
-        ),
-        prefixIconColor: accentColor,
-        filled: true,
-        fillColor: whiteColor,
-      ),
+          labelText: 'Search for a user...',
+          labelStyle: Theme.of(context)
+              .textTheme
+              .labelMedium
+              ?.copyWith(color: accentColor),
+          prefixIcon: const Icon(
+            Icons.search,
+            color: accentColor,
+          ),
+          prefixIconColor: accentColor,
+          filled: true,
+          fillColor: whiteColor,
+          suffixIcon: IconButton(
+            onPressed: searchController.clear,
+            icon: const Icon(Icons.clear, color: accentColor),
+          )),
       onFieldSubmitted: (String term) {
         context.read<SearchBloc>().add(OnSearchUsersEvent(term));
       },
@@ -75,23 +84,32 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildUsersGridView(SearchState state) {
-    return ListView.builder(
+    return ListView.separated(
+      padding: const EdgeInsets.only(top: 8),
+      physics: const BouncingScrollPhysics(),
+      shrinkWrap: true,
       itemCount: state.users.length,
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 8,
+      ),
       itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () => {},
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                state.users[index].photoUrl,
+        return Container(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+            color: primaryColor,
+            child: InkWell(
+              onTap: () => widget.onShowUserProfile(state.users[index].uid),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    state.users[index].photoUrl,
+                  ),
+                  radius: 16,
+                ),
+                title: Text(
+                  state.users[index].username,
+                ),
               ),
-              radius: 16,
-            ),
-            title: Text(
-              state.users[index].username,
-            ),
-          ),
-        );
+            ));
       },
     );
   }
