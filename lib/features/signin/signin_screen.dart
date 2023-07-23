@@ -151,25 +151,19 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: const EdgeInsets.only(bottom: 50),
-          child: Text('Dont have an account?',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: whiteColor)),
-        ),
+        Text('Dont have an account?',
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: whiteColor)),
         GestureDetector(
-          onTap: () => {widget.onSignUpPressed()},
-          child: Container(
-            padding: const EdgeInsets.only(bottom: 50),
-            child: Text(
-              ' Signup.',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: secondaryColor),
-            ),
+          onTap: widget.onSignUpPressed,
+          child: Text(
+            ' Signup.',
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(color: secondaryColor),
           ),
         ),
       ],
