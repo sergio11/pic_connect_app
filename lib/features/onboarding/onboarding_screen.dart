@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:video_player/video_player.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   final VoidCallback onSignInPressed;
@@ -17,27 +18,50 @@ class OnBoardingScreen extends StatefulWidget {
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
+
+  late VideoPlayerController _videoController;
+
+  @override
+  void initState() {
+    super.initState();
+    _videoController =
+    VideoPlayerController.asset("assets/pic_connect_onboarding_video.mp4")
+      ..initialize().then((_) {
+        // Once the video has been loaded we play the video and set looping to true.
+        _videoController.play();
+        _videoController.setLooping(true);
+        // Ensure the first frame is shown after the video is initialized.
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _videoController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            _buildScreenBackground(),
+            _buildVideoBackground(),
             _buildScreenContent()
           ],
         ));
   }
 
-  Widget _buildScreenBackground() {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/onboarding_picture.jpg"),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
+  Widget _buildVideoBackground() {
+    return SizedBox.expand(
+        child: FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: _videoController.value.size.width ?? 0,
+              height: _videoController.value.size.height ?? 0,
+              child: VideoPlayer(_videoController),
+            )));
   }
 
   Widget _buildScreenContent() {
@@ -47,12 +71,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       secondaryBegin: Alignment.bottomLeft,
       secondaryEnd: Alignment.topRight,
       primaryColors: [
-        accentColor.withOpacity(0.8),
-        secondaryColor.withOpacity(0.8)
+        secondaryColorLight.withOpacity(0.8),
+        accentColorShadow.withOpacity(0.8)
       ],
       secondaryColors: [
-        secondaryColor.withOpacity(0.8),
-        accentColor.withOpacity(0.8),
+        secondaryColorExtraLight.withOpacity(0.8),
+        accentColorShadow.withOpacity(0.8)
       ],
       child: SizedBox(
           width: double.infinity,

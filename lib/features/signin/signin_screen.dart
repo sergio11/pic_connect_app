@@ -8,7 +8,6 @@ import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
-import 'package:video_player/video_player.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onSignUpPressed;
@@ -23,28 +22,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late VideoPlayerController _videoController;
-
-  @override
-  void initState() {
-    super.initState();
-    _videoController =
-        VideoPlayerController.asset("assets/pic_connect_login_video.mp4")
-          ..initialize().then((_) {
-            // Once the video has been loaded we play the video and set looping to true.
-            _videoController.play();
-            _videoController.setLooping(true);
-            // Ensure the first frame is shown after the video is initialized.
-            setState(() {});
-          });
-  }
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _videoController.dispose();
   }
 
   void onLoginClicked() async {
@@ -72,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            _buildVideoBackground(context, state),
+            _buildScreenBackground(),
             _buildScreenContent(context, state)
           ],
         ),
@@ -170,15 +153,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildVideoBackground(BuildContext context, SignInState state) {
-    return SizedBox.expand(
-        child: FittedBox(
-            fit: BoxFit.cover,
-            child: SizedBox(
-              width: _videoController.value.size.width ?? 0,
-              height: _videoController.value.size.height ?? 0,
-              child: VideoPlayer(_videoController),
-            )));
+  Widget _buildScreenBackground() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/sign_in_background_picture.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 
   Widget _buildSignInForm(SignInState state) {

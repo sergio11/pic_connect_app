@@ -11,3 +11,6 @@ const secondaryColor = Color(0xFFFFCC00);
 const Color whiteColor = Color(0xFFFFFFFF);
 const Color blackColor = Colors.black;
 const Color accentColor = Color(0xFF424242);
+const Color accentColorShadow = Color(0xFF353535);
+const Color secondaryColorLight = Color(0xFFFFD633);
+const Color secondaryColorExtraLight = Color(0xFFFFEB99);

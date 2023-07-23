@@ -25,21 +25,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
-  late VideoPlayerController _videoController;
-
-  @override
-  void initState() {
-    super.initState();
-    _videoController =
-        VideoPlayerController.asset("assets/pic_connect_signup_video.mp4")
-          ..initialize().then((_) {
-            // Once the video has been loaded we play the video and set looping to true.
-            _videoController.play();
-            _videoController.setLooping(true);
-            // Ensure the first frame is shown after the video is initialized.
-            setState(() {});
-          });
-  }
 
   @override
   void dispose() {
@@ -48,7 +33,6 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _usernameController.dispose();
     _bioController.dispose();
-    _videoController.dispose();
   }
 
   void onSignUpUser() async {
@@ -84,7 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
             resizeToAvoidBottomInset: false,
             body: Stack(
               children: [
-                _buildVideoBackground(state),
+                _buildScreenBackground(),
                 _buildScreenContent(state)
               ],
             ),
@@ -92,15 +76,15 @@ class _SignupScreenState extends State<SignupScreen> {
         });
   }
 
-  Widget _buildVideoBackground(SignUpState state) {
-    return SizedBox.expand(
-        child: FittedBox(
-            fit: BoxFit.cover,
-            child: SizedBox(
-              width: _videoController.value.size.width ?? 0,
-              height: _videoController.value.size.height ?? 0,
-              child: VideoPlayer(_videoController),
-            )));
+  Widget _buildScreenBackground() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/sign_up_background_picture.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 
   Widget _buildScreenContent(SignUpState state) {

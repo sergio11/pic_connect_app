@@ -76,15 +76,26 @@ class AppRouter {
                 },
               )),
       GoRoute(
-        path: AppRoutesEnum.login.screenPath,
-        name: AppRoutesEnum.login.screenName,
-        builder: (context, state) => BlocProvider(
-          create: (context) => serviceLocator<SignInBloc>(),
-          child: LoginScreen(onSignUpPressed: () {
-            context.push(AppRoutesEnum.signup.screenPath);
-          }),
-        ),
-      ),
+          path: AppRoutesEnum.login.screenPath,
+          name: AppRoutesEnum.login.screenName,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => serviceLocator<SignInBloc>(),
+                child: LoginScreen(onSignUpPressed: () {
+                  context.push(AppRoutesEnum.signup.screenPath);
+                }),
+              ),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ))),
       GoRoute(
         path: AppRoutesEnum.signup.screenPath,
         name: AppRoutesEnum.signup.screenName,
@@ -95,38 +106,15 @@ class AppRouter {
                 child: SignupScreen(onSignInPressed: () {
                   context.push(AppRoutesEnum.login.screenPath);
                 })),
+            transitionDuration: const Duration(milliseconds: 600),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
-                    ScaleTransition(
-                      scale: Tween<double>(
-                        begin: 0.0,
-                        end: 1.0,
-                      ).animate(
-                        CurvedAnimation(
-                          parent: animation,
-                          curve: const Interval(
-                            0.00,
-                            0.50,
-                            curve: Curves.linear,
-                          ),
-                        ),
-                      ),
-                      child: ScaleTransition(
-                        scale: Tween<double>(
-                          begin: 1.5,
-                          end: 1.0,
-                        ).animate(
-                          CurvedAnimation(
-                            parent: animation,
-                            curve: const Interval(
-                              0.50,
-                              1.00,
-                              curve: Curves.linear,
-                            ),
-                          ),
-                        ),
-                        child: child,
-                      ),
+                    SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(-1.0, 0.0),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
                     )),
       ),
       GoRoute(
