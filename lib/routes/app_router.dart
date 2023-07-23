@@ -30,9 +30,7 @@ class AppRouter {
   final RouterRefreshStream routerRefreshStream;
   final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-  AppRouter({
-    required this.routerRefreshStream
-  });
+  AppRouter({required this.routerRefreshStream});
 
   get router => _router;
 
@@ -43,13 +41,16 @@ class AppRouter {
     redirect: (BuildContext context, GoRouterState state) async {
       final appState = context.read<AppBloc>().state;
       final bool loggedIn = appState.authUserUid != null;
-      final matchedLocation = AppRoutesEnum.values.firstWhere((route) => route.screenPath == state.matchedLocation);
-      if(matchedLocation.requireImmersiveMode) {
+      final matchedLocation = AppRoutesEnum.values
+          .firstWhere((route) => route.screenPath == state.matchedLocation);
+      if (matchedLocation.requireImmersiveMode) {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
       } else {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: SystemUiOverlay.values);
       }
-      debugPrint("redirect - loggedIn: $loggedIn  - state.matchedLocation: ${state.matchedLocation}");
+      debugPrint(
+          "redirect - loggedIn: $loggedIn  - state.matchedLocation: ${state.matchedLocation}");
       if (!loggedIn && matchedLocation != AppRoutesEnum.signup) {
         return AppRoutesEnum.login.screenPath;
       }
@@ -65,122 +66,181 @@ class AppRouter {
       GoRoute(
         path: AppRoutesEnum.login.screenPath,
         name: AppRoutesEnum.login.screenName,
-        builder: (context, state) =>
-            BlocProvider(
-              create: (context) => serviceLocator<SignInBloc>(),
-              child: LoginScreen(onSignUpPressed: () {
-                context.push(AppRoutesEnum.signup.screenPath);
-              }),
-            ),
+        builder: (context, state) => BlocProvider(
+          create: (context) => serviceLocator<SignInBloc>(),
+          child: LoginScreen(onSignUpPressed: () {
+            context.push(AppRoutesEnum.signup.screenPath);
+          }),
+        ),
       ),
       GoRoute(
         path: AppRoutesEnum.signup.screenPath,
         name: AppRoutesEnum.signup.screenName,
-        builder: (context, state) =>
-            BlocProvider(
-              create: (context) => serviceLocator<SignUpBloc>(),
-              child: SignupScreen(onSignInPressed: () {
-                context.pop();
-              }),
-            ),
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: BlocProvider(
+                create: (context) => serviceLocator<SignUpBloc>(),
+                child: SignupScreen(onSignInPressed: () {
+                  context.pop();
+                })),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    ScaleTransition(
+                      scale: Tween<double>(
+                        begin: 0.0,
+                        end: 1.0,
+                      ).animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: const Interval(
+                            0.00,
+                            0.50,
+                            curve: Curves.linear,
+                          ),
+                        ),
+                      ),
+                      child: ScaleTransition(
+                        scale: Tween<double>(
+                          begin: 1.5,
+                          end: 1.0,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: const Interval(
+                              0.50,
+                              1.00,
+                              curve: Curves.linear,
+                            ),
+                          ),
+                        ),
+                        child: child,
+                      ),
+                    )),
       ),
       GoRoute(
           path: AppRoutesEnum.add.screenPath,
           name: AppRoutesEnum.add.screenName,
-          builder: (BuildContext context, GoRouterState state) =>
-              BlocProvider(
+          builder: (BuildContext context, GoRouterState state) => BlocProvider(
                 create: (context) => serviceLocator<AddPostBloc>()
-                  ..add(OnAddNewPostEvent(
-                      state.extra as ImageSource,
-                      context.read<AppBloc>().state.authUserUid!
-                  )),
-                child: AddPostScreen(onBackPressed: () {
-                  context.go(AppRoutesEnum.home.screenPath);
-                }, onPostUploaded: () {
-                  context.go(AppRoutesEnum.profile.screenPath);
-                },),
-              )
-      ),
+                  ..add(OnAddNewPostEvent(state.extra as ImageSource,
+                      context.read<AppBloc>().state.authUserUid!)),
+                child: AddPostScreen(
+                  onBackPressed: () {
+                    context.go(AppRoutesEnum.home.screenPath);
+                  },
+                  onPostUploaded: () {
+                    context.go(AppRoutesEnum.profile.screenPath);
+                  },
+                ),
+              )),
       GoRoute(
           path: AppRoutesEnum.comments.screenPath,
           name: AppRoutesEnum.comments.screenName,
-          builder: (BuildContext context, GoRouterState state) =>
-              BlocProvider(
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: BlocProvider(
                 create: (context) => serviceLocator<CommentsBloc>()
-                  ..add(OnLoadCommentsByPostEvent(
-                      state.extra as String,
-                      context.read<AppBloc>().state.authUserUid!
-                  )),
-                child: CommentsScreen(onBackPressed: () {
-                  context.go(AppRoutesEnum.home.screenPath);
-                },),
-              )
-      ),
+                  ..add(OnLoadCommentsByPostEvent(state.extra as String,
+                      context.read<AppBloc>().state.authUserUid!)),
+                child: CommentsScreen(
+                  onBackPressed: () {
+                    context.go(AppRoutesEnum.home.screenPath);
+                  },
+                  onShowUserProfile: (String userUid) {
+                    context.push(AppRoutesEnum.profile.screenPath,
+                        extra: userUid);
+                  },
+                ),
+              ),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ))),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
-          return NavigateScreen(
-              navigationShell: navigationShell
-          );
+          return NavigateScreen(navigationShell: navigationShell);
         },
         branches: <StatefulShellBranch>[
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                path: AppRoutesEnum.home.screenPath,
-                name: AppRoutesEnum.home.screenName,
-                builder: (BuildContext context, GoRouterState state) =>
-                  BlocProvider(
-                    create: (context) => serviceLocator<FeedBloc>()
-                      ..add(OnLoadHomePostsEvent(context.read<AppBloc>().state.authUserUid!)),
-                    child: FeedScreen(onShowCommentsByPost: (String postId) {
-                      context.go(AppRoutesEnum.comments.screenPath, extra: postId);
-                    },),
-                  )
-              )
+                  path: AppRoutesEnum.home.screenPath,
+                  name: AppRoutesEnum.home.screenName,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      BlocProvider(
+                        create: (context) => serviceLocator<FeedBloc>()
+                          ..add(OnLoadHomePostsEvent(
+                              context.read<AppBloc>().state.authUserUid!)),
+                        child: FeedScreen(
+                          onShowCommentsByPost: (String postId) {
+                            context.go(AppRoutesEnum.comments.screenPath,
+                                extra: postId);
+                          },
+                        ),
+                      ))
             ],
           ),
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                path: AppRoutesEnum.search.screenPath,
-                name: AppRoutesEnum.search.screenName,
-                builder: (BuildContext context, GoRouterState state) =>
-                    BlocProvider(
-                      create: (context) => serviceLocator<SearchBloc>()
-                        ..add(const OnLoadLastPostsPublishedEvent()),
-                      child: SearchScreen(onShowUserProfile: (String userUid) {
-                        context.push(AppRoutesEnum.profile.screenPath, extra: userUid);
-                      },),
-                    )
-              ),
+                  path: AppRoutesEnum.search.screenPath,
+                  name: AppRoutesEnum.search.screenName,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      BlocProvider(
+                        create: (context) => serviceLocator<SearchBloc>()
+                          ..add(const OnLoadLastPostsPublishedEvent()),
+                        child: SearchScreen(
+                          onShowUserProfile: (String userUid) {
+                            context.push(AppRoutesEnum.profile.screenPath,
+                                extra: userUid);
+                          },
+                        ),
+                      )),
             ],
           ),
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                path: AppRoutesEnum.favorites.screenPath,
-                name: AppRoutesEnum.favorites.screenName,
-                builder: (BuildContext context, GoRouterState state) =>
-                    BlocProvider(
-                      create: (context) => serviceLocator<FavoritesBloc>(),
-                      child: const FavoritesScreen(),
-                    )
-              ),
+                  path: AppRoutesEnum.favorites.screenPath,
+                  name: AppRoutesEnum.favorites.screenName,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      BlocProvider(
+                        create: (context) => serviceLocator<FavoritesBloc>(),
+                        child: const FavoritesScreen(),
+                      )),
             ],
           ),
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                path: AppRoutesEnum.profile.screenPath,
-                name: AppRoutesEnum.profile.screenName,
-                builder: (BuildContext context, GoRouterState state) =>
-                  BlocProvider(
-                    create: (context) => serviceLocator<ProfileBloc>()
-                      ..add(OnLoadProfileEvent(state.extra is String ? state.extra as String : context.read<AppBloc>().state.authUserUid!)),
-                    child: const ProfileScreen(),
-                  )
-              ),
+                  path: AppRoutesEnum.profile.screenPath,
+                  name: AppRoutesEnum.profile.screenName,
+                  pageBuilder: (context, state) => CustomTransitionPage<void>(
+                      key: state.pageKey,
+                      child: BlocProvider(
+                        create: (context) => serviceLocator<ProfileBloc>()
+                          ..add(OnLoadProfileEvent(state.extra is String
+                              ? state.extra as String
+                              : context.read<AppBloc>().state.authUserUid!)),
+                        child: const ProfileScreen(),
+                      ),
+                      transitionDuration: const Duration(milliseconds: 800),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(-1.0, 0.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              ))),
             ],
           ),
         ],

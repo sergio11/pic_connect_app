@@ -6,8 +6,13 @@ import 'package:pic_connect/utils/colors.dart';
 
 class CommentsScreen extends StatefulWidget {
   final VoidCallback onBackPressed;
+  final Function(String userUid) onShowUserProfile;
 
-  const CommentsScreen({Key? key, required this.onBackPressed})
+  const CommentsScreen({
+    Key? key,
+    required this.onBackPressed,
+    required this.onShowUserProfile
+  })
       : super(key: key);
 
   @override
@@ -88,8 +93,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
           separatorBuilder: (context, index) => const SizedBox(
             height: 8,
           ),
-          itemBuilder: (ctx, index) => CommentCard(
-            commentBO: state.commentsByPost[index],
+          itemBuilder: (ctx, index) => GestureDetector(
+            onTap: () => widget.onShowUserProfile(state.commentsByPost[index].author.uid),
+            child: CommentCard(
+              commentBO: state.commentsByPost[index],
+            ),
           ),
         ));
   }
