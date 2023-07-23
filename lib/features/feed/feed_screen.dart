@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
-import 'package:pic_connect/utils/global_variable.dart';
 
 class FeedScreen extends StatefulWidget {
 
@@ -39,9 +38,8 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget _buildScreenContent(FeedState state) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor:
-            width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
-        appBar: width > webScreenSize ? null : _buildAppBar(),
+        backgroundColor: mobileBackgroundColor,
+        appBar: _buildAppBar(),
         body: state.isLoading
             ? _buildProgressIndicator()
             : _buildPostsList(state));

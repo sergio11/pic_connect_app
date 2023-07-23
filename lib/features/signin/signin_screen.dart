@@ -5,7 +5,6 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
-import 'package:pic_connect/utils/global_variable.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
@@ -184,10 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       decoration: BoxDecoration(color: primaryColor.withOpacity(0.4)),
       child: Padding(
-        padding: MediaQuery.of(context).size.width > webScreenSize
-            ? EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width / 3)
-            : const EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

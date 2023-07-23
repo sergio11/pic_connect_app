@@ -4,6 +4,7 @@ import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/follow_button.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,11 +14,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  void onLogout() {
+    showAlertDialog(
+        context: context,
+        title: "You have logged out",
+        description: "see you soon!",
+        onAcceptPressed: () =>
+            {context.read<AppBloc>().add(const OnVerifySession())});
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(listener: (context, state) {
       if (state.isLogout) {
-        context.read<AppBloc>().add(const OnVerifySession());
+        onLogout();
       }
     }, builder: (context, state) {
       return state.isLoading
@@ -63,10 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(10),
                         color: primaryColor,
                         boxShadow: const [
-                          BoxShadow(
-                              color: blackColor,
-                              blurRadius: 8
-                          ),
+                          BoxShadow(color: blackColor, blurRadius: 8),
                         ],
                       ),
                       child: Column(
@@ -143,7 +150,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       textColor: accentColor,
       borderColor: secondaryColor,
       onPressed: () async {
-        context.read<ProfileBloc>().add(const OnSignOutEvent());
+        showConfirmDialog(
+            context: context,
+            title: "Sign off?",
+            description: "Are you sure to sign out?",
+            onAcceptPressed: () =>
+                {context.read<ProfileBloc>().add(const OnSignOutEvent())});
       },
     );
   }
