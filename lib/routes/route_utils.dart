@@ -1,15 +1,19 @@
-enum AppRoutesEnum { login, signup, home, error, profile, search, add, favorites, comments }
+enum AppRoutesEnum { onBoarding, login, signup, home, error, profile, search, add, favorites, comments }
+
+const List<AppRoutesEnum> unProtectedPaths = [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup];
 
 extension AppRouteExtension on AppRoutesEnum {
 
   bool get requireImmersiveMode {
-    return [AppRoutesEnum.login, AppRoutesEnum.signup].contains(this);
+    return [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup].contains(this);
   }
 
   String get screenPath {
     switch (this) {
       case AppRoutesEnum.home:
         return "/";
+      case AppRoutesEnum.onBoarding:
+        return "/onBoarding";
       case AppRoutesEnum.login:
         return "/login";
       case AppRoutesEnum.signup:
@@ -35,6 +39,8 @@ extension AppRouteExtension on AppRoutesEnum {
     switch (this) {
       case AppRoutesEnum.home:
         return "HOME";
+      case AppRoutesEnum.onBoarding:
+        return "ONBOARDING";
       case AppRoutesEnum.login:
         return "LOGIN";
       case AppRoutesEnum.signup:
@@ -60,6 +66,8 @@ extension AppRouteExtension on AppRoutesEnum {
     switch (this) {
       case AppRoutesEnum.home:
         return "Home";
+      case AppRoutesEnum.onBoarding:
+        return "OnBoarding";
       case AppRoutesEnum.login:
         return "Login";
       case AppRoutesEnum.error:

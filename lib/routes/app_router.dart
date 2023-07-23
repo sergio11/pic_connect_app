@@ -15,6 +15,7 @@ import 'package:pic_connect/features/favorites/favorites_screen.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/feed/feed_screen.dart';
 import 'package:pic_connect/features/notfound/not_found_page.dart';
+import 'package:pic_connect/features/onboarding/onboarding_screen.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/features/profile/profile_screen.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
@@ -51,18 +52,29 @@ class AppRouter {
       }
       debugPrint(
           "redirect - loggedIn: $loggedIn  - state.matchedLocation: ${state.matchedLocation}");
-      if (!loggedIn && matchedLocation != AppRoutesEnum.signup) {
-        return AppRoutesEnum.login.screenPath;
+      if (!loggedIn && !unProtectedPaths.contains(matchedLocation)) {
+        return AppRoutesEnum.onBoarding.screenPath;
       }
       // if the user is logged in but still on the login page, send them to
       // the home page
-      if (matchedLocation == AppRoutesEnum.login) {
+      if (loggedIn && matchedLocation == AppRoutesEnum.login) {
         return AppRoutesEnum.home.screenPath;
       }
       // no need to redirect at all
       return null;
     },
     routes: [
+      GoRoute(
+          path: AppRoutesEnum.onBoarding.screenPath,
+          name: AppRoutesEnum.onBoarding.screenName,
+          builder: (context, state) => OnBoardingScreen(
+                onSignInPressed: () {
+                  context.push(AppRoutesEnum.login.screenPath);
+                },
+                onSignUpPressed: () {
+                  context.push(AppRoutesEnum.signup.screenPath);
+                },
+              )),
       GoRoute(
         path: AppRoutesEnum.login.screenPath,
         name: AppRoutesEnum.login.screenName,
@@ -81,7 +93,7 @@ class AppRouter {
             child: BlocProvider(
                 create: (context) => serviceLocator<SignUpBloc>(),
                 child: SignupScreen(onSignInPressed: () {
-                  context.pop();
+                  context.push(AppRoutesEnum.login.screenPath);
                 })),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>

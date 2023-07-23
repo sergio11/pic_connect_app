@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pic_connect/features/core/widgets/follow_button.dart';
+import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/constants.dart';
 
@@ -105,7 +105,7 @@ class CommonDialogBoxState extends State<CommonDialogBox> {
     if (widget.cancelledText != null &&
         widget.cancelledText!.isNotEmpty) {
       buttons.add(Flexible(
-          child: FollowButton(
+          child: CommonButton(
         text: widget.cancelledText!,
         backgroundColor: accentColor,
         textColor: secondaryColor,
@@ -117,7 +117,7 @@ class CommonDialogBoxState extends State<CommonDialogBox> {
       )));
     }
     buttons.add(Flexible(
-      child: FollowButton(
+      child: CommonButton(
         text: widget.acceptText,
         backgroundColor: secondaryColor,
         textColor: accentColor,

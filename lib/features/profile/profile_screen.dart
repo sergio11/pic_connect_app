@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
-import 'package:pic_connect/features/core/widgets/follow_button.dart';
+import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildSignOutButton() {
-    return FollowButton(
+    return CommonButton(
       text: 'Sign Out',
       backgroundColor: secondaryColor,
       textColor: accentColor,
@@ -161,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildUnFollowButton(ProfileState state) {
-    return FollowButton(
+    return CommonButton(
       text: 'Unfollow',
       backgroundColor: Colors.white,
       textColor: Colors.black,
@@ -173,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildFollowButton(ProfileState state) {
-    return FollowButton(
+    return CommonButton(
       text: 'Follow',
       backgroundColor: Colors.blue,
       textColor: Colors.white,

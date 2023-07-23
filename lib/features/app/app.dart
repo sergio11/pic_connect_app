@@ -16,20 +16,24 @@ class MainApp extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           final GoRouter router = Provider.of<AppRouter>(context).router;
-          return  MaterialApp.router(
+          return MaterialApp.router(
             routeInformationProvider: router.routeInformationProvider,
             routeInformationParser: router.routeInformationParser,
             routerDelegate: router.routerDelegate,
             title: 'PicConnect',
             debugShowCheckedModeBanner: false,
             theme: ThemeData.dark().copyWith(
-              textTheme: Theme.of(context)
-                  .textTheme
-                  .apply(fontFamily: 'montserrat'),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                  style: ElevatedButton.styleFrom(
+                elevation: 20,
+                shadowColor: blackColor,
+                padding: const EdgeInsets.all(15.0),
+              )),
+              textTheme:
+                  Theme.of(context).textTheme.apply(fontFamily: 'montserrat'),
               scaffoldBackgroundColor: mobileBackgroundColor,
             ),
           );
         });
-
   }
 }

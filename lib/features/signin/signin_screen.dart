@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
+import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +11,10 @@ import 'package:pic_connect/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 class LoginScreen extends StatefulWidget {
-
   final VoidCallback onSignUpPressed;
 
-  const LoginScreen({Key? key, required this.onSignUpPressed}) : super(key: key);
+  const LoginScreen({Key? key, required this.onSignUpPressed})
+      : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -52,39 +54,62 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void onLoginSuccess() async {
-    context
-        .read<AppBloc>()
-        .add(const OnVerifySession());
+    context.read<AppBloc>().add(const OnVerifySession());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignInBloc, SignInState>(
-        listener: (context, state) {
-          if(context.mounted) {
-            if(state.errorMessage != null) {
-              showSnackBar(context, state.errorMessage!);
-            } else if (state.isLoginSuccess) {
-              onLoginSuccess();
-            }
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: SizedBox(
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    _buildVideoBackground(context, state),
-                    _buildScreenContent(context, state)
-                  ],
-                ),
+    return BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
+      if (context.mounted) {
+        if (state.errorMessage != null) {
+          showSnackBar(context, state.errorMessage!);
+        } else if (state.isLoginSuccess) {
+          onLoginSuccess();
+        }
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            _buildVideoBackground(context, state),
+            _buildScreenContent(context, state)
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget _buildScreenContent(BuildContext context, SignInState state) {
+    return AnimateGradient(
+        primaryBegin: Alignment.topLeft,
+        primaryEnd: Alignment.bottomLeft,
+        secondaryBegin: Alignment.bottomLeft,
+        secondaryEnd: Alignment.topRight,
+        primaryColors: [
+          accentColor.withOpacity(0.7),
+          secondaryColor.withOpacity(0.7)
+        ],
+        secondaryColors: [
+          secondaryColor.withOpacity(0.7),
+          accentColor.withOpacity(0.7),
+        ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/pic_connect_logo.svg',
+                color: primaryColor,
+                height: 74,
               ),
-            ),
-          );
-        });
+              _buildSignInForm(state),
+              _buildSignUpRow(state),
+            ],
+          ),
+        ));
   }
 
   Widget _buildEmailTextInput(BuildContext context, SignInState state) {
@@ -112,32 +137,17 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInButton(BuildContext context, SignInState state) {
-    return InkWell(
-      onTap: () => { onLoginClicked() },
-      child: Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: const ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-            ),
-            color: secondaryColor,
-          ),
-          child: state.isLoading
-              ? const CircularProgressIndicator(color: whiteColor)
-              : Text(
-                  'Log in',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(color: primaryColor),
-                )),
+  Widget _buildSignInButton(SignInState state) {
+    return CommonButton(
+      text: "Sign In",
+      backgroundColor: secondaryColor,
+      textColor: primaryColor,
+      borderColor: secondaryColor,
+      onPressed: onLoginClicked,
     );
   }
 
-  Widget _buildSignUpRow(BuildContext context, SignInState state) {
+  Widget _buildSignUpRow(SignInState state) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -150,9 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ?.copyWith(color: whiteColor)),
         ),
         GestureDetector(
-          onTap: () => {
-            widget.onSignUpPressed()
-          },
+          onTap: () => {widget.onSignUpPressed()},
           child: Container(
             padding: const EdgeInsets.only(bottom: 50),
             child: Text(
@@ -179,36 +187,17 @@ class _LoginScreenState extends State<LoginScreen> {
             )));
   }
 
-  Widget _buildScreenContent(BuildContext context, SignInState state) {
-    return Container(
-      decoration: BoxDecoration(color: primaryColor.withOpacity(0.4)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Flexible(flex: 2, child: Container()),
-            SvgPicture.asset(
-              'assets/pic_connect_logo.svg',
-              color: secondaryColor,
-              height: 64,
-            ),
-            const SizedBox(height: 64),
-            _buildEmailTextInput(context, state),
-            const SizedBox(height: 24),
-            _buildPasswordTextInput(context, state),
-            const SizedBox(
-              height: 24,
-            ),
-            _buildSignInButton(context, state),
-            const SizedBox(
-              height: 12,
-            ),
-            Flexible(flex: 2, child: Container()),
-            _buildSignUpRow(context, state),
-          ],
-        ),
-      ),
+  Widget _buildSignInForm(SignInState state) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _buildEmailTextInput(context, state),
+        const SizedBox(height: 15,),
+        _buildPasswordTextInput(context, state),
+        const SizedBox(height: 25,),
+        _buildSignInButton(state)
+      ],
     );
   }
 }

@@ -85,6 +85,7 @@ flutter:
       - assets/pic_connect_login_video.mp4
       - assets/pic_connect_signup_video.mp4
       - assets/app_icon.png
+      - assets/onboarding_picture.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
