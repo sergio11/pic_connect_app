@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
+import 'package:pic_connect/features/core/widgets/loading_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
           showErrorSnackBar(context: context, message: state.errorMessage!);
         } else if (state.isLoginSuccess) {
           onLoginSuccess();
+        }
+        if(state.isLoading) {
+          LoadingProgressIndicator.start(context);
+        } else {
+          LoadingProgressIndicator.stop();
         }
       }
     }, builder: (context, state) {

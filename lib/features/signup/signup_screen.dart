@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
+import 'package:pic_connect/features/core/widgets/loading_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -63,6 +64,11 @@ class _SignupScreenState extends State<SignupScreen> {
               onSignUpSuccess();
             } else if (state.errorMessage != null) {
               showErrorSnackBar(context: context, message: state.errorMessage!);
+            }
+            if(state.isLoading) {
+              LoadingProgressIndicator.start(context);
+            } else {
+              LoadingProgressIndicator.stop();
             }
           }
         },
