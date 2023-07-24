@@ -8,6 +8,7 @@ import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -60,6 +61,8 @@ class _SignupScreenState extends State<SignupScreen> {
           if(context.mounted) {
             if(state.isSignUpSuccess) {
               onSignUpSuccess();
+            } else if (state.errorMessage != null) {
+              showErrorSnackBar(context: context, message: state.errorMessage!);
             }
           }
         },
@@ -204,10 +207,10 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget _buildDefaultAvatarImage() {
-    return const CircleAvatar(
+    return CircleAvatar(
       radius: 64,
-      backgroundImage: AssetImage("assets/user_default_icon.png"),
-      backgroundColor: primaryColor,
+      backgroundImage: const AssetImage("assets/user_default_icon.png"),
+      backgroundColor: primaryColor.withOpacity(0.5),
     );
   }
 
@@ -235,7 +238,7 @@ class _SignupScreenState extends State<SignupScreen> {
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
-                ?.copyWith(color: secondaryColor),
+                ?.copyWith(color: secondaryColor, fontWeight: FontWeight.bold),
           ),
         ),
       ],

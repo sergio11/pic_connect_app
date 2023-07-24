@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/core/widgets/common_dialog_box.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 // for picking up image from gallery
 pickImageAsBytes(ImageSource source) async {
@@ -16,23 +17,41 @@ Future<XFile?> pickImage(ImageSource source) async {
   return await imagePicker.pickImage(source: source);
 }
 
-// for displaying snackbars
-showSnackBar(BuildContext context, String text) {
-  return ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(text),
-    ),
-  );
+showErrorSnackBar({ required BuildContext context, required String message }) {
+  showSnackBar(
+      context: context,
+      title: "Oh Hey!!",
+      message: message,
+      contentType: ContentType.failure);
 }
 
-showAlertDialog({
-  required BuildContext context,
-  required String title,
-  required String description,
-  Function()? onAcceptPressed
-}) {
-  showDialog(context: context,
-      builder: (BuildContext context){
+showSnackBar(
+    {required BuildContext context,
+    required String title,
+    required String message,
+    required ContentType contentType}) {
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+          title: title,
+          message: message,
+          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+          contentType: contentType,),
+    ));
+}
+
+showAlertDialog(
+    {required BuildContext context,
+    required String title,
+    required String description,
+    Function()? onAcceptPressed}) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
         return CommonDialogBox(
           title: title,
           descriptions: description,
@@ -40,20 +59,18 @@ showAlertDialog({
           img: Image.asset("assets/app_icon.png"),
           onAccepted: onAcceptPressed,
         );
-      }
-  );
+      });
 }
 
-
-showConfirmDialog({
-  required BuildContext context,
-  required String title,
-  required String description,
-  Function()? onAcceptPressed,
-  Function()? onCancelPressed
-}) {
-  showDialog(context: context,
-      builder: (BuildContext context){
+showConfirmDialog(
+    {required BuildContext context,
+    required String title,
+    required String description,
+    Function()? onAcceptPressed,
+    Function()? onCancelPressed}) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
         return CommonDialogBox(
           title: title,
           descriptions: description,
@@ -63,6 +80,5 @@ showConfirmDialog({
           onAccepted: onAcceptPressed,
           onCancelled: onCancelPressed,
         );
-      }
-  );
+      });
 }

@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
       if (context.mounted) {
         if (state.errorMessage != null) {
-          showSnackBar(context, state.errorMessage!);
+          showErrorSnackBar(context: context, message: state.errorMessage!);
         } else if (state.isLoginSuccess) {
           onLoginSuccess();
         }
