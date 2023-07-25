@@ -36,7 +36,6 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget _buildScreenContent(FeedState state) {
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: mobileBackgroundColor,
         appBar: _buildAppBar(),

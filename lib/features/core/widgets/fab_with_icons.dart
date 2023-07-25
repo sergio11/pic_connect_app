@@ -76,12 +76,30 @@ class FabWithIconsState extends State<FabWithIcons>
           isCollapsed = !isCollapsed;
         });
       },
+      shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 2,color: primaryColor),
+          borderRadius: BorderRadius.circular(100)
+      ),
       tooltip: 'Add Post',
       elevation: 5.0,
-      backgroundColor: isCollapsed ? secondaryColor : accentColor,
-      foregroundColor: isCollapsed ? accentColor : secondaryColor,
-      child: isCollapsed ?
-        const Icon(Icons.add) : const Icon(Icons.close),
+      foregroundColor: primaryColor,
+      child: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: const [0.0, 1.0],
+              colors: isCollapsed ?
+                [secondaryColor, secondaryColorExtraLight] :
+              [accentColor, primaryColor],
+            )
+        ),
+        child: isCollapsed ?
+          const Icon(Icons.add) : const Icon(Icons.close),
+      ),
     );
   }
 

@@ -42,6 +42,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         iconTheme: const IconThemeData(
           color: accentColor, //change your color here
         ),
+        actions: [
+          IconButton(
+            icon: const ImageIcon(
+              AssetImage("assets/sign_out.png"),
+              color: accentColor,
+            ),
+            onPressed: () {
+              showConfirmDialog(
+                  context: context,
+                  title: "Sign off?",
+                  description: "Are you sure to sign out?",
+                  onAcceptPressed: () => {
+                        context.read<ProfileBloc>().add(const OnSignOutEvent())
+                      });
+            },
+          ),
+        ],
         backgroundColor: appBarBackgroundColor,
         title: Text(state.username,
             style: Theme.of(context)
@@ -103,10 +120,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildProfileHeader(ProfileState state) {
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.all(2),
-          decoration: const BoxDecoration(
-              color: secondaryColor, shape: BoxShape.circle),
+        Padding(
+          padding: const EdgeInsets.only(left: 5),
           child: CircleAvatar(
             backgroundColor: accentColor,
             backgroundImage: NetworkImage(state.photoUrl),
@@ -115,28 +130,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Expanded(
           flex: 1,
-          child: Column(
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildStatColumn(state.postLen, "posts"),
-                  _buildStatColumn(state.followers, "followers"),
-                  _buildStatColumn(state.following, "following"),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  state.isAuthUser
-                      ? _buildSignOutButton()
-                      : state.isFollowing
-                          ? _buildUnFollowButton(state)
-                          : _buildFollowButton(state)
-                ],
-              ),
-            ],
+          child: SizedBox(
+            height: 120,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildStatColumn(state.postLen, "posts"),
+                    _buildStatColumn(state.followers, "followers"),
+                    _buildStatColumn(state.following, "following"),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    state.isAuthUser
+                        ? _buildSignOutButton()
+                        : state.isFollowing
+                            ? _buildUnFollowButton(state)
+                            : _buildFollowButton(state)
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -145,42 +165,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildSignOutButton() {
     return CommonButton(
-      text: 'Sign Out',
+      text: 'Edit Profile',
       backgroundColor: secondaryColor,
-      textColor: accentColor,
+      textColor: primaryColor,
       borderColor: secondaryColor,
-      onPressed: () async {
-        showConfirmDialog(
-            context: context,
-            title: "Sign off?",
-            description: "Are you sure to sign out?",
-            onAcceptPressed: () =>
-                {context.read<ProfileBloc>().add(const OnSignOutEvent())});
-      },
+      onPressed: () async {},
+      sizeType: CommonButtonSizeType.small,
     );
   }
 
   Widget _buildUnFollowButton(ProfileState state) {
     return CommonButton(
       text: 'Unfollow',
-      backgroundColor: Colors.white,
-      textColor: Colors.black,
-      borderColor: Colors.grey,
+      backgroundColor: secondaryColor,
+      textColor: primaryColor,
+      borderColor: secondaryColor,
       onPressed: () async {
         context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid));
       },
+      sizeType: CommonButtonSizeType.small,
     );
   }
 
   Widget _buildFollowButton(ProfileState state) {
     return CommonButton(
       text: 'Follow',
-      backgroundColor: Colors.blue,
-      textColor: Colors.white,
-      borderColor: Colors.blue,
+      backgroundColor: secondaryColor,
+      textColor: primaryColor,
+      borderColor: secondaryColor,
       onPressed: () async {
         context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid));
       },
+      sizeType: CommonButtonSizeType.small,
     );
   }
 
@@ -188,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(
-        top: 15,
+        top: 15, left: 15
       ),
       child: Text(
         state.username,
@@ -204,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(
-        top: 1,
+        top: 3, left: 15
       ),
       child: Text(state.bio,
           style: Theme.of(context)
@@ -245,7 +261,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               tabs: tabs
                   .map((tab) => Tab(
                         height: 50,
-                        icon: ImageIcon(AssetImage("assets/$tab"), size: 30,),
+                        icon: ImageIcon(
+                          AssetImage("assets/$tab"),
+                          size: 30,
+                        ),
                       ))
                   .toList()),
           Container(

@@ -12,10 +12,10 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 
 class SignupScreen extends StatefulWidget {
-
   final VoidCallback onSignInPressed;
 
-  const SignupScreen({Key? key, required this.onSignInPressed}) : super(key: key);
+  const SignupScreen({Key? key, required this.onSignInPressed})
+      : super(key: key);
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -41,47 +41,42 @@ class _SignupScreenState extends State<SignupScreen> {
         _emailController.text,
         _passwordController.text,
         _usernameController.text,
-        _bioController.text
-    ));
+        _bioController.text));
   }
 
   void onSignUpSuccess() async {
-    context.read<AppBloc>()
-        .add(const OnVerifySession());
+    context.read<AppBloc>().add(const OnVerifySession());
   }
 
   void onPickUpImageFromGallery(BuildContext context) async {
-    context.read<SignUpBloc>().add(const OnPickUpImageEvent(ImageSource.gallery));
+    context
+        .read<SignUpBloc>()
+        .add(const OnPickUpImageEvent(ImageSource.gallery));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignUpBloc, SignUpState>(
-        listener: (context, state) {
-          if(context.mounted) {
-            if(state.isSignUpSuccess) {
-              onSignUpSuccess();
-            } else if (state.errorMessage != null) {
-              showErrorSnackBar(context: context, message: state.errorMessage!);
-            }
-            if(state.isLoading) {
-              LoadingProgressIndicator.start(context);
-            } else {
-              LoadingProgressIndicator.stop();
-            }
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Stack(
-              children: [
-                _buildScreenBackground(),
-                _buildScreenContent(state)
-              ],
-            ),
-          );
-        });
+    return BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
+      if (context.mounted) {
+        if (state.isSignUpSuccess) {
+          onSignUpSuccess();
+        } else if (state.errorMessage != null) {
+          showErrorSnackBar(context: context, message: state.errorMessage!);
+        }
+        if (state.isLoading) {
+          LoadingProgressIndicator.start(context);
+        } else {
+          LoadingProgressIndicator.stop();
+        }
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [_buildScreenBackground(), _buildScreenContent(state)],
+        ),
+      );
+    });
   }
 
   Widget _buildScreenBackground() {
@@ -102,12 +97,12 @@ class _SignupScreenState extends State<SignupScreen> {
         secondaryBegin: Alignment.bottomLeft,
         secondaryEnd: Alignment.topRight,
         primaryColors: [
-          accentColor.withOpacity(0.8),
-          secondaryColor.withOpacity(0.8)
+          secondaryColorMediumLight.withOpacity(0.8),
+          accentColorShadow.withOpacity(0.8)
         ],
         secondaryColors: [
-          secondaryColor.withOpacity(0.8),
-          accentColor.withOpacity(0.8),
+          secondaryColorLight.withOpacity(0.8),
+          accentColorShadow.withOpacity(0.8)
         ],
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -123,10 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   _buildAvatarInput(state),
                   _buildSignUpForm(state),
                   _buildNotAccountRow()
-                ]
-            )
-        )
-    );
+                ])));
   }
 
   Widget _buildAvatarInput(SignUpState state) {
@@ -208,6 +200,7 @@ class _SignupScreenState extends State<SignupScreen> {
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: onSignUpUser,
+      sizeType: CommonButtonSizeType.large,
     );
   }
 

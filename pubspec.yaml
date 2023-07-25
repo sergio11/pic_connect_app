@@ -99,6 +99,7 @@ flutter:
       - assets/tab_collections.png
       - assets/tab_favorites.png
       - assets/tab_publications.png
+      - assets/sign_out.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

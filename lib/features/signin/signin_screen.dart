@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (state.isLoginSuccess) {
           onLoginSuccess();
         }
-        if(state.isLoading) {
+        if (state.isLoading) {
           LoadingProgressIndicator.start(context);
         } else {
           LoadingProgressIndicator.stop();
@@ -76,12 +76,12 @@ class _LoginScreenState extends State<LoginScreen> {
         secondaryBegin: Alignment.bottomLeft,
         secondaryEnd: Alignment.topRight,
         primaryColors: [
-          accentColor.withOpacity(0.7),
-          secondaryColor.withOpacity(0.7)
+          secondaryColorMediumLight.withOpacity(0.8),
+          accentColorShadow.withOpacity(0.8)
         ],
         secondaryColors: [
-          secondaryColor.withOpacity(0.7),
-          accentColor.withOpacity(0.7),
+          secondaryColorLight.withOpacity(0.8),
+          accentColorShadow.withOpacity(0.8)
         ],
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -133,6 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: onLoginClicked,
+      sizeType: CommonButtonSizeType.large,
     );
   }
 
@@ -176,9 +177,13 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildEmailTextInput(context, state),
-        const SizedBox(height: 15,),
+        const SizedBox(
+          height: 15,
+        ),
         _buildPasswordTextInput(context, state),
-        const SizedBox(height: 25,),
+        const SizedBox(
+          height: 25,
+        ),
         _buildSignInButton(state)
       ],
     );

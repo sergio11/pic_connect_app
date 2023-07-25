@@ -61,25 +61,29 @@ class CommonDialogBoxState extends State<CommonDialogBox> {
             children: <Widget>[
               Text(
                 widget.title,
-                style:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: accentColor),
               ),
               const SizedBox(
                 height: 15,
               ),
               Text(
                 widget.descriptions,
-                style: const TextStyle(fontSize: 14),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: accentColor),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
                 height: 22,
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Row(
-                  children: _buildDialogButtons(),
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _buildDialogButtons(),
               ),
             ],
           ),
@@ -87,13 +91,30 @@ class CommonDialogBoxState extends State<CommonDialogBox> {
         Positioned(
           left: Constants.padding,
           right: Constants.padding,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            radius: Constants.avatarRadius,
-            child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(Constants.avatarRadius)),
-                child: widget.img),
+          child: Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: primaryColor,
+                  width: 4.0,
+                ),
+                boxShadow: const [
+                  BoxShadow(
+                      color: primaryColor,
+                      offset: Offset(0, 10),
+                      blurRadius: 20),
+                ]),
+            child: CircleAvatar(
+              backgroundColor: secondaryColor,
+              radius: Constants.avatarRadius,
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(Constants.avatarRadius)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: widget.img,
+                  )),
+            ),
           ),
         ),
       ],
@@ -102,14 +123,15 @@ class CommonDialogBoxState extends State<CommonDialogBox> {
 
   List<Widget> _buildDialogButtons() {
     final List<Widget> buttons = [];
-    if (widget.cancelledText != null &&
-        widget.cancelledText!.isNotEmpty) {
+    if (widget.cancelledText != null && widget.cancelledText!.isNotEmpty) {
       buttons.add(Flexible(
           child: CommonButton(
         text: widget.cancelledText!,
         backgroundColor: accentColor,
-        textColor: secondaryColor,
+        textColor: primaryColor,
         borderColor: accentColor,
+        reverseStyle: true,
+        sizeType: CommonButtonSizeType.small,
         onPressed: () {
           widget.onCancelled?.call();
           Navigator.pop(context);
@@ -120,8 +142,9 @@ class CommonDialogBoxState extends State<CommonDialogBox> {
       child: CommonButton(
         text: widget.acceptText,
         backgroundColor: secondaryColor,
-        textColor: accentColor,
+        textColor: primaryColor,
         borderColor: secondaryColor,
+        sizeType: CommonButtonSizeType.small,
         onPressed: () {
           widget.onAccepted?.call();
           Navigator.pop(context);

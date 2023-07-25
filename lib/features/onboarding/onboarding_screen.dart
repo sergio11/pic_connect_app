@@ -82,7 +82,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 0,),
+                const SizedBox(
+                  height: 0,
+                ),
                 SvgPicture.asset(
                   'assets/pic_connect_logo.svg',
                   color: primaryColor,
@@ -103,13 +105,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           autoPlay: true,
           enlargeCenterPage: true,
           viewportFraction: 0.9,
-          aspectRatio: 2.0
-      ),
+          aspectRatio: 2.0),
       items: [
-        { "image": "welcome_camera.png", "title": l10n.welcomeTitle, "text": l10n.welcomeText},
-        { "image": "discover_inspiration.png", "title": l10n.discoverTitle,  "text": l10n.discoverText },
-        { "image": "connect_people.png", "title": l10n.connectTitle,  "text": l10n.connectText },
-        { "image": "capture_and_share_moments.png", "title": l10n.captureTitle,  "text": l10n.captureText }
+        {
+          "image": "welcome_camera.png",
+          "title": l10n.welcomeTitle,
+          "text": l10n.welcomeText
+        },
+        {
+          "image": "discover_inspiration.png",
+          "title": l10n.discoverTitle,
+          "text": l10n.discoverText
+        },
+        {
+          "image": "connect_people.png",
+          "title": l10n.connectTitle,
+          "text": l10n.connectText
+        },
+        {
+          "image": "capture_and_share_moments.png",
+          "title": l10n.captureTitle,
+          "text": l10n.captureText
+        }
       ].map((slideItem) {
         return Builder(
           builder: (BuildContext context) {
@@ -120,14 +137,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset("assets/${slideItem["image"]!}", height: 85,),
+                    Image.asset(
+                      "assets/${slideItem["image"]!}",
+                      height: 85,
+                    ),
                     Text(slideItem["title"]!,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: primaryColor, fontWeight: FontWeight.bold)),
                     Text(slideItem["text"]!,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: primaryColor, fontWeight: FontWeight.w500, ))
+                              color: primaryColor,
+                              fontWeight: FontWeight.w500,
+                            ))
                   ],
                 ));
           },
@@ -147,10 +169,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget _buildFooter() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 60),
-      child: Text("Build with passion by dreamsoftware \n Sergio Sánchez © 2023",
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: primaryColor, fontWeight: FontWeight.bold, )),
+      child:
+          Text("Build with passion by dreamsoftware \n Sergio Sánchez © 2023",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: primaryColor,
+                    fontWeight: FontWeight.bold,
+                  )),
     );
   }
 
@@ -161,6 +186,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: widget.onSignInPressed,
+      sizeType: CommonButtonSizeType.large,
     );
   }
 
@@ -171,6 +197,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       textColor: primaryColor,
       borderColor: accentColor,
       onPressed: widget.onSignUpPressed,
+      reverseStyle: true,
+      sizeType: CommonButtonSizeType.large,
     );
   }
 }

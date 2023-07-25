@@ -56,7 +56,7 @@ showAlertDialog(
           title: title,
           descriptions: description,
           acceptText: "Accept",
-          img: Image.asset("assets/app_icon.png"),
+          img: Image.asset("assets/welcome_camera.png"),
           onAccepted: onAcceptPressed,
         );
       });
@@ -76,7 +76,7 @@ showConfirmDialog(
           descriptions: description,
           acceptText: "Accept",
           cancelledText: "Cancel",
-          img: Image.asset("assets/app_icon.png"),
+          img: Image.asset("assets/welcome_camera.png"),
           onAccepted: onAcceptPressed,
           onCancelled: onCancelPressed,
         );
