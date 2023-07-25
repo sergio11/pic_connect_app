@@ -10,7 +10,6 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
-import 'package:video_player/video_player.dart';
 
 class SignupScreen extends StatefulWidget {
 

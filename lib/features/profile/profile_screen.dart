@@ -88,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const Divider(
                     height: 20,
                   ),
-                  _buildPostsGrid(state)
+                  _buildTabController(state)
                 ])
           ])),
     );
@@ -211,6 +211,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
               .textTheme
               .bodyMedium
               ?.copyWith(color: accentColor, fontWeight: FontWeight.w400)),
+    );
+  }
+
+  Widget _buildTabController(ProfileState state) {
+    final tabs = [
+      "tab_publications.png",
+      "tab_favorites.png",
+      "tab_collections.png"
+    ];
+    return DefaultTabController(
+      length: tabs.length,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          TabBar(
+              padding: const EdgeInsets.only(bottom: 8, left: 10, right: 10),
+              indicatorSize: TabBarIndicatorSize.tab,
+              unselectedLabelColor: accentColor,
+              indicatorColor: primaryColor,
+              labelColor: primaryColor,
+              indicator: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(color: secondaryColorLight, blurRadius: 8),
+                  ],
+                  gradient: const LinearGradient(colors: [
+                    secondaryColor,
+                    secondaryColorMediumLight,
+                    secondaryColorLight,
+                    secondaryColorExtraLight
+                  ]),
+                  borderRadius: BorderRadius.circular(50)),
+              tabs: tabs
+                  .map((tab) => Tab(
+                        height: 50,
+                        icon: ImageIcon(AssetImage("assets/$tab"), size: 30,),
+                      ))
+                  .toList()),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            color: primaryColor,
+            child: TabBarView(children: [
+              _buildPostsGrid(state),
+              const Text("Favorites"),
+              const Text("Collections"),
+            ]),
+          ),
+        ],
+      ),
     );
   }
 

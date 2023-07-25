@@ -69,11 +69,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       secondaryBegin: Alignment.bottomLeft,
       secondaryEnd: Alignment.topRight,
       primaryColors: [
-        secondaryColorLight.withOpacity(0.8),
+        secondaryColorMediumLight.withOpacity(0.8),
         accentColorShadow.withOpacity(0.8)
       ],
       secondaryColors: [
-        secondaryColorExtraLight.withOpacity(0.8),
+        secondaryColorLight.withOpacity(0.8),
         accentColorShadow.withOpacity(0.8)
       ],
       child: SizedBox(

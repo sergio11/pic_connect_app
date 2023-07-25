@@ -96,6 +96,9 @@ flutter:
       - assets/connect_people.png
       - assets/discover_inspiration.png
       - assets/welcome_camera.png
+      - assets/tab_collections.png
+      - assets/tab_favorites.png
+      - assets/tab_publications.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
