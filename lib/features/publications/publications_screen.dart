@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/di/service_locator.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
@@ -17,9 +18,10 @@ class PublicationsScreen extends StatefulWidget {
 }
 
 class _PublicationsScreenState extends State<PublicationsScreen> {
-
   void onRefresh(PublicationsState state) async {
-    context.read<PublicationsBloc>().add(OnLoadPublicationsEvent(state.authorUserUid));
+    context
+        .read<PublicationsBloc>()
+        .add(OnLoadPublicationsEvent(state.authorUserUid));
   }
 
   @override
@@ -52,14 +54,14 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
               () => onRefresh(state),
             );
           },
-          child: state.isLoading ? _buildProgressIndicator() : _buildPostsList(state)),
+          child: state.isLoading
+              ? _buildProgressIndicator()
+              : _buildPostsList(state)),
     );
   }
 
   Widget _buildProgressIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const CommonScreenProgressIndicator();
   }
 
   Widget _buildPostsList(PublicationsState state) {
@@ -78,6 +80,7 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
             child: PostCard(
               onShowCommentsByPost: (String postId) =>
                   widget.onShowCommentsByPost(postId),
+              onPostDeleted: () => onRefresh(state),
             )),
       ),
     );

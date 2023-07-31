@@ -7,37 +7,48 @@ import 'package:pic_connect/utils/utils.dart';
 import 'post_card_bloc.dart';
 
 class PostCard extends StatefulWidget {
-
   final Function(String postId) onShowCommentsByPost;
+  final Function() onPostDeleted;
 
-  const PostCard({
-    Key? key,
-    required this.onShowCommentsByPost
-  }) : super(key: key);
+  const PostCard(
+      {Key? key,
+      required this.onShowCommentsByPost,
+      required this.onPostDeleted})
+      : super(key: key);
 
   @override
   State<PostCard> createState() => _PostCardState();
 }
 
 class _PostCardState extends State<PostCard> {
-
   bool isLikeAnimating = false;
 
   void onDeletePost(String postId) async {
     context.read<PostCardBloc>().add(OnDeletePostEvent(postId));
-  } 
-  
+  }
+
   void onLikePost(String postId) async {
     context.read<PostCardBloc>().add(OnLikePostEvent(postId));
+  }
+
+  void onPostDeleted() async {
+    showAlertDialog(
+        context: context,
+        title: "Post was deleted!",
+        description: "The post was deleted successfully",
+        onAcceptPressed: widget.onPostDeleted);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PostCardBloc, PostCardState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return _buildContent(state);
-        });
+        listener: (context, state) {
+      if (state.isPostDeleted) {
+        onPostDeleted();
+      }
+    }, builder: (context, state) {
+      return _buildContent(state);
+    });
   }
 
   Widget _buildContent(PostCardState state) {
@@ -54,16 +65,23 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildPostHeaderSection(PostCardState state) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16,).copyWith(right: 0),
+      padding: const EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 16,
+      ).copyWith(right: 0),
       child: Row(
         children: <Widget>[
           CircleAvatar(
             radius: 16,
-            backgroundImage: NetworkImage(state.authorImageUrl,),
+            backgroundImage: NetworkImage(
+              state.authorImageUrl,
+            ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8,),
+              padding: const EdgeInsets.only(
+                left: 8,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +127,10 @@ class _PostCardState extends State<PostCard> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.35,
                 width: double.infinity,
-                child: Image.network(state.postImageUrl, fit: BoxFit.cover,),
+                child: Image.network(
+                  state.postImageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             onDoubleTap: () => onLikePost(state.postId),

@@ -22,6 +22,7 @@ class PublicationsBloc extends Bloc<PublicationsEvent, PublicationsState> {
 
   FutureOr<void> onLoadPublicationsEventHandler(
       OnLoadPublicationsEvent event, Emitter<PublicationsState> emit) async {
+    emit(state.copyWith(isLoading: true));
     final response =
         await findPostsByUserUseCase(FindPostsByUserParams(event.userUid));
     response.fold(

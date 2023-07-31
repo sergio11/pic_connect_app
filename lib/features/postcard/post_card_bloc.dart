@@ -44,7 +44,7 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
     final response = await deletePostUseCase(DeletePostParams(event.postId));
     response.fold(
             (l) => emit(state.copyWith()),
-            (isSuccess) => emit(state.copyWith())
+            (isSuccess) => emit(state.copyWith(isPostDeleted: true))
     );
   }
 

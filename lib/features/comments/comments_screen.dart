@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/core/widgets/comment_card.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/utils/colors.dart';
 
 class CommentsScreen extends StatefulWidget {
@@ -72,9 +73,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   }
 
   Widget _buildProgressIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const CommonScreenProgressIndicator();
   }
 
   Widget _buildCommentsListView(CommentsState state) {

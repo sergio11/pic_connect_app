@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/di/service_locator.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
@@ -41,9 +42,7 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget _buildProgressIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const CommonScreenProgressIndicator();
   }
 
   AppBar _buildAppBar() {
@@ -91,6 +90,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: PostCard(
                 onShowCommentsByPost: (String postId) =>
                     widget.onShowCommentsByPost(postId),
+                onPostDeleted: () => onRefresh(state),
               )),
         ),
       ),
