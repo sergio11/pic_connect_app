@@ -8,20 +8,16 @@ import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 
 class FeedScreen extends StatefulWidget {
-
   final Function(String postId) onShowCommentsByPost;
 
-  const FeedScreen({
-    Key? key,
-    required this.onShowCommentsByPost
-  }) : super(key: key);
+  const FeedScreen({Key? key, required this.onShowCommentsByPost})
+      : super(key: key);
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
 }
 
 class _FeedScreenState extends State<FeedScreen> {
-
   void onRefresh(FeedState state) async {
     context.read<FeedBloc>().add(OnLoadHomePostsEvent(state.authUserUid));
   }
@@ -81,15 +77,21 @@ class _FeedScreenState extends State<FeedScreen> {
           },
         );
       },
-      child: ListView.builder(
+      child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         itemCount: state.posts.length,
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 4,
+        ),
         itemBuilder: (ctx, index) => Container(
-          margin: const EdgeInsets.all(10),
+          margin: const EdgeInsets.all(0),
           child: BlocProvider(
               create: (context) => serviceLocator<PostCardBloc>()
                 ..add(OnShowPostEvent(state.posts[index], state.authUserUid)),
-              child: PostCard(onShowCommentsByPost: (String postId) => widget.onShowCommentsByPost(postId),)),
+              child: PostCard(
+                onShowCommentsByPost: (String postId) =>
+                    widget.onShowCommentsByPost(postId),
+              )),
         ),
       ),
     );

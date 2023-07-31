@@ -9,7 +9,13 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+
+  final Function(String userUid) onShowPublications;
+
+  const ProfileScreen({
+    Key? key,
+    required this.onShowPublications
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -321,6 +327,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
       onDoubleTap: () => {
         showImageViewer(context, NetworkImage(post.postUrl))
+      },
+      onTap: () => {
+        widget.onShowPublications(post.postAuthorUid)
       },
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/like_animation.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 import 'post_card_bloc.dart';
 
@@ -41,16 +42,7 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildContent(PostCardState state) {
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: primaryColor,
-          boxShadow: const [
-            BoxShadow(
-                color: blackColor,
-                blurRadius: 8
-            ),
-          ],
-        ),
+        color: primaryColor,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(children: [
           _buildPostHeaderSection(state),
@@ -85,33 +77,14 @@ class _PostCardState extends State<PostCard> {
               ),
             ),
           ),
-          true
+          state.isPostOwner
               ? IconButton(
                   onPressed: () {
-                    showDialog(
-                      useRootNavigator: false,
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: ListView(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shrinkWrap: true,
-                              children: [
-                                'Delete',
-                              ]
-                                  .map(
-                                    (e) => InkWell(
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 12, horizontal: 16),
-                                          child: Text(e),
-                                        ),
-                                        onTap: () => onDeletePost(state.postId)),
-                                  )
-                                  .toList()),
-                        );
-                      },
-                    );
+                    showConfirmDialog(
+                        context: context,
+                        title: "Remove this post?",
+                        description: "Are you sure to remove this post?",
+                        onAcceptPressed: () => onDeletePost(state.postId));
                   },
                   icon: const Icon(
                     Icons.more_vert,

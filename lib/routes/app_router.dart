@@ -18,6 +18,8 @@ import 'package:pic_connect/features/notfound/not_found_page.dart';
 import 'package:pic_connect/features/onboarding/onboarding_screen.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/features/profile/profile_screen.dart';
+import 'package:pic_connect/features/publications/publications_bloc.dart';
+import 'package:pic_connect/features/publications/publications_screen.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/features/search/search_screen.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
@@ -162,6 +164,29 @@ class AppRouter {
                         ).animate(animation),
                         child: child,
                       ))),
+      GoRoute(
+          path: AppRoutesEnum.publications.screenPath,
+          name: AppRoutesEnum.publications.screenName,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => serviceLocator<PublicationsBloc>()
+                  ..add(OnLoadPublicationsEvent(state.extra as String)),
+                child: PublicationsScreen(onShowCommentsByPost: (String postId) {
+                  context.go(AppRoutesEnum.comments.screenPath,
+                      extra: postId);
+                },),
+              ),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                  SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ))),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
@@ -229,7 +254,10 @@ class AppRouter {
                           ..add(OnLoadProfileEvent(state.extra is String
                               ? state.extra as String
                               : context.read<AppBloc>().state.authUserUid!)),
-                        child: const ProfileScreen(),
+                        child: ProfileScreen(onShowPublications: (String userUid) {
+                          context.push(AppRoutesEnum.publications.screenPath,
+                              extra: userUid);
+                        },),
                       ),
                       transitionDuration: const Duration(milliseconds: 800),
                       transitionsBuilder:

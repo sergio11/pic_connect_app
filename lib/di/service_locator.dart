@@ -57,6 +57,7 @@ import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
+import 'package:pic_connect/features/publications/publications_bloc.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
@@ -132,4 +133,5 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => FavoritesBloc());
   serviceLocator.registerFactory(() => PostCardBloc(deletePostUseCase: serviceLocator(), likePostUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator(), publishCommentUseCase: serviceLocator(), getUserDetailsUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => PublicationsBloc(findPostsByUserUseCase: serviceLocator()));
 }
