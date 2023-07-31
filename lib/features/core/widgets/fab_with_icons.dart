@@ -93,7 +93,7 @@ class FabWithIconsState extends State<FabWithIcons>
               end: Alignment.bottomRight,
               stops: const [0.0, 1.0],
               colors: isCollapsed ?
-                [secondaryColor, secondaryColorExtraLight] :
+                [secondaryColor, accentColorShadow] :
               [accentColor, primaryColor],
             )
         ),

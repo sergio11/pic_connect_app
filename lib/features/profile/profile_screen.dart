@@ -1,5 +1,7 @@
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
@@ -249,14 +251,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               labelColor: primaryColor,
               indicator: BoxDecoration(
                   boxShadow: const [
-                    BoxShadow(color: secondaryColorLight, blurRadius: 8),
+                    BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(0, 4),
+                        blurRadius: 5.0),
                   ],
-                  gradient: const LinearGradient(colors: [
-                    secondaryColor,
-                    secondaryColorMediumLight,
-                    secondaryColorLight,
-                    secondaryColorExtraLight
-                  ]),
+                  border: Border.all(color: primaryColor, width: 2),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.0, 1.0],
+                    colors: [secondaryColor, accentColorShadow],
+                  ),
                   borderRadius: BorderRadius.circular(50)),
               tabs: tabs
                   .map((tab) => Tab(
@@ -293,16 +299,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
       itemBuilder: (context, index) {
         return state.isPostGridLoading
             ? _buildProgressIndicator()
-            : Container(
-                color: primaryColor,
-                padding: const EdgeInsets.all(1),
-                child: SizedBox(
-                  child: Image(
-                    image: NetworkImage(state.postList[index].postUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              );
+            : _buildPostItem(state.postList[index]);
+      },
+    );
+  }
+
+  Widget _buildPostItem(PostBO post) {
+    return GestureDetector(
+      child: Container(
+        color: primaryColor,
+        padding: const EdgeInsets.all(1),
+        child: SizedBox(
+          child: Image(
+              image: NetworkImage(post.postUrl),
+              fit: BoxFit.cover
+          ),
+        ),
+      ),
+      onLongPress: () => {
+        showImageViewer(context, NetworkImage(post.postUrl))
+      },
+      onDoubleTap: () => {
+        showImageViewer(context, NetworkImage(post.postUrl))
       },
     );
   }
