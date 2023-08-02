@@ -5,7 +5,8 @@ class AddPostState with _$AddPostState {
   const factory AddPostState({
     @Default(null) final ImageSource? imageSource,
     final String? authorPhotoUrl,
-    final String? postFilePath,
+    final Uint8List? postFileData,
+    @Default(false) final bool imageEditingRequired,
     @Default(false) final bool isPostUploading,
     @Default(false) final bool isLoading,
     @Default(false) final bool isPostUploadedSuccessfully,

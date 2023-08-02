@@ -22,6 +22,7 @@ mixin _$AddPostEvent {
         addNewPost,
     required TResult Function(String filePath) selectFile,
     required TResult Function(String description) uploadPost,
+    required TResult Function(Uint8List imageData) editedImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -29,6 +30,7 @@ mixin _$AddPostEvent {
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
     TResult? Function(String description)? uploadPost,
+    TResult? Function(Uint8List imageData)? editedImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +38,7 @@ mixin _$AddPostEvent {
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
     TResult Function(String description)? uploadPost,
+    TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -44,6 +47,7 @@ mixin _$AddPostEvent {
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
     required TResult Function(OnUploadPostEvent value) uploadPost,
+    required TResult Function(OnEditedImageEvent value) editedImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +55,7 @@ mixin _$AddPostEvent {
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
+    TResult? Function(OnEditedImageEvent value)? editedImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,6 +63,7 @@ mixin _$AddPostEvent {
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
     TResult Function(OnUploadPostEvent value)? uploadPost,
+    TResult Function(OnEditedImageEvent value)? editedImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +125,9 @@ class __$$OnAddNewPostEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnAddNewPostEvent implements OnAddNewPostEvent {
+class _$OnAddNewPostEvent
+    with DiagnosticableTreeMixin
+    implements OnAddNewPostEvent {
   const _$OnAddNewPostEvent(this.imageSource, this.userUid);
 
   @override
@@ -128,8 +136,17 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
   final String userUid;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AddPostEvent.addNewPost(imageSource: $imageSource, userUid: $userUid)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AddPostEvent.addNewPost'))
+      ..add(DiagnosticsProperty('imageSource', imageSource))
+      ..add(DiagnosticsProperty('userUid', userUid));
   }
 
   @override
@@ -158,6 +175,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
         addNewPost,
     required TResult Function(String filePath) selectFile,
     required TResult Function(String description) uploadPost,
+    required TResult Function(Uint8List imageData) editedImage,
   }) {
     return addNewPost(imageSource, userUid);
   }
@@ -168,6 +186,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
     TResult? Function(String description)? uploadPost,
+    TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return addNewPost?.call(imageSource, userUid);
   }
@@ -178,6 +197,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
     TResult Function(String description)? uploadPost,
+    TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
     if (addNewPost != null) {
@@ -192,6 +212,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
     required TResult Function(OnUploadPostEvent value) uploadPost,
+    required TResult Function(OnEditedImageEvent value) editedImage,
   }) {
     return addNewPost(this);
   }
@@ -202,6 +223,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
+    TResult? Function(OnEditedImageEvent value)? editedImage,
   }) {
     return addNewPost?.call(this);
   }
@@ -212,6 +234,7 @@ class _$OnAddNewPostEvent implements OnAddNewPostEvent {
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
     TResult Function(OnUploadPostEvent value)? uploadPost,
+    TResult Function(OnEditedImageEvent value)? editedImage,
     required TResult orElse(),
   }) {
     if (addNewPost != null) {
@@ -266,15 +289,25 @@ class __$$OnFileSelectedEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnFileSelectedEvent implements OnFileSelectedEvent {
+class _$OnFileSelectedEvent
+    with DiagnosticableTreeMixin
+    implements OnFileSelectedEvent {
   const _$OnFileSelectedEvent(this.filePath);
 
   @override
   final String filePath;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AddPostEvent.selectFile(filePath: $filePath)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AddPostEvent.selectFile'))
+      ..add(DiagnosticsProperty('filePath', filePath));
   }
 
   @override
@@ -303,6 +336,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
         addNewPost,
     required TResult Function(String filePath) selectFile,
     required TResult Function(String description) uploadPost,
+    required TResult Function(Uint8List imageData) editedImage,
   }) {
     return selectFile(filePath);
   }
@@ -313,6 +347,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
     TResult? Function(String description)? uploadPost,
+    TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return selectFile?.call(filePath);
   }
@@ -323,6 +358,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
     TResult Function(String description)? uploadPost,
+    TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
     if (selectFile != null) {
@@ -337,6 +373,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
     required TResult Function(OnUploadPostEvent value) uploadPost,
+    required TResult Function(OnEditedImageEvent value) editedImage,
   }) {
     return selectFile(this);
   }
@@ -347,6 +384,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
+    TResult? Function(OnEditedImageEvent value)? editedImage,
   }) {
     return selectFile?.call(this);
   }
@@ -357,6 +395,7 @@ class _$OnFileSelectedEvent implements OnFileSelectedEvent {
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
     TResult Function(OnUploadPostEvent value)? uploadPost,
+    TResult Function(OnEditedImageEvent value)? editedImage,
     required TResult orElse(),
   }) {
     if (selectFile != null) {
@@ -409,15 +448,25 @@ class __$$OnUploadPostEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OnUploadPostEvent implements OnUploadPostEvent {
+class _$OnUploadPostEvent
+    with DiagnosticableTreeMixin
+    implements OnUploadPostEvent {
   const _$OnUploadPostEvent(this.description);
 
   @override
   final String description;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AddPostEvent.uploadPost(description: $description)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AddPostEvent.uploadPost'))
+      ..add(DiagnosticsProperty('description', description));
   }
 
   @override
@@ -445,6 +494,7 @@ class _$OnUploadPostEvent implements OnUploadPostEvent {
         addNewPost,
     required TResult Function(String filePath) selectFile,
     required TResult Function(String description) uploadPost,
+    required TResult Function(Uint8List imageData) editedImage,
   }) {
     return uploadPost(description);
   }
@@ -455,6 +505,7 @@ class _$OnUploadPostEvent implements OnUploadPostEvent {
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String filePath)? selectFile,
     TResult? Function(String description)? uploadPost,
+    TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return uploadPost?.call(description);
   }
@@ -465,6 +516,7 @@ class _$OnUploadPostEvent implements OnUploadPostEvent {
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String filePath)? selectFile,
     TResult Function(String description)? uploadPost,
+    TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
     if (uploadPost != null) {
@@ -479,6 +531,7 @@ class _$OnUploadPostEvent implements OnUploadPostEvent {
     required TResult Function(OnAddNewPostEvent value) addNewPost,
     required TResult Function(OnFileSelectedEvent value) selectFile,
     required TResult Function(OnUploadPostEvent value) uploadPost,
+    required TResult Function(OnEditedImageEvent value) editedImage,
   }) {
     return uploadPost(this);
   }
@@ -489,6 +542,7 @@ class _$OnUploadPostEvent implements OnUploadPostEvent {
     TResult? Function(OnAddNewPostEvent value)? addNewPost,
     TResult? Function(OnFileSelectedEvent value)? selectFile,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
+    TResult? Function(OnEditedImageEvent value)? editedImage,
   }) {
     return uploadPost?.call(this);
   }
@@ -499,6 +553,7 @@ class _$OnUploadPostEvent implements OnUploadPostEvent {
     TResult Function(OnAddNewPostEvent value)? addNewPost,
     TResult Function(OnFileSelectedEvent value)? selectFile,
     TResult Function(OnUploadPostEvent value)? uploadPost,
+    TResult Function(OnEditedImageEvent value)? editedImage,
     required TResult orElse(),
   }) {
     if (uploadPost != null) {
@@ -519,10 +574,170 @@ abstract class OnUploadPostEvent implements AddPostEvent {
 }
 
 /// @nodoc
+abstract class _$$OnEditedImageEventCopyWith<$Res> {
+  factory _$$OnEditedImageEventCopyWith(_$OnEditedImageEvent value,
+          $Res Function(_$OnEditedImageEvent) then) =
+      __$$OnEditedImageEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Uint8List imageData});
+}
+
+/// @nodoc
+class __$$OnEditedImageEventCopyWithImpl<$Res>
+    extends _$AddPostEventCopyWithImpl<$Res, _$OnEditedImageEvent>
+    implements _$$OnEditedImageEventCopyWith<$Res> {
+  __$$OnEditedImageEventCopyWithImpl(
+      _$OnEditedImageEvent _value, $Res Function(_$OnEditedImageEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? imageData = null,
+  }) {
+    return _then(_$OnEditedImageEvent(
+      null == imageData
+          ? _value.imageData
+          : imageData // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnEditedImageEvent
+    with DiagnosticableTreeMixin
+    implements OnEditedImageEvent {
+  const _$OnEditedImageEvent(this.imageData);
+
+  @override
+  final Uint8List imageData;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AddPostEvent.editedImage(imageData: $imageData)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AddPostEvent.editedImage'))
+      ..add(DiagnosticsProperty('imageData', imageData));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnEditedImageEvent &&
+            const DeepCollectionEquality().equals(other.imageData, imageData));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(imageData));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnEditedImageEventCopyWith<_$OnEditedImageEvent> get copyWith =>
+      __$$OnEditedImageEventCopyWithImpl<_$OnEditedImageEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ImageSource imageSource, String userUid)
+        addNewPost,
+    required TResult Function(String filePath) selectFile,
+    required TResult Function(String description) uploadPost,
+    required TResult Function(Uint8List imageData) editedImage,
+  }) {
+    return editedImage(imageData);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
+    TResult? Function(String filePath)? selectFile,
+    TResult? Function(String description)? uploadPost,
+    TResult? Function(Uint8List imageData)? editedImage,
+  }) {
+    return editedImage?.call(imageData);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ImageSource imageSource, String userUid)? addNewPost,
+    TResult Function(String filePath)? selectFile,
+    TResult Function(String description)? uploadPost,
+    TResult Function(Uint8List imageData)? editedImage,
+    required TResult orElse(),
+  }) {
+    if (editedImage != null) {
+      return editedImage(imageData);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnAddNewPostEvent value) addNewPost,
+    required TResult Function(OnFileSelectedEvent value) selectFile,
+    required TResult Function(OnUploadPostEvent value) uploadPost,
+    required TResult Function(OnEditedImageEvent value) editedImage,
+  }) {
+    return editedImage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnAddNewPostEvent value)? addNewPost,
+    TResult? Function(OnFileSelectedEvent value)? selectFile,
+    TResult? Function(OnUploadPostEvent value)? uploadPost,
+    TResult? Function(OnEditedImageEvent value)? editedImage,
+  }) {
+    return editedImage?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnAddNewPostEvent value)? addNewPost,
+    TResult Function(OnFileSelectedEvent value)? selectFile,
+    TResult Function(OnUploadPostEvent value)? uploadPost,
+    TResult Function(OnEditedImageEvent value)? editedImage,
+    required TResult orElse(),
+  }) {
+    if (editedImage != null) {
+      return editedImage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnEditedImageEvent implements AddPostEvent {
+  const factory OnEditedImageEvent(final Uint8List imageData) =
+      _$OnEditedImageEvent;
+
+  Uint8List get imageData;
+  @JsonKey(ignore: true)
+  _$$OnEditedImageEventCopyWith<_$OnEditedImageEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$AddPostState {
   ImageSource? get imageSource => throw _privateConstructorUsedError;
   String? get authorPhotoUrl => throw _privateConstructorUsedError;
-  String? get postFilePath => throw _privateConstructorUsedError;
+  Uint8List? get postFileData => throw _privateConstructorUsedError;
+  bool get imageEditingRequired => throw _privateConstructorUsedError;
   bool get isPostUploading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isPostUploadedSuccessfully => throw _privateConstructorUsedError;
@@ -542,7 +757,8 @@ abstract class $AddPostStateCopyWith<$Res> {
   $Res call(
       {ImageSource? imageSource,
       String? authorPhotoUrl,
-      String? postFilePath,
+      Uint8List? postFileData,
+      bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
       bool isPostUploadedSuccessfully,
@@ -564,7 +780,8 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
   $Res call({
     Object? imageSource = freezed,
     Object? authorPhotoUrl = freezed,
-    Object? postFilePath = freezed,
+    Object? postFileData = freezed,
+    Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
     Object? isPostUploadedSuccessfully = null,
@@ -579,10 +796,14 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
           ? _value.authorPhotoUrl
           : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      postFilePath: freezed == postFilePath
-          ? _value.postFilePath
-          : postFilePath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      postFileData: freezed == postFileData
+          ? _value.postFileData
+          : postFileData // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      imageEditingRequired: null == imageEditingRequired
+          ? _value.imageEditingRequired
+          : imageEditingRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
       isPostUploading: null == isPostUploading
           ? _value.isPostUploading
           : isPostUploading // ignore: cast_nullable_to_non_nullable
@@ -614,7 +835,8 @@ abstract class _$$_AddPostStateCopyWith<$Res>
   $Res call(
       {ImageSource? imageSource,
       String? authorPhotoUrl,
-      String? postFilePath,
+      Uint8List? postFileData,
+      bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
       bool isPostUploadedSuccessfully,
@@ -634,7 +856,8 @@ class __$$_AddPostStateCopyWithImpl<$Res>
   $Res call({
     Object? imageSource = freezed,
     Object? authorPhotoUrl = freezed,
-    Object? postFilePath = freezed,
+    Object? postFileData = freezed,
+    Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
     Object? isPostUploadedSuccessfully = null,
@@ -649,10 +872,14 @@ class __$$_AddPostStateCopyWithImpl<$Res>
           ? _value.authorPhotoUrl
           : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      postFilePath: freezed == postFilePath
-          ? _value.postFilePath
-          : postFilePath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      postFileData: freezed == postFileData
+          ? _value.postFileData
+          : postFileData // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      imageEditingRequired: null == imageEditingRequired
+          ? _value.imageEditingRequired
+          : imageEditingRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
       isPostUploading: null == isPostUploading
           ? _value.isPostUploading
           : isPostUploading // ignore: cast_nullable_to_non_nullable
@@ -675,11 +902,12 @@ class __$$_AddPostStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddPostState implements _AddPostState {
+class _$_AddPostState with DiagnosticableTreeMixin implements _AddPostState {
   const _$_AddPostState(
       {this.imageSource = null,
       this.authorPhotoUrl,
-      this.postFilePath,
+      this.postFileData,
+      this.imageEditingRequired = false,
       this.isPostUploading = false,
       this.isLoading = false,
       this.isPostUploadedSuccessfully = false,
@@ -691,7 +919,10 @@ class _$_AddPostState implements _AddPostState {
   @override
   final String? authorPhotoUrl;
   @override
-  final String? postFilePath;
+  final Uint8List? postFileData;
+  @override
+  @JsonKey()
+  final bool imageEditingRequired;
   @override
   @JsonKey()
   final bool isPostUploading;
@@ -705,8 +936,24 @@ class _$_AddPostState implements _AddPostState {
   final String? errorMessage;
 
   @override
-  String toString() {
-    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, postFilePath: $postFilePath, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, postFileData: $postFileData, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AddPostState'))
+      ..add(DiagnosticsProperty('imageSource', imageSource))
+      ..add(DiagnosticsProperty('authorPhotoUrl', authorPhotoUrl))
+      ..add(DiagnosticsProperty('postFileData', postFileData))
+      ..add(DiagnosticsProperty('imageEditingRequired', imageEditingRequired))
+      ..add(DiagnosticsProperty('isPostUploading', isPostUploading))
+      ..add(DiagnosticsProperty('isLoading', isLoading))
+      ..add(DiagnosticsProperty(
+          'isPostUploadedSuccessfully', isPostUploadedSuccessfully))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage));
   }
 
   @override
@@ -718,8 +965,10 @@ class _$_AddPostState implements _AddPostState {
                 other.imageSource == imageSource) &&
             (identical(other.authorPhotoUrl, authorPhotoUrl) ||
                 other.authorPhotoUrl == authorPhotoUrl) &&
-            (identical(other.postFilePath, postFilePath) ||
-                other.postFilePath == postFilePath) &&
+            const DeepCollectionEquality()
+                .equals(other.postFileData, postFileData) &&
+            (identical(other.imageEditingRequired, imageEditingRequired) ||
+                other.imageEditingRequired == imageEditingRequired) &&
             (identical(other.isPostUploading, isPostUploading) ||
                 other.isPostUploading == isPostUploading) &&
             (identical(other.isLoading, isLoading) ||
@@ -737,7 +986,8 @@ class _$_AddPostState implements _AddPostState {
       runtimeType,
       imageSource,
       authorPhotoUrl,
-      postFilePath,
+      const DeepCollectionEquality().hash(postFileData),
+      imageEditingRequired,
       isPostUploading,
       isLoading,
       isPostUploadedSuccessfully,
@@ -754,7 +1004,8 @@ abstract class _AddPostState implements AddPostState {
   const factory _AddPostState(
       {final ImageSource? imageSource,
       final String? authorPhotoUrl,
-      final String? postFilePath,
+      final Uint8List? postFileData,
+      final bool imageEditingRequired,
       final bool isPostUploading,
       final bool isLoading,
       final bool isPostUploadedSuccessfully,
@@ -765,7 +1016,9 @@ abstract class _AddPostState implements AddPostState {
   @override
   String? get authorPhotoUrl;
   @override
-  String? get postFilePath;
+  Uint8List? get postFileData;
+  @override
+  bool get imageEditingRequired;
   @override
   bool get isPostUploading;
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
@@ -132,7 +133,8 @@ class AppRouter {
                   },
                   onPostUploaded: () {
                     context.go(AppRoutesEnum.profile.screenPath);
-                  },
+                  }, onEditImageRequired: (Uint8List imageData) =>
+                    context.push<Uint8List>(AppRoutesEnum.imageEditor.screenPath, extra: imageData),
                 ),
               )),
       GoRoute(
@@ -176,6 +178,24 @@ class AppRouter {
                   context.go(AppRoutesEnum.comments.screenPath,
                       extra: postId);
                 },),
+              ),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                  SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ))),
+      GoRoute(
+          path: AppRoutesEnum.imageEditor.screenPath,
+          name: AppRoutesEnum.imageEditor.screenName,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: ImageEditor(
+                  image: state.extra as Uint8List
               ),
               transitionDuration: const Duration(milliseconds: 800),
               transitionsBuilder:

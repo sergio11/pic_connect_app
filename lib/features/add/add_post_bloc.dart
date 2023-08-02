@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,8 +23,9 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     required this.publishPostUseCase
   }): super(const AddPostState()) {
     on<OnAddNewPostEvent>(onAddNewPostFromEventHandler);
-    on<OnFileSelectedEvent>(onOnFileSelectedEventHandler);
+    on<OnFileSelectedEvent>(onFileSelectedEventHandler);
     on<OnUploadPostEvent>(onUploadPostEventHandler);
+    on<OnEditedImageEvent>(onEditedImageEventHandler);
   }
 
   FutureOr<void> onAddNewPostFromEventHandler(OnAddNewPostEvent event, Emitter<AddPostState> emit) async {
@@ -39,15 +41,18 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     );
   }
 
-  FutureOr<void> onOnFileSelectedEventHandler(OnFileSelectedEvent event, Emitter<AddPostState> emit) async {
-    emit(state.copyWith(postFilePath: event.filePath));
+  FutureOr<void> onFileSelectedEventHandler(OnFileSelectedEvent event, Emitter<AddPostState> emit) async {
+    final fileData = await File(event.filePath).readAsBytes();
+    emit(state.copyWith(
+        postFileData: fileData,
+        imageEditingRequired: true
+    ));
   }
 
   FutureOr<void> onUploadPostEventHandler(OnUploadPostEvent event, Emitter<AddPostState> emit) async {
-    if(state.postFilePath != null) {
+    if(state.postFileData != null) {
       emit(state.copyWith(isPostUploading: true));
-      final fileData = await File(state.postFilePath!).readAsBytes();
-      final response = await publishPostUseCase(PublishPostUseParams(event.description, fileData));
+      final response = await publishPostUseCase(PublishPostUseParams(event.description, state.postFileData!));
       response.fold(
               (failure) => emit(state.copyWith(isPostUploading: false)),
               (userDetail) => emit(state.copyWith(
@@ -57,4 +62,10 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     }
   }
 
+  FutureOr<void> onEditedImageEventHandler(OnEditedImageEvent event, Emitter<AddPostState> emit) async {
+    emit(state.copyWith(
+        postFileData: event.imageData,
+        imageEditingRequired: false
+    ));
+  }
 }

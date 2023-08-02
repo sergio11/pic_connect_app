@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pic_connect/utils/colors.dart';
 
 class CommonScreenProgressIndicator extends StatelessWidget {
 
@@ -10,11 +11,11 @@ class CommonScreenProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      color: Colors.black54,
+      color: whiteColor,
       child: const Center(
           child: SpinKitChasingDots(
-            color: Colors.white,
-            size: 50.0,
+            color: secondaryColor,
+            size: 80.0,
           )),
     );
   }

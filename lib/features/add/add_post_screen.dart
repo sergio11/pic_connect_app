@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/camera_widget.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 
@@ -12,11 +15,13 @@ class AddPostScreen extends StatefulWidget {
 
   final VoidCallback onPostUploaded;
   final VoidCallback onBackPressed;
+  final Future<Uint8List?> Function(Uint8List imageData) onEditImageRequired;
 
   const AddPostScreen({
     Key? key,
     required this.onPostUploaded,
-    required this.onBackPressed
+    required this.onBackPressed,
+    required this.onEditImageRequired
   }) : super(key: key);
 
   @override
@@ -37,13 +42,24 @@ class _AddPostScreenState extends State<AddPostScreen> {
     context.read<AddPostBloc>().add(OnUploadPostEvent(_descriptionController.text));
   }
 
+  void _onEditImage(Uint8List imageData) async {
+    final editedImage = await widget.onEditImageRequired(imageData);
+    if(context.mounted) {
+      if(editedImage != null) {
+        context.read<AddPostBloc>().add(OnEditedImageEvent(editedImage));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddPostBloc, AddPostState>(listener: (context, state) {
       if (state.imageSource == ImageSource.gallery &&
-          state.postFilePath == null) {
+          state.postFileData == null) {
         _onPickImageFromGallery();
-      } else if(state.isPostUploadedSuccessfully) {
+      } else if(state.postFileData != null && state.imageEditingRequired) {
+        _onEditImage(state.postFileData!);
+      }else if(state.isPostUploadedSuccessfully) {
         widget.onPostUploaded();
       }
     }, builder: (context, state) {
@@ -84,16 +100,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
         ],
       ),
       // POST FORM
-      body: state.postFilePath == null
+      body: state.postFileData == null
           ?  state.imageSource == ImageSource.camera ? _buildTakePhotoFromCamera(state) : _buildProgressIndicator()
           : _buildFillPostDescription(state),
     );
   }
 
   Widget _buildProgressIndicator() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const CommonScreenProgressIndicator();
   }
 
   Widget _buildTakePhotoFromCamera(AddPostState state) {
@@ -145,7 +159,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         image: DecorationImage(
                           fit: BoxFit.fill,
                           alignment: FractionalOffset.topCenter,
-                          image: FileImage(File(state.postFilePath!)),
+                          image: MemoryImage(state.postFileData!),
                         )),
                   ),
                 ),

@@ -1,4 +1,4 @@
-enum AppRoutesEnum { onBoarding, login, signup, home, error, profile, search, add, favorites, comments, publications }
+enum AppRoutesEnum { onBoarding, login, signup, home, error, profile, search, add, favorites, comments, publications, imageEditor }
 
 const List<AppRoutesEnum> unProtectedPaths = [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup];
 
@@ -32,6 +32,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "/comments";
       case AppRoutesEnum.publications:
         return "/publications";
+      case AppRoutesEnum.imageEditor:
+        return "/imageEditor";
       default:
         return "/";
     }
@@ -61,6 +63,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "COMMENTS";
       case AppRoutesEnum.publications:
         return "PUBLICATIONS";
+      case AppRoutesEnum.imageEditor:
+        return "IMAGE_EDITOR";
       default:
         return "HOME";
     }
@@ -90,6 +94,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "Comments";
       case AppRoutesEnum.publications:
         return "Publications";
+      case AppRoutesEnum.imageEditor:
+        return "ImageEditor";
       default:
         return "Home";
     }
