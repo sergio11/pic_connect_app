@@ -9,6 +9,7 @@ class PostDTO {
   final String postUrl;
   final List<String> likes;
   final int commentCount;
+  final List<String> tags;
 
   PostDTO({
     required this.postId,
@@ -17,6 +18,7 @@ class PostDTO {
     required this.datePublished,
     required this.postUrl,
     required this.likes,
-    required this.commentCount
+    required this.commentCount,
+    required this.tags
   });
 }

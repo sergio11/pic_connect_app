@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:pic_connect/utils/colors.dart';
 
 class CameraWidget extends StatefulWidget {
 
@@ -59,6 +60,7 @@ class _CameraWidgetState extends State<CameraWidget> with WidgetsBindingObserver
     if (_isCameraInitialized) {
       return SafeArea(
         child: Scaffold(
+          backgroundColor: mobileBackgroundColor,
           body: Stack(
             fit: StackFit.expand,
             children: [

@@ -60,6 +60,7 @@ dependencies:
   flutter_spinkit: ^5.2.0
   easy_image_viewer: ^1.2.1
   image_editor_plus: ^0.2.5
+  textfield_tags: ^2.0.2
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -13,6 +13,7 @@ class PostCardState with _$PostCardState {
       @Default("") String datePublished,
       @Default("") String postImageUrl,
       @Default(false) bool isPostDeleted,
+      @Default([]) List<String> tags,
       @Default("https://i.stack.imgur.com/l60Hf.png")
       String authorImageUrl}) = _PostCardState;
 }

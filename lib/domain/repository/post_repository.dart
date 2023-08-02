@@ -9,6 +9,7 @@ abstract class PostRepository {
   Future<Either<Failure, bool>> uploadPost({
     required String authorUid,
     required String description,
+    required List<String> tags,
     required Uint8List file
   });
 

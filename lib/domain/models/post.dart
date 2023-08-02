@@ -9,6 +9,7 @@ class PostBO {
   final String postUrl;
   final String profImage;
   final int commentCount;
+  final List<String> tags;
 
   const PostBO({
     required this.description,
@@ -19,6 +20,7 @@ class PostBO {
     required this.datePublished,
     required this.postUrl,
     required this.profImage,
-    required this.commentCount
+    required this.commentCount,
+    required this.tags
   });
 }

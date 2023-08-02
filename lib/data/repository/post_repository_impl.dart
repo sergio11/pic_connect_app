@@ -82,6 +82,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, bool>> uploadPost({
     required String authorUid,
     required String description,
+    required List<String> tags,
     required Uint8List file
   }) async {
     try {
@@ -89,6 +90,7 @@ class PostRepositoryImpl implements PostRepository {
       postDatasource.uploadPost(SavePostDTO(
           authorUid: authorUid,
           description: description,
+          tags: tags,
           postUrl: postUrl
       ));
       return const Right(true);

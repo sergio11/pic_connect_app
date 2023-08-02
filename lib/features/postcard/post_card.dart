@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/like_animation.dart';
+import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 
@@ -203,6 +204,11 @@ class _PostCardState extends State<PostCard> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          TagsRow(
+            tags: state.tags,
+            scrollController: ScrollController(),
+            margin: const EdgeInsets.only(bottom: 15.0, right: 5.0),
+          ),
           DefaultTextStyle(
               style: Theme.of(context)
                   .textTheme

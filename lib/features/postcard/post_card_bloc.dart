@@ -33,6 +33,7 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
         commentCount: event.post.commentCount,
         postId: event.post.postId,
         username: event.post.username,
+        tags: event.post.tags,
         description: event.post.description,
         datePublished: DateFormat.yMMMd().format(event.post.datePublished),
         postImageUrl: event.post.postUrl,

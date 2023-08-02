@@ -15,8 +15,8 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
         postUrl: object.postDTO.postUrl,
         postAuthorUid: object.userDTO.uid,
         profImage: object.userDTO.photoUrl,
-        commentCount: object.postDTO.commentCount
-    );
+        commentCount: object.postDTO.commentCount,
+        tags: object.postDTO.tags);
   }
 }
 
@@ -24,8 +24,5 @@ class PostBoMapperData {
   final PostDTO postDTO;
   final UserDTO userDTO;
 
-  PostBoMapperData({
-    required this.postDTO,
-    required this.userDTO
-  });
+  PostBoMapperData({required this.postDTO, required this.userDTO});
 }
