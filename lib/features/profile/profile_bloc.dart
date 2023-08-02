@@ -80,6 +80,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             (fail) => emit(state.copyWith(isLoading: false)),
             (data) => emit(state.copyWith(
                 isLoading: false,
+                userUid: data.init.uid,
+                authUserUid: data.last,
                 photoUrl: data.init.photoUrl,
                 bio: data.init.bio,
                 username: data.init.username,

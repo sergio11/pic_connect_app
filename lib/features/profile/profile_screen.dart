@@ -147,9 +147,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildStatColumn(state.postLen, "posts"),
-                    _buildStatColumn(state.followers, "followers"),
-                    _buildStatColumn(state.following, "following"),
+                    _buildStatColumn(state.postLen, "posts", () => widget.onShowPublications(state.userUid)),
+                    _buildStatColumn(state.followers, "followers", () => {}),
+                    _buildStatColumn(state.following, "following", () => {}),
                   ],
                 ),
                 Row(
@@ -333,29 +333,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Column _buildStatColumn(int num, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          num.toString(),
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
-        ),
-        Container(
-          margin: const EdgeInsets.only(top: 4),
-          child: Text(
-            label,
+  Widget _buildStatColumn(int num, String label, Function()? onTag) {
+    return GestureDetector(
+      onTap: onTag,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            num.toString(),
             style: Theme.of(context)
                 .textTheme
-                .titleMedium
-                ?.copyWith(color: accentColor, fontWeight: FontWeight.w400),
+                .titleLarge
+                ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
+          Container(
+            margin: const EdgeInsets.only(top: 4),
+            child: Text(
+              label,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: accentColor, fontWeight: FontWeight.w400),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
