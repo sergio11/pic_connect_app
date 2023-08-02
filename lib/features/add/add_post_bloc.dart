@@ -42,40 +42,43 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
 
   FutureOr<void> onPhotoSelectedEventHandler(
       OnPhotoSelectedEvent event, Emitter<AddPostState> emit) async {
-    final fileData = await File(event.imageFilePath).readAsBytes();
+    final imageData = await File(event.imageFilePath).readAsBytes();
     emit(state.copyWith(
-        postFileData: fileData, imageEditingRequired: true, isVideo: false));
+        imageData: imageData, imageEditingRequired: true, videoFilePath: null));
   }
 
   FutureOr<void> onVideoSelectedEventHandler(
       OnVideoSelectedEvent event, Emitter<AddPostState> emit) async {
-    final fileData = await File(event.videoFilePath).readAsBytes();
     emit(state.copyWith(
-        postFileData: fileData, imageEditingRequired: false, isVideo: true));
+        videoFilePath: event.videoFilePath,
+        imageEditingRequired: false,
+        imageData: null));
   }
 
   FutureOr<void> onUploadPostEventHandler(
       OnUploadPostEvent event, Emitter<AddPostState> emit) async {
-    if (state.postFileData != null) {
-      if(event.description.isNotEmpty) {
+    if (state.imageData != null) {
+      if (event.description.isNotEmpty) {
         emit(state.copyWith(isPostUploading: true));
         final response = await publishPostUseCase(
-            PublishPostUseParams(event.description, state.postFileData!, event.tags));
+            PublishPostUseParams(event.description, state.imageData!, event.tags));
         response.fold(
-                (failure) => emit(state.copyWith(isPostUploading: false)),
-                (userDetail) => emit(state.copyWith(
+            (failure) => emit(state.copyWith(isPostUploading: false)),
+            (userDetail) => emit(state.copyWith(
                 isPostUploading: false, isPostUploadedSuccessfully: true)));
       } else {
-        emit(state.copyWith(errorMessage: "You must provide a description about your post!"));
+        emit(state.copyWith(
+            errorMessage: "You must provide a description about your post!"));
       }
     } else {
-      emit(state.copyWith(errorMessage: "An error occurred when trying to upload post, please try again!"));
+      emit(state.copyWith(
+          errorMessage:
+              "An error occurred when trying to upload post, please try again!"));
     }
   }
 
   FutureOr<void> onEditedImageEventHandler(
       OnEditedImageEvent event, Emitter<AddPostState> emit) async {
-    emit(state.copyWith(
-        postFileData: event.imageData, imageEditingRequired: false));
+    emit(state.copyWith(imageData: event.imageData, imageEditingRequired: false));
   }
 }

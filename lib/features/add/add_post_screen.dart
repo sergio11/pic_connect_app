@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +12,7 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:video_player/video_player.dart';
 
 class AddPostScreen extends StatefulWidget {
   final VoidCallback onPostUploaded;
@@ -28,6 +31,7 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
+  VideoPlayerController? _videoController;
   final TextEditingController _descriptionController = TextEditingController();
   final TextfieldTagsController _textFieldTagsController =
       TextfieldTagsController();
@@ -40,9 +44,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   void _onUploadPost() {
-    context
-        .read<AddPostBloc>()
-        .add(OnUploadPostEvent(_descriptionController.text, _textFieldTagsController.getTags ?? []));
+    context.read<AddPostBloc>().add(OnUploadPostEvent(
+        _descriptionController.text, _textFieldTagsController.getTags ?? []));
   }
 
   void _onEditImage(Uint8List imageData) async {
@@ -73,15 +76,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddPostBloc, AddPostState>(listener: (context, state) {
-      if (state.imageSource == ImageSource.gallery &&
-          state.postFileData == null) {
+      if (state.shouldPickContentFromGallery()) {
         _onPickImageFromGallery();
-      } else if (state.postFileData != null && state.imageEditingRequired) {
-        _onEditImage(state.postFileData!);
+      } else if (state.isImageEditingRequired()) {
+        _onEditImage(state.imageData!);
       } else if (state.isPostUploadedSuccessfully) {
         _onPostUploaded();
-      } else if(state.errorMessage != null) {
-          showErrorSnackBar(context: context, message: state.errorMessage!);
+      } else if (state.errorMessage != null) {
+        showErrorSnackBar(context: context, message: state.errorMessage!);
       }
     }, builder: (context, state) {
       return _buildScreenContent(state);
@@ -93,12 +95,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
     super.dispose();
     _descriptionController.dispose();
     _textFieldTagsController.dispose();
+    _videoController?.dispose();
   }
 
   Widget _buildScreenContent(AddPostState state) {
-    if(state.shouldTakeContentFromCamera()) {
+    if (state.shouldTakeContentFromCamera()) {
       return _buildTakeContentFromCamera(state);
-    } else if(state.shouldFillPostData()) {
+    } else if (state.shouldFillPostData()) {
       return _buildFillPostData(state);
     } else {
       return _buildProgressIndicator();
@@ -121,31 +124,33 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   PreferredSizeWidget? _buildAppBar(AddPostState state) {
-    return state.shouldFillPostData() ? AppBar(
-      backgroundColor: appBarBackgroundColor,
-      leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: accentColor,
-          onPressed: _onBackPressed),
-      title: Text('Post to',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(color: accentColor)),
-      centerTitle: false,
-      actions: <Widget>[
-        TextButton(
-          onPressed: () => _onUploadPost(),
-          child: Text(
-            "Post",
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(color: secondaryColor),
-          ),
-        )
-      ],
-    ) : null;
+    return state.shouldFillPostData()
+        ? AppBar(
+            backgroundColor: appBarBackgroundColor,
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                color: accentColor,
+                onPressed: _onBackPressed),
+            title: Text('Post to',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: accentColor)),
+            centerTitle: false,
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => _onUploadPost(),
+                child: Text(
+                  "Post",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(color: secondaryColor),
+                ),
+              )
+            ],
+          )
+        : null;
   }
 
   Widget _buildFillPostData(AddPostState state) {
@@ -155,17 +160,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
         child: Column(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 1.5,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      alignment: Alignment.topCenter,
-                      image: MemoryImage(state.postFileData!)),
-                ),
-              ),
-            ),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 1.5,
+                child: state.imageData != null
+                    ? _buildImagePreview(state.imageData!)
+                    : _buildVideoPreview(state.videoFilePath!)),
             const SizedBox(
               height: 30,
             ),
@@ -225,16 +224,40 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 textEditingController: tec,
                 onChanged: onChanged,
                 onSubmitted: onSubmitted,
-                hintText: _textFieldTagsController.hasTags ? '' : "Enter tag...",
+                hintText:
+                    _textFieldTagsController.hasTags ? '' : "Enter tag...",
                 helperText: 'Enter topics...',
                 focusNode: fn,
                 errorText: error,
                 prefixIconConstraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.74),
                 icon: tags.isNotEmpty
-                    ? TagsRow(tags: tags, scrollController: sc, onTagDeleted: onTagDelete) : null
-            );
+                    ? TagsRow(
+                        tags: tags,
+                        scrollController: sc,
+                        onTagDeleted: onTagDelete)
+                    : null);
           });
         });
+  }
+
+  Widget _buildVideoPreview(String videoPath) {
+    _videoController = VideoPlayerController.file(File(videoPath));
+    _videoController?.initialize();
+    _videoController?.play();
+    _videoController?.setVolume(1);
+    _videoController?.setLooping(true);
+    return VideoPlayer(_videoController!);
+  }
+
+  Widget _buildImagePreview(Uint8List imageData) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.fill,
+            alignment: Alignment.topCenter,
+            image: MemoryImage(imageData)),
+      ),
+    );
   }
 }

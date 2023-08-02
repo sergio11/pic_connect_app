@@ -948,8 +948,8 @@ abstract class OnEditedImageEvent implements AddPostEvent {
 mixin _$AddPostState {
   ImageSource? get imageSource => throw _privateConstructorUsedError;
   String? get authorPhotoUrl => throw _privateConstructorUsedError;
-  Uint8List? get postFileData => throw _privateConstructorUsedError;
-  bool get isVideo => throw _privateConstructorUsedError;
+  Uint8List? get imageData => throw _privateConstructorUsedError;
+  String? get videoFilePath => throw _privateConstructorUsedError;
   bool get imageEditingRequired => throw _privateConstructorUsedError;
   bool get isPostUploading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -970,8 +970,8 @@ abstract class $AddPostStateCopyWith<$Res> {
   $Res call(
       {ImageSource? imageSource,
       String? authorPhotoUrl,
-      Uint8List? postFileData,
-      bool isVideo,
+      Uint8List? imageData,
+      String? videoFilePath,
       bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
@@ -994,8 +994,8 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
   $Res call({
     Object? imageSource = freezed,
     Object? authorPhotoUrl = freezed,
-    Object? postFileData = freezed,
-    Object? isVideo = null,
+    Object? imageData = freezed,
+    Object? videoFilePath = freezed,
     Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
@@ -1011,14 +1011,14 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
           ? _value.authorPhotoUrl
           : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      postFileData: freezed == postFileData
-          ? _value.postFileData
-          : postFileData // ignore: cast_nullable_to_non_nullable
+      imageData: freezed == imageData
+          ? _value.imageData
+          : imageData // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      isVideo: null == isVideo
-          ? _value.isVideo
-          : isVideo // ignore: cast_nullable_to_non_nullable
-              as bool,
+      videoFilePath: freezed == videoFilePath
+          ? _value.videoFilePath
+          : videoFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
       imageEditingRequired: null == imageEditingRequired
           ? _value.imageEditingRequired
           : imageEditingRequired // ignore: cast_nullable_to_non_nullable
@@ -1054,8 +1054,8 @@ abstract class _$$_AddPostStateCopyWith<$Res>
   $Res call(
       {ImageSource? imageSource,
       String? authorPhotoUrl,
-      Uint8List? postFileData,
-      bool isVideo,
+      Uint8List? imageData,
+      String? videoFilePath,
       bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
@@ -1076,8 +1076,8 @@ class __$$_AddPostStateCopyWithImpl<$Res>
   $Res call({
     Object? imageSource = freezed,
     Object? authorPhotoUrl = freezed,
-    Object? postFileData = freezed,
-    Object? isVideo = null,
+    Object? imageData = freezed,
+    Object? videoFilePath = freezed,
     Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
@@ -1093,14 +1093,14 @@ class __$$_AddPostStateCopyWithImpl<$Res>
           ? _value.authorPhotoUrl
           : authorPhotoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      postFileData: freezed == postFileData
-          ? _value.postFileData
-          : postFileData // ignore: cast_nullable_to_non_nullable
+      imageData: freezed == imageData
+          ? _value.imageData
+          : imageData // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      isVideo: null == isVideo
-          ? _value.isVideo
-          : isVideo // ignore: cast_nullable_to_non_nullable
-              as bool,
+      videoFilePath: freezed == videoFilePath
+          ? _value.videoFilePath
+          : videoFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
       imageEditingRequired: null == imageEditingRequired
           ? _value.imageEditingRequired
           : imageEditingRequired // ignore: cast_nullable_to_non_nullable
@@ -1131,8 +1131,8 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
   const _$_AddPostState(
       {this.imageSource = null,
       this.authorPhotoUrl,
-      this.postFileData,
-      this.isVideo = false,
+      this.imageData,
+      this.videoFilePath,
       this.imageEditingRequired = false,
       this.isPostUploading = false,
       this.isLoading = false,
@@ -1146,10 +1146,9 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
   @override
   final String? authorPhotoUrl;
   @override
-  final Uint8List? postFileData;
+  final Uint8List? imageData;
   @override
-  @JsonKey()
-  final bool isVideo;
+  final String? videoFilePath;
   @override
   @JsonKey()
   final bool imageEditingRequired;
@@ -1167,7 +1166,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, postFileData: $postFileData, isVideo: $isVideo, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
+    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, imageData: $imageData, videoFilePath: $videoFilePath, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1177,8 +1176,8 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'AddPostState'))
       ..add(DiagnosticsProperty('imageSource', imageSource))
       ..add(DiagnosticsProperty('authorPhotoUrl', authorPhotoUrl))
-      ..add(DiagnosticsProperty('postFileData', postFileData))
-      ..add(DiagnosticsProperty('isVideo', isVideo))
+      ..add(DiagnosticsProperty('imageData', imageData))
+      ..add(DiagnosticsProperty('videoFilePath', videoFilePath))
       ..add(DiagnosticsProperty('imageEditingRequired', imageEditingRequired))
       ..add(DiagnosticsProperty('isPostUploading', isPostUploading))
       ..add(DiagnosticsProperty('isLoading', isLoading))
@@ -1196,9 +1195,9 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
                 other.imageSource == imageSource) &&
             (identical(other.authorPhotoUrl, authorPhotoUrl) ||
                 other.authorPhotoUrl == authorPhotoUrl) &&
-            const DeepCollectionEquality()
-                .equals(other.postFileData, postFileData) &&
-            (identical(other.isVideo, isVideo) || other.isVideo == isVideo) &&
+            const DeepCollectionEquality().equals(other.imageData, imageData) &&
+            (identical(other.videoFilePath, videoFilePath) ||
+                other.videoFilePath == videoFilePath) &&
             (identical(other.imageEditingRequired, imageEditingRequired) ||
                 other.imageEditingRequired == imageEditingRequired) &&
             (identical(other.isPostUploading, isPostUploading) ||
@@ -1218,8 +1217,8 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       runtimeType,
       imageSource,
       authorPhotoUrl,
-      const DeepCollectionEquality().hash(postFileData),
-      isVideo,
+      const DeepCollectionEquality().hash(imageData),
+      videoFilePath,
       imageEditingRequired,
       isPostUploading,
       isLoading,
@@ -1237,8 +1236,8 @@ abstract class _AddPostState extends AddPostState {
   const factory _AddPostState(
       {final ImageSource? imageSource,
       final String? authorPhotoUrl,
-      final Uint8List? postFileData,
-      final bool isVideo,
+      final Uint8List? imageData,
+      final String? videoFilePath,
       final bool imageEditingRequired,
       final bool isPostUploading,
       final bool isLoading,
@@ -1251,9 +1250,9 @@ abstract class _AddPostState extends AddPostState {
   @override
   String? get authorPhotoUrl;
   @override
-  Uint8List? get postFileData;
+  Uint8List? get imageData;
   @override
-  bool get isVideo;
+  String? get videoFilePath;
   @override
   bool get imageEditingRequired;
   @override

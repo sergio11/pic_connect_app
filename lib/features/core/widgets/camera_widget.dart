@@ -139,7 +139,7 @@ class _CameraWidgetState extends State<CameraWidget> with WidgetsBindingObserver
         _isRecording = true;
       });
       await cameraController?.startVideoRecording();
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 15));
       final video = await cameraController?.stopVideoRecording();
       setState(() {
         _isRecording = false;
@@ -161,7 +161,9 @@ class _CameraWidgetState extends State<CameraWidget> with WidgetsBindingObserver
   }
 
   void _onRecordVideoPressed() async {
+    debugPrint("captureVideo started!");
     final xFile = await captureVideo();
+    debugPrint("captureVideo xFile: ${xFile?.path} finished!");
     if (xFile != null) {
       if (xFile.path.isNotEmpty) {
         widget.onRecordVideoPressed(xFile.path);

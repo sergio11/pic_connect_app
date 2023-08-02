@@ -6,8 +6,8 @@ class AddPostState with _$AddPostState {
   const factory AddPostState({
     @Default(null) final ImageSource? imageSource,
     final String? authorPhotoUrl,
-    final Uint8List? postFileData,
-    @Default(false) final bool isVideo,
+    final Uint8List? imageData,
+    final String? videoFilePath,
     @Default(false) final bool imageEditingRequired,
     @Default(false) final bool isPostUploading,
     @Default(false) final bool isLoading,
@@ -16,14 +16,18 @@ class AddPostState with _$AddPostState {
   }) = _AddPostState;
 
   bool shouldTakeContentFromCamera() {
-    return postFileData == null && imageSource == ImageSource.camera;
+    return imageData == null && videoFilePath == null && imageSource == ImageSource.camera;
+  }
+
+  bool shouldPickContentFromGallery() {
+    return imageData == null && videoFilePath == null && imageSource == ImageSource.gallery;
   }
 
   bool isImageEditingRequired() {
-    return postFileData != null && imageEditingRequired;
+    return imageData != null && imageEditingRequired;
   }
 
   bool shouldFillPostData() {
-    return !isPostUploading && postFileData != null && (isVideo || !imageEditingRequired);
+    return !isPostUploading && (imageData != null && !imageEditingRequired) || videoFilePath != null;
   }
 }
