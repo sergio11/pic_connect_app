@@ -1,3 +1,4 @@
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/like_animation.dart';
@@ -124,7 +125,7 @@ class _PostCardState extends State<PostCard> {
         children: [
           GestureDetector(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15), // Image border
+              borderRadius: BorderRadius.circular(15),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.35,
                 width: double.infinity,
@@ -134,6 +135,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
             ),
+            onLongPress: () => showImageViewer(context, NetworkImage(state.postImageUrl)),
             onDoubleTap: () => onLikePost(state.postId),
           ),
           AnimatedOpacity(

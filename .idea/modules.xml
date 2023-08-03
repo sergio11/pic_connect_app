@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/pic_connect.iml" filepath="$PROJECT_DIR$/pic_connect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/pic_connect_android.iml" filepath="$PROJECT_DIR$/android/pic_connect_android.iml" />
     </modules>
   </component>
 </project>

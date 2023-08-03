@@ -282,8 +282,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             height: MediaQuery.of(context).size.height,
             color: primaryColor,
             child: TabBarView(children: [
-              _buildPostsGrid(state),
-              const Text("Favorites"),
+              _buildPostsGrid(state.postList, state.isPostGridLoading),
+              _buildPostsGrid(state.favoritePostList, state.isFavoritePostGridLoading),
               const Text("Collections"),
             ]),
           ),
@@ -292,19 +292,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildPostsGrid(ProfileState state) {
+  Widget _buildPostsGrid(List<PostBO> data, bool isLoading) {
     return GridView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 2),
-      itemCount: state.postList.length,
+      itemCount: data.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
-        return state.isPostGridLoading
+        return isLoading
             ? _buildProgressIndicator()
-            : _buildPostItem(state.postList[index]);
+            : _buildPostItem(data[index]);
       },
     );
   }

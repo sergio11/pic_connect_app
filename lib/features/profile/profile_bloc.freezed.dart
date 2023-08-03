@@ -652,7 +652,9 @@ mixin _$ProfileState {
   bool get isFollowing => throw _privateConstructorUsedError;
   bool get isAuthUser => throw _privateConstructorUsedError;
   bool get isPostGridLoading => throw _privateConstructorUsedError;
+  bool get isFavoritePostGridLoading => throw _privateConstructorUsedError;
   List<PostBO> get postList => throw _privateConstructorUsedError;
+  List<PostBO> get favoritePostList => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -680,7 +682,9 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool isFollowing,
       bool isAuthUser,
       bool isPostGridLoading,
+      bool isFavoritePostGridLoading,
       List<PostBO> postList,
+      List<PostBO> favoritePostList,
       String? errorMessage});
 }
 
@@ -710,7 +714,9 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? isFollowing = null,
     Object? isAuthUser = null,
     Object? isPostGridLoading = null,
+    Object? isFavoritePostGridLoading = null,
     Object? postList = null,
+    Object? favoritePostList = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -766,9 +772,17 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isPostGridLoading
           : isPostGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isFavoritePostGridLoading: null == isFavoritePostGridLoading
+          ? _value.isFavoritePostGridLoading
+          : isFavoritePostGridLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value.postList
           : postList // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
+      favoritePostList: null == favoritePostList
+          ? _value.favoritePostList
+          : favoritePostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -800,7 +814,9 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       bool isFollowing,
       bool isAuthUser,
       bool isPostGridLoading,
+      bool isFavoritePostGridLoading,
       List<PostBO> postList,
+      List<PostBO> favoritePostList,
       String? errorMessage});
 }
 
@@ -828,7 +844,9 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? isFollowing = null,
     Object? isAuthUser = null,
     Object? isPostGridLoading = null,
+    Object? isFavoritePostGridLoading = null,
     Object? postList = null,
+    Object? favoritePostList = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ProfileState(
@@ -884,9 +902,17 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.isPostGridLoading
           : isPostGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isFavoritePostGridLoading: null == isFavoritePostGridLoading
+          ? _value.isFavoritePostGridLoading
+          : isFavoritePostGridLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value._postList
           : postList // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
+      favoritePostList: null == favoritePostList
+          ? _value._favoritePostList
+          : favoritePostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -913,9 +939,12 @@ class _$_ProfileState implements _ProfileState {
       this.isFollowing = false,
       this.isAuthUser = false,
       this.isPostGridLoading = true,
+      this.isFavoritePostGridLoading = true,
       final List<PostBO> postList = const [],
+      final List<PostBO> favoritePostList = const [],
       this.errorMessage})
-      : _postList = postList;
+      : _postList = postList,
+        _favoritePostList = favoritePostList;
 
   @override
   @JsonKey()
@@ -956,6 +985,9 @@ class _$_ProfileState implements _ProfileState {
   @override
   @JsonKey()
   final bool isPostGridLoading;
+  @override
+  @JsonKey()
+  final bool isFavoritePostGridLoading;
   final List<PostBO> _postList;
   @override
   @JsonKey()
@@ -965,12 +997,22 @@ class _$_ProfileState implements _ProfileState {
     return EqualUnmodifiableListView(_postList);
   }
 
+  final List<PostBO> _favoritePostList;
+  @override
+  @JsonKey()
+  List<PostBO> get favoritePostList {
+    if (_favoritePostList is EqualUnmodifiableListView)
+      return _favoritePostList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_favoritePostList);
+  }
+
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, postList: $postList, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, isFavoritePostGridLoading: $isFavoritePostGridLoading, postList: $postList, favoritePostList: $favoritePostList, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1001,7 +1043,12 @@ class _$_ProfileState implements _ProfileState {
                 other.isAuthUser == isAuthUser) &&
             (identical(other.isPostGridLoading, isPostGridLoading) ||
                 other.isPostGridLoading == isPostGridLoading) &&
+            (identical(other.isFavoritePostGridLoading,
+                    isFavoritePostGridLoading) ||
+                other.isFavoritePostGridLoading == isFavoritePostGridLoading) &&
             const DeepCollectionEquality().equals(other._postList, _postList) &&
+            const DeepCollectionEquality()
+                .equals(other._favoritePostList, _favoritePostList) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -1022,7 +1069,9 @@ class _$_ProfileState implements _ProfileState {
       isFollowing,
       isAuthUser,
       isPostGridLoading,
+      isFavoritePostGridLoading,
       const DeepCollectionEquality().hash(_postList),
+      const DeepCollectionEquality().hash(_favoritePostList),
       errorMessage);
 
   @JsonKey(ignore: true)
@@ -1047,7 +1096,9 @@ abstract class _ProfileState implements ProfileState {
       final bool isFollowing,
       final bool isAuthUser,
       final bool isPostGridLoading,
+      final bool isFavoritePostGridLoading,
       final List<PostBO> postList,
+      final List<PostBO> favoritePostList,
       final String? errorMessage}) = _$_ProfileState;
 
   @override
@@ -1077,7 +1128,11 @@ abstract class _ProfileState implements ProfileState {
   @override
   bool get isPostGridLoading;
   @override
+  bool get isFavoritePostGridLoading;
+  @override
   List<PostBO> get postList;
+  @override
+  List<PostBO> get favoritePostList;
   @override
   String? get errorMessage;
   @override

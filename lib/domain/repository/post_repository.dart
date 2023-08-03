@@ -32,5 +32,7 @@ abstract class PostRepository {
 
   Future<Either<Failure, List<PostBO>>> findAllOrderByDatePublished();
 
+  Future<Either<Failure, List<PostBO>>> findAllFavoritesByUserUidOrderByDatePublished(String userUi);
+
   Future<Either<Failure, List<PostBO>>> findAllByUserUidListOrderByDatePublished(List<String> userUidList);
 }

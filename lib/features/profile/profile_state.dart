@@ -15,8 +15,10 @@ class ProfileState with _$ProfileState {
     @Default(false) final bool isLogout,
     @Default(false) final bool isFollowing,
     @Default(false) final bool isAuthUser,
-    @Default(true) final bool isPostGridLoading,
+    @Default(false) final bool isPostGridLoading,
+    @Default(false) final bool isFavoritePostGridLoading,
     @Default([]) final List<PostBO> postList,
+    @Default([]) final List<PostBO> favoritePostList,
     final String? errorMessage
   }) = _ProfileState;
 }

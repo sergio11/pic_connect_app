@@ -37,6 +37,7 @@ import 'package:pic_connect/domain/repository/user_repository.dart';
 import 'package:pic_connect/domain/usecase/delete_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_user_home_feed_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_comments_by_post_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_favorites_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_users_by_name_use_case.dart';
@@ -120,6 +121,7 @@ setupServiceLocator() async {
   serviceLocator.registerLazySingleton(() => DeletePostUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => LikePostUseCase(postRepository: serviceLocator(), authRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => PublishCommentUseCase(authRepository: serviceLocator(), postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FindFavoritesPostsByUserUseCase(postRepository: serviceLocator()));
   /// BloC ///
   serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
@@ -127,7 +129,7 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() =>
       SignUpBloc(signUpUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator(), findPostsByUserUseCase: serviceLocator(), followUserUseCase: serviceLocator(), unFollowUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator(), findPostsByUserUseCase: serviceLocator(), followUserUseCase: serviceLocator(), unFollowUserUseCase: serviceLocator(), findFavoritesPostsByUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc(findUsersByNameUseCase: serviceLocator(), findPostsOrderByDatePublishedUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => AddPostBloc(getUserDetailsUseCase: serviceLocator(), publishPostUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FavoritesBloc());
