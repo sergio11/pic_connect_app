@@ -21,6 +21,11 @@ class ProfileState with _$ProfileState {
     @Default([]) final List<PostBO> postList,
     @Default([]) final List<PostBO> favoritePostList,
     @Default([]) final List<PostBO> bookmarkPostList,
+    @Default(ProfileTab.values) final List<ProfileTab> profileTabs,
     final String? errorMessage
   }) = _ProfileState;
+}
+
+enum ProfileTab {
+  pictures, favorites, bookmark
 }

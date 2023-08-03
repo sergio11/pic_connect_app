@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget _buildScreenContent(SearchState state) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: primaryColor,
+          backgroundColor: appBarBackgroundColor,
           title: Form(
             child: _buildTextSearchView(),
           ),

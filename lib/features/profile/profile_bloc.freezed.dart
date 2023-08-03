@@ -657,6 +657,7 @@ mixin _$ProfileState {
   List<PostBO> get postList => throw _privateConstructorUsedError;
   List<PostBO> get favoritePostList => throw _privateConstructorUsedError;
   List<PostBO> get bookmarkPostList => throw _privateConstructorUsedError;
+  List<ProfileTab> get profileTabs => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -689,6 +690,7 @@ abstract class $ProfileStateCopyWith<$Res> {
       List<PostBO> postList,
       List<PostBO> favoritePostList,
       List<PostBO> bookmarkPostList,
+      List<ProfileTab> profileTabs,
       String? errorMessage});
 }
 
@@ -723,6 +725,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? postList = null,
     Object? favoritePostList = null,
     Object? bookmarkPostList = null,
+    Object? profileTabs = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -798,6 +801,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.bookmarkPostList
           : bookmarkPostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      profileTabs: null == profileTabs
+          ? _value.profileTabs
+          : profileTabs // ignore: cast_nullable_to_non_nullable
+              as List<ProfileTab>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -833,6 +840,7 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       List<PostBO> postList,
       List<PostBO> favoritePostList,
       List<PostBO> bookmarkPostList,
+      List<ProfileTab> profileTabs,
       String? errorMessage});
 }
 
@@ -865,6 +873,7 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? postList = null,
     Object? favoritePostList = null,
     Object? bookmarkPostList = null,
+    Object? profileTabs = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ProfileState(
@@ -940,6 +949,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value._bookmarkPostList
           : bookmarkPostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      profileTabs: null == profileTabs
+          ? _value._profileTabs
+          : profileTabs // ignore: cast_nullable_to_non_nullable
+              as List<ProfileTab>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -970,10 +983,12 @@ class _$_ProfileState implements _ProfileState {
       final List<PostBO> postList = const [],
       final List<PostBO> favoritePostList = const [],
       final List<PostBO> bookmarkPostList = const [],
+      final List<ProfileTab> profileTabs = ProfileTab.values,
       this.errorMessage})
       : _postList = postList,
         _favoritePostList = favoritePostList,
-        _bookmarkPostList = bookmarkPostList;
+        _bookmarkPostList = bookmarkPostList,
+        _profileTabs = profileTabs;
 
   @override
   @JsonKey()
@@ -1049,12 +1064,21 @@ class _$_ProfileState implements _ProfileState {
     return EqualUnmodifiableListView(_bookmarkPostList);
   }
 
+  final List<ProfileTab> _profileTabs;
+  @override
+  @JsonKey()
+  List<ProfileTab> get profileTabs {
+    if (_profileTabs is EqualUnmodifiableListView) return _profileTabs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_profileTabs);
+  }
+
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, isFavoritePostGridLoading: $isFavoritePostGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, postList: $postList, favoritePostList: $favoritePostList, bookmarkPostList: $bookmarkPostList, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, isFavoritePostGridLoading: $isFavoritePostGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, postList: $postList, favoritePostList: $favoritePostList, bookmarkPostList: $bookmarkPostList, profileTabs: $profileTabs, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1096,6 +1120,8 @@ class _$_ProfileState implements _ProfileState {
                 .equals(other._favoritePostList, _favoritePostList) &&
             const DeepCollectionEquality()
                 .equals(other._bookmarkPostList, _bookmarkPostList) &&
+            const DeepCollectionEquality()
+                .equals(other._profileTabs, _profileTabs) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -1121,6 +1147,7 @@ class _$_ProfileState implements _ProfileState {
         const DeepCollectionEquality().hash(_postList),
         const DeepCollectionEquality().hash(_favoritePostList),
         const DeepCollectionEquality().hash(_bookmarkPostList),
+        const DeepCollectionEquality().hash(_profileTabs),
         errorMessage
       ]);
 
@@ -1151,6 +1178,7 @@ abstract class _ProfileState implements ProfileState {
       final List<PostBO> postList,
       final List<PostBO> favoritePostList,
       final List<PostBO> bookmarkPostList,
+      final List<ProfileTab> profileTabs,
       final String? errorMessage}) = _$_ProfileState;
 
   @override
@@ -1189,6 +1217,8 @@ abstract class _ProfileState implements ProfileState {
   List<PostBO> get favoritePostList;
   @override
   List<PostBO> get bookmarkPostList;
+  @override
+  List<ProfileTab> get profileTabs;
   @override
   String? get errorMessage;
   @override

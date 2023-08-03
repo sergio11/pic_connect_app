@@ -79,4 +79,18 @@ class UserDatasourceImpl extends UserDatasource {
         .toList();
     return followingDTOList..add(userDTO);
   }
+
+  @override
+  Future<List<UserDTO>> findAllFollowersBy(String uid) async {
+    final userSnap = await firestore.collection('users').doc(uid).get();
+    final userDTO = userDtoMapper(userSnap);
+    final followersSnap = await firestore
+        .collection('users')
+        .where('following', arrayContains: uid)
+        .get();
+    final followersDTOList = followersSnap.docs
+        .map((doc) => userDtoMapper(doc))
+        .toList();
+    return followersDTOList..add(userDTO);
+  }
 }

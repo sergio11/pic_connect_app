@@ -1,4 +1,3 @@
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/domain/models/post.dart';
@@ -11,11 +10,15 @@ import 'package:pic_connect/utils/utils.dart';
 
 class ProfileScreen extends StatefulWidget {
 
-  final Function(String userUid) onShowPublications;
+  final Function(String userUid) onGoToPublications;
+  final Function(String userUid) onGoToFollowersScreen;
+  final Function(String userUid) onGoToFollowingScreen;
 
   const ProfileScreen({
     Key? key,
-    required this.onShowPublications
+    required this.onGoToPublications,
+    required this.onGoToFollowersScreen,
+    required this.onGoToFollowingScreen
   }) : super(key: key);
 
   @override
@@ -23,13 +26,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  ProfileTab _currentProfileTabSelected = ProfileTab.pictures;
+
   void onLogout() {
     showAlertDialog(
         context: context,
         title: "You have logged out",
         description: "see you soon!",
-        onAcceptPressed: () =>
-            {context.read<AppBloc>().add(const OnVerifySession())});
+        onAcceptPressed: () => context.read<AppBloc>().add(const OnVerifySession()));
   }
 
   @override
@@ -62,15 +67,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   context: context,
                   title: "Sign off?",
                   description: "Are you sure to sign out?",
-                  onAcceptPressed: () => {
-                        context.read<ProfileBloc>().add(const OnSignOutEvent())
-                      });
+                  onAcceptPressed: () => context.read<ProfileBloc>().add(const OnSignOutEvent()));
             },
           ),
         ],
         backgroundColor: appBarBackgroundColor,
         title: Text(state.username,
-            style: Theme.of(context)
+            style: Theme
+                .of(context)
                 .textTheme
                 .titleLarge
                 ?.copyWith(color: accentColor)),
@@ -80,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onRefresh: () {
             return Future.delayed(
               const Duration(seconds: 1),
-              () {
+                  () {
                 //context.read<ProfileBloc>().add(const OnLoadProfileEvent());
               },
             );
@@ -92,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -147,9 +151,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildStatColumn(state.postLen, "posts", () => widget.onShowPublications(state.userUid)),
-                    _buildStatColumn(state.followers, "followers", () => {}),
-                    _buildStatColumn(state.following, "following", () => {}),
+                    _buildStatColumn(state.postLen, "posts", () =>
+                        widget.onGoToPublications(state.userUid)),
+                    _buildStatColumn(state.followers, "followers", () =>
+                        widget.onGoToFollowersScreen(state.userUid)),
+                    _buildStatColumn(state.following, "following", () =>
+                        widget.onGoToFollowingScreen(state.userUid)),
                   ],
                 ),
                 Row(
@@ -158,8 +165,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     state.isAuthUser
                         ? _buildSignOutButton()
                         : state.isFollowing
-                            ? _buildUnFollowButton(state)
-                            : _buildFollowButton(state)
+                        ? _buildUnFollowButton(state)
+                        : _buildFollowButton(state)
                   ],
                 ),
               ],
@@ -211,11 +218,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(
-        top: 15, left: 15
+          top: 15, left: 15
       ),
       child: Text(
         state.username,
-        style: Theme.of(context)
+        style: Theme
+            .of(context)
             .textTheme
             .bodyLarge
             ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
@@ -227,10 +235,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(
-        top: 3, left: 15
+          top: 3, left: 15
       ),
       child: Text(state.bio,
-          style: Theme.of(context)
+          style: Theme
+              .of(context)
               .textTheme
               .bodyMedium
               ?.copyWith(color: accentColor, fontWeight: FontWeight.w400)),
@@ -238,13 +247,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildTabController(ProfileState state) {
-    final tabs = [
-      "tab_publications.png",
-      "tab_favorites.png",
-      "tab_collections.png"
-    ];
     return DefaultTabController(
-      length: tabs.length,
+      length: state.profileTabs.length,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -252,39 +256,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.only(bottom: 8, left: 10, right: 10),
               indicatorSize: TabBarIndicatorSize.tab,
               unselectedLabelColor: accentColor,
-              indicatorColor: primaryColor,
-              labelColor: primaryColor,
+              indicatorColor: accentColor,
+              labelColor: accentColor,
               indicator: BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(0, 4),
-                        blurRadius: 5.0),
+                        color: blackColor,
+                        offset: Offset(0, 0),
+                        blurRadius: 8.0),
                   ],
-                  border: Border.all(color: primaryColor, width: 2),
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     stops: [0.0, 1.0],
-                    colors: [secondaryColor, accentColorShadow],
+                    colors: [secondaryColor, secondaryColorExtraLight],
                   ),
                   borderRadius: BorderRadius.circular(50)),
-              tabs: tabs
-                  .map((tab) => Tab(
-                        height: 50,
-                        icon: ImageIcon(
-                          AssetImage("assets/$tab"),
-                          size: 30,
-                        ),
-                      ))
+              onTap: (tabIdx) =>
+              {
+                setState(() {
+                  _currentProfileTabSelected = state.profileTabs[tabIdx];
+                })
+              },
+              tabs: state.profileTabs
+                  .map((tab) =>
+                  Tab(
+                    height: 50,
+                    icon: _buildTabIcon(tab),
+                  ))
                   .toList()),
           Container(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
             color: primaryColor,
             child: TabBarView(children: [
               _buildPostsGrid(state.postList, state.isPostGridLoading),
-              _buildPostsGrid(state.favoritePostList, state.isFavoritePostGridLoading),
-              _buildPostsGrid(state.bookmarkPostList, state.isBookmarkPostGridLoading)
+              _buildPostsGrid(
+                  state.favoritePostList, state.isFavoritePostGridLoading),
+              _buildPostsGrid(
+                  state.bookmarkPostList, state.isBookmarkPostGridLoading)
             ]),
           ),
         ],
@@ -321,14 +333,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      onLongPress: () => {
+      onLongPress: () =>
+      {
         showImage(context, post.postUrl)
       },
-      onDoubleTap: () => {
+      onDoubleTap: () =>
+      {
         showImage(context, post.postUrl)
       },
-      onTap: () => {
-        widget.onShowPublications(post.postAuthorUid)
+      onTap: () =>
+      {
+        widget.onGoToPublications(post.postAuthorUid)
       },
     );
   }
@@ -342,7 +357,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Text(
             num.toString(),
-            style: Theme.of(context)
+            style: Theme
+                .of(context)
                 .textTheme
                 .titleLarge
                 ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
@@ -351,7 +367,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             margin: const EdgeInsets.only(top: 4),
             child: Text(
               label,
-              style: Theme.of(context)
+              style: Theme
+                  .of(context)
                   .textTheme
                   .titleMedium
                   ?.copyWith(color: accentColor, fontWeight: FontWeight.w400),
@@ -361,4 +378,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  Widget _buildTabIcon(ProfileTab tab) {
+    final IconData iconData;
+    switch (tab) {
+      case ProfileTab.pictures:
+        iconData =
+        tab == _currentProfileTabSelected ? Icons.photo_camera : Icons
+            .photo_camera_outlined;
+      case ProfileTab.favorites:
+        iconData = tab == _currentProfileTabSelected ? Icons.favorite : Icons
+            .favorite_border;
+      case ProfileTab.bookmark:
+        iconData = tab == _currentProfileTabSelected ? Icons.bookmark : Icons
+            .bookmark_border;
+    }
+    return Icon(iconData, size: tab == _currentProfileTabSelected ? 35 : 30);
+  }
+
 }

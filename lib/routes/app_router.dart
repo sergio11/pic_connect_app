@@ -15,6 +15,8 @@ import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/favorites/favorites_screen.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/feed/feed_screen.dart';
+import 'package:pic_connect/features/followers/followers_bloc.dart';
+import 'package:pic_connect/features/followers/followers_screen.dart';
 import 'package:pic_connect/features/notfound/not_found_page.dart';
 import 'package:pic_connect/features/onboarding/onboarding_screen.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
@@ -137,6 +139,58 @@ class AppRouter {
                     context.push<Uint8List>(AppRoutesEnum.imageEditor.screenPath, extra: imageData),
                 ),
               )),
+      GoRoute(
+          path: AppRoutesEnum.followers.screenPath,
+          name: AppRoutesEnum.followers.screenName,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => serviceLocator<FollowersBloc>()
+                  ..add(OnLoadFollowersEvent(state.extra as String,
+                      context.read<AppBloc>().state.authUserUid!)),
+                child: FollowersScreen(
+                  onShowUserProfile: (String userUid) {
+                    context.push(AppRoutesEnum.profile.screenPath,
+                        extra: userUid);
+                  },
+                ),
+              ),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                  SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ))),
+      GoRoute(
+          path: AppRoutesEnum.following.screenPath,
+          name: AppRoutesEnum.following.screenName,
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => serviceLocator<FollowersBloc>()
+                  ..add(OnLoadFollowingEvent(state.extra as String,
+                      context.read<AppBloc>().state.authUserUid!)),
+                child: FollowersScreen(
+                  onShowUserProfile: (String userUid) {
+                    context.push(AppRoutesEnum.profile.screenPath,
+                        extra: userUid);
+                  },
+                ),
+              ),
+              transitionDuration: const Duration(milliseconds: 800),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                  SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-1.0, 0.0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  ))),
       GoRoute(
           path: AppRoutesEnum.comments.screenPath,
           name: AppRoutesEnum.comments.screenName,
@@ -274,8 +328,14 @@ class AppRouter {
                           ..add(OnLoadProfileEvent(state.extra is String
                               ? state.extra as String
                               : context.read<AppBloc>().state.authUserUid!)),
-                        child: ProfileScreen(onShowPublications: (String userUid) {
+                        child: ProfileScreen(onGoToPublications: (String userUid) {
                           context.push(AppRoutesEnum.publications.screenPath,
+                              extra: userUid);
+                        }, onGoToFollowersScreen: (String userUid) {
+                          context.push(AppRoutesEnum.followers.screenPath,
+                              extra: userUid);
+                        }, onGoToFollowingScreen: (String userUid) {
+                          context.push(AppRoutesEnum.following.screenPath,
                               extra: userUid);
                         },),
                       ),

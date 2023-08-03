@@ -37,8 +37,10 @@ import 'package:pic_connect/domain/repository/user_repository.dart';
 import 'package:pic_connect/domain/usecase/delete_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_user_home_feed_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_comments_by_post_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_all_that_user_is_following_by_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_bookmark_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_favorites_posts_by_user_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_followers_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_users_by_name_use_case.dart';
@@ -58,6 +60,7 @@ import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
+import 'package:pic_connect/features/followers/followers_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
@@ -126,6 +129,8 @@ setupServiceLocator() async {
   serviceLocator.registerLazySingleton(() => FindFavoritesPostsByUserUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => SaveBookmarkUseCase(authRepository: serviceLocator(), postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindBookmarkPostsByUserUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FindAllThatUserIsFollowingByUseCase(userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FindFollowersByUserUseCase(userRepository: serviceLocator()));
   /// BloC ///
   serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
@@ -140,4 +145,5 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => PostCardBloc(deletePostUseCase: serviceLocator(), likePostUseCase: serviceLocator(), saveBookmarkUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator(), publishCommentUseCase: serviceLocator(), getUserDetailsUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => PublicationsBloc(findPostsByUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => FollowersBloc(findFollowersByUserUseCase: serviceLocator(), findAllThatUserIsFollowingByUseCase: serviceLocator()));
 }

@@ -77,23 +77,29 @@ class FabWithIconsState extends State<FabWithIcons>
         });
       },
       shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 2,color: primaryColor),
           borderRadius: BorderRadius.circular(100)
       ),
       tooltip: 'Add Post',
       elevation: 5.0,
-      foregroundColor: primaryColor,
+      foregroundColor: isCollapsed ? accentColor: primaryColor,
       child: Container(
         width: 60,
         height: 60,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: isCollapsed ? secondaryColor: accentColor,
+                offset: const Offset(0.0, -20.0),
+                blurRadius: 60,
+              ),
+            ],
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               stops: const [0.0, 1.0],
               colors: isCollapsed ?
-                [secondaryColor, accentColorShadow] :
+                [secondaryColor, secondaryColorLight] :
               [accentColor, primaryColor],
             )
         ),

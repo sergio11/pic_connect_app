@@ -13,4 +13,6 @@ abstract class UserDatasource {
 
   Future<List<UserDTO>> findAllThatUserIsFollowingBy(String uid);
 
+  Future<List<UserDTO>> findAllFollowersBy(String uid);
+
 }
