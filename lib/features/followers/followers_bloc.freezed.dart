@@ -17,23 +17,28 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FollowersEvent {
   String get userUid => throw _privateConstructorUsedError;
-  String get authUserUid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String userUid, String authUserUid) loadFollowers,
     required TResult Function(String userUid, String authUserUid) loadFollowing,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String userUid, String authUserUid)? loadFollowers,
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String userUid, String authUserUid)? loadFollowers,
     TResult Function(String userUid, String authUserUid)? loadFollowing,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,18 +46,24 @@ mixin _$FollowersEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadFollowersEvent value) loadFollowers,
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadFollowersEvent value)? loadFollowers,
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadFollowersEvent value)? loadFollowers,
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -68,7 +79,7 @@ abstract class $FollowersEventCopyWith<$Res> {
           FollowersEvent value, $Res Function(FollowersEvent) then) =
       _$FollowersEventCopyWithImpl<$Res, FollowersEvent>;
   @useResult
-  $Res call({String userUid, String authUserUid});
+  $Res call({String userUid});
 }
 
 /// @nodoc
@@ -85,16 +96,11 @@ class _$FollowersEventCopyWithImpl<$Res, $Val extends FollowersEvent>
   @override
   $Res call({
     Object? userUid = null,
-    Object? authUserUid = null,
   }) {
     return _then(_value.copyWith(
       userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
-              as String,
-      authUserUid: null == authUserUid
-          ? _value.authUserUid
-          : authUserUid // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -178,6 +184,8 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String userUid, String authUserUid) loadFollowers,
     required TResult Function(String userUid, String authUserUid) loadFollowing,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
   }) {
     return loadFollowers(userUid, authUserUid);
   }
@@ -187,6 +195,8 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String userUid, String authUserUid)? loadFollowers,
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
   }) {
     return loadFollowers?.call(userUid, authUserUid);
   }
@@ -196,6 +206,8 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String userUid, String authUserUid)? loadFollowers,
     TResult Function(String userUid, String authUserUid)? loadFollowing,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadFollowers != null) {
@@ -209,6 +221,8 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadFollowersEvent value) loadFollowers,
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) {
     return loadFollowers(this);
   }
@@ -218,6 +232,8 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadFollowersEvent value)? loadFollowers,
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) {
     return loadFollowers?.call(this);
   }
@@ -227,6 +243,8 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadFollowersEvent value)? loadFollowers,
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadFollowers != null) {
@@ -242,7 +260,6 @@ abstract class OnLoadFollowersEvent implements FollowersEvent {
 
   @override
   String get userUid;
-  @override
   String get authUserUid;
   @override
   @JsonKey(ignore: true)
@@ -328,6 +345,8 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String userUid, String authUserUid) loadFollowers,
     required TResult Function(String userUid, String authUserUid) loadFollowing,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
   }) {
     return loadFollowing(userUid, authUserUid);
   }
@@ -337,6 +356,8 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String userUid, String authUserUid)? loadFollowers,
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
   }) {
     return loadFollowing?.call(userUid, authUserUid);
   }
@@ -346,6 +367,8 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String userUid, String authUserUid)? loadFollowers,
     TResult Function(String userUid, String authUserUid)? loadFollowing,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadFollowing != null) {
@@ -359,6 +382,8 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadFollowersEvent value) loadFollowers,
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) {
     return loadFollowing(this);
   }
@@ -368,6 +393,8 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadFollowersEvent value)? loadFollowers,
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) {
     return loadFollowing?.call(this);
   }
@@ -377,6 +404,8 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadFollowersEvent value)? loadFollowers,
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadFollowing != null) {
@@ -392,7 +421,6 @@ abstract class OnLoadFollowingEvent implements FollowersEvent {
 
   @override
   String get userUid;
-  @override
   String get authUserUid;
   @override
   @JsonKey(ignore: true)
@@ -401,11 +429,311 @@ abstract class OnLoadFollowingEvent implements FollowersEvent {
 }
 
 /// @nodoc
+abstract class _$$OnFollowUserEventCopyWith<$Res>
+    implements $FollowersEventCopyWith<$Res> {
+  factory _$$OnFollowUserEventCopyWith(
+          _$OnFollowUserEvent value, $Res Function(_$OnFollowUserEvent) then) =
+      __$$OnFollowUserEventCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String userUid});
+}
+
+/// @nodoc
+class __$$OnFollowUserEventCopyWithImpl<$Res>
+    extends _$FollowersEventCopyWithImpl<$Res, _$OnFollowUserEvent>
+    implements _$$OnFollowUserEventCopyWith<$Res> {
+  __$$OnFollowUserEventCopyWithImpl(
+      _$OnFollowUserEvent _value, $Res Function(_$OnFollowUserEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userUid = null,
+  }) {
+    return _then(_$OnFollowUserEvent(
+      null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnFollowUserEvent implements OnFollowUserEvent {
+  const _$OnFollowUserEvent(this.userUid);
+
+  @override
+  final String userUid;
+
+  @override
+  String toString() {
+    return 'FollowersEvent.followUser(userUid: $userUid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnFollowUserEvent &&
+            (identical(other.userUid, userUid) || other.userUid == userUid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userUid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
+      __$$OnFollowUserEventCopyWithImpl<_$OnFollowUserEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String userUid, String authUserUid) loadFollowers,
+    required TResult Function(String userUid, String authUserUid) loadFollowing,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
+  }) {
+    return followUser(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String userUid, String authUserUid)? loadFollowers,
+    TResult? Function(String userUid, String authUserUid)? loadFollowing,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
+  }) {
+    return followUser?.call(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String userUid, String authUserUid)? loadFollowers,
+    TResult Function(String userUid, String authUserUid)? loadFollowing,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (followUser != null) {
+      return followUser(userUid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadFollowersEvent value) loadFollowers,
+    required TResult Function(OnLoadFollowingEvent value) loadFollowing,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return followUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadFollowersEvent value)? loadFollowers,
+    TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return followUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadFollowersEvent value)? loadFollowers,
+    TResult Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (followUser != null) {
+      return followUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnFollowUserEvent implements FollowersEvent {
+  const factory OnFollowUserEvent(final String userUid) = _$OnFollowUserEvent;
+
+  @override
+  String get userUid;
+  @override
+  @JsonKey(ignore: true)
+  _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnUnFollowUserEventCopyWith<$Res>
+    implements $FollowersEventCopyWith<$Res> {
+  factory _$$OnUnFollowUserEventCopyWith(_$OnUnFollowUserEvent value,
+          $Res Function(_$OnUnFollowUserEvent) then) =
+      __$$OnUnFollowUserEventCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String userUid});
+}
+
+/// @nodoc
+class __$$OnUnFollowUserEventCopyWithImpl<$Res>
+    extends _$FollowersEventCopyWithImpl<$Res, _$OnUnFollowUserEvent>
+    implements _$$OnUnFollowUserEventCopyWith<$Res> {
+  __$$OnUnFollowUserEventCopyWithImpl(
+      _$OnUnFollowUserEvent _value, $Res Function(_$OnUnFollowUserEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userUid = null,
+  }) {
+    return _then(_$OnUnFollowUserEvent(
+      null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
+  const _$OnUnFollowUserEvent(this.userUid);
+
+  @override
+  final String userUid;
+
+  @override
+  String toString() {
+    return 'FollowersEvent.unFollowUser(userUid: $userUid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUnFollowUserEvent &&
+            (identical(other.userUid, userUid) || other.userUid == userUid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userUid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
+      __$$OnUnFollowUserEventCopyWithImpl<_$OnUnFollowUserEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String userUid, String authUserUid) loadFollowers,
+    required TResult Function(String userUid, String authUserUid) loadFollowing,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
+  }) {
+    return unFollowUser(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String userUid, String authUserUid)? loadFollowers,
+    TResult? Function(String userUid, String authUserUid)? loadFollowing,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
+  }) {
+    return unFollowUser?.call(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String userUid, String authUserUid)? loadFollowers,
+    TResult Function(String userUid, String authUserUid)? loadFollowing,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (unFollowUser != null) {
+      return unFollowUser(userUid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadFollowersEvent value) loadFollowers,
+    required TResult Function(OnLoadFollowingEvent value) loadFollowing,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return unFollowUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadFollowersEvent value)? loadFollowers,
+    TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return unFollowUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadFollowersEvent value)? loadFollowers,
+    TResult Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (unFollowUser != null) {
+      return unFollowUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUnFollowUserEvent implements FollowersEvent {
+  const factory OnUnFollowUserEvent(final String userUid) =
+      _$OnUnFollowUserEvent;
+
+  @override
+  String get userUid;
+  @override
+  @JsonKey(ignore: true)
+  _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$FollowersState {
   bool get isLoading => throw _privateConstructorUsedError;
   List<UserBO> get users => throw _privateConstructorUsedError;
-  DisplayContentTypeEnum get contentTypeEnum =>
-      throw _privateConstructorUsedError;
+  String get authUserUid => throw _privateConstructorUsedError;
+  String get toolbarTitle => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -422,7 +750,8 @@ abstract class $FollowersStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       List<UserBO> users,
-      DisplayContentTypeEnum contentTypeEnum,
+      String authUserUid,
+      String toolbarTitle,
       String? errorMessage});
 }
 
@@ -441,7 +770,8 @@ class _$FollowersStateCopyWithImpl<$Res, $Val extends FollowersState>
   $Res call({
     Object? isLoading = null,
     Object? users = null,
-    Object? contentTypeEnum = null,
+    Object? authUserUid = null,
+    Object? toolbarTitle = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -453,10 +783,14 @@ class _$FollowersStateCopyWithImpl<$Res, $Val extends FollowersState>
           ? _value.users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserBO>,
-      contentTypeEnum: null == contentTypeEnum
-          ? _value.contentTypeEnum
-          : contentTypeEnum // ignore: cast_nullable_to_non_nullable
-              as DisplayContentTypeEnum,
+      authUserUid: null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      toolbarTitle: null == toolbarTitle
+          ? _value.toolbarTitle
+          : toolbarTitle // ignore: cast_nullable_to_non_nullable
+              as String,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -476,7 +810,8 @@ abstract class _$$_FollowersStateCopyWith<$Res>
   $Res call(
       {bool isLoading,
       List<UserBO> users,
-      DisplayContentTypeEnum contentTypeEnum,
+      String authUserUid,
+      String toolbarTitle,
       String? errorMessage});
 }
 
@@ -493,7 +828,8 @@ class __$$_FollowersStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? users = null,
-    Object? contentTypeEnum = null,
+    Object? authUserUid = null,
+    Object? toolbarTitle = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_FollowersState(
@@ -505,10 +841,14 @@ class __$$_FollowersStateCopyWithImpl<$Res>
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserBO>,
-      contentTypeEnum: null == contentTypeEnum
-          ? _value.contentTypeEnum
-          : contentTypeEnum // ignore: cast_nullable_to_non_nullable
-              as DisplayContentTypeEnum,
+      authUserUid: null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      toolbarTitle: null == toolbarTitle
+          ? _value.toolbarTitle
+          : toolbarTitle // ignore: cast_nullable_to_non_nullable
+              as String,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -523,7 +863,8 @@ class _$_FollowersState implements _FollowersState {
   const _$_FollowersState(
       {this.isLoading = false,
       final List<UserBO> users = const [],
-      this.contentTypeEnum = DisplayContentTypeEnum.followers,
+      this.authUserUid = "",
+      this.toolbarTitle = "",
       this.errorMessage})
       : _users = users;
 
@@ -541,13 +882,16 @@ class _$_FollowersState implements _FollowersState {
 
   @override
   @JsonKey()
-  final DisplayContentTypeEnum contentTypeEnum;
+  final String authUserUid;
+  @override
+  @JsonKey()
+  final String toolbarTitle;
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'FollowersState(isLoading: $isLoading, users: $users, contentTypeEnum: $contentTypeEnum, errorMessage: $errorMessage)';
+    return 'FollowersState(isLoading: $isLoading, users: $users, authUserUid: $authUserUid, toolbarTitle: $toolbarTitle, errorMessage: $errorMessage)';
   }
 
   @override
@@ -558,8 +902,10 @@ class _$_FollowersState implements _FollowersState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
-            (identical(other.contentTypeEnum, contentTypeEnum) ||
-                other.contentTypeEnum == contentTypeEnum) &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid) &&
+            (identical(other.toolbarTitle, toolbarTitle) ||
+                other.toolbarTitle == toolbarTitle) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -569,7 +915,8 @@ class _$_FollowersState implements _FollowersState {
       runtimeType,
       isLoading,
       const DeepCollectionEquality().hash(_users),
-      contentTypeEnum,
+      authUserUid,
+      toolbarTitle,
       errorMessage);
 
   @JsonKey(ignore: true)
@@ -583,7 +930,8 @@ abstract class _FollowersState implements FollowersState {
   const factory _FollowersState(
       {final bool isLoading,
       final List<UserBO> users,
-      final DisplayContentTypeEnum contentTypeEnum,
+      final String authUserUid,
+      final String toolbarTitle,
       final String? errorMessage}) = _$_FollowersState;
 
   @override
@@ -591,7 +939,9 @@ abstract class _FollowersState implements FollowersState {
   @override
   List<UserBO> get users;
   @override
-  DisplayContentTypeEnum get contentTypeEnum;
+  String get authUserUid;
+  @override
+  String get toolbarTitle;
   @override
   String? get errorMessage;
   @override

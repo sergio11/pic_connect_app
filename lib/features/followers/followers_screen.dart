@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
-import 'package:pic_connect/features/core/widgets/tags_row.dart';
+import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
 import 'package:pic_connect/features/followers/followers_bloc.dart';
-import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:pic_connect/utils/utils.dart';
 
 class FollowersScreen extends StatefulWidget {
   final Function(String userUid) onShowUserProfile;
@@ -19,6 +16,14 @@ class FollowersScreen extends StatefulWidget {
 }
 
 class _FollowersScreen extends State<FollowersScreen> {
+  void _onFollowUser(String userUid) {
+    context.read<FollowersBloc>().add(OnFollowUserEvent(userUid));
+  }
+
+  void _onUnFollowUser(String userUid) {
+    context.read<FollowersBloc>().add(OnUnFollowUserEvent(userUid));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FollowersBloc, FollowersState>(
@@ -59,16 +64,13 @@ class _FollowersScreen extends State<FollowersScreen> {
             color: primaryColor,
             child: InkWell(
               onTap: () => widget.onShowUserProfile(state.users[index].uid),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    state.users[index].photoUrl,
-                  ),
-                  radius: 16,
-                ),
-                title: Text(
-                  state.users[index].username,
-                ),
+              child: UserListTile(
+                userBO: state.users[index],
+                onFollowPressed: () => _onFollowUser(state.users[index].uid),
+                onUnFollowPressed: () =>
+                    _onUnFollowUser(state.users[index].uid),
+                isFollowedByAuthUser: state.users[index].followers.contains(state.authUserUid),
+                isAuthUser: state.users[index].uid == state.authUserUid,
               ),
             ));
       },

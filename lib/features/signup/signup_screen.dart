@@ -10,6 +10,7 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignupScreen extends StatefulWidget {
   final VoidCallback onSignInPressed;
@@ -56,6 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
       if (context.mounted) {
         if (state.isSignUpSuccess) {
@@ -73,7 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
-          children: [_buildScreenBackground(), _buildScreenContent(state)],
+          children: [_buildScreenBackground(), _buildScreenContent(state, l10n)],
         ),
       );
     });
@@ -90,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildScreenContent(SignUpState state) {
+  Widget _buildScreenContent(SignUpState state, AppLocalizations l10n) {
     return AnimateGradient(
         primaryBegin: Alignment.topLeft,
         primaryEnd: Alignment.bottomLeft,
@@ -116,8 +118,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 74,
                   ),
                   _buildAvatarInput(state),
-                  _buildSignUpForm(state),
-                  _buildNotAccountRow()
+                  _buildSignUpForm(state, l10n),
+                  _buildNotAccountRow(l10n)
                 ])));
   }
 
@@ -139,44 +141,44 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildSignUpForm(SignUpState state) {
+  Widget _buildSignUpForm(SignUpState state, AppLocalizations l10n) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _buildUsernameTextInput(state),
+        _buildUsernameTextInput(state, l10n),
         const SizedBox(height: 24),
-        _buildEmailTextInput(state),
+        _buildEmailTextInput(state, l10n),
         const SizedBox(height: 24),
-        _buildPasswordTextInput(state),
+        _buildPasswordTextInput(state, l10n),
         const SizedBox(height: 24),
-        _buildBioTextInput(state),
+        _buildBioTextInput(state, l10n),
         const SizedBox(height: 24),
-        _buildSignUpButton(state),
+        _buildSignUpButton(state, l10n),
       ],
     );
   }
 
-  Widget _buildUsernameTextInput(SignUpState state) {
+  Widget _buildUsernameTextInput(SignUpState state, AppLocalizations l10n) {
     return TextFieldInput(
-        hintText: 'Enter your username',
+        hintText: l10n.signUpUsernameTextInput,
         icon: const Icon(Icons.person, size: 16),
         textInputType: TextInputType.text,
         textEditingController: _usernameController);
   }
 
-  Widget _buildEmailTextInput(SignUpState state) {
+  Widget _buildEmailTextInput(SignUpState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: 'Enter your email',
+      hintText: l10n.signUpEmailTextInput,
       icon: const Icon(Icons.mail, size: 16),
       textInputType: TextInputType.emailAddress,
       textEditingController: _emailController,
     );
   }
 
-  Widget _buildPasswordTextInput(SignUpState state) {
+  Widget _buildPasswordTextInput(SignUpState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: 'Enter your password',
+      hintText: l10n.signUpPasswordTextInput,
       icon: const Icon(Icons.password, size: 16),
       textInputType: TextInputType.text,
       textEditingController: _passwordController,
@@ -184,18 +186,18 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildBioTextInput(SignUpState state) {
+  Widget _buildBioTextInput(SignUpState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: 'Enter your bio',
+      hintText: l10n.signUpBioTextInput,
       icon: const Icon(Icons.info, size: 16),
       textInputType: TextInputType.text,
       textEditingController: _bioController,
     );
   }
 
-  Widget _buildSignUpButton(SignUpState state) {
+  Widget _buildSignUpButton(SignUpState state, AppLocalizations l10n) {
     return CommonButton(
-      text: "Sign up",
+      text: l10n.signUpButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -220,11 +222,11 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildNotAccountRow() {
+  Widget _buildNotAccountRow(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Already have an account?',
+        Text(l10n.signUpHaveAccountText,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -232,7 +234,7 @@ class _SignupScreenState extends State<SignupScreen> {
         GestureDetector(
           onTap: widget.onSignInPressed,
           child: Text(
-            ' Login.',
+            l10n.signUpHaveAccountButtonText,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium

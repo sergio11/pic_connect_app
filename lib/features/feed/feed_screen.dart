@@ -68,6 +68,8 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _buildPostsList(FeedState state) {
     return RefreshIndicator(
+      backgroundColor: secondaryColor,
+      color: accentColor,
       onRefresh: () {
         return Future.delayed(
           const Duration(seconds: 1),

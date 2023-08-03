@@ -48,6 +48,8 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
         centerTitle: false,
       ),
       body: RefreshIndicator(
+          backgroundColor: secondaryColor,
+          color: accentColor,
           onRefresh: () {
             return Future.delayed(
               const Duration(seconds: 1),

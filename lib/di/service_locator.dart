@@ -145,5 +145,5 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => PostCardBloc(deletePostUseCase: serviceLocator(), likePostUseCase: serviceLocator(), saveBookmarkUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator(), publishCommentUseCase: serviceLocator(), getUserDetailsUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => PublicationsBloc(findPostsByUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => FollowersBloc(findFollowersByUserUseCase: serviceLocator(), findAllThatUserIsFollowingByUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => FollowersBloc(findFollowersByUserUseCase: serviceLocator(), findAllThatUserIsFollowingByUseCase: serviceLocator(), followUserUseCase: serviceLocator()));
 }

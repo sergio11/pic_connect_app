@@ -9,6 +9,7 @@ import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback onSignUpPressed;
@@ -43,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
       if (context.mounted) {
         if (state.errorMessage != null) {
@@ -62,14 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Stack(
           children: [
             _buildScreenBackground(),
-            _buildScreenContent(context, state)
+            _buildScreenContent(state, l10n)
           ],
         ),
       );
     });
   }
 
-  Widget _buildScreenContent(BuildContext context, SignInState state) {
+  Widget _buildScreenContent(SignInState state, AppLocalizations l10n) {
     return AnimateGradient(
         primaryBegin: Alignment.topLeft,
         primaryEnd: Alignment.bottomLeft,
@@ -94,16 +96,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: primaryColor,
                 height: 74,
               ),
-              _buildSignInForm(state),
-              _buildSignUpRow(state),
+              _buildSignInForm(state, l10n),
+              _buildSignUpRow(state, l10n),
             ],
           ),
         ));
   }
 
-  Widget _buildEmailTextInput(BuildContext context, SignInState state) {
+  Widget _buildEmailTextInput(SignInState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: 'Enter your email',
+      hintText: l10n.signInEmailTextInput,
       icon: const Icon(
         Icons.mail,
         size: 16,
@@ -113,9 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildPasswordTextInput(BuildContext context, SignInState state) {
+  Widget _buildPasswordTextInput(SignInState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: 'Enter your password',
+      hintText: l10n.signInPasswordTextInput,
       icon: const Icon(
         Icons.password,
         size: 16,
@@ -126,9 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInButton(SignInState state) {
+  Widget _buildSignInButton(SignInState state, AppLocalizations l10n) {
     return CommonButton(
-      text: "Sign In",
+      text: l10n.signInButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -137,11 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignUpRow(SignInState state) {
+  Widget _buildSignUpRow(SignInState state, AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Dont have an account?',
+        Text(l10n.signInNotHaveAccount,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -149,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
         GestureDetector(
           onTap: widget.onSignUpPressed,
           child: Text(
-            ' Signup.',
+            l10n.signInNotHaveAccountSignUpButtonText,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -171,20 +173,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInForm(SignInState state) {
+  Widget _buildSignInForm(SignInState state, AppLocalizations l10n) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _buildEmailTextInput(context, state),
+        _buildEmailTextInput(state, l10n),
         const SizedBox(
           height: 15,
         ),
-        _buildPasswordTextInput(context, state),
+        _buildPasswordTextInput(state, l10n),
         const SizedBox(
           height: 25,
         ),
-        _buildSignInButton(state)
+        _buildSignInButton(state, l10n)
       ],
     );
   }

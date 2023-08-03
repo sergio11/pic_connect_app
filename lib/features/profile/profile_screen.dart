@@ -7,50 +7,51 @@ import 'package:pic_connect/features/core/widgets/common_screen_progress_indicat
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
-
   final Function(String userUid) onGoToPublications;
   final Function(String userUid) onGoToFollowersScreen;
   final Function(String userUid) onGoToFollowingScreen;
 
-  const ProfileScreen({
-    Key? key,
-    required this.onGoToPublications,
-    required this.onGoToFollowersScreen,
-    required this.onGoToFollowingScreen
-  }) : super(key: key);
+  const ProfileScreen(
+      {Key? key,
+      required this.onGoToPublications,
+      required this.onGoToFollowersScreen,
+      required this.onGoToFollowingScreen})
+      : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   ProfileTab _currentProfileTabSelected = ProfileTab.pictures;
 
-  void onLogout() {
+  void onLogout(AppLocalizations l10n) {
     showAlertDialog(
         context: context,
-        title: "You have logged out",
-        description: "see you soon!",
-        onAcceptPressed: () => context.read<AppBloc>().add(const OnVerifySession()));
+        title: l10n.sessionClosedDialogTitle,
+        description: l10n.sessionClosedDialogDescription,
+        onAcceptPressed: () =>
+            context.read<AppBloc>().add(const OnVerifySession()));
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return BlocConsumer<ProfileBloc, ProfileState>(listener: (context, state) {
       if (state.isLogout) {
-        onLogout();
+        onLogout(l10n);
       }
     }, builder: (context, state) {
       return state.isLoading
           ? _buildProgressIndicator()
-          : _buildScreenContent(context, state);
+          : _buildScreenContent(state, l10n);
     });
   }
 
-  Widget _buildScreenContent(BuildContext context, ProfileState state) {
+  Widget _buildScreenContent(ProfileState state, AppLocalizations l10n) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -65,26 +66,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               showConfirmDialog(
                   context: context,
-                  title: "Sign off?",
-                  description: "Are you sure to sign out?",
-                  onAcceptPressed: () => context.read<ProfileBloc>().add(const OnSignOutEvent()));
+                  title: l10n.signOffDialogTitle,
+                  description: l10n.signOffDialogDescription,
+                  onAcceptPressed: () =>
+                      context.read<ProfileBloc>().add(const OnSignOutEvent()));
             },
           ),
         ],
         backgroundColor: appBarBackgroundColor,
         title: Text(state.username,
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .titleLarge
                 ?.copyWith(color: accentColor)),
         centerTitle: false,
       ),
       body: RefreshIndicator(
+          backgroundColor: secondaryColor,
+          color: accentColor,
           onRefresh: () {
             return Future.delayed(
               const Duration(seconds: 1),
-                  () {
+              () {
                 //context.read<ProfileBloc>().add(const OnLoadProfileEvent());
               },
             );
@@ -96,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Padding(
                     padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -108,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       child: Column(
                         children: [
-                          _buildProfileHeader(state),
+                          _buildProfileHeader(state, l10n),
                           _buildUserNameRow(state),
                           _buildUserBioRow(state)
                         ],
@@ -128,7 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return const CommonScreenProgressIndicator();
   }
 
-  Widget _buildProfileHeader(ProfileState state) {
+  Widget _buildProfileHeader(ProfileState state, AppLocalizations l10n) {
     return Row(
       children: [
         Padding(
@@ -151,22 +154,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildStatColumn(state.postLen, "posts", () =>
-                        widget.onGoToPublications(state.userUid)),
-                    _buildStatColumn(state.followers, "followers", () =>
-                        widget.onGoToFollowersScreen(state.userUid)),
-                    _buildStatColumn(state.following, "following", () =>
-                        widget.onGoToFollowingScreen(state.userUid)),
+                    _buildStatColumn(state.postLen, l10n.profilePostStats,
+                        () => widget.onGoToPublications(state.userUid)),
+                    _buildStatColumn(state.followers, l10n.profileFollowerStats,
+                        () => widget.onGoToFollowersScreen(state.userUid)),
+                    _buildStatColumn(
+                        state.following,
+                        l10n.profileFollowingStats,
+                        () => widget.onGoToFollowingScreen(state.userUid)),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     state.isAuthUser
-                        ? _buildSignOutButton()
+                        ? _buildSignOutButton(l10n)
                         : state.isFollowing
-                        ? _buildUnFollowButton(state)
-                        : _buildFollowButton(state)
+                            ? _buildUnFollowButton(state, l10n)
+                            : _buildFollowButton(state, l10n)
                   ],
                 ),
               ],
@@ -177,9 +182,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSignOutButton() {
+  Widget _buildSignOutButton(AppLocalizations l10n) {
     return CommonButton(
-      text: 'Edit Profile',
+      text: l10n.editProfileButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -188,12 +193,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildUnFollowButton(ProfileState state) {
+  Widget _buildUnFollowButton(ProfileState state, AppLocalizations l10n) {
     return CommonButton(
-      text: 'Unfollow',
-      backgroundColor: secondaryColor,
+      text: l10n.unFollowButtonText,
+      backgroundColor: accentColor,
       textColor: primaryColor,
-      borderColor: secondaryColor,
+      borderColor: accentColor,
       onPressed: () async {
         context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid));
       },
@@ -201,9 +206,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildFollowButton(ProfileState state) {
+  Widget _buildFollowButton(ProfileState state, AppLocalizations l10n) {
     return CommonButton(
-      text: 'Follow',
+      text: l10n.followButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -217,13 +222,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildUserNameRow(ProfileState state) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.only(
-          top: 15, left: 15
-      ),
+      padding: const EdgeInsets.only(top: 15, left: 15),
       child: Text(
         state.username,
-        style: Theme
-            .of(context)
+        style: Theme.of(context)
             .textTheme
             .bodyLarge
             ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
@@ -234,12 +236,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildUserBioRow(ProfileState state) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.only(
-          top: 3, left: 15
-      ),
+      padding: const EdgeInsets.only(top: 3, left: 15),
       child: Text(state.bio,
-          style: Theme
-              .of(context)
+          style: Theme.of(context)
               .textTheme
               .bodyMedium
               ?.copyWith(color: accentColor, fontWeight: FontWeight.w400)),
@@ -272,24 +271,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     colors: [secondaryColor, secondaryColorExtraLight],
                   ),
                   borderRadius: BorderRadius.circular(50)),
-              onTap: (tabIdx) =>
-              {
-                setState(() {
-                  _currentProfileTabSelected = state.profileTabs[tabIdx];
-                })
-              },
+              onTap: (tabIdx) => {
+                    setState(() {
+                      _currentProfileTabSelected = state.profileTabs[tabIdx];
+                    })
+                  },
               tabs: state.profileTabs
-                  .map((tab) =>
-                  Tab(
-                    height: 50,
-                    icon: _buildTabIcon(tab),
-                  ))
+                  .map((tab) => Tab(
+                        height: 50,
+                        icon: _buildTabIcon(tab),
+                      ))
                   .toList()),
           Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
+            height: MediaQuery.of(context).size.height,
             color: primaryColor,
             child: TabBarView(children: [
               _buildPostsGrid(state.postList, state.isPostGridLoading),
@@ -327,24 +321,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         color: primaryColor,
         padding: const EdgeInsets.all(1),
         child: SizedBox(
-          child: Image(
-              image: NetworkImage(post.postUrl),
-              fit: BoxFit.cover
-          ),
+          child: Image(image: NetworkImage(post.postUrl), fit: BoxFit.cover),
         ),
       ),
-      onLongPress: () =>
-      {
-        showImage(context, post.postUrl)
-      },
-      onDoubleTap: () =>
-      {
-        showImage(context, post.postUrl)
-      },
-      onTap: () =>
-      {
-        widget.onGoToPublications(post.postAuthorUid)
-      },
+      onLongPress: () => {showImage(context, post.postUrl)},
+      onDoubleTap: () => {showImage(context, post.postUrl)},
+      onTap: () => {widget.onGoToPublications(post.postAuthorUid)},
     );
   }
 
@@ -357,8 +339,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Text(
             num.toString(),
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .titleLarge
                 ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
@@ -367,8 +348,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             margin: const EdgeInsets.only(top: 4),
             child: Text(
               label,
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .titleMedium
                   ?.copyWith(color: accentColor, fontWeight: FontWeight.w400),
@@ -383,17 +363,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final IconData iconData;
     switch (tab) {
       case ProfileTab.pictures:
-        iconData =
-        tab == _currentProfileTabSelected ? Icons.photo_camera : Icons
-            .photo_camera_outlined;
+        iconData = tab == _currentProfileTabSelected
+            ? Icons.photo_camera
+            : Icons.photo_camera_outlined;
       case ProfileTab.favorites:
-        iconData = tab == _currentProfileTabSelected ? Icons.favorite : Icons
-            .favorite_border;
+        iconData = tab == _currentProfileTabSelected
+            ? Icons.favorite
+            : Icons.favorite_border;
       case ProfileTab.bookmark:
-        iconData = tab == _currentProfileTabSelected ? Icons.bookmark : Icons
-            .bookmark_border;
+        iconData = tab == _currentProfileTabSelected
+            ? Icons.bookmark
+            : Icons.bookmark_border;
     }
     return Icon(iconData, size: tab == _currentProfileTabSelected ? 35 : 30);
   }
-
 }

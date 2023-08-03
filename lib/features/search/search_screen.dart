@@ -2,26 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
+import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pic_connect/utils/utils.dart';
 
 class SearchScreen extends StatefulWidget {
-
   final Function(String userUid) onShowUserProfile;
 
-  const SearchScreen({
-    Key? key,
-    required this.onShowUserProfile
-  }) : super(key: key);
+  const SearchScreen({Key? key, required this.onShowUserProfile})
+      : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -99,16 +96,12 @@ class _SearchScreenState extends State<SearchScreen> {
             color: primaryColor,
             child: InkWell(
               onTap: () => widget.onShowUserProfile(state.users[index].uid),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    state.users[index].photoUrl,
-                  ),
-                  radius: 16,
-                ),
-                title: Text(
-                  state.users[index].username,
-                ),
+              child: UserListTile(
+                userBO: state.users[index],
+                onFollowPressed: () {},
+                onUnFollowPressed: () {},
+                isFollowedByAuthUser: false,
+                isAuthUser: false,
               ),
             ));
       },
@@ -131,8 +124,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               TagsRow(
                   tags: state.posts[index].tags,
-                  scrollController: ScrollController()
-              )
+                  scrollController: ScrollController())
             ],
           ),
           onTap: () => showImage(context, state.posts[index].postUrl),

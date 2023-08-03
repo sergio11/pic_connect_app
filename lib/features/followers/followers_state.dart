@@ -5,11 +5,8 @@ class FollowersState with _$FollowersState {
   const factory FollowersState({
     @Default(false) final bool isLoading,
     @Default([]) final List<UserBO> users,
-    @Default(DisplayContentTypeEnum.followers) final DisplayContentTypeEnum contentTypeEnum,
+    @Default("") final String authUserUid,
+    @Default("") final String toolbarTitle,
     final String? errorMessage
   }) = _FollowersState;
-}
-
-enum DisplayContentTypeEnum {
-  followers, following
 }
