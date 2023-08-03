@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_bookmark_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_favorites_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/follow_user_use_case.dart';
@@ -28,6 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final FollowUserUseCase followUserUseCase;
   final UnFollowUserUseCase unFollowUserUseCase;
   final FindFavoritesPostsByUserUseCase findFavoritesPostsByUserUseCase;
+  final FindBookmarkPostsByUserUseCase findBookmarkPostsByUserUseCase;
 
   ProfileBloc(
       {required this.getUserDetailsUseCase,
@@ -36,7 +38,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       required this.findPostsByUserUseCase,
       required this.followUserUseCase,
       required this.unFollowUserUseCase,
-      required this.findFavoritesPostsByUserUseCase})
+      required this.findFavoritesPostsByUserUseCase,
+      required this.findBookmarkPostsByUserUseCase})
       : super(const ProfileState()) {
     on<OnLoadProfileEvent>(onLoadProfileEventHandler);
     on<OnSignOutEvent>(onSignOutEventHandler);
@@ -81,7 +84,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(state.copyWith(
         isLoading: true,
         isPostGridLoading: true,
-        isFavoritePostGridLoading: true));
+        isFavoritePostGridLoading: true,
+        isBookmarkPostGridLoading: true));
     final getUserDetailResponse =
         await getUserDetailsUseCase(GetUserDetailsParams(event.uid));
     final getAuthUserUidResponse =
@@ -119,5 +123,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         (favoritePostsByUser) => emit(state.copyWith(
             isFavoritePostGridLoading: false,
             favoritePostList: favoritePostsByUser)));
+
+    final findBookmarkPostsByUserResponse =
+    await findBookmarkPostsByUserUseCase(
+        FindBookmarkPostsByUserParams(event.uid));
+    findBookmarkPostsByUserResponse.fold(
+            (l) => emit(state.copyWith(isBookmarkPostGridLoading: false)),
+            (bookmarkPostsByUser) => emit(state.copyWith(
+                isBookmarkPostGridLoading: false,
+            bookmarkPostList: bookmarkPostsByUser)));
   }
 }

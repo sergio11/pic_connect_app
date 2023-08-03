@@ -18,6 +18,11 @@ abstract class PostRepository {
     required String userUid
   });
 
+  Future<Either<Failure, bool>> saveBookmark({
+    required String postId,
+    required String userUid
+  });
+
   Future<Either<Failure, CommentBO>> postComment({
     required String postId,
     required String text,
@@ -33,6 +38,8 @@ abstract class PostRepository {
   Future<Either<Failure, List<PostBO>>> findAllOrderByDatePublished();
 
   Future<Either<Failure, List<PostBO>>> findAllFavoritesByUserUidOrderByDatePublished(String userUi);
+
+  Future<Either<Failure, List<PostBO>>> findAllBookmarkByUserUidOrderByDatePublished(String userUi);
 
   Future<Either<Failure, List<PostBO>>> findAllByUserUidListOrderByDatePublished(List<String> userUidList);
 }

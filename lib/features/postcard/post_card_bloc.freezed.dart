@@ -21,6 +21,7 @@ mixin _$PostCardEvent {
     required TResult Function(PostBO post, String authUserUid) showPost,
     required TResult Function(String postId) deletePost,
     required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$PostCardEvent {
     TResult? Function(PostBO post, String authUserUid)? showPost,
     TResult? Function(String postId)? deletePost,
     TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$PostCardEvent {
     TResult Function(PostBO post, String authUserUid)? showPost,
     TResult Function(String postId)? deletePost,
     TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$PostCardEvent {
     required TResult Function(OnShowPostEvent value) showPost,
     required TResult Function(OnDeletePostEvent value) deletePost,
     required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$PostCardEvent {
     TResult? Function(OnShowPostEvent value)? showPost,
     TResult? Function(OnDeletePostEvent value)? deletePost,
     TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$PostCardEvent {
     TResult Function(OnShowPostEvent value)? showPost,
     TResult Function(OnDeletePostEvent value)? deletePost,
     TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -156,6 +162,7 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     required TResult Function(PostBO post, String authUserUid) showPost,
     required TResult Function(String postId) deletePost,
     required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
   }) {
     return showPost(post, authUserUid);
   }
@@ -166,6 +173,7 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     TResult? Function(PostBO post, String authUserUid)? showPost,
     TResult? Function(String postId)? deletePost,
     TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
   }) {
     return showPost?.call(post, authUserUid);
   }
@@ -176,6 +184,7 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     TResult Function(PostBO post, String authUserUid)? showPost,
     TResult Function(String postId)? deletePost,
     TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
     required TResult orElse(),
   }) {
     if (showPost != null) {
@@ -190,6 +199,7 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     required TResult Function(OnShowPostEvent value) showPost,
     required TResult Function(OnDeletePostEvent value) deletePost,
     required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
   }) {
     return showPost(this);
   }
@@ -200,6 +210,7 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     TResult? Function(OnShowPostEvent value)? showPost,
     TResult? Function(OnDeletePostEvent value)? deletePost,
     TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
   }) {
     return showPost?.call(this);
   }
@@ -210,6 +221,7 @@ class _$OnShowPostEvent implements OnShowPostEvent {
     TResult Function(OnShowPostEvent value)? showPost,
     TResult Function(OnDeletePostEvent value)? deletePost,
     TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
     required TResult orElse(),
   }) {
     if (showPost != null) {
@@ -297,6 +309,7 @@ class _$OnDeletePostEvent implements OnDeletePostEvent {
     required TResult Function(PostBO post, String authUserUid) showPost,
     required TResult Function(String postId) deletePost,
     required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
   }) {
     return deletePost(postId);
   }
@@ -307,6 +320,7 @@ class _$OnDeletePostEvent implements OnDeletePostEvent {
     TResult? Function(PostBO post, String authUserUid)? showPost,
     TResult? Function(String postId)? deletePost,
     TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
   }) {
     return deletePost?.call(postId);
   }
@@ -317,6 +331,7 @@ class _$OnDeletePostEvent implements OnDeletePostEvent {
     TResult Function(PostBO post, String authUserUid)? showPost,
     TResult Function(String postId)? deletePost,
     TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
     required TResult orElse(),
   }) {
     if (deletePost != null) {
@@ -331,6 +346,7 @@ class _$OnDeletePostEvent implements OnDeletePostEvent {
     required TResult Function(OnShowPostEvent value) showPost,
     required TResult Function(OnDeletePostEvent value) deletePost,
     required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
   }) {
     return deletePost(this);
   }
@@ -341,6 +357,7 @@ class _$OnDeletePostEvent implements OnDeletePostEvent {
     TResult? Function(OnShowPostEvent value)? showPost,
     TResult? Function(OnDeletePostEvent value)? deletePost,
     TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
   }) {
     return deletePost?.call(this);
   }
@@ -351,6 +368,7 @@ class _$OnDeletePostEvent implements OnDeletePostEvent {
     TResult Function(OnShowPostEvent value)? showPost,
     TResult Function(OnDeletePostEvent value)? deletePost,
     TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
     required TResult orElse(),
   }) {
     if (deletePost != null) {
@@ -436,6 +454,7 @@ class _$OnLikePostEvent implements OnLikePostEvent {
     required TResult Function(PostBO post, String authUserUid) showPost,
     required TResult Function(String postId) deletePost,
     required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
   }) {
     return likePost(postId);
   }
@@ -446,6 +465,7 @@ class _$OnLikePostEvent implements OnLikePostEvent {
     TResult? Function(PostBO post, String authUserUid)? showPost,
     TResult? Function(String postId)? deletePost,
     TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
   }) {
     return likePost?.call(postId);
   }
@@ -456,6 +476,7 @@ class _$OnLikePostEvent implements OnLikePostEvent {
     TResult Function(PostBO post, String authUserUid)? showPost,
     TResult Function(String postId)? deletePost,
     TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
     required TResult orElse(),
   }) {
     if (likePost != null) {
@@ -470,6 +491,7 @@ class _$OnLikePostEvent implements OnLikePostEvent {
     required TResult Function(OnShowPostEvent value) showPost,
     required TResult Function(OnDeletePostEvent value) deletePost,
     required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
   }) {
     return likePost(this);
   }
@@ -480,6 +502,7 @@ class _$OnLikePostEvent implements OnLikePostEvent {
     TResult? Function(OnShowPostEvent value)? showPost,
     TResult? Function(OnDeletePostEvent value)? deletePost,
     TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
   }) {
     return likePost?.call(this);
   }
@@ -490,6 +513,7 @@ class _$OnLikePostEvent implements OnLikePostEvent {
     TResult Function(OnShowPostEvent value)? showPost,
     TResult Function(OnDeletePostEvent value)? deletePost,
     TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
     required TResult orElse(),
   }) {
     if (likePost != null) {
@@ -509,9 +533,157 @@ abstract class OnLikePostEvent implements PostCardEvent {
 }
 
 /// @nodoc
+abstract class _$$OnSaveBookmarkEventCopyWith<$Res> {
+  factory _$$OnSaveBookmarkEventCopyWith(_$OnSaveBookmarkEvent value,
+          $Res Function(_$OnSaveBookmarkEvent) then) =
+      __$$OnSaveBookmarkEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String postId});
+}
+
+/// @nodoc
+class __$$OnSaveBookmarkEventCopyWithImpl<$Res>
+    extends _$PostCardEventCopyWithImpl<$Res, _$OnSaveBookmarkEvent>
+    implements _$$OnSaveBookmarkEventCopyWith<$Res> {
+  __$$OnSaveBookmarkEventCopyWithImpl(
+      _$OnSaveBookmarkEvent _value, $Res Function(_$OnSaveBookmarkEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnSaveBookmarkEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnSaveBookmarkEvent implements OnSaveBookmarkEvent {
+  const _$OnSaveBookmarkEvent(this.postId);
+
+  @override
+  final String postId;
+
+  @override
+  String toString() {
+    return 'PostCardEvent.saveBookmark(postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnSaveBookmarkEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnSaveBookmarkEventCopyWith<_$OnSaveBookmarkEvent> get copyWith =>
+      __$$OnSaveBookmarkEventCopyWithImpl<_$OnSaveBookmarkEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PostBO post, String authUserUid) showPost,
+    required TResult Function(String postId) deletePost,
+    required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
+  }) {
+    return saveBookmark(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PostBO post, String authUserUid)? showPost,
+    TResult? Function(String postId)? deletePost,
+    TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
+  }) {
+    return saveBookmark?.call(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PostBO post, String authUserUid)? showPost,
+    TResult Function(String postId)? deletePost,
+    TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
+    required TResult orElse(),
+  }) {
+    if (saveBookmark != null) {
+      return saveBookmark(postId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnShowPostEvent value) showPost,
+    required TResult Function(OnDeletePostEvent value) deletePost,
+    required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
+  }) {
+    return saveBookmark(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnShowPostEvent value)? showPost,
+    TResult? Function(OnDeletePostEvent value)? deletePost,
+    TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
+  }) {
+    return saveBookmark?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnShowPostEvent value)? showPost,
+    TResult Function(OnDeletePostEvent value)? deletePost,
+    TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
+    required TResult orElse(),
+  }) {
+    if (saveBookmark != null) {
+      return saveBookmark(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnSaveBookmarkEvent implements PostCardEvent {
+  const factory OnSaveBookmarkEvent(final String postId) =
+      _$OnSaveBookmarkEvent;
+
+  String get postId;
+  @JsonKey(ignore: true)
+  _$$OnSaveBookmarkEventCopyWith<_$OnSaveBookmarkEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PostCardState {
   bool get isPostOwner => throw _privateConstructorUsedError;
   bool get isLikedByAuthUser => throw _privateConstructorUsedError;
+  bool get isBookmarkedByAuthUser => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
   int get commentCount => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
@@ -537,6 +709,7 @@ abstract class $PostCardStateCopyWith<$Res> {
   $Res call(
       {bool isPostOwner,
       bool isLikedByAuthUser,
+      bool isBookmarkedByAuthUser,
       int likes,
       int commentCount,
       String postId,
@@ -564,6 +737,7 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
   $Res call({
     Object? isPostOwner = null,
     Object? isLikedByAuthUser = null,
+    Object? isBookmarkedByAuthUser = null,
     Object? likes = null,
     Object? commentCount = null,
     Object? postId = null,
@@ -583,6 +757,10 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
       isLikedByAuthUser: null == isLikedByAuthUser
           ? _value.isLikedByAuthUser
           : isLikedByAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBookmarkedByAuthUser: null == isBookmarkedByAuthUser
+          ? _value.isBookmarkedByAuthUser
+          : isBookmarkedByAuthUser // ignore: cast_nullable_to_non_nullable
               as bool,
       likes: null == likes
           ? _value.likes
@@ -639,6 +817,7 @@ abstract class _$$_PostCardStateCopyWith<$Res>
   $Res call(
       {bool isPostOwner,
       bool isLikedByAuthUser,
+      bool isBookmarkedByAuthUser,
       int likes,
       int commentCount,
       String postId,
@@ -664,6 +843,7 @@ class __$$_PostCardStateCopyWithImpl<$Res>
   $Res call({
     Object? isPostOwner = null,
     Object? isLikedByAuthUser = null,
+    Object? isBookmarkedByAuthUser = null,
     Object? likes = null,
     Object? commentCount = null,
     Object? postId = null,
@@ -683,6 +863,10 @@ class __$$_PostCardStateCopyWithImpl<$Res>
       isLikedByAuthUser: null == isLikedByAuthUser
           ? _value.isLikedByAuthUser
           : isLikedByAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBookmarkedByAuthUser: null == isBookmarkedByAuthUser
+          ? _value.isBookmarkedByAuthUser
+          : isBookmarkedByAuthUser // ignore: cast_nullable_to_non_nullable
               as bool,
       likes: null == likes
           ? _value.likes
@@ -734,6 +918,7 @@ class _$_PostCardState implements _PostCardState {
   const _$_PostCardState(
       {this.isPostOwner = false,
       this.isLikedByAuthUser = false,
+      this.isBookmarkedByAuthUser = false,
       this.likes = 0,
       this.commentCount = 0,
       this.postId = "",
@@ -752,6 +937,9 @@ class _$_PostCardState implements _PostCardState {
   @override
   @JsonKey()
   final bool isLikedByAuthUser;
+  @override
+  @JsonKey()
+  final bool isBookmarkedByAuthUser;
   @override
   @JsonKey()
   final int likes;
@@ -791,7 +979,7 @@ class _$_PostCardState implements _PostCardState {
 
   @override
   String toString() {
-    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
+    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
   }
 
   @override
@@ -803,6 +991,8 @@ class _$_PostCardState implements _PostCardState {
                 other.isPostOwner == isPostOwner) &&
             (identical(other.isLikedByAuthUser, isLikedByAuthUser) ||
                 other.isLikedByAuthUser == isLikedByAuthUser) &&
+            (identical(other.isBookmarkedByAuthUser, isBookmarkedByAuthUser) ||
+                other.isBookmarkedByAuthUser == isBookmarkedByAuthUser) &&
             (identical(other.likes, likes) || other.likes == likes) &&
             (identical(other.commentCount, commentCount) ||
                 other.commentCount == commentCount) &&
@@ -827,6 +1017,7 @@ class _$_PostCardState implements _PostCardState {
       runtimeType,
       isPostOwner,
       isLikedByAuthUser,
+      isBookmarkedByAuthUser,
       likes,
       commentCount,
       postId,
@@ -849,6 +1040,7 @@ abstract class _PostCardState implements PostCardState {
   const factory _PostCardState(
       {final bool isPostOwner,
       final bool isLikedByAuthUser,
+      final bool isBookmarkedByAuthUser,
       final int likes,
       final int commentCount,
       final String postId,
@@ -864,6 +1056,8 @@ abstract class _PostCardState implements PostCardState {
   bool get isPostOwner;
   @override
   bool get isLikedByAuthUser;
+  @override
+  bool get isBookmarkedByAuthUser;
   @override
   int get likes;
   @override

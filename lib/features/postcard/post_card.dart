@@ -1,7 +1,7 @@
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pic_connect/features/core/widgets/like_animation.dart';
+import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
@@ -31,6 +31,11 @@ class _PostCardState extends State<PostCard> {
 
   void onLikePost(String postId) async {
     context.read<PostCardBloc>().add(OnLikePostEvent(postId));
+  }
+
+  void onSaveBookmark(String postId) async {
+    debugPrint("onSaveBookmark -> $postId CALLED!");
+    context.read<PostCardBloc>().add(OnSaveBookmarkEvent(postId));
   }
 
   void onPostDeleted() async {
@@ -135,13 +140,14 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
             ),
-            onLongPress: () => showImageViewer(context, NetworkImage(state.postImageUrl)),
+            onLongPress: () =>
+                showImageViewer(context, NetworkImage(state.postImageUrl)),
             onDoubleTap: () => onLikePost(state.postId),
           ),
           AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
             opacity: isLikeAnimating ? 1 : 0,
-            child: LikeAnimation(
+            child: IconActionAnimation(
               isAnimating: isLikeAnimating,
               duration: const Duration(
                 milliseconds: 400,
@@ -166,9 +172,9 @@ class _PostCardState extends State<PostCard> {
   Widget _buildPostActionsSection(PostCardState state) {
     return Row(
       children: <Widget>[
-        LikeAnimation(
+        IconActionAnimation(
           isAnimating: state.isLikedByAuthUser,
-          smallLike: true,
+          smallAction: true,
           child: IconButton(
             icon: state.isLikedByAuthUser
                 ? const Icon(
@@ -190,11 +196,22 @@ class _PostCardState extends State<PostCard> {
             icon: const Icon(Icons.send, color: accentColor), onPressed: () {}),
         Expanded(
             child: Align(
-          alignment: Alignment.bottomRight,
-          child: IconButton(
-              icon: const Icon(Icons.bookmark_border, color: accentColor),
-              onPressed: () {}),
-        ))
+                alignment: Alignment.bottomRight,
+                child: IconActionAnimation(
+                  isAnimating: state.isBookmarkedByAuthUser,
+                  smallAction: true,
+                  child: IconButton(
+                      icon: state.isBookmarkedByAuthUser
+                          ? const Icon(
+                              Icons.bookmark,
+                              color: accentColor,
+                            )
+                          : const Icon(
+                              Icons.bookmark_border,
+                              color: accentColor,
+                            ),
+                      onPressed: () => onSaveBookmark(state.postId)),
+                )))
       ],
     );
   }

@@ -284,7 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: TabBarView(children: [
               _buildPostsGrid(state.postList, state.isPostGridLoading),
               _buildPostsGrid(state.favoritePostList, state.isFavoritePostGridLoading),
-              const Text("Collections"),
+              _buildPostsGrid(state.bookmarkPostList, state.isBookmarkPostGridLoading)
             ]),
           ),
         ],

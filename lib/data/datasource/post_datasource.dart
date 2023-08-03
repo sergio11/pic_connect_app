@@ -17,6 +17,11 @@ abstract class PostDatasource {
     required String uid
   });
 
+  Future<bool> saveBookmark({
+    required String postId,
+    required String uid
+  });
+
   Future<void> uploadPost(SavePostDTO post);
 
   Future<List<CommentDTO>> findAllCommentsByPostId(String postId);
@@ -26,6 +31,8 @@ abstract class PostDatasource {
   Future<List<PostDTO>> findAllOrderByDatePublished();
 
   Future<List<PostDTO>> findAllFavoritesByUserUidOrderByDatePublished(String userUi);
+
+  Future<List<PostDTO>> findAllBookmarkByUserUidOrderByDatePublished(String userUi);
 
   Future<List<PostDTO>> findAllByUserUidListOrderByDatePublished(List<String> userUidList);
 

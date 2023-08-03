@@ -10,6 +10,7 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
         description: object.postDTO.description,
         username: object.userDTO.username,
         likes: object.postDTO.likes,
+        bookmarks: object.postDTO.bookmarks,
         postId: object.postDTO.postId,
         datePublished: object.postDTO.datePublished,
         postUrl: object.postDTO.postUrl,

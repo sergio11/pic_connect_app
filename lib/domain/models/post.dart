@@ -3,6 +3,7 @@ class PostBO {
   final String description;
   final String username;
   final List<String> likes;
+  final List<String> bookmarks;
   final String postId;
   final String postAuthorUid;
   final DateTime datePublished;
@@ -15,6 +16,7 @@ class PostBO {
     required this.description,
     required this.username,
     required this.likes,
+    required this.bookmarks,
     required this.postId,
     required this.postAuthorUid,
     required this.datePublished,

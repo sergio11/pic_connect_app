@@ -61,6 +61,17 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Future<Either<Failure, bool>> saveBookmark({required String postId, required String userUid}) async {
+    try {
+      final isBookmarkedByUser = await postDatasource.saveBookmark(postId: postId, uid: userUid);
+      return Right(isBookmarkedByUser);
+    } catch (err) {
+      debugPrint("saveBookmark - ex -> ${err.toString()}");
+      return Left(Failure(message: err.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, CommentBO>> postComment({
     required String postId,
     required String text,
@@ -72,7 +83,7 @@ class PostRepositoryImpl implements PostRepository {
           text: text,
           authorUid: authorUid
       ));
-      return Right(await mapToCommentBO(comment));
+      return Right(await _mapToCommentBO(comment));
     } catch (err) {
       return Left(Failure(message: err.toString()));
     }
@@ -103,7 +114,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, List<PostBO>>> findAllByUserUid(String userUi) async {
     try {
       final postsByUser = await postDatasource.findAllByUserUid(userUi);
-      final posts = await Future.wait(postsByUser.map((post) async => mapToPostBO(post)));
+      final posts = await Future.wait(postsByUser.map((post) async => _mapToPostBO(post)));
       return Right(posts);
     }  catch(ex) {
       debugPrint("findAllCommentsByPostId - ex -> ${ex.toString()}");
@@ -115,7 +126,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, List<CommentBO>>> findAllCommentsByPostId(String postId) async {
     try {
       final commentsByPost = await postDatasource.findAllCommentsByPostId(postId);
-      final comments = await Future.wait(commentsByPost.map((comment) async  => mapToCommentBO(comment)));
+      final comments = await Future.wait(commentsByPost.map((comment) async  => _mapToCommentBO(comment)));
       return Right(comments);
     } catch(ex) {
       debugPrint("findAllCommentsByPostId - ex -> ${ex.toString()}");
@@ -127,7 +138,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, List<PostBO>>> findAllOrderByDatePublished() async {
     try {
         final postListDTO = await postDatasource.findAllOrderByDatePublished();
-        final posts = await Future.wait(postListDTO.map((postDTO) async  => mapToPostBO(postDTO)));
+        final posts = await Future.wait(postListDTO.map((postDTO) async  => _mapToPostBO(postDTO)));
         return Right(posts);
     }  catch(ex) {
       debugPrint("findAllOrderByDatePublished - ex -> ${ex.toString()}");
@@ -140,7 +151,7 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final postListDTO = await postDatasource.findAllByUserUidListOrderByDatePublished(userUidList);
       debugPrint("findAllByUserUidListOrderByDatePublished - postListDTO - ${postListDTO.length}");
-      final posts = await Future.wait(postListDTO.map((postDTO) async  => mapToPostBO(postDTO)));
+      final posts = await Future.wait(postListDTO.map((postDTO) async  => _mapToPostBO(postDTO)));
       return Right(posts);
     } catch(ex) {
       debugPrint("findAllByUserUidListOrderByDatePublished - ex -> ${ex.toString()}");
@@ -153,7 +164,7 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final postListDTO = await postDatasource.findAllFavoritesByUserUidOrderByDatePublished(userUi);
       debugPrint("findAllFavoritesByUserUidOrderByDatePublished - postListDTO - ${postListDTO.length}");
-      final posts = await Future.wait(postListDTO.map((postDTO) async  => mapToPostBO(postDTO)));
+      final posts = await Future.wait(postListDTO.map((postDTO) async  => _mapToPostBO(postDTO)));
       return Right(posts);
     } catch(ex) {
       debugPrint("findAllFavoritesByUserUidOrderByDatePublished - ex -> ${ex.toString()}");
@@ -161,7 +172,20 @@ class PostRepositoryImpl implements PostRepository {
     }
   }
 
-  Future<PostBO> mapToPostBO(PostDTO post) async {
+  @override
+  Future<Either<Failure, List<PostBO>>> findAllBookmarkByUserUidOrderByDatePublished(String userUi) async {
+    try {
+      final postListDTO = await postDatasource.findAllBookmarkByUserUidOrderByDatePublished(userUi);
+      debugPrint("findAllBookmarkByUserUidOrderByDatePublished - postListDTO - ${postListDTO.length}");
+      final posts = await Future.wait(postListDTO.map((postDTO) async  => _mapToPostBO(postDTO)));
+      return Right(posts);
+    } catch(ex) {
+      debugPrint("findAllBookmarkByUserUidOrderByDatePublished - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
+  Future<PostBO> _mapToPostBO(PostDTO post) async {
     final author = await userDatasource.findByUid(post.authorUid);
     return postBoMapper(PostBoMapperData(
         postDTO: post,
@@ -169,7 +193,7 @@ class PostRepositoryImpl implements PostRepository {
     ));
   }
 
-  Future<CommentBO> mapToCommentBO(CommentDTO comment) async {
+  Future<CommentBO> _mapToCommentBO(CommentDTO comment) async {
     final author = await userDatasource.findByUid(comment.authorUid);
     return commentBoMapper(CommentBoMapperData(
         commentDTO: comment,

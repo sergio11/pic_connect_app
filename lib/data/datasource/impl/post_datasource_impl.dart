@@ -145,4 +145,36 @@ class PostDatasourceImpl extends PostDatasource {
         .map((doc) => postMapper(doc))
         .toList();
   }
+
+  @override
+  Future<bool> saveBookmark({required String postId, required String uid}) async {
+    final DocumentSnapshot snap = await firestore.collection('posts').doc(postId).get();
+    var data = snap.data() as Map<String, dynamic>;
+    List bookmarks = data['bookmarks'] is List ? List<String>.from(data['bookmarks'] as List) : [];
+    final bool isBookmarkedByUser;
+    if (bookmarks.contains(uid)) {
+      firestore.collection('posts').doc(postId).update({
+        'bookmarks': FieldValue.arrayRemove([uid])
+      });
+      isBookmarkedByUser = false;
+    } else {
+      firestore.collection('posts').doc(postId).update({
+        'bookmarks': FieldValue.arrayUnion([uid])
+      });
+      isBookmarkedByUser = true;
+    }
+    return isBookmarkedByUser;
+  }
+
+  @override
+  Future<List<PostDTO>> findAllBookmarkByUserUidOrderByDatePublished(String userUi) async {
+    final bookmarkPostsByUser = await firestore
+        .collection('posts')
+        .where('bookmarks', arrayContains: userUi)
+        .orderBy('datePublished', descending: true)
+        .get();
+    return bookmarkPostsByUser.docs
+        .map((doc) => postMapper(doc))
+        .toList();
+  }
 }

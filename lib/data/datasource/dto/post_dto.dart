@@ -8,6 +8,7 @@ class PostDTO {
   final DateTime datePublished;
   final String postUrl;
   final List<String> likes;
+  final List<String> bookmarks;
   final int commentCount;
   final List<String> tags;
 
@@ -18,6 +19,7 @@ class PostDTO {
     required this.datePublished,
     required this.postUrl,
     required this.likes,
+    required this.bookmarks,
     required this.commentCount,
     required this.tags
   });

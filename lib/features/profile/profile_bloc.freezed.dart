@@ -653,8 +653,10 @@ mixin _$ProfileState {
   bool get isAuthUser => throw _privateConstructorUsedError;
   bool get isPostGridLoading => throw _privateConstructorUsedError;
   bool get isFavoritePostGridLoading => throw _privateConstructorUsedError;
+  bool get isBookmarkPostGridLoading => throw _privateConstructorUsedError;
   List<PostBO> get postList => throw _privateConstructorUsedError;
   List<PostBO> get favoritePostList => throw _privateConstructorUsedError;
+  List<PostBO> get bookmarkPostList => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -683,8 +685,10 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool isAuthUser,
       bool isPostGridLoading,
       bool isFavoritePostGridLoading,
+      bool isBookmarkPostGridLoading,
       List<PostBO> postList,
       List<PostBO> favoritePostList,
+      List<PostBO> bookmarkPostList,
       String? errorMessage});
 }
 
@@ -715,8 +719,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? isAuthUser = null,
     Object? isPostGridLoading = null,
     Object? isFavoritePostGridLoading = null,
+    Object? isBookmarkPostGridLoading = null,
     Object? postList = null,
     Object? favoritePostList = null,
+    Object? bookmarkPostList = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -776,6 +782,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isFavoritePostGridLoading
           : isFavoritePostGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isBookmarkPostGridLoading: null == isBookmarkPostGridLoading
+          ? _value.isBookmarkPostGridLoading
+          : isBookmarkPostGridLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value.postList
           : postList // ignore: cast_nullable_to_non_nullable
@@ -783,6 +793,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
       favoritePostList: null == favoritePostList
           ? _value.favoritePostList
           : favoritePostList // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
+      bookmarkPostList: null == bookmarkPostList
+          ? _value.bookmarkPostList
+          : bookmarkPostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -815,8 +829,10 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       bool isAuthUser,
       bool isPostGridLoading,
       bool isFavoritePostGridLoading,
+      bool isBookmarkPostGridLoading,
       List<PostBO> postList,
       List<PostBO> favoritePostList,
+      List<PostBO> bookmarkPostList,
       String? errorMessage});
 }
 
@@ -845,8 +861,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? isAuthUser = null,
     Object? isPostGridLoading = null,
     Object? isFavoritePostGridLoading = null,
+    Object? isBookmarkPostGridLoading = null,
     Object? postList = null,
     Object? favoritePostList = null,
+    Object? bookmarkPostList = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ProfileState(
@@ -906,6 +924,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.isFavoritePostGridLoading
           : isFavoritePostGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isBookmarkPostGridLoading: null == isBookmarkPostGridLoading
+          ? _value.isBookmarkPostGridLoading
+          : isBookmarkPostGridLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       postList: null == postList
           ? _value._postList
           : postList // ignore: cast_nullable_to_non_nullable
@@ -913,6 +935,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
       favoritePostList: null == favoritePostList
           ? _value._favoritePostList
           : favoritePostList // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
+      bookmarkPostList: null == bookmarkPostList
+          ? _value._bookmarkPostList
+          : bookmarkPostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -938,13 +964,16 @@ class _$_ProfileState implements _ProfileState {
       this.isLogout = false,
       this.isFollowing = false,
       this.isAuthUser = false,
-      this.isPostGridLoading = true,
-      this.isFavoritePostGridLoading = true,
+      this.isPostGridLoading = false,
+      this.isFavoritePostGridLoading = false,
+      this.isBookmarkPostGridLoading = false,
       final List<PostBO> postList = const [],
       final List<PostBO> favoritePostList = const [],
+      final List<PostBO> bookmarkPostList = const [],
       this.errorMessage})
       : _postList = postList,
-        _favoritePostList = favoritePostList;
+        _favoritePostList = favoritePostList,
+        _bookmarkPostList = bookmarkPostList;
 
   @override
   @JsonKey()
@@ -988,6 +1017,9 @@ class _$_ProfileState implements _ProfileState {
   @override
   @JsonKey()
   final bool isFavoritePostGridLoading;
+  @override
+  @JsonKey()
+  final bool isBookmarkPostGridLoading;
   final List<PostBO> _postList;
   @override
   @JsonKey()
@@ -1007,12 +1039,22 @@ class _$_ProfileState implements _ProfileState {
     return EqualUnmodifiableListView(_favoritePostList);
   }
 
+  final List<PostBO> _bookmarkPostList;
+  @override
+  @JsonKey()
+  List<PostBO> get bookmarkPostList {
+    if (_bookmarkPostList is EqualUnmodifiableListView)
+      return _bookmarkPostList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_bookmarkPostList);
+  }
+
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, isFavoritePostGridLoading: $isFavoritePostGridLoading, postList: $postList, favoritePostList: $favoritePostList, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, isFavoritePostGridLoading: $isFavoritePostGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, postList: $postList, favoritePostList: $favoritePostList, bookmarkPostList: $bookmarkPostList, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1046,33 +1088,41 @@ class _$_ProfileState implements _ProfileState {
             (identical(other.isFavoritePostGridLoading,
                     isFavoritePostGridLoading) ||
                 other.isFavoritePostGridLoading == isFavoritePostGridLoading) &&
+            (identical(other.isBookmarkPostGridLoading,
+                    isBookmarkPostGridLoading) ||
+                other.isBookmarkPostGridLoading == isBookmarkPostGridLoading) &&
             const DeepCollectionEquality().equals(other._postList, _postList) &&
             const DeepCollectionEquality()
                 .equals(other._favoritePostList, _favoritePostList) &&
+            const DeepCollectionEquality()
+                .equals(other._bookmarkPostList, _bookmarkPostList) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      postLen,
-      followers,
-      following,
-      userUid,
-      authUserUid,
-      photoUrl,
-      bio,
-      username,
-      isLogout,
-      isFollowing,
-      isAuthUser,
-      isPostGridLoading,
-      isFavoritePostGridLoading,
-      const DeepCollectionEquality().hash(_postList),
-      const DeepCollectionEquality().hash(_favoritePostList),
-      errorMessage);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        isLoading,
+        postLen,
+        followers,
+        following,
+        userUid,
+        authUserUid,
+        photoUrl,
+        bio,
+        username,
+        isLogout,
+        isFollowing,
+        isAuthUser,
+        isPostGridLoading,
+        isFavoritePostGridLoading,
+        isBookmarkPostGridLoading,
+        const DeepCollectionEquality().hash(_postList),
+        const DeepCollectionEquality().hash(_favoritePostList),
+        const DeepCollectionEquality().hash(_bookmarkPostList),
+        errorMessage
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1097,8 +1147,10 @@ abstract class _ProfileState implements ProfileState {
       final bool isAuthUser,
       final bool isPostGridLoading,
       final bool isFavoritePostGridLoading,
+      final bool isBookmarkPostGridLoading,
       final List<PostBO> postList,
       final List<PostBO> favoritePostList,
+      final List<PostBO> bookmarkPostList,
       final String? errorMessage}) = _$_ProfileState;
 
   @override
@@ -1130,9 +1182,13 @@ abstract class _ProfileState implements ProfileState {
   @override
   bool get isFavoritePostGridLoading;
   @override
+  bool get isBookmarkPostGridLoading;
+  @override
   List<PostBO> get postList;
   @override
   List<PostBO> get favoritePostList;
+  @override
+  List<PostBO> get bookmarkPostList;
   @override
   String? get errorMessage;
   @override
