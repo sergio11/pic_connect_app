@@ -58,7 +58,7 @@ class _FeedScreenState extends State<FeedScreen> {
         IconButton(
           icon: const Icon(
             Icons.messenger_outline,
-            color: secondaryColor,
+            color: accentColor,
           ),
           onPressed: () {},
         ),

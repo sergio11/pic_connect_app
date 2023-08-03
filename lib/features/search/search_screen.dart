@@ -1,4 +1,3 @@
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
@@ -6,6 +5,7 @@ import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class SearchScreen extends StatefulWidget {
 
@@ -135,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen> {
               )
             ],
           ),
-          onTap: () => showImageViewer(context, NetworkImage(state.posts[index].postUrl)),
+          onTap: () => showImage(context, state.posts[index].postUrl),
         ),
         mainAxisSpacing: 1,
         crossAxisSpacing: 1,

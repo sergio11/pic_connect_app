@@ -25,20 +25,33 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
 
-  void onDeletePost(String postId) async {
+  void _startLikeAnimation(String postId) {
+    setState(() {
+      isLikeAnimating = true;
+    });
+    _onLikePost(postId);
+  }
+
+  void _stopLikeAnimation() {
+    setState(() {
+      isLikeAnimating = false;
+    });
+  }
+
+  void _onDeletePost(String postId) async {
     context.read<PostCardBloc>().add(OnDeletePostEvent(postId));
   }
 
-  void onLikePost(String postId) async {
+  void _onLikePost(String postId) async {
     context.read<PostCardBloc>().add(OnLikePostEvent(postId));
   }
 
-  void onSaveBookmark(String postId) async {
+  void _onSaveBookmark(String postId) async {
     debugPrint("onSaveBookmark -> $postId CALLED!");
     context.read<PostCardBloc>().add(OnSaveBookmarkEvent(postId));
   }
 
-  void onPostDeleted() async {
+  void _onPostDeleted() async {
     showAlertDialog(
         context: context,
         title: "Post was deleted!",
@@ -51,7 +64,7 @@ class _PostCardState extends State<PostCard> {
     return BlocConsumer<PostCardBloc, PostCardState>(
         listener: (context, state) {
       if (state.isPostDeleted) {
-        onPostDeleted();
+        _onPostDeleted();
       }
     }, builder: (context, state) {
       return _buildContent(state);
@@ -109,7 +122,7 @@ class _PostCardState extends State<PostCard> {
                         context: context,
                         title: "Remove this post?",
                         description: "Are you sure to remove this post?",
-                        onAcceptPressed: () => onDeletePost(state.postId));
+                        onAcceptPressed: () => _onDeletePost(state.postId));
                   },
                   icon: const Icon(
                     Icons.more_vert,
@@ -124,25 +137,19 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildPostBodySection(PostCardState state) {
     return GestureDetector(
-      onDoubleTap: () {},
       child: Stack(
         alignment: Alignment.center,
         children: [
-          GestureDetector(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.35,
-                width: double.infinity,
-                child: Image.network(
-                  state.postImageUrl,
-                  fit: BoxFit.cover,
-                ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.35,
+              width: double.infinity,
+              child: Image.network(
+                state.postImageUrl,
+                fit: BoxFit.cover,
               ),
             ),
-            onLongPress: () =>
-                showImageViewer(context, NetworkImage(state.postImageUrl)),
-            onDoubleTap: () => onLikePost(state.postId),
           ),
           AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
@@ -152,20 +159,19 @@ class _PostCardState extends State<PostCard> {
               duration: const Duration(
                 milliseconds: 400,
               ),
-              onEnd: () {
-                setState(() {
-                  isLikeAnimating = false;
-                });
-              },
+              onEnd: () => _stopLikeAnimation(),
               child: const Icon(
                 Icons.favorite,
-                color: accentColor,
+                color: Colors.redAccent,
                 size: 100,
               ),
             ),
-          ),
-        ],
+          )
+        ]
       ),
+        onLongPress: () =>
+            showImage(context, state.postImageUrl),
+        onDoubleTap: () => _startLikeAnimation(state.postId)
     );
   }
 
@@ -179,13 +185,13 @@ class _PostCardState extends State<PostCard> {
             icon: state.isLikedByAuthUser
                 ? const Icon(
                     Icons.favorite,
-                    color: Colors.red,
+                    color: Colors.redAccent,
                   )
                 : const Icon(
                     Icons.favorite_border,
                     color: accentColor,
                   ),
-            onPressed: () => onLikePost(state.postId),
+            onPressed: () => _onLikePost(state.postId),
           ),
         ),
         IconButton(
@@ -210,7 +216,7 @@ class _PostCardState extends State<PostCard> {
                               Icons.bookmark_border,
                               color: accentColor,
                             ),
-                      onPressed: () => onSaveBookmark(state.postId)),
+                      onPressed: () => _onSaveBookmark(state.postId)),
                 )))
       ],
     );
@@ -223,11 +229,6 @@ class _PostCardState extends State<PostCard> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TagsRow(
-            tags: state.tags,
-            scrollController: ScrollController(),
-            margin: const EdgeInsets.only(bottom: 15.0, right: 5.0),
-          ),
           DefaultTextStyle(
               style: Theme.of(context)
                   .textTheme
@@ -286,6 +287,11 @@ class _PostCardState extends State<PostCard> {
                   .bodySmall
                   ?.copyWith(color: accentColor),
             ),
+          ),
+          TagsRow(
+            tags: state.tags,
+            scrollController: ScrollController(),
+            margin: const EdgeInsets.only(top: 10.0, bottom: 15.0, right: 5.0),
           ),
         ],
       ),

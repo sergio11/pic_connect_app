@@ -1,7 +1,38 @@
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/core/widgets/common_dialog_box.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:pic_connect/utils/colors.dart';
+
+showImage(BuildContext context, String imageUrl) async {
+  showImageViewer(context, NetworkImage(imageUrl),
+      immersive: false,
+      useSafeArea: true,
+      doubleTapZoomable: true,
+      backgroundColor: primaryColor,
+      closeButtonColor: accentColor);
+}
+
+disableSystemUI() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+}
+
+enableSystemUI() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: SystemUiOverlay.values);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: primaryColor /*Android=23*/,
+    statusBarBrightness: Brightness.light /*iOS*/,
+    statusBarIconBrightness: Brightness.dark /*Android=23*/,
+    systemStatusBarContrastEnforced: false /*Android=29*/,
+    systemNavigationBarColor: primaryColor /*Android=27*/,
+    systemNavigationBarDividerColor: primaryColor /*Android=28 */,
+    systemNavigationBarIconBrightness: Brightness.dark /*Android=27*/,
+    systemNavigationBarContrastEnforced: false /*Android=29*/,
+  ));
+}
 
 // for picking up image from gallery
 pickImageAsBytes(ImageSource source) async {
@@ -17,7 +48,7 @@ Future<XFile?> pickImage(ImageSource source) async {
   return await imagePicker.pickImage(source: source);
 }
 
-showErrorSnackBar({ required BuildContext context, required String message }) {
+showErrorSnackBar({required BuildContext context, required String message}) {
   showSnackBar(
       context: context,
       title: "Oh Hey!!",
@@ -37,10 +68,12 @@ showSnackBar(
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       content: AwesomeSnackbarContent(
-          title: title,
-          message: message,
-          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-          contentType: contentType,),
+        title: title,
+        message: message,
+
+        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+        contentType: contentType,
+      ),
     ));
 }
 

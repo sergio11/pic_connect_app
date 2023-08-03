@@ -322,10 +322,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       onLongPress: () => {
-        showImageViewer(context, NetworkImage(post.postUrl))
+        showImage(context, post.postUrl)
       },
       onDoubleTap: () => {
-        showImageViewer(context, NetworkImage(post.postUrl))
+        showImage(context, post.postUrl)
       },
       onTap: () => {
         widget.onShowPublications(post.postAuthorUid)

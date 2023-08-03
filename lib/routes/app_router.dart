@@ -29,6 +29,7 @@ import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/features/signup/signup_screen.dart';
 import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/routes/router_refresh_stream.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class AppRouter {
   final RouterRefreshStream routerRefreshStream;
@@ -48,10 +49,9 @@ class AppRouter {
       final matchedLocation = AppRoutesEnum.values
           .firstWhere((route) => route.screenPath == state.matchedLocation);
       if (matchedLocation.requireImmersiveMode) {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+        disableSystemUI();
       } else {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-            overlays: SystemUiOverlay.values);
+        enableSystemUI();
       }
       debugPrint(
           "redirect - loggedIn: $loggedIn  - state.matchedLocation: ${state.matchedLocation}");

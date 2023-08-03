@@ -60,6 +60,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
     return Scaffold(
       body: NotificationListener<UserScrollNotification>(
         onNotification: (UserScrollNotification value) {
+          debugPrint("Scroll pixels -> ${value.metrics.pixels}");
           if (value.direction == ScrollDirection.forward ||
               value.direction == ScrollDirection.idle) {
             showNav();
