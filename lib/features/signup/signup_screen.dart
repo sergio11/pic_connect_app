@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
-import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
+import 'package:pic_connect/features/core/widgets/avatar_input_selector.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
-import 'package:pic_connect/features/core/widgets/loading_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/common_onboarding_container.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -49,7 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
     context.read<AppBloc>().add(const OnVerifySession());
   }
 
-  void onPickUpImageFromGallery(BuildContext context) async {
+  void onPickUpImageFromGallery() async {
     context
         .read<SignUpBloc>()
         .add(const OnPickUpImageEvent(ImageSource.gallery));
@@ -65,17 +66,11 @@ class _SignupScreenState extends State<SignupScreen> {
         } else if (state.errorMessage != null) {
           showErrorSnackBar(context: context, message: state.errorMessage!);
         }
-        if (state.isLoading) {
-          LoadingProgressIndicator.start(context);
-        } else {
-          LoadingProgressIndicator.stop();
-        }
       }
     }, builder: (context, state) {
       return Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Stack(
-          children: [_buildScreenBackground(), _buildScreenContent(state, l10n)],
+          children: _buildScreenStack(state, l10n),
         ),
       );
     });
@@ -92,52 +87,39 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+  List<Widget> _buildScreenStack(SignUpState state, AppLocalizations l10n) {
+    final screenStack = [
+      _buildScreenBackground(),
+      _buildScreenContent(state, l10n)
+    ];
+    if (state.isLoading) {
+      screenStack.add(CommonScreenProgressIndicator(
+        backgroundColor: blackColor.withOpacity(0.5),
+        spinnerColor: primaryColor,
+      ));
+    }
+    return screenStack;
+  }
+
   Widget _buildScreenContent(SignUpState state, AppLocalizations l10n) {
-    return AnimateGradient(
-        primaryBegin: Alignment.topLeft,
-        primaryEnd: Alignment.bottomLeft,
-        secondaryBegin: Alignment.bottomLeft,
-        secondaryEnd: Alignment.topRight,
-        primaryColors: [
-          secondaryColorMediumLight.withOpacity(0.8),
-          accentColorShadow.withOpacity(0.8)
-        ],
-        secondaryColors: [
-          secondaryColorLight.withOpacity(0.8),
-          accentColorShadow.withOpacity(0.8)
-        ],
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/pic_connect_logo.svg',
-                    color: primaryColor,
-                    height: 74,
-                  ),
-                  _buildAvatarInput(state),
-                  _buildSignUpForm(state, l10n),
-                  _buildNotAccountRow(l10n)
-                ])));
+    return CommonOnBoardingContainer(
+      children: [
+        SvgPicture.asset(
+          'assets/pic_connect_logo.svg',
+          color: primaryColor,
+          height: 74,
+        ),
+        _buildAvatarInput(state),
+        _buildSignUpForm(state, l10n),
+        _buildNotAccountRow(l10n)
+      ],
+    );
   }
 
   Widget _buildAvatarInput(SignUpState state) {
-    return Stack(
-      children: [
-        state.image != null
-            ? _buildUserPicture(state)
-            : _buildDefaultAvatarImage(),
-        Positioned(
-          bottom: -10,
-          left: 80,
-          child: IconButton(
-            onPressed: () => onPickUpImageFromGallery(context),
-            icon: const Icon(Icons.add_a_photo, color: secondaryColor),
-          ),
-        )
-      ],
+    return AvatarInputSelector(
+      onPickUpImageFromGallery: () => onPickUpImageFromGallery(),
+      avatarImageData: state.image,
     );
   }
 
@@ -147,11 +129,8 @@ class _SignupScreenState extends State<SignupScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildUsernameTextInput(state, l10n),
-        const SizedBox(height: 24),
         _buildEmailTextInput(state, l10n),
-        const SizedBox(height: 24),
         _buildPasswordTextInput(state, l10n),
-        const SizedBox(height: 24),
         _buildBioTextInput(state, l10n),
         const SizedBox(height: 24),
         _buildSignUpButton(state, l10n),
@@ -203,22 +182,6 @@ class _SignupScreenState extends State<SignupScreen> {
       borderColor: secondaryColor,
       onPressed: onSignUpUser,
       sizeType: CommonButtonSizeType.large,
-    );
-  }
-
-  Widget _buildDefaultAvatarImage() {
-    return CircleAvatar(
-      radius: 64,
-      backgroundImage: const AssetImage("assets/user_default_icon.png"),
-      backgroundColor: primaryColor.withOpacity(0.5),
-    );
-  }
-
-  Widget _buildUserPicture(SignUpState state) {
-    return CircleAvatar(
-      radius: 64,
-      backgroundImage: MemoryImage(state.image!),
-      backgroundColor: primaryColor,
     );
   }
 

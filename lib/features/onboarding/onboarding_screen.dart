@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
+import 'package:pic_connect/features/core/widgets/common_onboarding_container.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -63,38 +63,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   Widget _buildScreenContent() {
-    return AnimateGradient(
-      primaryBegin: Alignment.topLeft,
-      primaryEnd: Alignment.bottomLeft,
-      secondaryBegin: Alignment.bottomLeft,
-      secondaryEnd: Alignment.topRight,
-      primaryColors: [
-        secondaryColorMediumLight.withOpacity(0.8),
-        accentColorShadow.withOpacity(0.8)
-      ],
-      secondaryColors: [
-        secondaryColorLight.withOpacity(0.8),
-        accentColorShadow.withOpacity(0.8)
-      ],
-      child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 0,
-                ),
-                SvgPicture.asset(
-                  'assets/pic_connect_logo.svg',
-                  color: primaryColor,
-                  height: 80,
-                ),
-                _buildCarouselSlider(),
-                _buildActions(),
-                _buildFooter()
-              ])),
-    );
+    return CommonOnBoardingContainer(
+      children: [
+        const SizedBox(
+          height: 0,
+        ),
+        SvgPicture.asset(
+          'assets/pic_connect_logo.svg',
+          color: primaryColor,
+          height: 80,
+        ),
+        _buildCarouselSlider(),
+        _buildActions(),
+        _buildFooter()
+      ]);
   }
 
   Widget _buildCarouselSlider() {
@@ -142,6 +124,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       height: 85,
                     ),
                     Text(slideItem["title"]!,
+                        textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: primaryColor, fontWeight: FontWeight.bold)),
                     Text(slideItem["text"]!,

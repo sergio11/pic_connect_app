@@ -41,6 +41,8 @@ class TextFieldInput extends StatelessWidget {
     return TextField(
         controller: textEditingController,
         focusNode: focusNode,
+      scrollPadding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: Theme.of(context)

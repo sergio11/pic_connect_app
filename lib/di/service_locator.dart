@@ -58,6 +58,7 @@ import 'package:pic_connect/domain/usecase/unfollow_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
+import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
 import 'package:pic_connect/features/favorites/favorites_bloc.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/followers/followers_bloc.dart';
@@ -146,4 +147,5 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator(), publishCommentUseCase: serviceLocator(), getUserDetailsUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => PublicationsBloc(findPostsByUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => FollowersBloc(findFollowersByUserUseCase: serviceLocator(), findAllThatUserIsFollowingByUseCase: serviceLocator(), followUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => EditProfileBloc(getUserDetailsUseCase: serviceLocator()));
 }

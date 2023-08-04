@@ -15,12 +15,14 @@ class ProfileScreen extends StatefulWidget {
   final Function(String userUid) onGoToPublications;
   final Function(String userUid) onGoToFollowersScreen;
   final Function(String userUid) onGoToFollowingScreen;
+  final Function(String userUid) onGoToEditProfileScreen;
 
   const ProfileScreen(
       {Key? key,
       required this.onGoToPublications,
       required this.onGoToFollowersScreen,
-      required this.onGoToFollowingScreen})
+      required this.onGoToFollowingScreen,
+      required this.onGoToEditProfileScreen})
       : super(key: key);
 
   @override
@@ -92,9 +94,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
           backgroundColor: secondaryColor,
           color: accentColor,
           onRefresh: () => Future.delayed(
-            const Duration(seconds: 1),
+                const Duration(seconds: 1),
                 () => context.read<ProfileBloc>().add(const OnRefreshEvent()),
-          ),
+              ),
           child: ListView(children: [
             Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,7 +173,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     state.isAuthUser
-                        ? _buildSignOutButton(l10n)
+                        ? _buildEditProfileButton(state, l10n)
                         : state.isFollowing
                             ? _buildUnFollowButton(state, l10n)
                             : _buildFollowButton(state, l10n)
@@ -185,13 +187,13 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     );
   }
 
-  Widget _buildSignOutButton(AppLocalizations l10n) {
+  Widget _buildEditProfileButton(ProfileState state, AppLocalizations l10n) {
     return CommonButton(
       text: l10n.editProfileButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
-      onPressed: () async {},
+      onPressed: () => widget.onGoToEditProfileScreen(state.userUid),
       sizeType: CommonButtonSizeType.small,
     );
   }
@@ -202,9 +204,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       backgroundColor: accentColor,
       textColor: primaryColor,
       borderColor: accentColor,
-      onPressed: () async {
-        context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid));
-      },
+      onPressed: () => context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid)),
       sizeType: CommonButtonSizeType.small,
     );
   }
@@ -215,9 +215,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
-      onPressed: () async {
-        context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid));
-      },
+      onPressed: () => context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid)),
       sizeType: CommonButtonSizeType.small,
     );
   }
@@ -259,7 +257,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
               indicatorSize: TabBarIndicatorSize.tab,
               unselectedLabelColor: accentColor,
               indicatorColor: accentColor,
-              labelColor: accentColor,
+              labelColor: primaryColor,
               indicator: BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
@@ -267,6 +265,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                         offset: Offset(0, 0),
                         blurRadius: 8.0),
                   ],
+                  border: Border.all(color: primaryColor, width: 3),
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -281,7 +280,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                   },
               tabs: state.profileTabs
                   .map((tab) => Tab(
-                        height: 50,
+                        height: 45,
                         icon: _buildTabIcon(tab),
                       ))
                   .toList()),
@@ -327,9 +326,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
           child: buildNetworkImage(post.postUrl),
         ),
       ),
-      onLongPress: () => {showImage(context, post.postUrl)},
-      onDoubleTap: () => {showImage(context, post.postUrl)},
-      onTap: () => {widget.onGoToPublications(post.postAuthorUid)},
+      onLongPress: () => showImage(context, post.postUrl),
+      onDoubleTap: () => showImage(context, post.postUrl),
+      onTap: () => widget.onGoToPublications(post.postAuthorUid),
     );
   }
 
@@ -367,16 +366,16 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     switch (tab) {
       case ProfileTab.pictures:
         iconData = tab == _currentProfileTabSelected
-            ? Icons.photo_camera
-            : Icons.photo_camera_outlined;
+            ? Icons.photo_camera_outlined
+            : Icons.photo_camera;
       case ProfileTab.favorites:
         iconData = tab == _currentProfileTabSelected
-            ? Icons.favorite
-            : Icons.favorite_border;
+            ? Icons.favorite_border
+            : Icons.favorite;
       case ProfileTab.bookmark:
         iconData = tab == _currentProfileTabSelected
-            ? Icons.bookmark
-            : Icons.bookmark_border;
+            ? Icons.bookmark_border
+            : Icons.bookmark;
     }
     return Icon(iconData, size: tab == _currentProfileTabSelected ? 35 : 30);
   }

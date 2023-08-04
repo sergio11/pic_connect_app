@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
-import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
-import 'package:pic_connect/features/core/widgets/loading_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/common_onboarding_container.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,55 +52,57 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (state.isLoginSuccess) {
           onLoginSuccess();
         }
-        if (state.isLoading) {
-          LoadingProgressIndicator.start(context);
-        } else {
-          LoadingProgressIndicator.stop();
-        }
       }
     }, builder: (context, state) {
       return Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Stack(
-          children: [
-            _buildScreenBackground(),
-            _buildScreenContent(state, l10n)
-          ],
+          children: _buildScreenStack(state, l10n),
         ),
       );
     });
   }
 
+  List<Widget> _buildScreenStack(SignInState state, AppLocalizations l10n) {
+    final screenStack = [
+      _buildScreenBackground(),
+      _buildScreenContent(state, l10n)
+    ];
+    if (state.isLoading) {
+      screenStack.add(CommonScreenProgressIndicator(
+        backgroundColor: blackColor.withOpacity(0.5),
+        spinnerColor: primaryColor,
+      ));
+    }
+    return screenStack;
+  }
+
   Widget _buildScreenContent(SignInState state, AppLocalizations l10n) {
-    return AnimateGradient(
-        primaryBegin: Alignment.topLeft,
-        primaryEnd: Alignment.bottomLeft,
-        secondaryBegin: Alignment.bottomLeft,
-        secondaryEnd: Alignment.topRight,
-        primaryColors: [
-          secondaryColorMediumLight.withOpacity(0.8),
-          accentColorShadow.withOpacity(0.8)
-        ],
-        secondaryColors: [
-          secondaryColorLight.withOpacity(0.8),
-          accentColorShadow.withOpacity(0.8)
-        ],
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/pic_connect_logo.svg',
-                color: primaryColor,
-                height: 74,
-              ),
-              _buildSignInForm(state, l10n),
-              _buildSignUpRow(state, l10n),
-            ],
-          ),
-        ));
+    return CommonOnBoardingContainer(
+      children: [
+        SvgPicture.asset(
+          'assets/pic_connect_logo.svg',
+          color: primaryColor,
+          height: 74,
+        ),
+        _buildTitleScreen(l10n),
+        _buildSignInForm(state, l10n),
+        _buildSignUpRow(state, l10n),
+      ],
+    );
+  }
+
+  Widget _buildTitleScreen(AppLocalizations l10n) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(l10n.signInMainTitle,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(color: whiteColor, fontWeight: FontWeight.w300)),
+      ],
+    );
   }
 
   Widget _buildEmailTextInput(SignInState state, AppLocalizations l10n) {
@@ -179,9 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildEmailTextInput(state, l10n),
-        const SizedBox(
-          height: 15,
-        ),
         _buildPasswordTextInput(state, l10n),
         const SizedBox(
           height: 25,
