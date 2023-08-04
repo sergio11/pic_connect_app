@@ -17,12 +17,14 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreen extends State<EditProfileScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _usernameController.dispose();
+    _bioController.dispose();
   }
 
   @override
@@ -39,11 +41,19 @@ class _EditProfileScreen extends State<EditProfileScreen> {
   Widget _buildScreenContent(EditProfileState state) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           iconTheme: const IconThemeData(
             color: accentColor, //change your color here
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.save_outlined,
+                color: accentColor,
+              ),
+              onPressed: () {},
+            )
+          ],
           backgroundColor: appBarBackgroundColor,
           title: Text("Edit Profile",
               style: Theme.of(context)
@@ -52,16 +62,22 @@ class _EditProfileScreen extends State<EditProfileScreen> {
                   ?.copyWith(color: accentColor)),
           centerTitle: false,
         ),
-        body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildAvatarInputSelector(state),
-                  _buildUsernameTextInput(state, l10n),
-                  _buildEmailTextInput(state, l10n)
-                ])));
+        body: SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.all(35),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _buildAvatarInputSelector(state),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      _buildUsernameTextInput(state, l10n),
+                      _buildEmailTextInput(state, l10n),
+                      _buildBioTextInput(state, l10n)
+                    ]))));
   }
 
   Widget _buildProgressIndicator() {
@@ -75,6 +91,15 @@ class _EditProfileScreen extends State<EditProfileScreen> {
     );
   }
 
+  Widget _buildEmailTextInput(EditProfileState state, AppLocalizations l10n) {
+    return TextFieldInput(
+      hintText: l10n.signUpEmailTextInput,
+      icon: const Icon(Icons.mail, size: 16),
+      textInputType: TextInputType.emailAddress,
+      textEditingController: _emailController,
+    );
+  }
+
   Widget _buildUsernameTextInput(
       EditProfileState state, AppLocalizations l10n) {
     return TextFieldInput(
@@ -84,12 +109,12 @@ class _EditProfileScreen extends State<EditProfileScreen> {
         textEditingController: _usernameController);
   }
 
-  Widget _buildEmailTextInput(EditProfileState state, AppLocalizations l10n) {
+  Widget _buildBioTextInput(EditProfileState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: l10n.signUpEmailTextInput,
-      icon: const Icon(Icons.mail, size: 16),
-      textInputType: TextInputType.emailAddress,
-      textEditingController: _emailController,
+      hintText: l10n.signUpBioTextInput,
+      textInputType: TextInputType.multiline,
+      maxLines: 5,
+      textEditingController: _bioController,
     );
   }
 }
