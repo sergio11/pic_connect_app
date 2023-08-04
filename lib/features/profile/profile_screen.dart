@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
@@ -25,7 +27,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
   ProfileTab _currentProfileTabSelected = ProfileTab.pictures;
 
   void onLogout(AppLocalizations l10n) {
@@ -49,6 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ? _buildProgressIndicator()
           : _buildScreenContent(state, l10n);
     });
+  }
+
+  @override
+  void onResumed() {
+    context.read<ProfileBloc>().add(const OnRefreshEvent());
   }
 
   Widget _buildScreenContent(ProfileState state, AppLocalizations l10n) {
@@ -84,14 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: RefreshIndicator(
           backgroundColor: secondaryColor,
           color: accentColor,
-          onRefresh: () {
-            return Future.delayed(
-              const Duration(seconds: 1),
-              () {
-                //context.read<ProfileBloc>().add(const OnLoadProfileEvent());
-              },
-            );
-          },
+          onRefresh: () => Future.delayed(
+            const Duration(seconds: 1),
+                () => context.read<ProfileBloc>().add(const OnRefreshEvent()),
+          ),
           child: ListView(children: [
             Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -321,7 +324,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         color: primaryColor,
         padding: const EdgeInsets.all(1),
         child: SizedBox(
-          child: Image(image: NetworkImage(post.postUrl), fit: BoxFit.cover),
+          child: buildNetworkImage(post.postUrl),
         ),
       ),
       onLongPress: () => {showImage(context, post.postUrl)},

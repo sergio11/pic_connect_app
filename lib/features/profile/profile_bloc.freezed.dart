@@ -22,6 +22,7 @@ mixin _$ProfileEvent {
     required TResult Function() signOut,
     required TResult Function(String uid) followUser,
     required TResult Function(String uid) unFollowUser,
+    required TResult Function() refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$ProfileEvent {
     TResult? Function()? signOut,
     TResult? Function(String uid)? followUser,
     TResult? Function(String uid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$ProfileEvent {
     TResult Function()? signOut,
     TResult Function(String uid)? followUser,
     TResult Function(String uid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$ProfileEvent {
     required TResult Function(OnSignOutEvent value) signOut,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshEvent value) refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$ProfileEvent {
     TResult? Function(OnSignOutEvent value)? signOut,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshEvent value)? refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$ProfileEvent {
     TResult Function(OnSignOutEvent value)? signOut,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshEvent value)? refreshData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -155,6 +161,7 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
     required TResult Function() signOut,
     required TResult Function(String uid) followUser,
     required TResult Function(String uid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return loadProfile(uid);
   }
@@ -166,6 +173,7 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
     TResult? Function()? signOut,
     TResult? Function(String uid)? followUser,
     TResult? Function(String uid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return loadProfile?.call(uid);
   }
@@ -177,6 +185,7 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
     TResult Function()? signOut,
     TResult Function(String uid)? followUser,
     TResult Function(String uid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (loadProfile != null) {
@@ -192,6 +201,7 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
     required TResult Function(OnSignOutEvent value) signOut,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshEvent value) refreshData,
   }) {
     return loadProfile(this);
   }
@@ -203,6 +213,7 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
     TResult? Function(OnSignOutEvent value)? signOut,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshEvent value)? refreshData,
   }) {
     return loadProfile?.call(this);
   }
@@ -214,6 +225,7 @@ class _$OnLoadProfileEvent implements OnLoadProfileEvent {
     TResult Function(OnSignOutEvent value)? signOut,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (loadProfile != null) {
@@ -274,6 +286,7 @@ class _$OnSignOutEvent implements OnSignOutEvent {
     required TResult Function() signOut,
     required TResult Function(String uid) followUser,
     required TResult Function(String uid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return signOut();
   }
@@ -285,6 +298,7 @@ class _$OnSignOutEvent implements OnSignOutEvent {
     TResult? Function()? signOut,
     TResult? Function(String uid)? followUser,
     TResult? Function(String uid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return signOut?.call();
   }
@@ -296,6 +310,7 @@ class _$OnSignOutEvent implements OnSignOutEvent {
     TResult Function()? signOut,
     TResult Function(String uid)? followUser,
     TResult Function(String uid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -311,6 +326,7 @@ class _$OnSignOutEvent implements OnSignOutEvent {
     required TResult Function(OnSignOutEvent value) signOut,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshEvent value) refreshData,
   }) {
     return signOut(this);
   }
@@ -322,6 +338,7 @@ class _$OnSignOutEvent implements OnSignOutEvent {
     TResult? Function(OnSignOutEvent value)? signOut,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshEvent value)? refreshData,
   }) {
     return signOut?.call(this);
   }
@@ -333,6 +350,7 @@ class _$OnSignOutEvent implements OnSignOutEvent {
     TResult Function(OnSignOutEvent value)? signOut,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (signOut != null) {
@@ -414,6 +432,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     required TResult Function() signOut,
     required TResult Function(String uid) followUser,
     required TResult Function(String uid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return followUser(uid);
   }
@@ -425,6 +444,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult? Function()? signOut,
     TResult? Function(String uid)? followUser,
     TResult? Function(String uid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return followUser?.call(uid);
   }
@@ -436,6 +456,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult Function()? signOut,
     TResult Function(String uid)? followUser,
     TResult Function(String uid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (followUser != null) {
@@ -451,6 +472,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     required TResult Function(OnSignOutEvent value) signOut,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshEvent value) refreshData,
   }) {
     return followUser(this);
   }
@@ -462,6 +484,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult? Function(OnSignOutEvent value)? signOut,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshEvent value)? refreshData,
   }) {
     return followUser?.call(this);
   }
@@ -473,6 +496,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult Function(OnSignOutEvent value)? signOut,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (followUser != null) {
@@ -560,6 +584,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     required TResult Function() signOut,
     required TResult Function(String uid) followUser,
     required TResult Function(String uid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return unFollowUser(uid);
   }
@@ -571,6 +596,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult? Function()? signOut,
     TResult? Function(String uid)? followUser,
     TResult? Function(String uid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return unFollowUser?.call(uid);
   }
@@ -582,6 +608,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult Function()? signOut,
     TResult Function(String uid)? followUser,
     TResult Function(String uid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (unFollowUser != null) {
@@ -597,6 +624,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     required TResult Function(OnSignOutEvent value) signOut,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshEvent value) refreshData,
   }) {
     return unFollowUser(this);
   }
@@ -608,6 +636,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult? Function(OnSignOutEvent value)? signOut,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshEvent value)? refreshData,
   }) {
     return unFollowUser?.call(this);
   }
@@ -619,6 +648,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult Function(OnSignOutEvent value)? signOut,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (unFollowUser != null) {
@@ -635,6 +665,126 @@ abstract class OnUnFollowUserEvent implements ProfileEvent {
   @JsonKey(ignore: true)
   _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnRefreshEventCopyWith<$Res> {
+  factory _$$OnRefreshEventCopyWith(
+          _$OnRefreshEvent value, $Res Function(_$OnRefreshEvent) then) =
+      __$$OnRefreshEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OnRefreshEventCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res, _$OnRefreshEvent>
+    implements _$$OnRefreshEventCopyWith<$Res> {
+  __$$OnRefreshEventCopyWithImpl(
+      _$OnRefreshEvent _value, $Res Function(_$OnRefreshEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OnRefreshEvent implements OnRefreshEvent {
+  const _$OnRefreshEvent();
+
+  @override
+  String toString() {
+    return 'ProfileEvent.refreshData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$OnRefreshEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uid) loadProfile,
+    required TResult Function() signOut,
+    required TResult Function(String uid) followUser,
+    required TResult Function(String uid) unFollowUser,
+    required TResult Function() refreshData,
+  }) {
+    return refreshData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uid)? loadProfile,
+    TResult? Function()? signOut,
+    TResult? Function(String uid)? followUser,
+    TResult? Function(String uid)? unFollowUser,
+    TResult? Function()? refreshData,
+  }) {
+    return refreshData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uid)? loadProfile,
+    TResult Function()? signOut,
+    TResult Function(String uid)? followUser,
+    TResult Function(String uid)? unFollowUser,
+    TResult Function()? refreshData,
+    required TResult orElse(),
+  }) {
+    if (refreshData != null) {
+      return refreshData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadProfileEvent value) loadProfile,
+    required TResult Function(OnSignOutEvent value) signOut,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshEvent value) refreshData,
+  }) {
+    return refreshData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadProfileEvent value)? loadProfile,
+    TResult? Function(OnSignOutEvent value)? signOut,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshEvent value)? refreshData,
+  }) {
+    return refreshData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadProfileEvent value)? loadProfile,
+    TResult Function(OnSignOutEvent value)? signOut,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshEvent value)? refreshData,
+    required TResult orElse(),
+  }) {
+    if (refreshData != null) {
+      return refreshData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnRefreshEvent implements ProfileEvent {
+  const factory OnRefreshEvent() = _$OnRefreshEvent;
 }
 
 /// @nodoc

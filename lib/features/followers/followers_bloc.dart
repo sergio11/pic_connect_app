@@ -20,92 +20,105 @@ class FollowersBloc extends Bloc<FollowersEvent, FollowersState> {
   final FindAllThatUserIsFollowingByUseCase findAllThatUserIsFollowingByUseCase;
   final FollowUserUseCase followUserUseCase;
 
-  FollowersBloc({required this.findFollowersByUserUseCase,
-    required this.findAllThatUserIsFollowingByUseCase,
-    required this.followUserUseCase})
+  FollowersBloc(
+      {required this.findFollowersByUserUseCase,
+      required this.findAllThatUserIsFollowingByUseCase,
+      required this.followUserUseCase})
       : super(const FollowersState()) {
     on<OnLoadFollowingEvent>(onLoadFollowingEventHandler);
     on<OnLoadFollowersEvent>(onLoadFollowersEventHandler);
     on<OnFollowUserEvent>(onFollowUserEventHandler);
     on<OnUnFollowUserEvent>(onUnFollowUserEventHandler);
+    on<OnRefreshDataEvent>(onRefreshDataEventHandler);
   }
 
-  FutureOr<void> onLoadFollowingEventHandler(OnLoadFollowingEvent event,
-      Emitter<FollowersState> emit) async {
-    emit(state.copyWith(isLoading: true));
+  FutureOr<void> onLoadFollowingEventHandler(
+      OnLoadFollowingEvent event, Emitter<FollowersState> emit) async {
+    await _fetchFollowing(event.userUid, event.authUserUid, emit);
+  }
+
+  FutureOr<void> onLoadFollowersEventHandler(
+      OnLoadFollowersEvent event, Emitter<FollowersState> emit) async {
+    await _fetchFollowers(event.userUid, event.authUserUid, emit);
+  }
+
+  FutureOr<void> onRefreshDataEventHandler(
+      OnRefreshDataEvent event, Emitter<FollowersState> emit) async {
+    if (state.contentType == ContentTypeEnum.followers) {
+      await _fetchFollowers(state.userUid, state.authUserUid, emit);
+    } else {
+      await _fetchFollowing(state.userUid, state.authUserUid, emit);
+    }
+  }
+
+  FutureOr<void> onFollowUserEventHandler(
+      OnFollowUserEvent event, Emitter<FollowersState> emit) async {
+    emit(state.copyWith(allowUserInput: false));
+    final response = await followUserUseCase(FollowUserParams(event.userUid));
+    response.fold(
+        (failure) => emit(state.copyWith(
+            errorMessage: failure.message, allowUserInput: true)),
+        (isFollowed) => emit(state.copyWith(
+            errorMessage: null,
+            allowUserInput: true,
+            users: !isFollowed
+                ? state.users
+                : _updateUserFollowers(
+                    event.userUid, state.authUserUid, true))));
+  }
+
+  FutureOr<void> onUnFollowUserEventHandler(
+      OnUnFollowUserEvent event, Emitter<FollowersState> emit) async {
+    emit(state.copyWith(allowUserInput: false));
+    final response = await followUserUseCase(FollowUserParams(event.userUid));
+    response.fold(
+        (failure) => emit(state.copyWith(errorMessage: failure.message, allowUserInput: true)),
+        (isUnFollowed) => emit(state.copyWith(
+            errorMessage: null,
+            allowUserInput: true,
+            users: !isUnFollowed
+                ? state.users
+                : _updateUserFollowers(
+                    event.userUid, state.authUserUid, false))));
+  }
+
+  FutureOr<void> _fetchFollowers(
+      String userUid, String authUserUid, Emitter<FollowersState> emit) async {
+    emit(state.copyWith(
+        isLoading: true, userUid: userUid, authUserUid: authUserUid));
     final response = await findAllThatUserIsFollowingByUseCase(
-        FindAllThatUserIsFollowingByParams(event.userUid));
+        FindAllThatUserIsFollowingByParams(userUid));
     response.fold(
-            (failure) =>
-            emit(
-                state.copyWith(
-                    isLoading: false, errorMessage: failure.message)),
-            (users) =>
-            emit(state.copyWith(
-                isLoading: false,
-                errorMessage: null,
-                users: users,
-                authUserUid: event.authUserUid)));
+        (failure) => emit(
+            state.copyWith(isLoading: false, errorMessage: failure.message)),
+        (users) => emit(state.copyWith(
+            isLoading: false, errorMessage: null, users: users)));
   }
 
-  FutureOr<void> onLoadFollowersEventHandler(OnLoadFollowersEvent event,
-      Emitter<FollowersState> emit) async {
-    emit(state.copyWith(isLoading: true));
-    final response = await findFollowersByUserUseCase(
-        FindFollowersByUserParams(event.userUid));
+  FutureOr<void> _fetchFollowing(
+      String userUid, String authUserUid, Emitter<FollowersState> emit) async {
+    emit(state.copyWith(
+        isLoading: true, userUid: userUid, authUserUid: authUserUid));
+    final response = await findAllThatUserIsFollowingByUseCase(
+        FindAllThatUserIsFollowingByParams(userUid));
     response.fold(
-            (failure) =>
-            emit(
-                state.copyWith(
-                    isLoading: false, errorMessage: failure.message)),
-            (users) =>
-            emit(state.copyWith(
-                isLoading: false,
-                errorMessage: null,
-                users: users,
-                authUserUid: event.authUserUid)));
+        (failure) => emit(
+            state.copyWith(isLoading: false, errorMessage: failure.message)),
+        (users) => emit(state.copyWith(
+            isLoading: false, errorMessage: null, users: users)));
   }
 
-  FutureOr<void> onFollowUserEventHandler(OnFollowUserEvent event,
-      Emitter<FollowersState> emit) async {
-    final response = await followUserUseCase(FollowUserParams(event.userUid));
-    response.fold(
-            (failure) => emit(state.copyWith(errorMessage: failure.message)),
-            (isFollowed) =>
-            emit(state.copyWith(
-                errorMessage: null,
-                users: !isFollowed
-                    ? state.users
-                    : _updateUserFollowers(event.userUid, state.authUserUid, true))));
-  }
-
-  FutureOr<void> onUnFollowUserEventHandler(OnUnFollowUserEvent event,
-      Emitter<FollowersState> emit) async {
-    final response = await followUserUseCase(FollowUserParams(event.userUid));
-    response.fold(
-            (failure) => emit(state.copyWith(errorMessage: failure.message)),
-            (isUnFollowed) =>
-            emit(state.copyWith(
-                errorMessage: null,
-                users: !isUnFollowed ? state.users : _updateUserFollowers(event.userUid, state.authUserUid, false))));
-  }
-
-  List<UserBO> _updateUserFollowers(String userUid, String authUserUid,
-      bool follow) {
+  List<UserBO> _updateUserFollowers(
+      String userUid, String authUserUid, bool follow) {
     final index = state.users.indexWhere((element) => element.uid == userUid);
     final List<UserBO> users = List.from(state.users);
     final user = users.removeAt(index);
     final List<String> followers;
     if (follow) {
-      followers = List.from(user.followers)
-        ..add(authUserUid);
+      followers = List.from(user.followers)..add(authUserUid);
     } else {
-      followers = List.from(user.followers)
-        ..remove(authUserUid);
+      followers = List.from(user.followers)..remove(authUserUid);
     }
-    return users
-      ..insert(index, user.copyWith(
-          followers: followers));
+    return users..insert(index, user.copyWith(followers: followers));
   }
-
 }

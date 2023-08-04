@@ -70,14 +70,10 @@ class _FeedScreenState extends State<FeedScreen> {
     return RefreshIndicator(
       backgroundColor: secondaryColor,
       color: accentColor,
-      onRefresh: () {
-        return Future.delayed(
-          const Duration(seconds: 1),
-          () {
-            onRefresh(state);
-          },
-        );
-      },
+      onRefresh: () => Future.delayed(
+        const Duration(seconds: 1),
+            () => onRefresh(state),
+      ),
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         itemCount: state.posts.length,

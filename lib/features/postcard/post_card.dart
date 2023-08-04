@@ -1,6 +1,6 @@
-import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -145,10 +145,7 @@ class _PostCardState extends State<PostCard> {
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.35,
               width: double.infinity,
-              child: Image.network(
-                state.postImageUrl,
-                fit: BoxFit.cover,
-              ),
+              child: buildNetworkImage(state.postImageUrl),
             ),
           ),
           AnimatedOpacity(

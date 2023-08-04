@@ -4,6 +4,7 @@ import 'package:pic_connect/features/core/widgets/common_screen_progress_indicat
 import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
 import 'package:pic_connect/features/followers/followers_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FollowersScreen extends StatefulWidget {
   final Function(String userUid) onShowUserProfile;
@@ -24,6 +25,11 @@ class _FollowersScreen extends State<FollowersScreen> {
     context.read<FollowersBloc>().add(OnUnFollowUserEvent(userUid));
   }
 
+  void _onRefresh() async {
+    debugPrint("_onRefresh CALLED!");
+    context.read<FollowersBloc>().add(const OnRefreshDataEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FollowersBloc, FollowersState>(
@@ -36,12 +42,23 @@ class _FollowersScreen extends State<FollowersScreen> {
   }
 
   Widget _buildScreenContent(FollowersState state) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
         appBar: AppBar(
-            iconTheme: const IconThemeData(
-              color: accentColor, //change your color here
-            ),
-            backgroundColor: appBarBackgroundColor),
+          iconTheme: const IconThemeData(
+            color: accentColor, //change your color here
+          ),
+          backgroundColor: appBarBackgroundColor,
+          title: Text(
+              state.contentType == ContentTypeEnum.followers
+                  ? l10n.followersScreenTitle
+                  : l10n.followingScreenTitle,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: accentColor)),
+          centerTitle: false,
+        ),
         body: _buildUsersListView(state));
   }
 
@@ -50,30 +67,46 @@ class _FollowersScreen extends State<FollowersScreen> {
   }
 
   Widget _buildUsersListView(FollowersState state) {
-    return ListView.separated(
-      padding: const EdgeInsets.only(top: 8),
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: state.users.length,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 8,
-      ),
-      itemBuilder: (context, index) {
-        return Container(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-            color: primaryColor,
-            child: InkWell(
-              onTap: () => widget.onShowUserProfile(state.users[index].uid),
-              child: UserListTile(
-                userBO: state.users[index],
-                onFollowPressed: () => _onFollowUser(state.users[index].uid),
-                onUnFollowPressed: () =>
-                    _onUnFollowUser(state.users[index].uid),
-                isFollowedByAuthUser: state.users[index].followers.contains(state.authUserUid),
-                isAuthUser: state.users[index].uid == state.authUserUid,
-              ),
-            ));
-      },
-    );
+    return RefreshIndicator(
+        backgroundColor: secondaryColor,
+        color: accentColor,
+        onRefresh: () => Future.delayed(
+          const Duration(seconds: 1),
+              () => _onRefresh(),
+        ),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: ListView.separated(
+            padding: const EdgeInsets.only(top: 8),
+            physics: const AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: state.users.length,
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 8,
+            ),
+            itemBuilder: (context, index) {
+              return Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4, horizontal: 4),
+                  color: primaryColor,
+                  child: InkWell(
+                    onTap: () =>
+                        widget.onShowUserProfile(state.users[index].uid),
+                    child: UserListTile(
+                      userBO: state.users[index],
+                      onFollowPressed: () =>
+                          _onFollowUser(state.users[index].uid),
+                      onUnFollowPressed: () =>
+                          _onUnFollowUser(state.users[index].uid),
+                      isFollowedByAuthUser: state.users[index].followers
+                          .contains(state.authUserUid),
+                      isAuthUser:
+                      state.users[index].uid == state.authUserUid,
+                      isDisabled: !state.allowUserInput,
+                    ),
+                  ));
+            },
+          ),
+        ));
   }
 }

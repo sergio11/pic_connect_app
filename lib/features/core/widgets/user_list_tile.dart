@@ -11,6 +11,7 @@ class UserListTile extends StatelessWidget {
   final bool isAuthUser;
   final VoidCallback onFollowPressed;
   final VoidCallback onUnFollowPressed;
+  final bool isDisabled;
 
   const UserListTile(
       {super.key,
@@ -18,7 +19,8 @@ class UserListTile extends StatelessWidget {
       required this.onFollowPressed,
       required this.onUnFollowPressed,
       required this.isFollowedByAuthUser,
-      required this.isAuthUser});
+      required this.isAuthUser,
+      this.isDisabled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class UserListTile extends StatelessWidget {
                   isFollowedByAuthUser ? accentColor : secondaryColor,
               textColor: primaryColor,
               borderColor: isFollowedByAuthUser ? accentColor : secondaryColor,
+              isDisabled: isDisabled,
               onPressed: () {
                 if (isFollowedByAuthUser) {
                   onUnFollowPressed();

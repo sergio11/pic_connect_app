@@ -30,5 +30,7 @@
   "signUpBioTextInput": "Enter your bio",
   "signUpButtonText": "Sign up",
   "signUpHaveAccountText": "Already have an account?",
-  "signUpHaveAccountButtonText": " Login."
+  "signUpHaveAccountButtonText": " Login.",
+  "followersScreenTitle": "Followers",
+  "followingScreenTitle": "Following"
 }

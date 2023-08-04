@@ -30,5 +30,7 @@
   "signUpBioTextInput": "Introduce una descripción sobre ti",
   "signUpButtonText": "Registrarse",
   "signUpHaveAccountText": "¿Ya dispones de una cuenta?",
-  "signUpHaveAccountButtonText": " Iniciar sesión."
+  "signUpHaveAccountButtonText": " Iniciar sesión.",
+  "followersScreenTitle": "Seguidores",
+  "followingScreenTitle": "Siguiendo"
 }

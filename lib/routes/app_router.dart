@@ -135,8 +135,10 @@ class AppRouter {
                   },
                   onPostUploaded: () {
                     context.go(AppRoutesEnum.profile.screenPath);
-                  }, onEditImageRequired: (Uint8List imageData) =>
-                    context.push<Uint8List>(AppRoutesEnum.imageEditor.screenPath, extra: imageData),
+                  },
+                  onEditImageRequired: (Uint8List imageData) => context
+                      .push<Uint8List>(AppRoutesEnum.imageEditor.screenPath,
+                          extra: imageData),
                 ),
               )),
       GoRoute(
@@ -158,13 +160,13 @@ class AppRouter {
               transitionDuration: const Duration(milliseconds: 800),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) =>
-                  SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(-1.0, 0.0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ))),
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ))),
       GoRoute(
           path: AppRoutesEnum.following.screenPath,
           name: AppRoutesEnum.following.screenName,
@@ -184,13 +186,13 @@ class AppRouter {
               transitionDuration: const Duration(milliseconds: 800),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) =>
-                  SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(-1.0, 0.0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ))),
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ))),
       GoRoute(
           path: AppRoutesEnum.comments.screenPath,
           name: AppRoutesEnum.comments.screenName,
@@ -228,39 +230,39 @@ class AppRouter {
               child: BlocProvider(
                 create: (context) => serviceLocator<PublicationsBloc>()
                   ..add(OnLoadPublicationsEvent(state.extra as String)),
-                child: PublicationsScreen(onShowCommentsByPost: (String postId) {
-                  context.go(AppRoutesEnum.comments.screenPath,
-                      extra: postId);
-                },),
+                child: PublicationsScreen(
+                  onShowCommentsByPost: (String postId) {
+                    context.go(AppRoutesEnum.comments.screenPath,
+                        extra: postId);
+                  },
+                ),
               ),
               transitionDuration: const Duration(milliseconds: 800),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) =>
-                  SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(-1.0, 0.0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ))),
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ))),
       GoRoute(
           path: AppRoutesEnum.imageEditor.screenPath,
           name: AppRoutesEnum.imageEditor.screenName,
           pageBuilder: (context, state) => CustomTransitionPage<void>(
               key: state.pageKey,
-              child: ImageEditor(
-                  image: state.extra as Uint8List
-              ),
+              child: ImageEditor(image: state.extra as Uint8List),
               transitionDuration: const Duration(milliseconds: 800),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) =>
-                  SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(-1.0, 0.0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ))),
+                      SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ))),
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
             StatefulNavigationShell navigationShell) {
@@ -321,34 +323,50 @@ class AppRouter {
               GoRoute(
                   path: AppRoutesEnum.profile.screenPath,
                   name: AppRoutesEnum.profile.screenName,
-                  pageBuilder: (context, state) => CustomTransitionPage<void>(
-                      key: state.pageKey,
-                      child: BlocProvider(
-                        create: (context) => serviceLocator<ProfileBloc>()
-                          ..add(OnLoadProfileEvent(state.extra is String
-                              ? state.extra as String
-                              : context.read<AppBloc>().state.authUserUid!)),
-                        child: ProfileScreen(onGoToPublications: (String userUid) {
-                          context.push(AppRoutesEnum.publications.screenPath,
-                              extra: userUid);
-                        }, onGoToFollowersScreen: (String userUid) {
-                          context.push(AppRoutesEnum.followers.screenPath,
-                              extra: userUid);
-                        }, onGoToFollowingScreen: (String userUid) {
-                          context.push(AppRoutesEnum.following.screenPath,
-                              extra: userUid);
-                        },),
-                      ),
-                      transitionDuration: const Duration(milliseconds: 800),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) =>
-                              SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(-1.0, 0.0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: child,
-                              ))),
+                  pageBuilder: (context, state) {
+                    final screenBloc = serviceLocator<ProfileBloc>();
+                    return CustomTransitionPage<void>(
+                        key: state.pageKey,
+                        child: BlocProvider(
+                          create: (context) => screenBloc
+                            ..add(OnLoadProfileEvent(state.extra is String
+                                ? state.extra as String
+                                : context.read<AppBloc>().state.authUserUid!)),
+                          child: ProfileScreen(
+                            onGoToPublications: (String userUid) {
+                              context
+                                  .push(AppRoutesEnum.publications.screenPath,
+                                      extra: userUid)
+                                  .then((value) => screenBloc
+                                    ..add(const OnRefreshEvent()));
+                            },
+                            onGoToFollowersScreen: (String userUid) {
+                              context
+                                  .push(AppRoutesEnum.followers.screenPath,
+                                      extra: userUid)
+                                  .then((value) => screenBloc
+                                    ..add(const OnRefreshEvent()));
+                            },
+                            onGoToFollowingScreen: (String userUid) {
+                              context
+                                  .push(AppRoutesEnum.following.screenPath,
+                                      extra: userUid)
+                                  .then((value) => screenBloc
+                                    ..add(const OnRefreshEvent()));
+                            },
+                          ),
+                        ),
+                        transitionDuration: const Duration(milliseconds: 800),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) =>
+                                SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(-1.0, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(animation),
+                                  child: child,
+                                ));
+                  }),
             ],
           ),
         ],

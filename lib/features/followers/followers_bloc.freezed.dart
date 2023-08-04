@@ -16,13 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FollowersEvent {
-  String get userUid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String userUid, String authUserUid) loadFollowers,
     required TResult Function(String userUid, String authUserUid) loadFollowing,
     required TResult Function(String userUid) followUser,
     required TResult Function(String userUid) unFollowUser,
+    required TResult Function() refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,6 +31,7 @@ mixin _$FollowersEvent {
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
     TResult? Function(String userUid)? followUser,
     TResult? Function(String userUid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +40,7 @@ mixin _$FollowersEvent {
     TResult Function(String userUid, String authUserUid)? loadFollowing,
     TResult Function(String userUid)? followUser,
     TResult Function(String userUid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +50,7 @@ mixin _$FollowersEvent {
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshDataEvent value) refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -56,6 +59,7 @@ mixin _$FollowersEvent {
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshDataEvent value)? refreshData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,12 +68,9 @@ mixin _$FollowersEvent {
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshDataEvent value)? refreshData,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $FollowersEventCopyWith<FollowersEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -78,8 +79,6 @@ abstract class $FollowersEventCopyWith<$Res> {
   factory $FollowersEventCopyWith(
           FollowersEvent value, $Res Function(FollowersEvent) then) =
       _$FollowersEventCopyWithImpl<$Res, FollowersEvent>;
-  @useResult
-  $Res call({String userUid});
 }
 
 /// @nodoc
@@ -91,28 +90,13 @@ class _$FollowersEventCopyWithImpl<$Res, $Val extends FollowersEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? userUid = null,
-  }) {
-    return _then(_value.copyWith(
-      userUid: null == userUid
-          ? _value.userUid
-          : userUid // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnLoadFollowersEventCopyWith<$Res>
-    implements $FollowersEventCopyWith<$Res> {
+abstract class _$$OnLoadFollowersEventCopyWith<$Res> {
   factory _$$OnLoadFollowersEventCopyWith(_$OnLoadFollowersEvent value,
           $Res Function(_$OnLoadFollowersEvent) then) =
       __$$OnLoadFollowersEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String userUid, String authUserUid});
 }
@@ -186,6 +170,7 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
     required TResult Function(String userUid, String authUserUid) loadFollowing,
     required TResult Function(String userUid) followUser,
     required TResult Function(String userUid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return loadFollowers(userUid, authUserUid);
   }
@@ -197,6 +182,7 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
     TResult? Function(String userUid)? followUser,
     TResult? Function(String userUid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return loadFollowers?.call(userUid, authUserUid);
   }
@@ -208,6 +194,7 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
     TResult Function(String userUid, String authUserUid)? loadFollowing,
     TResult Function(String userUid)? followUser,
     TResult Function(String userUid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (loadFollowers != null) {
@@ -223,6 +210,7 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshDataEvent value) refreshData,
   }) {
     return loadFollowers(this);
   }
@@ -234,6 +222,7 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshDataEvent value)? refreshData,
   }) {
     return loadFollowers?.call(this);
   }
@@ -245,6 +234,7 @@ class _$OnLoadFollowersEvent implements OnLoadFollowersEvent {
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshDataEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (loadFollowers != null) {
@@ -258,22 +248,18 @@ abstract class OnLoadFollowersEvent implements FollowersEvent {
   const factory OnLoadFollowersEvent(
       final String userUid, final String authUserUid) = _$OnLoadFollowersEvent;
 
-  @override
   String get userUid;
   String get authUserUid;
-  @override
   @JsonKey(ignore: true)
   _$$OnLoadFollowersEventCopyWith<_$OnLoadFollowersEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OnLoadFollowingEventCopyWith<$Res>
-    implements $FollowersEventCopyWith<$Res> {
+abstract class _$$OnLoadFollowingEventCopyWith<$Res> {
   factory _$$OnLoadFollowingEventCopyWith(_$OnLoadFollowingEvent value,
           $Res Function(_$OnLoadFollowingEvent) then) =
       __$$OnLoadFollowingEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String userUid, String authUserUid});
 }
@@ -347,6 +333,7 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
     required TResult Function(String userUid, String authUserUid) loadFollowing,
     required TResult Function(String userUid) followUser,
     required TResult Function(String userUid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return loadFollowing(userUid, authUserUid);
   }
@@ -358,6 +345,7 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
     TResult? Function(String userUid)? followUser,
     TResult? Function(String userUid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return loadFollowing?.call(userUid, authUserUid);
   }
@@ -369,6 +357,7 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
     TResult Function(String userUid, String authUserUid)? loadFollowing,
     TResult Function(String userUid)? followUser,
     TResult Function(String userUid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (loadFollowing != null) {
@@ -384,6 +373,7 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshDataEvent value) refreshData,
   }) {
     return loadFollowing(this);
   }
@@ -395,6 +385,7 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshDataEvent value)? refreshData,
   }) {
     return loadFollowing?.call(this);
   }
@@ -406,6 +397,7 @@ class _$OnLoadFollowingEvent implements OnLoadFollowingEvent {
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshDataEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (loadFollowing != null) {
@@ -419,22 +411,18 @@ abstract class OnLoadFollowingEvent implements FollowersEvent {
   const factory OnLoadFollowingEvent(
       final String userUid, final String authUserUid) = _$OnLoadFollowingEvent;
 
-  @override
   String get userUid;
   String get authUserUid;
-  @override
   @JsonKey(ignore: true)
   _$$OnLoadFollowingEventCopyWith<_$OnLoadFollowingEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OnFollowUserEventCopyWith<$Res>
-    implements $FollowersEventCopyWith<$Res> {
+abstract class _$$OnFollowUserEventCopyWith<$Res> {
   factory _$$OnFollowUserEventCopyWith(
           _$OnFollowUserEvent value, $Res Function(_$OnFollowUserEvent) then) =
       __$$OnFollowUserEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String userUid});
 }
@@ -498,6 +486,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     required TResult Function(String userUid, String authUserUid) loadFollowing,
     required TResult Function(String userUid) followUser,
     required TResult Function(String userUid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return followUser(userUid);
   }
@@ -509,6 +498,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
     TResult? Function(String userUid)? followUser,
     TResult? Function(String userUid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return followUser?.call(userUid);
   }
@@ -520,6 +510,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult Function(String userUid, String authUserUid)? loadFollowing,
     TResult Function(String userUid)? followUser,
     TResult Function(String userUid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (followUser != null) {
@@ -535,6 +526,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshDataEvent value) refreshData,
   }) {
     return followUser(this);
   }
@@ -546,6 +538,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshDataEvent value)? refreshData,
   }) {
     return followUser?.call(this);
   }
@@ -557,6 +550,7 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshDataEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (followUser != null) {
@@ -569,21 +563,17 @@ class _$OnFollowUserEvent implements OnFollowUserEvent {
 abstract class OnFollowUserEvent implements FollowersEvent {
   const factory OnFollowUserEvent(final String userUid) = _$OnFollowUserEvent;
 
-  @override
   String get userUid;
-  @override
   @JsonKey(ignore: true)
   _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OnUnFollowUserEventCopyWith<$Res>
-    implements $FollowersEventCopyWith<$Res> {
+abstract class _$$OnUnFollowUserEventCopyWith<$Res> {
   factory _$$OnUnFollowUserEventCopyWith(_$OnUnFollowUserEvent value,
           $Res Function(_$OnUnFollowUserEvent) then) =
       __$$OnUnFollowUserEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String userUid});
 }
@@ -648,6 +638,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     required TResult Function(String userUid, String authUserUid) loadFollowing,
     required TResult Function(String userUid) followUser,
     required TResult Function(String userUid) unFollowUser,
+    required TResult Function() refreshData,
   }) {
     return unFollowUser(userUid);
   }
@@ -659,6 +650,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult? Function(String userUid, String authUserUid)? loadFollowing,
     TResult? Function(String userUid)? followUser,
     TResult? Function(String userUid)? unFollowUser,
+    TResult? Function()? refreshData,
   }) {
     return unFollowUser?.call(userUid);
   }
@@ -670,6 +662,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult Function(String userUid, String authUserUid)? loadFollowing,
     TResult Function(String userUid)? followUser,
     TResult Function(String userUid)? unFollowUser,
+    TResult Function()? refreshData,
     required TResult orElse(),
   }) {
     if (unFollowUser != null) {
@@ -685,6 +678,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     required TResult Function(OnLoadFollowingEvent value) loadFollowing,
     required TResult Function(OnFollowUserEvent value) followUser,
     required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshDataEvent value) refreshData,
   }) {
     return unFollowUser(this);
   }
@@ -696,6 +690,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult? Function(OnFollowUserEvent value)? followUser,
     TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshDataEvent value)? refreshData,
   }) {
     return unFollowUser?.call(this);
   }
@@ -707,6 +702,7 @@ class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
     TResult Function(OnLoadFollowingEvent value)? loadFollowing,
     TResult Function(OnFollowUserEvent value)? followUser,
     TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshDataEvent value)? refreshData,
     required TResult orElse(),
   }) {
     if (unFollowUser != null) {
@@ -720,20 +716,140 @@ abstract class OnUnFollowUserEvent implements FollowersEvent {
   const factory OnUnFollowUserEvent(final String userUid) =
       _$OnUnFollowUserEvent;
 
-  @override
   String get userUid;
-  @override
   @JsonKey(ignore: true)
   _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$OnRefreshDataEventCopyWith<$Res> {
+  factory _$$OnRefreshDataEventCopyWith(_$OnRefreshDataEvent value,
+          $Res Function(_$OnRefreshDataEvent) then) =
+      __$$OnRefreshDataEventCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OnRefreshDataEventCopyWithImpl<$Res>
+    extends _$FollowersEventCopyWithImpl<$Res, _$OnRefreshDataEvent>
+    implements _$$OnRefreshDataEventCopyWith<$Res> {
+  __$$OnRefreshDataEventCopyWithImpl(
+      _$OnRefreshDataEvent _value, $Res Function(_$OnRefreshDataEvent) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$OnRefreshDataEvent implements OnRefreshDataEvent {
+  const _$OnRefreshDataEvent();
+
+  @override
+  String toString() {
+    return 'FollowersEvent.refreshData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$OnRefreshDataEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String userUid, String authUserUid) loadFollowers,
+    required TResult Function(String userUid, String authUserUid) loadFollowing,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
+    required TResult Function() refreshData,
+  }) {
+    return refreshData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String userUid, String authUserUid)? loadFollowers,
+    TResult? Function(String userUid, String authUserUid)? loadFollowing,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
+    TResult? Function()? refreshData,
+  }) {
+    return refreshData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String userUid, String authUserUid)? loadFollowers,
+    TResult Function(String userUid, String authUserUid)? loadFollowing,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
+    TResult Function()? refreshData,
+    required TResult orElse(),
+  }) {
+    if (refreshData != null) {
+      return refreshData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadFollowersEvent value) loadFollowers,
+    required TResult Function(OnLoadFollowingEvent value) loadFollowing,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+    required TResult Function(OnRefreshDataEvent value) refreshData,
+  }) {
+    return refreshData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadFollowersEvent value)? loadFollowers,
+    TResult? Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult? Function(OnRefreshDataEvent value)? refreshData,
+  }) {
+    return refreshData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadFollowersEvent value)? loadFollowers,
+    TResult Function(OnLoadFollowingEvent value)? loadFollowing,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    TResult Function(OnRefreshDataEvent value)? refreshData,
+    required TResult orElse(),
+  }) {
+    if (refreshData != null) {
+      return refreshData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnRefreshDataEvent implements FollowersEvent {
+  const factory OnRefreshDataEvent() = _$OnRefreshDataEvent;
+}
+
+/// @nodoc
 mixin _$FollowersState {
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get allowUserInput => throw _privateConstructorUsedError;
   List<UserBO> get users => throw _privateConstructorUsedError;
   String get authUserUid => throw _privateConstructorUsedError;
-  String get toolbarTitle => throw _privateConstructorUsedError;
+  String get userUid => throw _privateConstructorUsedError;
+  ContentTypeEnum get contentType => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -749,9 +865,11 @@ abstract class $FollowersStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
+      bool allowUserInput,
       List<UserBO> users,
       String authUserUid,
-      String toolbarTitle,
+      String userUid,
+      ContentTypeEnum contentType,
       String? errorMessage});
 }
 
@@ -769,15 +887,21 @@ class _$FollowersStateCopyWithImpl<$Res, $Val extends FollowersState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? allowUserInput = null,
     Object? users = null,
     Object? authUserUid = null,
-    Object? toolbarTitle = null,
+    Object? userUid = null,
+    Object? contentType = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      allowUserInput: null == allowUserInput
+          ? _value.allowUserInput
+          : allowUserInput // ignore: cast_nullable_to_non_nullable
               as bool,
       users: null == users
           ? _value.users
@@ -787,10 +911,14 @@ class _$FollowersStateCopyWithImpl<$Res, $Val extends FollowersState>
           ? _value.authUserUid
           : authUserUid // ignore: cast_nullable_to_non_nullable
               as String,
-      toolbarTitle: null == toolbarTitle
-          ? _value.toolbarTitle
-          : toolbarTitle // ignore: cast_nullable_to_non_nullable
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
               as String,
+      contentType: null == contentType
+          ? _value.contentType
+          : contentType // ignore: cast_nullable_to_non_nullable
+              as ContentTypeEnum,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -809,9 +937,11 @@ abstract class _$$_FollowersStateCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
+      bool allowUserInput,
       List<UserBO> users,
       String authUserUid,
-      String toolbarTitle,
+      String userUid,
+      ContentTypeEnum contentType,
       String? errorMessage});
 }
 
@@ -827,15 +957,21 @@ class __$$_FollowersStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? allowUserInput = null,
     Object? users = null,
     Object? authUserUid = null,
-    Object? toolbarTitle = null,
+    Object? userUid = null,
+    Object? contentType = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_FollowersState(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      allowUserInput: null == allowUserInput
+          ? _value.allowUserInput
+          : allowUserInput // ignore: cast_nullable_to_non_nullable
               as bool,
       users: null == users
           ? _value._users
@@ -845,10 +981,14 @@ class __$$_FollowersStateCopyWithImpl<$Res>
           ? _value.authUserUid
           : authUserUid // ignore: cast_nullable_to_non_nullable
               as String,
-      toolbarTitle: null == toolbarTitle
-          ? _value.toolbarTitle
-          : toolbarTitle // ignore: cast_nullable_to_non_nullable
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
               as String,
+      contentType: null == contentType
+          ? _value.contentType
+          : contentType // ignore: cast_nullable_to_non_nullable
+              as ContentTypeEnum,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -862,15 +1002,20 @@ class __$$_FollowersStateCopyWithImpl<$Res>
 class _$_FollowersState implements _FollowersState {
   const _$_FollowersState(
       {this.isLoading = false,
+      this.allowUserInput = true,
       final List<UserBO> users = const [],
       this.authUserUid = "",
-      this.toolbarTitle = "",
+      this.userUid = "",
+      this.contentType = ContentTypeEnum.followers,
       this.errorMessage})
       : _users = users;
 
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool allowUserInput;
   final List<UserBO> _users;
   @override
   @JsonKey()
@@ -885,13 +1030,16 @@ class _$_FollowersState implements _FollowersState {
   final String authUserUid;
   @override
   @JsonKey()
-  final String toolbarTitle;
+  final String userUid;
+  @override
+  @JsonKey()
+  final ContentTypeEnum contentType;
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'FollowersState(isLoading: $isLoading, users: $users, authUserUid: $authUserUid, toolbarTitle: $toolbarTitle, errorMessage: $errorMessage)';
+    return 'FollowersState(isLoading: $isLoading, allowUserInput: $allowUserInput, users: $users, authUserUid: $authUserUid, userUid: $userUid, contentType: $contentType, errorMessage: $errorMessage)';
   }
 
   @override
@@ -901,11 +1049,14 @@ class _$_FollowersState implements _FollowersState {
             other is _$_FollowersState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.allowUserInput, allowUserInput) ||
+                other.allowUserInput == allowUserInput) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
             (identical(other.authUserUid, authUserUid) ||
                 other.authUserUid == authUserUid) &&
-            (identical(other.toolbarTitle, toolbarTitle) ||
-                other.toolbarTitle == toolbarTitle) &&
+            (identical(other.userUid, userUid) || other.userUid == userUid) &&
+            (identical(other.contentType, contentType) ||
+                other.contentType == contentType) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -914,9 +1065,11 @@ class _$_FollowersState implements _FollowersState {
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
+      allowUserInput,
       const DeepCollectionEquality().hash(_users),
       authUserUid,
-      toolbarTitle,
+      userUid,
+      contentType,
       errorMessage);
 
   @JsonKey(ignore: true)
@@ -929,19 +1082,25 @@ class _$_FollowersState implements _FollowersState {
 abstract class _FollowersState implements FollowersState {
   const factory _FollowersState(
       {final bool isLoading,
+      final bool allowUserInput,
       final List<UserBO> users,
       final String authUserUid,
-      final String toolbarTitle,
+      final String userUid,
+      final ContentTypeEnum contentType,
       final String? errorMessage}) = _$_FollowersState;
 
   @override
   bool get isLoading;
   @override
+  bool get allowUserInput;
+  @override
   List<UserBO> get users;
   @override
   String get authUserUid;
   @override
-  String get toolbarTitle;
+  String get userUid;
+  @override
+  ContentTypeEnum get contentType;
   @override
   String? get errorMessage;
   @override

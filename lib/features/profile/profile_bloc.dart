@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pic_connect/domain/models/post.dart';
@@ -43,8 +44,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       : super(const ProfileState()) {
     on<OnLoadProfileEvent>(onLoadProfileEventHandler);
     on<OnSignOutEvent>(onSignOutEventHandler);
-    on<OnFollowUserEvent>(onFollowUserEvent);
-    on<OnUnFollowUserEvent>(onUnFollowUserEvent);
+    on<OnFollowUserEvent>(onFollowUserEventHandler);
+    on<OnUnFollowUserEvent>(onUnFollowUserEventHandler);
+    on<OnRefreshEvent>(onRefreshDataEventHandler);
   }
 
   FutureOr<void> onSignOutEventHandler(
@@ -53,7 +55,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     response.forEach((r) => emit(state.copyWith(isLogout: true)));
   }
 
-  FutureOr<void> onFollowUserEvent(
+  FutureOr<void> onFollowUserEventHandler(
       OnFollowUserEvent event, Emitter<ProfileState> emit) async {
     final response = await followUserUseCase(FollowUserParams(event.uid));
     response.fold(
@@ -66,7 +68,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             )));
   }
 
-  FutureOr<void> onUnFollowUserEvent(
+  FutureOr<void> onUnFollowUserEventHandler(
       OnUnFollowUserEvent event, Emitter<ProfileState> emit) async {
     final response = await followUserUseCase(FollowUserParams(event.uid));
     response.fold(
@@ -79,15 +81,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             )));
   }
 
+  FutureOr<void> onRefreshDataEventHandler(
+      OnRefreshEvent event, Emitter<ProfileState> emit) async {
+    debugPrint("onRefreshDataEventHandler -> ${state.userUid}");
+    await _loadUserProfile(state.userUid, emit);
+  }
+
   FutureOr<void> onLoadProfileEventHandler(
       OnLoadProfileEvent event, Emitter<ProfileState> emit) async {
+    debugPrint("onLoadProfileEventHandler -> ${event.uid}");
+    await _loadUserProfile(event.uid, emit);
+  }
+
+  FutureOr<void> _loadUserProfile(
+      String userUid, Emitter<ProfileState> emit) async {
     emit(state.copyWith(
         isLoading: true,
         isPostGridLoading: true,
         isFavoritePostGridLoading: true,
         isBookmarkPostGridLoading: true));
     final getUserDetailResponse =
-        await getUserDetailsUseCase(GetUserDetailsParams(event.uid));
+        await getUserDetailsUseCase(GetUserDetailsParams(userUid));
     final getAuthUserUidResponse =
         await getAuthUserUidUseCase(const DefaultParams());
     getUserDetailResponse
@@ -107,7 +121,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 isAuthUser: data.init.uid == data.last)));
 
     final findPostsByUserResponse =
-        await findPostsByUserUseCase(FindPostsByUserParams(event.uid));
+        await findPostsByUserUseCase(FindPostsByUserParams(userUid));
     findPostsByUserResponse.fold(
         (l) => emit(state.copyWith(isPostGridLoading: false)),
         (postsByUser) => emit(state.copyWith(
@@ -117,7 +131,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     final findFavoritesPostsByUserResponse =
         await findFavoritesPostsByUserUseCase(
-            FindFavoritesPostsByUserParams(event.uid));
+            FindFavoritesPostsByUserParams(userUid));
     findFavoritesPostsByUserResponse.fold(
         (l) => emit(state.copyWith(isFavoritePostGridLoading: false)),
         (favoritePostsByUser) => emit(state.copyWith(
@@ -125,12 +139,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             favoritePostList: favoritePostsByUser)));
 
     final findBookmarkPostsByUserResponse =
-    await findBookmarkPostsByUserUseCase(
-        FindBookmarkPostsByUserParams(event.uid));
+        await findBookmarkPostsByUserUseCase(
+            FindBookmarkPostsByUserParams(userUid));
     findBookmarkPostsByUserResponse.fold(
-            (l) => emit(state.copyWith(isBookmarkPostGridLoading: false)),
-            (bookmarkPostsByUser) => emit(state.copyWith(
-                isBookmarkPostGridLoading: false,
+        (l) => emit(state.copyWith(isBookmarkPostGridLoading: false)),
+        (bookmarkPostsByUser) => emit(state.copyWith(
+            isBookmarkPostGridLoading: false,
             bookmarkPostList: bookmarkPostsByUser)));
   }
 }

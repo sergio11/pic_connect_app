@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
@@ -118,10 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
-              Image.network(
-                state.posts[index].postUrl,
-                fit: BoxFit.cover,
-              ),
+              buildNetworkImage(state.posts[index].postUrl),
               TagsRow(
                   tags: state.posts[index].tags,
                   scrollController: ScrollController())

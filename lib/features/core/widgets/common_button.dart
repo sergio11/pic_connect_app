@@ -18,6 +18,7 @@ class CommonButton extends StatelessWidget {
   final Color textColor;
   final CommonButtonSizeType sizeType;
   final bool reverseStyle;
+  final bool isDisabled;
 
   const CommonButton({
     Key? key,
@@ -28,6 +29,7 @@ class CommonButton extends StatelessWidget {
     this.sizeType = CommonButtonSizeType.medium,
     this.reverseStyle = false,
     this.onPressed,
+    this.isDisabled = false
   }) : super(key: key);
 
   @override
@@ -52,20 +54,20 @@ class CommonButton extends StatelessWidget {
                     offset: Offset(0, 4),
                     blurRadius: 5.0)
               ],
-              border: Border.all(color: primaryColor, width: 3),
-              gradient: LinearGradient(
+              border: !isDisabled ? Border.all(color: primaryColor, width: 3) : null,
+              gradient: !isDisabled ? LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 stops: const [0.0, 1.0],
                 colors: !reverseStyle
                     ? [secondaryColor, secondaryColorExtraLight]
                     : [accentColor, primaryColor],
-              ),
+              ): null,
               color: secondaryColorExtraLight,
               borderRadius: BorderRadius.circular(20),
             ),
             child: ElevatedButton(
-              onPressed: onPressed,
+              onPressed: isDisabled ? null : onPressed,
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size(
                       defaultSmallButtonWidth, defaultSmallButtonHeight),
@@ -73,6 +75,8 @@ class CommonButton extends StatelessWidget {
                       defaultLargeButtonWidth, defaultLargeButtonHeight),
                   padding: const EdgeInsets.all(0),
                   foregroundColor: textColor,
+                  disabledBackgroundColor: accentColor,
+                  disabledForegroundColor: primaryColor,
                   fixedSize: switch (sizeType) {
                     CommonButtonSizeType.small => const Size(
                         defaultSmallButtonWidth, defaultSmallButtonHeight),
