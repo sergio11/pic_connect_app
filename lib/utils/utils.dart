@@ -83,6 +83,7 @@ showAlertDialog(
     required String description,
     Function()? onAcceptPressed}) {
   showDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
       context: context,
       builder: (BuildContext context) {
         return CommonDialogBox(

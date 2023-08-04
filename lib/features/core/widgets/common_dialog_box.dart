@@ -25,17 +25,36 @@ class CommonDialogBox extends StatefulWidget {
   CommonDialogBoxState createState() => CommonDialogBoxState();
 }
 
-class CommonDialogBoxState extends State<CommonDialogBox> {
+class CommonDialogBoxState extends State<CommonDialogBox> with SingleTickerProviderStateMixin {
+
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+    controller.addListener(() {
+      setState(() {});
+    });
+    controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
+    return ScaleTransition(
+        scale: scaleAnimation,
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Constants.padding),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: contentBox(context),
+        ));
   }
 
   contentBox(context) {
