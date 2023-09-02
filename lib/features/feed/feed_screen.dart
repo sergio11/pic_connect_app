@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import '../moments/moment_story_track.dart';
 
 class FeedScreen extends StatefulWidget {
   final Function(String postId) onShowCommentsByPost;
@@ -38,7 +39,16 @@ class _FeedScreenState extends State<FeedScreen> {
         appBar: _buildAppBar(),
         body: state.isLoading
             ? _buildProgressIndicator()
-            : _buildPostsList(state));
+            : RefreshIndicator(
+                backgroundColor: secondaryColor,
+                color: accentColor,
+                onRefresh: () => Future.delayed(
+                      const Duration(seconds: 1),
+                      () => onRefresh(state),
+                    ),
+                child: Column(
+                  children: [_buildStoryTrack(), _buildPostsList(state)],
+                )));
   }
 
   Widget _buildProgressIndicator() {
@@ -66,14 +76,12 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
+  Widget _buildStoryTrack() {
+    return const MomentStoryTrack();
+  }
+
   Widget _buildPostsList(FeedState state) {
-    return RefreshIndicator(
-      backgroundColor: secondaryColor,
-      color: accentColor,
-      onRefresh: () => Future.delayed(
-        const Duration(seconds: 1),
-            () => onRefresh(state),
-      ),
+    return Expanded(
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         itemCount: state.posts.length,
