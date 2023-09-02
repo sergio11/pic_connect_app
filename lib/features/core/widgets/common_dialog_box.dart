@@ -84,6 +84,7 @@ class CommonDialogBoxState extends State<CommonDialogBox> with SingleTickerProvi
                     .textTheme
                     .titleLarge
                     ?.copyWith(color: accentColor),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(
                 height: 15,

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'favorites_bloc.dart';
+part of 'reels_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -165,26 +165,26 @@ abstract class OnLoadFavorites implements FavoritesEvent {
 }
 
 /// @nodoc
-mixin _$FavoritesState {
+mixin _$ReelsState {
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $FavoritesStateCopyWith<FavoritesState> get copyWith =>
+  $FavoritesStateCopyWith<ReelsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $FavoritesStateCopyWith<$Res> {
   factory $FavoritesStateCopyWith(
-          FavoritesState value, $Res Function(FavoritesState) then) =
-      _$FavoritesStateCopyWithImpl<$Res, FavoritesState>;
+          ReelsState value, $Res Function(ReelsState) then) =
+      _$FavoritesStateCopyWithImpl<$Res, ReelsState>;
   @useResult
   $Res call({bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
-class _$FavoritesStateCopyWithImpl<$Res, $Val extends FavoritesState>
+class _$FavoritesStateCopyWithImpl<$Res, $Val extends ReelsState>
     implements $FavoritesStateCopyWith<$Res> {
   _$FavoritesStateCopyWithImpl(this._value, this._then);
 
@@ -252,7 +252,7 @@ class __$$_FavoritesStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FavoritesState implements _FavoritesState {
+class _$_FavoritesState implements _ReelsState {
   const _$_FavoritesState({this.isLoading = false, this.errorMessage});
 
   @override
@@ -287,8 +287,8 @@ class _$_FavoritesState implements _FavoritesState {
       __$$_FavoritesStateCopyWithImpl<_$_FavoritesState>(this, _$identity);
 }
 
-abstract class _FavoritesState implements FavoritesState {
-  const factory _FavoritesState(
+abstract class _ReelsState implements ReelsState {
+  const factory _ReelsState(
       {final bool isLoading, final String? errorMessage}) = _$_FavoritesState;
 
   @override

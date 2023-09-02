@@ -13,8 +13,6 @@ import 'package:pic_connect/features/comments/comments_screen.dart';
 import 'package:pic_connect/features/core/widgets/navigate_screen.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_screen.dart';
-import 'package:pic_connect/features/favorites/favorites_bloc.dart';
-import 'package:pic_connect/features/favorites/favorites_screen.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/feed/feed_screen.dart';
 import 'package:pic_connect/features/followers/followers_bloc.dart';
@@ -25,6 +23,7 @@ import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/features/profile/profile_screen.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
 import 'package:pic_connect/features/publications/publications_screen.dart';
+import 'package:pic_connect/features/reels/reels_bloc.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/features/search/search_screen.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
@@ -35,6 +34,8 @@ import 'package:pic_connect/routes/core/common_transition_page.dart';
 import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/routes/router_refresh_stream.dart';
 import 'package:pic_connect/utils/utils.dart';
+
+import '../features/reels/reels_screen.dart';
 
 class AppRouter {
   final RouterRefreshStream routerRefreshStream;
@@ -257,12 +258,12 @@ class AppRouter {
           StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
-                  path: AppRoutesEnum.favorites.screenPath,
-                  name: AppRoutesEnum.favorites.screenName,
+                  path: AppRoutesEnum.reels.screenPath,
+                  name: AppRoutesEnum.reels.screenName,
                   builder: (BuildContext context, GoRouterState state) =>
                       BlocProvider(
-                        create: (context) => serviceLocator<FavoritesBloc>(),
-                        child: const FavoritesScreen(),
+                        create: (context) => serviceLocator<ReelsBloc>(),
+                        child: const ReelsViewerScreen(),
                       )),
             ],
           ),

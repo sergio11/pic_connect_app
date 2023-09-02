@@ -1,4 +1,4 @@
-part of 'favorites_bloc.dart';
+part of 'reels_bloc.dart';
 
 @freezed
 class FavoritesEvent with _$FavoritesEvent {

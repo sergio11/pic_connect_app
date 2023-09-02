@@ -45,7 +45,6 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     });
   }
 
-
   @override
   void onResumed() {
     showNav();
@@ -55,11 +54,6 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   void onPaused() {
     hideNav();
   }
-
-  @override
-  void onInactive() {}
-
-
 
   @override
   void initState() {
@@ -108,8 +102,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
               items: [
                 FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
                 FABBottomAppBarItem(iconData: Icons.search, text: 'Search'),
-                FABBottomAppBarItem(
-                    iconData: Icons.favorite, text: 'Favorites'),
+                FABBottomAppBarItem(iconData: Icons.tv_rounded, text: 'Reels TV'),
                 FABBottomAppBarItem(iconData: Icons.person, text: 'Profile'),
               ],
             )
