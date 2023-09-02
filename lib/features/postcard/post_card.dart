@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/helpers.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -32,6 +33,7 @@ class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
   bool isOpenCommentsClicked = false;
   bool isSendContentClicked = false;
+  bool isVideoReady = false;
 
   void _startLikeAnimation(String postId) {
     setState(() {
@@ -342,11 +344,20 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildVideoViewer(String videoPath) {
-    _videoController = VideoPlayerController.networkUrl(Uri.parse(videoPath));
-    _videoController?.initialize();
-    _videoController?.play();
-    _videoController?.setVolume(1);
-    _videoController?.setLooping(true);
-    return VideoPlayer(_videoController!);
+    if(_videoController == null) {
+      _videoController = VideoPlayerController.networkUrl(Uri.parse(videoPath));
+      _videoController?.addListener(() {
+        if(_videoController?.value.isInitialized == true) {
+          setState(() {
+            isVideoReady = true;
+          });
+          _videoController?.play();
+        }
+      });
+      _videoController?.initialize();
+      _videoController?.setVolume(1);
+      _videoController?.setLooping(true);
+    }
+    return isVideoReady ? VideoPlayer(_videoController!) : const CommonScreenProgressIndicator();
   }
 }

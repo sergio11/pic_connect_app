@@ -34,7 +34,6 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
 
   FutureOr<void> onShowPostEventHandler(
       OnShowPostEvent event, Emitter<PostCardState> emit) async {
-    debugPrint("Is Reel? ${event.post.isReel}");
     emit(state.copyWith(
         isLikedByAuthUser: event.post.likes.contains(event.authUserUid),
         isBookmarkedByAuthUser:

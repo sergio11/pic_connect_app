@@ -31,8 +31,6 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   bool isBottomBarVisible = true;
   bool showOverlay = true;
 
-
-
   void hideNav() {
     setState(() {
       isBottomBarVisible = false;

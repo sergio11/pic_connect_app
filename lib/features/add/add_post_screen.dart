@@ -1,12 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:better_open_file/better_open_file.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
@@ -32,6 +33,8 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
+
+  late StreamSubscription<bool> _keyboardSubscription;
   VideoPlayerController? _videoController;
   final TextEditingController _descriptionController = TextEditingController();
   final TextfieldTagsController _textFieldTagsController =
@@ -75,6 +78,23 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   @override
+  void initState() {
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    _keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
+      if(visible) {
+        if(_videoController?.value.isPlaying == true) {
+          _videoController?.pause();
+        }
+      } else {
+        if(_videoController != null && _videoController?.value.isPlaying == false) {
+          _videoController?.play();
+        }
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddPostBloc, AddPostState>(listener: (context, state) {
       if (state.shouldPickContentFromGallery()) {
@@ -85,6 +105,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _onPostUploaded();
       } else if (state.errorMessage != null) {
         showErrorSnackBar(context: context, message: state.errorMessage!);
+      } else if(state.isPostUploading) {
+        _videoController?.pause();
       }
     }, builder: (context, state) {
       return _buildScreenContent(state);
@@ -94,6 +116,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   void dispose() {
     super.dispose();
+    _keyboardSubscription.cancel();
     _descriptionController.dispose();
     _textFieldTagsController.dispose();
     _videoController?.dispose();
@@ -103,14 +126,22 @@ class _AddPostScreenState extends State<AddPostScreen> {
     if (state.shouldTakeContentFromCamera()) {
       return _buildTakeContentFromCamera(state);
     } else if (state.shouldFillPostData()) {
-      return _buildFillPostData(state);
+      if(state.isPostUploading) {
+        return Stack(
+          children: [
+            _buildFillPostData(state),
+            CommonScreenProgressIndicator(
+              backgroundColor: blackColor.withOpacity(0.5),
+              spinnerColor: primaryColor,
+            )
+          ],
+        );
+      } else {
+        return _buildFillPostData(state);
+      }
     } else {
-      return _buildProgressIndicator();
+      return const CommonScreenProgressIndicator();
     }
-  }
-
-  Widget _buildProgressIndicator() {
-    return const CommonScreenProgressIndicator();
   }
 
   Widget _buildTakeContentFromCamera(AddPostState state) {
@@ -280,11 +311,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   Widget _buildVideoPreview(String videoPath) {
-    _videoController = VideoPlayerController.file(File(videoPath));
-    _videoController?.initialize();
-    _videoController?.play();
-    _videoController?.setVolume(1);
-    _videoController?.setLooping(true);
+    if(_videoController == null) {
+      _videoController = VideoPlayerController.file(File(videoPath));
+      _videoController?.initialize();
+      _videoController?.play();
+      _videoController?.setVolume(1);
+      _videoController?.setLooping(true);
+    }
     return VideoPlayer(_videoController!);
   }
 

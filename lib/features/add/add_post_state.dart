@@ -28,6 +28,6 @@ class AddPostState with _$AddPostState {
   }
 
   bool shouldFillPostData() {
-    return !isPostUploading && (imageData != null && !imageEditingRequired) || videoFilePath != null;
+    return imageData != null && !imageEditingRequired || videoFilePath != null;
   }
 }
