@@ -10,6 +10,7 @@ abstract class PostRepository {
     required String authorUid,
     required String description,
     required List<String> tags,
+    required bool isReel,
     required Uint8List file
   });
 

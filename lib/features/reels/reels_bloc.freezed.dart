@@ -170,23 +170,23 @@ mixin _$ReelsState {
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $FavoritesStateCopyWith<ReelsState> get copyWith =>
+  $ReelsStateCopyWith<ReelsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FavoritesStateCopyWith<$Res> {
-  factory $FavoritesStateCopyWith(
+abstract class $ReelsStateCopyWith<$Res> {
+  factory $ReelsStateCopyWith(
           ReelsState value, $Res Function(ReelsState) then) =
-      _$FavoritesStateCopyWithImpl<$Res, ReelsState>;
+      _$ReelsStateCopyWithImpl<$Res, ReelsState>;
   @useResult
   $Res call({bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
-class _$FavoritesStateCopyWithImpl<$Res, $Val extends ReelsState>
-    implements $FavoritesStateCopyWith<$Res> {
-  _$FavoritesStateCopyWithImpl(this._value, this._then);
+class _$ReelsStateCopyWithImpl<$Res, $Val extends ReelsState>
+    implements $ReelsStateCopyWith<$Res> {
+  _$ReelsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -213,22 +213,22 @@ class _$FavoritesStateCopyWithImpl<$Res, $Val extends ReelsState>
 }
 
 /// @nodoc
-abstract class _$$_FavoritesStateCopyWith<$Res>
-    implements $FavoritesStateCopyWith<$Res> {
-  factory _$$_FavoritesStateCopyWith(
-          _$_FavoritesState value, $Res Function(_$_FavoritesState) then) =
-      __$$_FavoritesStateCopyWithImpl<$Res>;
+abstract class _$$_ReelsStateCopyWith<$Res>
+    implements $ReelsStateCopyWith<$Res> {
+  factory _$$_ReelsStateCopyWith(
+          _$_ReelsState value, $Res Function(_$_ReelsState) then) =
+      __$$_ReelsStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
-class __$$_FavoritesStateCopyWithImpl<$Res>
-    extends _$FavoritesStateCopyWithImpl<$Res, _$_FavoritesState>
-    implements _$$_FavoritesStateCopyWith<$Res> {
-  __$$_FavoritesStateCopyWithImpl(
-      _$_FavoritesState _value, $Res Function(_$_FavoritesState) _then)
+class __$$_ReelsStateCopyWithImpl<$Res>
+    extends _$ReelsStateCopyWithImpl<$Res, _$_ReelsState>
+    implements _$$_ReelsStateCopyWith<$Res> {
+  __$$_ReelsStateCopyWithImpl(
+      _$_ReelsState _value, $Res Function(_$_ReelsState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -237,7 +237,7 @@ class __$$_FavoritesStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
-    return _then(_$_FavoritesState(
+    return _then(_$_ReelsState(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -252,8 +252,8 @@ class __$$_FavoritesStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_FavoritesState implements _ReelsState {
-  const _$_FavoritesState({this.isLoading = false, this.errorMessage});
+class _$_ReelsState implements _ReelsState {
+  const _$_ReelsState({this.isLoading = false, this.errorMessage});
 
   @override
   @JsonKey()
@@ -263,14 +263,14 @@ class _$_FavoritesState implements _ReelsState {
 
   @override
   String toString() {
-    return 'FavoritesState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'ReelsState(isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FavoritesState &&
+            other is _$_ReelsState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -283,13 +283,13 @@ class _$_FavoritesState implements _ReelsState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FavoritesStateCopyWith<_$_FavoritesState> get copyWith =>
-      __$$_FavoritesStateCopyWithImpl<_$_FavoritesState>(this, _$identity);
+  _$$_ReelsStateCopyWith<_$_ReelsState> get copyWith =>
+      __$$_ReelsStateCopyWithImpl<_$_ReelsState>(this, _$identity);
 }
 
 abstract class _ReelsState implements ReelsState {
   const factory _ReelsState(
-      {final bool isLoading, final String? errorMessage}) = _$_FavoritesState;
+      {final bool isLoading, final String? errorMessage}) = _$_ReelsState;
 
   @override
   bool get isLoading;
@@ -297,6 +297,6 @@ abstract class _ReelsState implements ReelsState {
   String? get errorMessage;
   @override
   @JsonKey(ignore: true)
-  _$$_FavoritesStateCopyWith<_$_FavoritesState> get copyWith =>
+  _$$_ReelsStateCopyWith<_$_ReelsState> get copyWith =>
       throw _privateConstructorUsedError;
 }

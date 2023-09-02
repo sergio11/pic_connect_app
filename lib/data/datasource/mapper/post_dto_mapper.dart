@@ -12,6 +12,7 @@ class PostDtoMapper extends Mapper<DocumentSnapshot, PostDTO> {
         authorUid: snapshot['authorUid'],
         datePublished: (snapshot['datePublished'] as Timestamp).toDate(),
         postUrl: snapshot['postUrl'],
+        isReel: snapshot['isReel'] is bool ? snapshot['isReel'] as bool : false,
         likes: List<String>.from(snapshot['likes'] as List),
         bookmarks: snapshot['bookmarks'] is List ? List<String>.from(snapshot['bookmarks'] as List) : [],
         commentCount: snapshot['commentsCount'] is int ? snapshot['commentsCount'] : 0,

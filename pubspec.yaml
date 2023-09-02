@@ -66,6 +66,8 @@ dependencies:
   share_plus: ^7.1.0
   chewie: ^1.7.0
   card_swiper: ^3.0.1
+  camerawesome: ^2.0.0-dev.1
+  better_open_file: ^3.6.4
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -57,11 +57,13 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
 
   FutureOr<void> onUploadPostEventHandler(
       OnUploadPostEvent event, Emitter<AddPostState> emit) async {
-    if (state.imageData != null) {
+    if (state.imageData != null || state.videoFilePath != null) {
       if (event.description.isNotEmpty) {
         emit(state.copyWith(isPostUploading: true));
+        final fileData = state.imageData ?? await File(state.videoFilePath!).readAsBytes();
+        final isReel = state.videoFilePath != null;
         final response = await publishPostUseCase(
-            PublishPostUseParams(event.description, state.imageData!, event.tags));
+            PublishPostUseParams(event.description, fileData, isReel, event.tags));
         response.fold(
             (failure) => emit(state.copyWith(isPostUploading: false)),
             (userDetail) => emit(state.copyWith(

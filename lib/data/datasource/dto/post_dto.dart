@@ -7,6 +7,7 @@ class PostDTO {
   final String authorUid;
   final DateTime datePublished;
   final String postUrl;
+  final bool isReel;
   final List<String> likes;
   final List<String> bookmarks;
   final int commentCount;
@@ -18,6 +19,7 @@ class PostDTO {
     required this.authorUid,
     required this.datePublished,
     required this.postUrl,
+    required this.isReel,
     required this.likes,
     required this.bookmarks,
     required this.commentCount,

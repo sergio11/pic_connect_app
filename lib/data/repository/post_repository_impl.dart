@@ -94,7 +94,8 @@ class PostRepositoryImpl implements PostRepository {
     required String authorUid,
     required String description,
     required List<String> tags,
-    required Uint8List file
+    required Uint8List file,
+    required bool isReel
   }) async {
     try {
       final postUrl = await storageDatasource.uploadFileToStorage(folderName: 'posts', id: const Uuid().v1(), file: file);
@@ -102,7 +103,8 @@ class PostRepositoryImpl implements PostRepository {
           authorUid: authorUid,
           description: description,
           tags: tags,
-          postUrl: postUrl
+          postUrl: postUrl,
+          isReel: isReel
       ));
       return const Right(true);
     } catch (err) {

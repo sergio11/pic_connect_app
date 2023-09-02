@@ -6,6 +6,7 @@ class PostCardState with _$PostCardState {
       {@Default(false) bool isPostOwner,
       @Default(false) bool isLikedByAuthUser,
       @Default(false) bool isBookmarkedByAuthUser,
+      @Default(false) bool isReel,
       @Default(0) int likes,
       @Default(0) int commentCount,
       @Default("") String postId,

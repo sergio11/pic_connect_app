@@ -684,6 +684,7 @@ mixin _$PostCardState {
   bool get isPostOwner => throw _privateConstructorUsedError;
   bool get isLikedByAuthUser => throw _privateConstructorUsedError;
   bool get isBookmarkedByAuthUser => throw _privateConstructorUsedError;
+  bool get isReel => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
   int get commentCount => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
@@ -710,6 +711,7 @@ abstract class $PostCardStateCopyWith<$Res> {
       {bool isPostOwner,
       bool isLikedByAuthUser,
       bool isBookmarkedByAuthUser,
+      bool isReel,
       int likes,
       int commentCount,
       String postId,
@@ -738,6 +740,7 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
     Object? isPostOwner = null,
     Object? isLikedByAuthUser = null,
     Object? isBookmarkedByAuthUser = null,
+    Object? isReel = null,
     Object? likes = null,
     Object? commentCount = null,
     Object? postId = null,
@@ -761,6 +764,10 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
       isBookmarkedByAuthUser: null == isBookmarkedByAuthUser
           ? _value.isBookmarkedByAuthUser
           : isBookmarkedByAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReel: null == isReel
+          ? _value.isReel
+          : isReel // ignore: cast_nullable_to_non_nullable
               as bool,
       likes: null == likes
           ? _value.likes
@@ -818,6 +825,7 @@ abstract class _$$_PostCardStateCopyWith<$Res>
       {bool isPostOwner,
       bool isLikedByAuthUser,
       bool isBookmarkedByAuthUser,
+      bool isReel,
       int likes,
       int commentCount,
       String postId,
@@ -844,6 +852,7 @@ class __$$_PostCardStateCopyWithImpl<$Res>
     Object? isPostOwner = null,
     Object? isLikedByAuthUser = null,
     Object? isBookmarkedByAuthUser = null,
+    Object? isReel = null,
     Object? likes = null,
     Object? commentCount = null,
     Object? postId = null,
@@ -867,6 +876,10 @@ class __$$_PostCardStateCopyWithImpl<$Res>
       isBookmarkedByAuthUser: null == isBookmarkedByAuthUser
           ? _value.isBookmarkedByAuthUser
           : isBookmarkedByAuthUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReel: null == isReel
+          ? _value.isReel
+          : isReel // ignore: cast_nullable_to_non_nullable
               as bool,
       likes: null == likes
           ? _value.likes
@@ -919,6 +932,7 @@ class _$_PostCardState implements _PostCardState {
       {this.isPostOwner = false,
       this.isLikedByAuthUser = false,
       this.isBookmarkedByAuthUser = false,
+      this.isReel = false,
       this.likes = 0,
       this.commentCount = 0,
       this.postId = "",
@@ -940,6 +954,9 @@ class _$_PostCardState implements _PostCardState {
   @override
   @JsonKey()
   final bool isBookmarkedByAuthUser;
+  @override
+  @JsonKey()
+  final bool isReel;
   @override
   @JsonKey()
   final int likes;
@@ -979,7 +996,7 @@ class _$_PostCardState implements _PostCardState {
 
   @override
   String toString() {
-    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
+    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, isReel: $isReel, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
   }
 
   @override
@@ -993,6 +1010,7 @@ class _$_PostCardState implements _PostCardState {
                 other.isLikedByAuthUser == isLikedByAuthUser) &&
             (identical(other.isBookmarkedByAuthUser, isBookmarkedByAuthUser) ||
                 other.isBookmarkedByAuthUser == isBookmarkedByAuthUser) &&
+            (identical(other.isReel, isReel) || other.isReel == isReel) &&
             (identical(other.likes, likes) || other.likes == likes) &&
             (identical(other.commentCount, commentCount) ||
                 other.commentCount == commentCount) &&
@@ -1018,6 +1036,7 @@ class _$_PostCardState implements _PostCardState {
       isPostOwner,
       isLikedByAuthUser,
       isBookmarkedByAuthUser,
+      isReel,
       likes,
       commentCount,
       postId,
@@ -1041,6 +1060,7 @@ abstract class _PostCardState implements PostCardState {
       {final bool isPostOwner,
       final bool isLikedByAuthUser,
       final bool isBookmarkedByAuthUser,
+      final bool isReel,
       final int likes,
       final int commentCount,
       final String postId,
@@ -1058,6 +1078,8 @@ abstract class _PostCardState implements PostCardState {
   bool get isLikedByAuthUser;
   @override
   bool get isBookmarkedByAuthUser;
+  @override
+  bool get isReel;
   @override
   int get likes;
   @override

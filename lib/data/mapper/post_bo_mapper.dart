@@ -17,7 +17,9 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
         postAuthorUid: object.userDTO.uid,
         profImage: object.userDTO.photoUrl,
         commentCount: object.postDTO.commentCount,
-        tags: object.postDTO.tags);
+        tags: object.postDTO.tags,
+        isReel: object.postDTO.isReel
+    );
   }
 }
 

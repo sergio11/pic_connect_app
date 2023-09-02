@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/helpers.dart';
@@ -6,6 +8,7 @@ import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:video_player/video_player.dart';
 
 import 'post_card_bloc.dart';
 
@@ -24,6 +27,8 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+
+  VideoPlayerController? _videoController;
   bool isLikeAnimating = false;
   bool isOpenCommentsClicked = false;
   bool isSendContentClicked = false;
@@ -80,6 +85,13 @@ class _PostCardState extends State<PostCard> {
         title: "Post was deleted!",
         description: "The post was deleted successfully",
         onAcceptPressed: widget.onPostDeleted);
+  }
+
+
+  @override
+  void dispose() {
+    _videoController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -171,7 +183,7 @@ class _PostCardState extends State<PostCard> {
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.35,
               width: double.infinity,
-              child: buildNetworkImage(state.postImageUrl),
+              child: state.isReel ? _buildVideoViewer(state.postImageUrl): _buildImageViewer(state.postImageUrl),
             ),
           ),
           AnimatedOpacity(
@@ -323,5 +335,18 @@ class _PostCardState extends State<PostCard> {
         ],
       ),
     );
+  }
+
+  Widget _buildImageViewer(String imagePath) {
+    return buildNetworkImage(imagePath);
+  }
+
+  Widget _buildVideoViewer(String videoPath) {
+    _videoController = VideoPlayerController.networkUrl(Uri.parse(videoPath));
+    _videoController?.initialize();
+    _videoController?.play();
+    _videoController?.setVolume(1);
+    _videoController?.setLooping(true);
+    return VideoPlayer(_videoController!);
   }
 }

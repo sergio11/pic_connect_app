@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pic_connect/features/core/widgets/camera_widget.dart';
+import 'package:better_open_file/better_open_file.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
@@ -113,12 +114,49 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   Widget _buildTakeContentFromCamera(AddPostState state) {
-    return CameraWidget(
-      onTakePhotoPressed: (String filePath) {
-        context.read<AddPostBloc>().add(OnPhotoSelectedEvent(filePath));
-      },
-      onRecordVideoPressed: (String filePath) {
-        context.read<AddPostBloc>().add(OnVideoSelectedEvent(filePath));
+    return CameraAwesomeBuilder.awesome(
+      saveConfig: SaveConfig.photoAndVideo(
+        initialCaptureMode: CaptureMode.photo,
+      ),
+      sensorConfig: SensorConfig.single(
+        flashMode: FlashMode.auto,
+        aspectRatio: CameraAspectRatios.ratio_16_9,
+      ),
+      theme: AwesomeTheme(
+        bottomActionsBackgroundColor: secondaryColor.withOpacity(0.5),
+        buttonTheme: AwesomeButtonTheme(
+          backgroundColor: secondaryColor.withOpacity(0.5),
+          // Size of the icon
+          iconSize: 22,
+          // Padding around the icon
+          padding: const EdgeInsets.all(18),
+          foregroundColor: accentColor,
+          buttonBuilder: (child, onTap) {
+            return ClipOval(
+              child: Material(
+                color: Colors.transparent,
+                shape: const CircleBorder(),
+                child: InkWell(
+                  splashColor: secondaryColor,
+                  highlightColor: secondaryColor.withOpacity(0.5),
+                  onTap: onTap,
+                  child: child,
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+      onMediaTap: (mediaCapture) {
+        final filePath = mediaCapture.captureRequest
+            .when(single: (single) => single.file?.path);
+        if(filePath != null) {
+          if(mediaCapture.isPicture) {
+            context.read<AddPostBloc>().add(OnPhotoSelectedEvent(filePath));
+          } else {
+            context.read<AddPostBloc>().add(OnVideoSelectedEvent(filePath));
+          }
+        }
       },
     );
   }
