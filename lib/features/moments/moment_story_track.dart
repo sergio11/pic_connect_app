@@ -1,8 +1,10 @@
 import 'package:advstory/advstory.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 import '../../utils/mock_story_data.dart';
 import 'moment_animated_tray.dart';
+import 'moment_story_content.dart';
 
 class MomentStoryTrack extends StatelessWidget {
 
@@ -19,22 +21,21 @@ class MomentStoryTrack extends StatelessWidget {
         height: 110,
         width: MediaQuery.of(context).size.width,
         child: AdvStory(
-          // Disable story build on scroll to increasing animation
-          // duration.
-          buildStoryOnTrayScroll: false,
+          buildStoryOnTrayScroll: true,
+          preloadContent: true,
+          preloadStory: true,
           style: const AdvStoryStyle(
             trayListStyle: TrayListStyle(
               direction: Axis.horizontal,
             ),
+            hideBars: false
           ),
           storyCount: userNames.length,
           storyBuilder: (index) {
             return Story(
               contentCount: 3,
               contentBuilder: (contentIndex) {
-                return contentIndex % 2 == 0
-                    ? VideoContent(url: videoUrls[contentIndex])
-                    : ImageContent(url: imageUrls[contentIndex]);
+                return MomentStoryContent(contentIndex: contentIndex);
               },
             );
           },

@@ -7,9 +7,11 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/features/core/widgets/fab_bottom_app_bar.dart';
 import 'package:pic_connect/features/core/widgets/fab_with_icons.dart';
-import 'package:pic_connect/features/core/widgets/layout.dart';
+import 'package:pic_connect/features/core/widgets/anchored_overlay.dart';
 import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/utils/colors.dart';
+
+import 'lifecycle_watcher_state.dart';
 
 class NavigateScreen extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -23,11 +25,13 @@ class NavigateScreen extends StatefulWidget {
   State<NavigateScreen> createState() => _NavigateScreenState();
 }
 
-class _NavigateScreenState extends State<NavigateScreen> {
+class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
 
   late StreamSubscription<bool> keyboardSubscription;
   bool isBottomBarVisible = true;
   bool showOverlay = true;
+
+
 
   void hideNav() {
     setState(() {
@@ -40,6 +44,21 @@ class _NavigateScreenState extends State<NavigateScreen> {
       isBottomBarVisible = true;
     });
   }
+
+
+  @override
+  void onResumed() {
+    showNav();
+  }
+
+  @override
+  void onPaused() {
+    hideNav();
+  }
+
+  @override
+  void onInactive() {}
+
 
 
   @override

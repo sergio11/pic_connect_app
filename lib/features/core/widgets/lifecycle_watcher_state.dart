@@ -17,6 +17,8 @@ abstract class LifecycleWatcherState<T extends StatefulWidget> extends State<T>
     super.dispose();
   }
 
+
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     debugPrint("didChangeAppLifecycleState -> ${state.name}");
