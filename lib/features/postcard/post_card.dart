@@ -5,6 +5,7 @@ import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'post_card_bloc.dart';
 
@@ -24,6 +25,8 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+  bool isOpenCommentsClicked = false;
+  bool isSendContentClicked = false;
 
   void _startLikeAnimation(String postId) {
     setState(() {
@@ -35,6 +38,26 @@ class _PostCardState extends State<PostCard> {
   void _stopLikeAnimation() {
     setState(() {
       isLikeAnimating = false;
+    });
+  }
+
+  void _onOpenCommentsClicked(String postId) {
+    setState(() {
+      isOpenCommentsClicked = true;
+    });
+    widget.onShowCommentsByPost(postId);
+    setState(() {
+      isOpenCommentsClicked = false;
+    });
+  }
+
+  void _onSendContentClicked() {
+    setState(() {
+      isSendContentClicked = true;
+    });
+    Share.share('Shared this content!');
+    setState(() {
+      isSendContentClicked = false;
     });
   }
 
@@ -111,6 +134,11 @@ class _PostCardState extends State<PostCard> {
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: accentColor, fontWeight: FontWeight.bold),
                   ),
+                  Text(
+                    "Madrid, Spain",
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: accentColor, fontWeight: FontWeight.w400),
+                  )
                 ],
               ),
             ),
@@ -125,7 +153,7 @@ class _PostCardState extends State<PostCard> {
                         onAcceptPressed: () => _onDeletePost(state.postId));
                   },
                   icon: const Icon(
-                    Icons.more_vert,
+                    Icons.delete_rounded,
                     color: accentColor,
                   ),
                 )
@@ -137,9 +165,7 @@ class _PostCardState extends State<PostCard> {
 
   Widget _buildPostBodySection(PostCardState state) {
     return GestureDetector(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
+        child: Stack(alignment: Alignment.center, children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: SizedBox(
@@ -164,12 +190,9 @@ class _PostCardState extends State<PostCard> {
               ),
             ),
           )
-        ]
-      ),
-        onLongPress: () =>
-            showImage(context, state.postImageUrl),
-        onDoubleTap: () => _startLikeAnimation(state.postId)
-    );
+        ]),
+        onLongPress: () => showImage(context, state.postImageUrl),
+        onDoubleTap: () => _startLikeAnimation(state.postId));
   }
 
   Widget _buildPostActionsSection(PostCardState state) {
@@ -191,12 +214,19 @@ class _PostCardState extends State<PostCard> {
             onPressed: () => _onLikePost(state.postId),
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.comment_outlined, color: accentColor),
-          onPressed: () => widget.onShowCommentsByPost(state.postId),
-        ),
-        IconButton(
-            icon: const Icon(Icons.send, color: accentColor), onPressed: () {}),
+        IconActionAnimation(
+            isAnimating: isOpenCommentsClicked,
+            smallAction: true,
+            child: IconButton(
+              icon: const Icon(Icons.comment_outlined, color: accentColor),
+              onPressed: () => _onOpenCommentsClicked(state.postId),
+            )),
+        IconActionAnimation(
+            isAnimating: isSendContentClicked,
+            smallAction: true,
+            child: IconButton(
+                icon: const Icon(Icons.send, color: accentColor),
+                onPressed: () => _onSendContentClicked())),
         Expanded(
             child: Align(
                 alignment: Alignment.bottomRight,
