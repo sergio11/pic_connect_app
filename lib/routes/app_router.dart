@@ -236,7 +236,7 @@ class AppRouter {
                                 extra: postId);
                           },
                           onShowFavoritePosts: () {
-                            context.go(AppRoutesEnum.publications.screenPath,
+                            context.push(AppRoutesEnum.publications.screenPath,
                                 extra: PublicationsScreenArgs(
                                     userUid: context
                                         .read<AppBloc>()

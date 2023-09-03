@@ -1,3 +1,4 @@
+import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/domain/models/post.dart';
@@ -5,6 +6,7 @@ import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -254,68 +256,83 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          TabBar(
-              padding: const EdgeInsets.only(bottom: 8, left: 10, right: 10),
-              indicatorSize: TabBarIndicatorSize.tab,
-              unselectedLabelColor: accentColor,
-              indicatorColor: accentColor,
-              labelColor: primaryColor,
-              indicator: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                        color: blackColor,
-                        offset: Offset(0, 0),
-                        blurRadius: 8.0),
-                  ],
-                  border: Border.all(color: primaryColor, width: 3),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.0, 1.0],
-                    colors: [secondaryColor, secondaryColorExtraLight],
-                  ),
-                  borderRadius: BorderRadius.circular(50)),
-              onTap: (tabIdx) => {
-                    setState(() {
-                      _currentProfileTabSelected = state.profileTabs[tabIdx];
-                    })
-                  },
-              tabs: state.profileTabs
-                  .map((tab) => Tab(
-                        height: 45,
-                        icon: _buildTabIcon(tab),
-                      ))
-                  .toList()),
-          Container(
-            height: MediaQuery.of(context).size.height,
-            color: primaryColor,
-            child: TabBarView(children: [
-              _buildPostsGrid(state.picturesList, state.isPictureGridLoading),
-              _buildPostsGrid(state.reelsList, state.isReelsGridLoading),
-              _buildPostsGrid(
-                  state.bookmarkPostList, state.isBookmarkPostGridLoading)
-            ]),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 60,
+            child: TabBar(
+                padding: const EdgeInsets.only(bottom: 8, left: 10, right: 10),
+                indicatorSize: TabBarIndicatorSize.tab,
+                unselectedLabelColor: accentColor,
+                indicatorColor: accentColor,
+                labelColor: primaryColor,
+                indicator: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                          color: blackColor,
+                          offset: Offset(0, 0),
+                          blurRadius: 8.0),
+                    ],
+                    border: Border.all(color: primaryColor, width: 3),
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.0, 1.0],
+                      colors: [secondaryColor, secondaryColorExtraLight],
+                    ),
+                    borderRadius: BorderRadius.circular(50)),
+                onTap: (tabIdx) => {
+                      setState(() {
+                        _currentProfileTabSelected = state.profileTabs[tabIdx];
+                      })
+                    },
+                tabs: state.profileTabs
+                    .map((tab) => Tab(
+                          height: 45,
+                          icon: _buildTabIcon(tab),
+                        ))
+                    .toList()),
           ),
+          Container(
+              color: primaryColor,
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+                minHeight: MediaQuery.of(context).size.height * 0.5,
+              ),
+              child: AutoScaleTabBarView(children: [
+                _buildPostsGrid(state.picturesList, state.isPictureGridLoading,
+                    "No pictures found"),
+                _buildPostsGrid(state.reelsList, state.isReelsGridLoading,
+                    "No Reels found"),
+                _buildPostsGrid(state.bookmarkPostList,
+                    state.isBookmarkPostGridLoading, "No Bookmarks saved")
+              ]))
         ],
       ),
     );
   }
 
-  Widget _buildPostsGrid(List<PostBO> data, bool isLoading) {
-    return GridView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      itemCount: data.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1,
-      ),
-      itemBuilder: (context, index) {
-        return isLoading
-            ? _buildProgressIndicator()
-            : _buildPostItem(data[index]);
-      },
-    );
+  Widget _buildPostsGrid(
+      List<PostBO> data, bool isLoading, String noDataMessage) {
+    return data.isNotEmpty
+        ? GridView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            itemCount: data.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1,
+            ),
+            itemBuilder: (context, index) {
+              return isLoading
+                  ? _buildProgressIndicator()
+                  : _buildPostItem(data[index]);
+            },
+          )
+        : SizedBox(
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: EmptyStateWidget(
+                message: noDataMessage, iconData: Icons.mood_bad),
+          );
   }
 
   Widget _buildPostItem(PostBO post) {

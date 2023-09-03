@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
@@ -10,14 +11,13 @@ import 'package:pic_connect/utils/colors.dart';
 import '../moments/moment_story_track.dart';
 
 class FeedScreen extends StatefulWidget {
-
   final Function() onShowFavoritePosts;
   final Function(String postId) onShowCommentsByPost;
 
-  const FeedScreen({Key? key,
-    required this.onShowCommentsByPost,
-    required this.onShowFavoritePosts
-  })
+  const FeedScreen(
+      {Key? key,
+      required this.onShowCommentsByPost,
+      required this.onShowFavoritePosts})
       : super(key: key);
 
   @override
@@ -94,24 +94,31 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _buildPostsList(FeedState state) {
     return Expanded(
-      child: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        itemCount: state.posts.length,
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 4,
-        ),
-        itemBuilder: (ctx, index) => Container(
-          margin: const EdgeInsets.all(0),
-          child: BlocProvider(
-              create: (context) => serviceLocator<PostCardBloc>()
-                ..add(OnShowPostEvent(state.posts[index], state.authUserUid)),
-              child: PostCard(
-                onShowCommentsByPost: (String postId) =>
-                    widget.onShowCommentsByPost(postId),
-                onPostDeleted: () => onRefresh(state),
-              )),
-        ),
-      ),
+      child: state.posts.isNotEmpty
+          ? ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemCount: state.posts.length,
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 4,
+              ),
+              itemBuilder: (ctx, index) => Container(
+                margin: const EdgeInsets.all(0),
+                child: BlocProvider(
+                    create: (context) => serviceLocator<PostCardBloc>()
+                      ..add(OnShowPostEvent(
+                          state.posts[index], state.authUserUid)),
+                    child: PostCard(
+                      onShowCommentsByPost: (String postId) =>
+                          widget.onShowCommentsByPost(postId),
+                      onPostDeleted: () => onRefresh(state),
+                    )),
+              ),
+            )
+          : EmptyStateWidget(
+              message: 'No publications found',
+              iconData: Icons.mood_bad,
+              onRetry: () => onRefresh(state),
+            ),
     );
   }
 }

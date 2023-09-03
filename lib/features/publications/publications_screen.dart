@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
@@ -67,24 +68,30 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
   }
 
   Widget _buildPostsList(PublicationsState state) {
-    return ListView.separated(
-      physics: const BouncingScrollPhysics(),
-      itemCount: state.postLen,
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 4,
-      ),
-      itemBuilder: (ctx, index) => Container(
-        margin: const EdgeInsets.all(0),
-        child: BlocProvider(
-            create: (context) => serviceLocator<PostCardBloc>()
-              ..add(OnShowPostEvent(
-                  state.postList[index], state.postList[index].postAuthorUid)),
-            child: PostCard(
-              onShowCommentsByPost: (String postId) =>
-                  widget.onShowCommentsByPost(postId),
-              onPostDeleted: () => onRefresh(state),
-            )),
-      ),
-    );
+    return state.postLen == 0
+        ? EmptyStateWidget(
+            message: 'No publications found! please try again',
+            iconData: Icons.mood_bad,
+            onRetry: () => onRefresh(state),
+          )
+        : ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            itemCount: state.postLen,
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 4,
+            ),
+            itemBuilder: (ctx, index) => Container(
+              margin: const EdgeInsets.all(0),
+              child: BlocProvider(
+                  create: (context) => serviceLocator<PostCardBloc>()
+                    ..add(OnShowPostEvent(state.postList[index],
+                        state.postList[index].postAuthorUid)),
+                  child: PostCard(
+                    onShowCommentsByPost: (String postId) =>
+                        widget.onShowCommentsByPost(postId),
+                    onPostDeleted: () => onRefresh(state),
+                  )),
+            ),
+          );
   }
 }

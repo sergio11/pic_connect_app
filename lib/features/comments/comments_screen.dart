@@ -3,17 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/core/widgets/comment_card.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
 
 class CommentsScreen extends StatefulWidget {
   final VoidCallback onBackPressed;
   final Function(String userUid) onShowUserProfile;
 
-  const CommentsScreen({
-    Key? key,
-    required this.onBackPressed,
-    required this.onShowUserProfile
-  })
+  const CommentsScreen(
+      {Key? key, required this.onBackPressed, required this.onShowUserProfile})
       : super(key: key);
 
   @override
@@ -84,21 +82,28 @@ class _CommentsScreenState extends State<CommentsScreen> {
             () => onRefresh(state),
           );
         },
-        child: ListView.separated(
-          padding: const EdgeInsets.only(top: 8),
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: state.commentsByPost.length,
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 8,
-          ),
-          itemBuilder: (ctx, index) => GestureDetector(
-            onTap: () => widget.onShowUserProfile(state.commentsByPost[index].author.uid),
-            child: CommentCard(
-              commentBO: state.commentsByPost[index],
-            ),
-          ),
-        ));
+        child: state.commentsByPost.isNotEmpty
+            ? ListView.separated(
+                padding: const EdgeInsets.only(top: 8),
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: state.commentsByPost.length,
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 8,
+                ),
+                itemBuilder: (ctx, index) => GestureDetector(
+                  onTap: () => widget.onShowUserProfile(
+                      state.commentsByPost[index].author.uid),
+                  child: CommentCard(
+                    commentBO: state.commentsByPost[index],
+                  ),
+                ),
+              )
+            : EmptyStateWidget(
+                message: "No comments found",
+                iconData: Icons.mood_bad,
+                onRetry: () => onRefresh(state),
+              ));
   }
 
   Widget _buildTextInput(CommentsState state) {
