@@ -19,7 +19,6 @@ class SignUpUserUseCase extends BaseUseCase<bool, SignUpParams> {
         email: param.email,
         password: param.password,
         username: param.username,
-        bio: param.bio,
         file: param.file
     );
   }
@@ -31,11 +30,10 @@ class SignUpParams extends Equatable {
   final String email;
   final String password;
   final String username;
-  final String bio;
   final Uint8List file;
 
-  const SignUpParams(this.email, this.password, this.username, this.bio, this.file);
+  const SignUpParams(this.email, this.password, this.username, this.file);
 
   @override
-  List<Object> get props => [email, password, username, bio, file];
+  List<Object> get props => [email, password, username, file];
 }

@@ -111,7 +111,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
 
   Widget _buildBioTextInput(EditProfileState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: l10n.signUpBioTextInput,
+      hintText:  "",
       textInputType: TextInputType.multiline,
       maxLines: 5,
       textEditingController: _bioController,

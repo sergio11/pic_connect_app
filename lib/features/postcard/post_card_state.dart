@@ -9,6 +9,7 @@ class PostCardState with _$PostCardState {
       @Default(false) bool isReel,
       @Default(0) int likes,
       @Default(0) int commentCount,
+      @Default("") String ownerUid,
       @Default("") String postId,
       @Default("") String username,
       @Default("") String description,

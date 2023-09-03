@@ -83,13 +83,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   FutureOr<void> onRefreshDataEventHandler(
       OnRefreshEvent event, Emitter<ProfileState> emit) async {
-    debugPrint("onRefreshDataEventHandler -> ${state.userUid}");
     await _loadUserProfile(state.userUid, emit);
   }
 
   FutureOr<void> onLoadProfileEventHandler(
       OnLoadProfileEvent event, Emitter<ProfileState> emit) async {
-    debugPrint("onLoadProfileEventHandler -> ${event.uid}");
     await _loadUserProfile(event.uid, emit);
   }
 
@@ -111,15 +109,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             (fail) => emit(state.copyWith(isLoading: false)),
             (data) => emit(state.copyWith(
                 isLoading: false,
-                userUid: data.init.uid,
+                userUid: userUid,
                 authUserUid: data.last,
                 photoUrl: data.init.photoUrl,
-                bio: data.init.bio,
+                bio: data.init.bio ?? "",
                 username: data.init.username,
                 followers: data.init.followers.length,
                 following: data.init.following.length,
                 isFollowing: data.init.followers.contains(data.last),
-                isAuthUser: data.init.uid == data.last)));
+                isAuthUser: userUid == data.last)));
 
     final findPicturesByUserResponse = await findPostsByUserUseCase(
         FindPostsByUserParams(userUid, FindPostTypeEnum.pictures));

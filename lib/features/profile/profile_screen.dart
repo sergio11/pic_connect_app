@@ -147,7 +147,10 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 5),
-          child: buildCircleAvatar(imageUrl: state.photoUrl),
+          child: GestureDetector(
+            child: buildCircleAvatar(imageUrl: state.photoUrl),
+            onTap: () => showImage(context, state.photoUrl),
+          ),
         ),
         Expanded(
           flex: 1,

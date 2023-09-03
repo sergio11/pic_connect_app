@@ -27,7 +27,6 @@ class _FollowersScreen extends State<FollowersScreen> {
   }
 
   void _onRefresh() async {
-    debugPrint("_onRefresh CALLED!");
     context.read<FollowersBloc>().add(const OnRefreshDataEvent());
   }
 

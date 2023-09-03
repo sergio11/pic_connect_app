@@ -10,6 +10,7 @@ import 'package:pic_connect/features/core/widgets/common_screen_progress_indicat
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/textfield_validation.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,10 +25,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _repeatPasswordController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -35,15 +38,20 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
-    _bioController.dispose();
+    _repeatPasswordController.dispose();
   }
 
   void onSignUpUser() async {
-    context.read<SignUpBloc>().add(OnDoSignUpEvent(
-        _emailController.text,
-        _passwordController.text,
-        _usernameController.text,
-        _bioController.text));
+    if (_formKey.currentState?.validate() == true) {
+      hideKeyboard(context);
+      context.read<SignUpBloc>().add(OnDoSignUpEvent(
+          _emailController.text,
+          _passwordController.text,
+          _usernameController.text,
+          _repeatPasswordController.text));
+    } else {
+      showErrorSnackBar(context: context, message: "The content is not valid");
+    }
   }
 
   void onSignUpSuccess() async {
@@ -124,18 +132,20 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget _buildSignUpForm(SignUpState state, AppLocalizations l10n) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildUsernameTextInput(state, l10n),
-        _buildEmailTextInput(state, l10n),
-        _buildPasswordTextInput(state, l10n),
-        _buildBioTextInput(state, l10n),
-        const SizedBox(height: 24),
-        _buildSignUpButton(state, l10n),
-      ],
-    );
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildUsernameTextInput(state, l10n),
+            _buildEmailTextInput(state, l10n),
+            _buildPasswordTextInput(state, l10n),
+            _buildRepeatPasswordTextInput(state, l10n),
+            const SizedBox(height: 24),
+            _buildSignUpButton(state, l10n),
+          ],
+        ));
   }
 
   Widget _buildUsernameTextInput(SignUpState state, AppLocalizations l10n) {
@@ -143,6 +153,9 @@ class _SignupScreenState extends State<SignupScreen> {
         hintText: l10n.signUpUsernameTextInput,
         icon: const Icon(Icons.person, size: 16),
         textInputType: TextInputType.text,
+        onValidate: (value) =>
+            value != null && value.isNotEmpty && value.isValidName(),
+        errorText: "You must specify your name",
         textEditingController: _usernameController);
   }
 
@@ -152,6 +165,9 @@ class _SignupScreenState extends State<SignupScreen> {
       icon: const Icon(Icons.mail, size: 16),
       textInputType: TextInputType.emailAddress,
       textEditingController: _emailController,
+      onValidate: (value) =>
+          value != null && value.isNotEmpty && value.isValidEmail(),
+      errorText: "You must specify a email with correct format",
     );
   }
 
@@ -161,16 +177,20 @@ class _SignupScreenState extends State<SignupScreen> {
       icon: const Icon(Icons.password, size: 16),
       textInputType: TextInputType.text,
       textEditingController: _passwordController,
+      onValidate: (value) =>
+          value != null && value.isNotEmpty && value.isValidPassword(),
+      errorText: "You must a specify a secure password",
       isPass: true,
     );
   }
 
-  Widget _buildBioTextInput(SignUpState state, AppLocalizations l10n) {
+  Widget _buildRepeatPasswordTextInput(
+      SignUpState state, AppLocalizations l10n) {
     return TextFieldInput(
-      hintText: l10n.signUpBioTextInput,
-      icon: const Icon(Icons.info, size: 16),
+      hintText: l10n.signUpRepeatPasswordTextInput,
+      icon: const Icon(Icons.password, size: 16),
       textInputType: TextInputType.text,
-      textEditingController: _bioController,
+      textEditingController: _repeatPasswordController,
     );
   }
 

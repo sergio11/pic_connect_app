@@ -5,14 +5,14 @@ class SaveUserDTO {
   final String username;
   final String email;
   final String photoUrl;
-  final String bio;
+  final String? bio;
 
   SaveUserDTO({
     required this.uid,
     required this.username,
     required this.email,
     required this.photoUrl,
-    required this.bio
+    this.bio
   });
 
 }

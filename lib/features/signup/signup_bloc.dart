@@ -35,7 +35,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     if (state.image != null) {
       final response = await signUpUserUseCase(SignUpParams(event.email,
-          event.password, event.username, event.bio, state.image!));
+          event.password, event.username, state.image!));
       response.fold(
           (fail) => emit(
               state.copyWith(isLoading: false, errorMessage: fail.message)),

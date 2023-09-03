@@ -687,6 +687,7 @@ mixin _$PostCardState {
   bool get isReel => throw _privateConstructorUsedError;
   int get likes => throw _privateConstructorUsedError;
   int get commentCount => throw _privateConstructorUsedError;
+  String get ownerUid => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -715,6 +716,7 @@ abstract class $PostCardStateCopyWith<$Res> {
       bool isReel,
       int likes,
       int commentCount,
+      String ownerUid,
       String postId,
       String username,
       String description,
@@ -745,6 +747,7 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
     Object? isReel = null,
     Object? likes = null,
     Object? commentCount = null,
+    Object? ownerUid = null,
     Object? postId = null,
     Object? username = null,
     Object? description = null,
@@ -780,6 +783,10 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
               as int,
+      ownerUid: null == ownerUid
+          ? _value.ownerUid
+          : ownerUid // ignore: cast_nullable_to_non_nullable
+              as String,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -835,6 +842,7 @@ abstract class _$$_PostCardStateCopyWith<$Res>
       bool isReel,
       int likes,
       int commentCount,
+      String ownerUid,
       String postId,
       String username,
       String description,
@@ -863,6 +871,7 @@ class __$$_PostCardStateCopyWithImpl<$Res>
     Object? isReel = null,
     Object? likes = null,
     Object? commentCount = null,
+    Object? ownerUid = null,
     Object? postId = null,
     Object? username = null,
     Object? description = null,
@@ -898,6 +907,10 @@ class __$$_PostCardStateCopyWithImpl<$Res>
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
               as int,
+      ownerUid: null == ownerUid
+          ? _value.ownerUid
+          : ownerUid // ignore: cast_nullable_to_non_nullable
+              as String,
       postId: null == postId
           ? _value.postId
           : postId // ignore: cast_nullable_to_non_nullable
@@ -948,6 +961,7 @@ class _$_PostCardState implements _PostCardState {
       this.isReel = false,
       this.likes = 0,
       this.commentCount = 0,
+      this.ownerUid = "",
       this.postId = "",
       this.username = "",
       this.description = "",
@@ -977,6 +991,9 @@ class _$_PostCardState implements _PostCardState {
   @override
   @JsonKey()
   final int commentCount;
+  @override
+  @JsonKey()
+  final String ownerUid;
   @override
   @JsonKey()
   final String postId;
@@ -1013,7 +1030,7 @@ class _$_PostCardState implements _PostCardState {
 
   @override
   String toString() {
-    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, isReel: $isReel, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, placeInfo: $placeInfo, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
+    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, isReel: $isReel, likes: $likes, commentCount: $commentCount, ownerUid: $ownerUid, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, placeInfo: $placeInfo, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
   }
 
   @override
@@ -1031,6 +1048,8 @@ class _$_PostCardState implements _PostCardState {
             (identical(other.likes, likes) || other.likes == likes) &&
             (identical(other.commentCount, commentCount) ||
                 other.commentCount == commentCount) &&
+            (identical(other.ownerUid, ownerUid) ||
+                other.ownerUid == ownerUid) &&
             (identical(other.postId, postId) || other.postId == postId) &&
             (identical(other.username, username) ||
                 other.username == username) &&
@@ -1058,6 +1077,7 @@ class _$_PostCardState implements _PostCardState {
       isReel,
       likes,
       commentCount,
+      ownerUid,
       postId,
       username,
       description,
@@ -1083,6 +1103,7 @@ abstract class _PostCardState implements PostCardState {
       final bool isReel,
       final int likes,
       final int commentCount,
+      final String ownerUid,
       final String postId,
       final String username,
       final String description,
@@ -1105,6 +1126,8 @@ abstract class _PostCardState implements PostCardState {
   int get likes;
   @override
   int get commentCount;
+  @override
+  String get ownerUid;
   @override
   String get postId;
   @override

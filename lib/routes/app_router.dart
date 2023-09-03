@@ -131,9 +131,16 @@ class AppRouter {
           pageBuilder: (context, state) => CommonTransitionPage(
                 key: state.pageKey,
                 child: BlocProvider(
-                  create: (context) => serviceLocator<FollowersBloc>()
-                    ..add(OnLoadFollowersEvent(state.extra as String,
-                        context.read<AppBloc>().state.authUserUid!)),
+                  create: (context) {
+                    final authUserUid =
+                        context.read<AppBloc>().state.authUserUid!;
+                    return serviceLocator<FollowersBloc>()
+                      ..add(OnLoadFollowersEvent(
+                          state.extra is String
+                              ? state.extra as String
+                              : authUserUid,
+                          authUserUid));
+                  },
                   child: FollowersScreen(
                     onShowUserProfile: (String userUid) {
                       context.push(AppRoutesEnum.profile.screenPath,
@@ -148,9 +155,16 @@ class AppRouter {
           pageBuilder: (context, state) => CommonTransitionPage(
               key: state.pageKey,
               child: BlocProvider(
-                create: (context) => serviceLocator<FollowersBloc>()
-                  ..add(OnLoadFollowingEvent(state.extra as String,
-                      context.read<AppBloc>().state.authUserUid!)),
+                create: (context) {
+                  final authUserUid =
+                      context.read<AppBloc>().state.authUserUid!;
+                  return serviceLocator<FollowersBloc>()
+                    ..add(OnLoadFollowingEvent(
+                        state.extra is String
+                            ? state.extra as String
+                            : authUserUid,
+                        authUserUid));
+                },
                 child: FollowersScreen(
                   onShowUserProfile: (String userUid) {
                     context.push(AppRoutesEnum.profile.screenPath,
@@ -164,9 +178,13 @@ class AppRouter {
           pageBuilder: (context, state) => CommonTransitionPage(
                 key: state.pageKey,
                 child: BlocProvider(
-                  create: (context) => serviceLocator<CommentsBloc>()
-                    ..add(OnLoadCommentsByPostEvent(state.extra as String,
-                        context.read<AppBloc>().state.authUserUid!)),
+                  create: (context) {
+                    final authUserUid = context.read<AppBloc>().state.authUserUid!;
+                    return serviceLocator<CommentsBloc>()
+                      ..add(OnLoadCommentsByPostEvent(state.extra is String
+                        ? state.extra as String
+                        : authUserUid, authUserUid));
+                  },
                   child: CommentsScreen(
                     onBackPressed: () {
                       context.go(AppRoutesEnum.home.screenPath);
@@ -192,6 +210,10 @@ class AppRouter {
                     onShowCommentsByPost: (String postId) {
                       context.go(AppRoutesEnum.comments.screenPath,
                           extra: postId);
+                    },
+                    onShowUserProfile: (String userUid) {
+                      context.push(AppRoutesEnum.profile.screenPath,
+                          extra: userUid);
                     },
                   ),
                 ),
@@ -243,6 +265,10 @@ class AppRouter {
                                         .state
                                         .authUserUid!,
                                     type: PostTypeEnum.favorites));
+                          },
+                          onShowUserProfile: (String userUid) {
+                            context.push(AppRoutesEnum.profile.screenPath,
+                                extra: userUid);
                           },
                         ),
                       ))
@@ -297,10 +323,7 @@ class AppRouter {
                             context
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
-                                        userUid: context
-                                            .read<AppBloc>()
-                                            .state
-                                            .authUserUid!,
+                                        userUid: userUid,
                                         type: PostTypeEnum.pictures))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
@@ -330,10 +353,7 @@ class AppRouter {
                             context
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
-                                        userUid: context
-                                            .read<AppBloc>()
-                                            .state
-                                            .authUserUid!,
+                                        userUid: userUid,
                                         type: PostTypeEnum.reels))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
@@ -342,10 +362,7 @@ class AppRouter {
                             context
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
-                                        userUid: context
-                                            .read<AppBloc>()
-                                            .state
-                                            .authUserUid!,
+                                        userUid: userUid,
                                         type: PostTypeEnum.bookmarks))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));

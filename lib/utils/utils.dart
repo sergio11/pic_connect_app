@@ -48,6 +48,10 @@ Future<XFile?> pickImage(ImageSource source) async {
   return await imagePicker.pickImage(source: source);
 }
 
+hideKeyboard(BuildContext context) {
+  FocusScope.of(context).requestFocus(FocusNode());
+}
+
 showErrorSnackBar({required BuildContext context, required String message}) {
   showSnackBar(
       context: context,

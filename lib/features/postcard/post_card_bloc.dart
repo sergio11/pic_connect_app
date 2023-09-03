@@ -45,6 +45,7 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
         username: event.post.username,
         tags: event.post.tags,
         isReel: event.post.isReel,
+        ownerUid: event.post.postAuthorUid,
         description: event.post.description,
         placeInfo: event.post.placeInfo ?? "",
         datePublished: DateFormatter.getTimeAgo(event.post.datePublished),

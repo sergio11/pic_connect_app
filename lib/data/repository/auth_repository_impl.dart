@@ -68,7 +68,6 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
       required String password,
       required String username,
-      required String bio,
       required Uint8List file
   }) async {
     try {
@@ -78,8 +77,7 @@ class AuthRepositoryImpl implements AuthRepository {
           uid: userUid,
           username: username,
           email: email,
-          photoUrl: userPhotoUrl,
-          bio: bio
+          photoUrl: userPhotoUrl
       ));
       return const Right(true);
     } catch (err) {

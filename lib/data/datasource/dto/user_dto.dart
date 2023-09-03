@@ -6,7 +6,7 @@ class UserDTO {
   final String username;
   final String email;
   final String photoUrl;
-  final String bio;
+  final String? bio;
   final List followers;
   final List following;
 

@@ -13,9 +13,11 @@ import '../moments/moment_story_track.dart';
 class FeedScreen extends StatefulWidget {
   final Function() onShowFavoritePosts;
   final Function(String postId) onShowCommentsByPost;
+  final Function(String userUid) onShowUserProfile;
 
   const FeedScreen(
       {Key? key,
+      required this.onShowUserProfile,
       required this.onShowCommentsByPost,
       required this.onShowFavoritePosts})
       : super(key: key);
@@ -111,6 +113,8 @@ class _FeedScreenState extends State<FeedScreen> {
                       onShowCommentsByPost: (String postId) =>
                           widget.onShowCommentsByPost(postId),
                       onPostDeleted: () => onRefresh(state),
+                      onShowUserProfile: (String userUid) =>
+                          widget.onShowUserProfile(userUid),
                     )),
               ),
             )

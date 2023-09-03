@@ -10,8 +10,12 @@ import 'package:pic_connect/utils/colors.dart';
 
 class PublicationsScreen extends StatefulWidget {
   final Function(String postId) onShowCommentsByPost;
+  final Function(String userUid) onShowUserProfile;
 
-  const PublicationsScreen({Key? key, required this.onShowCommentsByPost})
+  const PublicationsScreen(
+      {Key? key,
+      required this.onShowUserProfile,
+      required this.onShowCommentsByPost})
       : super(key: key);
 
   @override
@@ -90,6 +94,8 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
                     onShowCommentsByPost: (String postId) =>
                         widget.onShowCommentsByPost(postId),
                     onPostDeleted: () => onRefresh(state),
+                    onShowUserProfile: (String userUid) =>
+                        widget.onShowUserProfile(userUid),
                   )),
             ),
           );

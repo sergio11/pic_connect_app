@@ -6,7 +6,7 @@ class SignUpEvent with _$SignUpEvent {
       String email,
       String password,
       String username,
-      String bio
+      String repeatPassword
       ) = OnDoSignUpEvent;
   const factory SignUpEvent.pickUpImage(ImageSource imageSource) = OnPickUpImageEvent;
 }

@@ -27,7 +27,7 @@
   "signUpEmailTextInput": "Introduce tu email",
   "signUpUsernameTextInput": "Introduce tu nombre de usuario",
   "signUpPasswordTextInput": "Introduce tu contraseña",
-  "signUpBioTextInput": "Introduce una descripción sobre ti",
+  "signUpRepeatPasswordTextInput": "Repite contraseña",
   "signUpButtonText": "Registrarse",
   "signUpHaveAccountText": "¿Ya dispones de una cuenta?",
   "signUpHaveAccountButtonText": " Iniciar sesión.",

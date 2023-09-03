@@ -43,12 +43,12 @@ class UserListTile extends StatelessWidget {
             .labelLarge
             ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
       ),
-      subtitle: Text(userBO.bio,
+      subtitle: Text(userBO.bio ?? "No user information provided",
           style: Theme.of(context)
               .textTheme
               .labelMedium
               ?.copyWith(color: accentColor)),
-      trailing: isAuthUser
+      trailing: !isAuthUser
           ? CommonButton(
               text: isFollowedByAuthUser
                   ? l10n.unFollowButtonText

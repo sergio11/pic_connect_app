@@ -3,7 +3,7 @@ class UserBO {
   final String uid;
   final String photoUrl;
   final String username;
-  final String bio;
+  final String? bio;
   final List followers;
   final List following;
 

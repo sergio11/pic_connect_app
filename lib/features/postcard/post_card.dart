@@ -12,11 +12,13 @@ import 'package:video_player/video_player.dart';
 import 'post_card_bloc.dart';
 
 class PostCard extends StatefulWidget {
+  final Function(String userUid) onShowUserProfile;
   final Function(String postId) onShowCommentsByPost;
   final Function() onPostDeleted;
 
   const PostCard(
       {Key? key,
+      required this.onShowUserProfile,
       required this.onShowCommentsByPost,
       required this.onPostDeleted})
       : super(key: key);
@@ -26,7 +28,6 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-
   VideoPlayerController? _videoController;
   bool isLikeAnimating = false;
   bool isOpenCommentsClicked = false;
@@ -86,7 +87,6 @@ class _PostCardState extends State<PostCard> {
         onAcceptPressed: widget.onPostDeleted);
   }
 
-
   @override
   void dispose() {
     _videoController?.dispose();
@@ -125,7 +125,10 @@ class _PostCardState extends State<PostCard> {
       ).copyWith(right: 0),
       child: Row(
         children: <Widget>[
-          buildCircleAvatar(imageUrl: state.authorImageUrl, radius: 16),
+          GestureDetector(
+            onTap: () => widget.onShowUserProfile(state.ownerUid),
+              child: buildCircleAvatar(imageUrl: state.authorImageUrl, radius: 22)
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -142,7 +145,7 @@ class _PostCardState extends State<PostCard> {
                   ),
                   Text(
                     state.placeInfo,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: accentColor, fontWeight: FontWeight.w400),
                     maxLines: 1,
                     overflow: TextOverflow.fade,
@@ -179,7 +182,9 @@ class _PostCardState extends State<PostCard> {
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.35,
               width: double.infinity,
-              child: state.isReel ? _buildVideoViewer(state.postImageUrl): _buildImageViewer(state.postImageUrl),
+              child: state.isReel
+                  ? _buildVideoViewer(state.postImageUrl)
+                  : _buildImageViewer(state.postImageUrl),
             ),
           ),
           AnimatedOpacity(
@@ -338,10 +343,10 @@ class _PostCardState extends State<PostCard> {
   }
 
   Widget _buildVideoViewer(String videoPath) {
-    if(_videoController == null) {
+    if (_videoController == null) {
       _videoController = VideoPlayerController.networkUrl(Uri.parse(videoPath));
       _videoController?.addListener(() {
-        if(_videoController?.value.isInitialized == true) {
+        if (_videoController?.value.isInitialized == true) {
           setState(() {
             isVideoReady = true;
           });
@@ -352,6 +357,8 @@ class _PostCardState extends State<PostCard> {
       _videoController?.setVolume(1);
       _videoController?.setLooping(true);
     }
-    return isVideoReady ? VideoPlayer(_videoController!) : const CommonScreenProgressIndicator();
+    return isVideoReady
+        ? VideoPlayer(_videoController!)
+        : const CommonScreenProgressIndicator();
   }
 }

@@ -18,24 +18,24 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SignUpEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String email, String password, String username, String bio)
+    required TResult Function(String email, String password, String username,
+            String repeatPassword)
         onDoSignUp,
     required TResult Function(ImageSource imageSource) pickUpImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String email, String password, String username, String bio)?
+    TResult? Function(String email, String password, String username,
+            String repeatPassword)?
         onDoSignUp,
     TResult? Function(ImageSource imageSource)? pickUpImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String email, String password, String username, String bio)?
+    TResult Function(String email, String password, String username,
+            String repeatPassword)?
         onDoSignUp,
     TResult Function(ImageSource imageSource)? pickUpImage,
     required TResult orElse(),
@@ -86,7 +86,8 @@ abstract class _$$OnDoSignUpEventCopyWith<$Res> {
           _$OnDoSignUpEvent value, $Res Function(_$OnDoSignUpEvent) then) =
       __$$OnDoSignUpEventCopyWithImpl<$Res>;
   @useResult
-  $Res call({String email, String password, String username, String bio});
+  $Res call(
+      {String email, String password, String username, String repeatPassword});
 }
 
 /// @nodoc
@@ -103,7 +104,7 @@ class __$$OnDoSignUpEventCopyWithImpl<$Res>
     Object? email = null,
     Object? password = null,
     Object? username = null,
-    Object? bio = null,
+    Object? repeatPassword = null,
   }) {
     return _then(_$OnDoSignUpEvent(
       null == email
@@ -118,9 +119,9 @@ class __$$OnDoSignUpEventCopyWithImpl<$Res>
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
               as String,
-      null == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
+      null == repeatPassword
+          ? _value.repeatPassword
+          : repeatPassword // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -131,7 +132,8 @@ class __$$OnDoSignUpEventCopyWithImpl<$Res>
 class _$OnDoSignUpEvent
     with DiagnosticableTreeMixin
     implements OnDoSignUpEvent {
-  const _$OnDoSignUpEvent(this.email, this.password, this.username, this.bio);
+  const _$OnDoSignUpEvent(
+      this.email, this.password, this.username, this.repeatPassword);
 
   @override
   final String email;
@@ -140,11 +142,11 @@ class _$OnDoSignUpEvent
   @override
   final String username;
   @override
-  final String bio;
+  final String repeatPassword;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpEvent.onDoSignUp(email: $email, password: $password, username: $username, bio: $bio)';
+    return 'SignUpEvent.onDoSignUp(email: $email, password: $password, username: $username, repeatPassword: $repeatPassword)';
   }
 
   @override
@@ -155,7 +157,7 @@ class _$OnDoSignUpEvent
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('password', password))
       ..add(DiagnosticsProperty('username', username))
-      ..add(DiagnosticsProperty('bio', bio));
+      ..add(DiagnosticsProperty('repeatPassword', repeatPassword));
   }
 
   @override
@@ -168,11 +170,13 @@ class _$OnDoSignUpEvent
                 other.password == password) &&
             (identical(other.username, username) ||
                 other.username == username) &&
-            (identical(other.bio, bio) || other.bio == bio));
+            (identical(other.repeatPassword, repeatPassword) ||
+                other.repeatPassword == repeatPassword));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, password, username, bio);
+  int get hashCode =>
+      Object.hash(runtimeType, email, password, username, repeatPassword);
 
   @JsonKey(ignore: true)
   @override
@@ -183,36 +187,36 @@ class _$OnDoSignUpEvent
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String email, String password, String username, String bio)
+    required TResult Function(String email, String password, String username,
+            String repeatPassword)
         onDoSignUp,
     required TResult Function(ImageSource imageSource) pickUpImage,
   }) {
-    return onDoSignUp(email, password, username, bio);
+    return onDoSignUp(email, password, username, repeatPassword);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String email, String password, String username, String bio)?
+    TResult? Function(String email, String password, String username,
+            String repeatPassword)?
         onDoSignUp,
     TResult? Function(ImageSource imageSource)? pickUpImage,
   }) {
-    return onDoSignUp?.call(email, password, username, bio);
+    return onDoSignUp?.call(email, password, username, repeatPassword);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String email, String password, String username, String bio)?
+    TResult Function(String email, String password, String username,
+            String repeatPassword)?
         onDoSignUp,
     TResult Function(ImageSource imageSource)? pickUpImage,
     required TResult orElse(),
   }) {
     if (onDoSignUp != null) {
-      return onDoSignUp(email, password, username, bio);
+      return onDoSignUp(email, password, username, repeatPassword);
     }
     return orElse();
   }
@@ -251,12 +255,12 @@ class _$OnDoSignUpEvent
 
 abstract class OnDoSignUpEvent implements SignUpEvent {
   const factory OnDoSignUpEvent(final String email, final String password,
-      final String username, final String bio) = _$OnDoSignUpEvent;
+      final String username, final String repeatPassword) = _$OnDoSignUpEvent;
 
   String get email;
   String get password;
   String get username;
-  String get bio;
+  String get repeatPassword;
   @JsonKey(ignore: true)
   _$$OnDoSignUpEventCopyWith<_$OnDoSignUpEvent> get copyWith =>
       throw _privateConstructorUsedError;
@@ -338,8 +342,8 @@ class _$OnPickUpImageEvent
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String email, String password, String username, String bio)
+    required TResult Function(String email, String password, String username,
+            String repeatPassword)
         onDoSignUp,
     required TResult Function(ImageSource imageSource) pickUpImage,
   }) {
@@ -349,8 +353,8 @@ class _$OnPickUpImageEvent
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            String email, String password, String username, String bio)?
+    TResult? Function(String email, String password, String username,
+            String repeatPassword)?
         onDoSignUp,
     TResult? Function(ImageSource imageSource)? pickUpImage,
   }) {
@@ -360,8 +364,8 @@ class _$OnPickUpImageEvent
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            String email, String password, String username, String bio)?
+    TResult Function(String email, String password, String username,
+            String repeatPassword)?
         onDoSignUp,
     TResult Function(ImageSource imageSource)? pickUpImage,
     required TResult orElse(),
