@@ -1,3 +1,5 @@
+import 'package:pic_connect/features/publications/publications_bloc.dart';
+
 enum AppRoutesEnum { onBoarding, login, signup, home, error, profile, search, add, reels, comments, publications, imageEditor, following, followers, editProfile }
 
 const List<AppRoutesEnum> unProtectedPaths = [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup];
@@ -118,4 +120,15 @@ extension AppRouteExtension on AppRoutesEnum {
         return "Home";
     }
   }
+}
+
+class PublicationsScreenArgs {
+
+  final String userUid;
+  final PostTypeEnum type;
+
+  PublicationsScreenArgs({
+    required this.userUid,
+    required this.type
+  });
 }

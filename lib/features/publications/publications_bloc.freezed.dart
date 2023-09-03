@@ -17,19 +17,21 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PublicationsEvent {
   String get userUid => throw _privateConstructorUsedError;
+  PostTypeEnum get type => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userUid) loadPublications,
+    required TResult Function(String userUid, PostTypeEnum type)
+        loadPublications,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userUid)? loadPublications,
+    TResult? Function(String userUid, PostTypeEnum type)? loadPublications,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userUid)? loadPublications,
+    TResult Function(String userUid, PostTypeEnum type)? loadPublications,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +63,7 @@ abstract class $PublicationsEventCopyWith<$Res> {
           PublicationsEvent value, $Res Function(PublicationsEvent) then) =
       _$PublicationsEventCopyWithImpl<$Res, PublicationsEvent>;
   @useResult
-  $Res call({String userUid});
+  $Res call({String userUid, PostTypeEnum type});
 }
 
 /// @nodoc
@@ -78,12 +80,17 @@ class _$PublicationsEventCopyWithImpl<$Res, $Val extends PublicationsEvent>
   @override
   $Res call({
     Object? userUid = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       userUid: null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as PostTypeEnum,
     ) as $Val);
   }
 }
@@ -96,7 +103,7 @@ abstract class _$$OnLoadPublicationsEventCopyWith<$Res>
       __$$OnLoadPublicationsEventCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userUid});
+  $Res call({String userUid, PostTypeEnum type});
 }
 
 /// @nodoc
@@ -111,12 +118,17 @@ class __$$OnLoadPublicationsEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userUid = null,
+    Object? type = null,
   }) {
     return _then(_$OnLoadPublicationsEvent(
       null == userUid
           ? _value.userUid
           : userUid // ignore: cast_nullable_to_non_nullable
               as String,
+      null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as PostTypeEnum,
     ));
   }
 }
@@ -124,14 +136,16 @@ class __$$OnLoadPublicationsEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OnLoadPublicationsEvent implements OnLoadPublicationsEvent {
-  const _$OnLoadPublicationsEvent(this.userUid);
+  const _$OnLoadPublicationsEvent(this.userUid, this.type);
 
   @override
   final String userUid;
+  @override
+  final PostTypeEnum type;
 
   @override
   String toString() {
-    return 'PublicationsEvent.loadPublications(userUid: $userUid)';
+    return 'PublicationsEvent.loadPublications(userUid: $userUid, type: $type)';
   }
 
   @override
@@ -139,11 +153,12 @@ class _$OnLoadPublicationsEvent implements OnLoadPublicationsEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnLoadPublicationsEvent &&
-            (identical(other.userUid, userUid) || other.userUid == userUid));
+            (identical(other.userUid, userUid) || other.userUid == userUid) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userUid);
+  int get hashCode => Object.hash(runtimeType, userUid, type);
 
   @JsonKey(ignore: true)
   @override
@@ -155,27 +170,28 @@ class _$OnLoadPublicationsEvent implements OnLoadPublicationsEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String userUid) loadPublications,
+    required TResult Function(String userUid, PostTypeEnum type)
+        loadPublications,
   }) {
-    return loadPublications(userUid);
+    return loadPublications(userUid, type);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String userUid)? loadPublications,
+    TResult? Function(String userUid, PostTypeEnum type)? loadPublications,
   }) {
-    return loadPublications?.call(userUid);
+    return loadPublications?.call(userUid, type);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String userUid)? loadPublications,
+    TResult Function(String userUid, PostTypeEnum type)? loadPublications,
     required TResult orElse(),
   }) {
     if (loadPublications != null) {
-      return loadPublications(userUid);
+      return loadPublications(userUid, type);
     }
     return orElse();
   }
@@ -210,11 +226,14 @@ class _$OnLoadPublicationsEvent implements OnLoadPublicationsEvent {
 }
 
 abstract class OnLoadPublicationsEvent implements PublicationsEvent {
-  const factory OnLoadPublicationsEvent(final String userUid) =
+  const factory OnLoadPublicationsEvent(
+          final String userUid, final PostTypeEnum type) =
       _$OnLoadPublicationsEvent;
 
   @override
   String get userUid;
+  @override
+  PostTypeEnum get type;
   @override
   @JsonKey(ignore: true)
   _$$OnLoadPublicationsEventCopyWith<_$OnLoadPublicationsEvent> get copyWith =>
@@ -227,6 +246,7 @@ mixin _$PublicationsState {
   List<PostBO> get postList => throw _privateConstructorUsedError;
   int get postLen => throw _privateConstructorUsedError;
   String get authorUserUid => throw _privateConstructorUsedError;
+  PostTypeEnum get type => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -245,6 +265,7 @@ abstract class $PublicationsStateCopyWith<$Res> {
       List<PostBO> postList,
       int postLen,
       String authorUserUid,
+      PostTypeEnum type,
       String? errorMessage});
 }
 
@@ -265,6 +286,7 @@ class _$PublicationsStateCopyWithImpl<$Res, $Val extends PublicationsState>
     Object? postList = null,
     Object? postLen = null,
     Object? authorUserUid = null,
+    Object? type = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -284,6 +306,10 @@ class _$PublicationsStateCopyWithImpl<$Res, $Val extends PublicationsState>
           ? _value.authorUserUid
           : authorUserUid // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as PostTypeEnum,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -305,6 +331,7 @@ abstract class _$$_PublicationsStateCopyWith<$Res>
       List<PostBO> postList,
       int postLen,
       String authorUserUid,
+      PostTypeEnum type,
       String? errorMessage});
 }
 
@@ -323,6 +350,7 @@ class __$$_PublicationsStateCopyWithImpl<$Res>
     Object? postList = null,
     Object? postLen = null,
     Object? authorUserUid = null,
+    Object? type = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_PublicationsState(
@@ -342,6 +370,10 @@ class __$$_PublicationsStateCopyWithImpl<$Res>
           ? _value.authorUserUid
           : authorUserUid // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as PostTypeEnum,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -358,6 +390,7 @@ class _$_PublicationsState implements _PublicationsState {
       final List<PostBO> postList = const [],
       this.postLen = 0,
       this.authorUserUid = "",
+      this.type = PostTypeEnum.all,
       this.errorMessage})
       : _postList = postList;
 
@@ -380,11 +413,14 @@ class _$_PublicationsState implements _PublicationsState {
   @JsonKey()
   final String authorUserUid;
   @override
+  @JsonKey()
+  final PostTypeEnum type;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'PublicationsState(isLoading: $isLoading, postList: $postList, postLen: $postLen, authorUserUid: $authorUserUid, errorMessage: $errorMessage)';
+    return 'PublicationsState(isLoading: $isLoading, postList: $postList, postLen: $postLen, authorUserUid: $authorUserUid, type: $type, errorMessage: $errorMessage)';
   }
 
   @override
@@ -398,6 +434,7 @@ class _$_PublicationsState implements _PublicationsState {
             (identical(other.postLen, postLen) || other.postLen == postLen) &&
             (identical(other.authorUserUid, authorUserUid) ||
                 other.authorUserUid == authorUserUid) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -409,6 +446,7 @@ class _$_PublicationsState implements _PublicationsState {
       const DeepCollectionEquality().hash(_postList),
       postLen,
       authorUserUid,
+      type,
       errorMessage);
 
   @JsonKey(ignore: true)
@@ -425,6 +463,7 @@ abstract class _PublicationsState implements PublicationsState {
       final List<PostBO> postList,
       final int postLen,
       final String authorUserUid,
+      final PostTypeEnum type,
       final String? errorMessage}) = _$_PublicationsState;
 
   @override
@@ -435,6 +474,8 @@ abstract class _PublicationsState implements PublicationsState {
   int get postLen;
   @override
   String get authorUserUid;
+  @override
+  PostTypeEnum get type;
   @override
   String? get errorMessage;
   @override

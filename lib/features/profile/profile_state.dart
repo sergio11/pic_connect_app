@@ -15,11 +15,11 @@ class ProfileState with _$ProfileState {
     @Default(false) final bool isLogout,
     @Default(false) final bool isFollowing,
     @Default(false) final bool isAuthUser,
-    @Default(false) final bool isPostGridLoading,
-    @Default(false) final bool isFavoritePostGridLoading,
+    @Default(false) final bool isPictureGridLoading,
+    @Default(false) final bool isReelsGridLoading,
     @Default(false) final bool isBookmarkPostGridLoading,
-    @Default([]) final List<PostBO> postList,
-    @Default([]) final List<PostBO> favoritePostList,
+    @Default([]) final List<PostBO> picturesList,
+    @Default([]) final List<PostBO> reelsList,
     @Default([]) final List<PostBO> bookmarkPostList,
     @Default(ProfileTab.values) final List<ProfileTab> profileTabs,
     final String? errorMessage
@@ -27,5 +27,5 @@ class ProfileState with _$ProfileState {
 }
 
 enum ProfileTab {
-  pictures, favorites, bookmark
+  pictures, reels, bookmark
 }

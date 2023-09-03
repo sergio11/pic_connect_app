@@ -10,9 +10,14 @@ import 'package:pic_connect/utils/colors.dart';
 import '../moments/moment_story_track.dart';
 
 class FeedScreen extends StatefulWidget {
+
+  final Function() onShowFavoritePosts;
   final Function(String postId) onShowCommentsByPost;
 
-  const FeedScreen({Key? key, required this.onShowCommentsByPost})
+  const FeedScreen({Key? key,
+    required this.onShowCommentsByPost,
+    required this.onShowFavoritePosts
+  })
       : super(key: key);
 
   @override
@@ -67,7 +72,14 @@ class _FeedScreenState extends State<FeedScreen> {
       actions: [
         IconButton(
           icon: const Icon(
-            Icons.messenger_outline,
+            Icons.favorite_border,
+            color: accentColor,
+          ),
+          onPressed: widget.onShowFavoritePosts,
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.send,
             color: accentColor,
           ),
           onPressed: () {},

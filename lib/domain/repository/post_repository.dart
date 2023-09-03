@@ -32,7 +32,11 @@ abstract class PostRepository {
 
   Future<Either<Failure, bool>> deletePost(String postId);
 
-  Future<Either<Failure, List<PostBO>>> findAllByUserUid(String userUi);
+  Future<Either<Failure, List<PostBO>>> findAllByUserUidOrderByDatePublished(String userUi);
+
+  Future<Either<Failure, List<PostBO>>> findReelsByUserUidOrderByDatePublished(String userUi);
+
+  Future<Either<Failure, List<PostBO>>> findPicturesByUserUidOrderByDatePublished(String userUi);
 
   Future<Either<Failure, List<CommentBO>>> findAllCommentsByPostId(String postId);
 

@@ -801,11 +801,11 @@ mixin _$ProfileState {
   bool get isLogout => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
   bool get isAuthUser => throw _privateConstructorUsedError;
-  bool get isPostGridLoading => throw _privateConstructorUsedError;
-  bool get isFavoritePostGridLoading => throw _privateConstructorUsedError;
+  bool get isPictureGridLoading => throw _privateConstructorUsedError;
+  bool get isReelsGridLoading => throw _privateConstructorUsedError;
   bool get isBookmarkPostGridLoading => throw _privateConstructorUsedError;
-  List<PostBO> get postList => throw _privateConstructorUsedError;
-  List<PostBO> get favoritePostList => throw _privateConstructorUsedError;
+  List<PostBO> get picturesList => throw _privateConstructorUsedError;
+  List<PostBO> get reelsList => throw _privateConstructorUsedError;
   List<PostBO> get bookmarkPostList => throw _privateConstructorUsedError;
   List<ProfileTab> get profileTabs => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
@@ -834,11 +834,11 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
-      bool isPostGridLoading,
-      bool isFavoritePostGridLoading,
+      bool isPictureGridLoading,
+      bool isReelsGridLoading,
       bool isBookmarkPostGridLoading,
-      List<PostBO> postList,
-      List<PostBO> favoritePostList,
+      List<PostBO> picturesList,
+      List<PostBO> reelsList,
       List<PostBO> bookmarkPostList,
       List<ProfileTab> profileTabs,
       String? errorMessage});
@@ -869,11 +869,11 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
-    Object? isPostGridLoading = null,
-    Object? isFavoritePostGridLoading = null,
+    Object? isPictureGridLoading = null,
+    Object? isReelsGridLoading = null,
     Object? isBookmarkPostGridLoading = null,
-    Object? postList = null,
-    Object? favoritePostList = null,
+    Object? picturesList = null,
+    Object? reelsList = null,
     Object? bookmarkPostList = null,
     Object? profileTabs = null,
     Object? errorMessage = freezed,
@@ -927,25 +927,25 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isAuthUser
           : isAuthUser // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPostGridLoading: null == isPostGridLoading
-          ? _value.isPostGridLoading
-          : isPostGridLoading // ignore: cast_nullable_to_non_nullable
+      isPictureGridLoading: null == isPictureGridLoading
+          ? _value.isPictureGridLoading
+          : isPictureGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isFavoritePostGridLoading: null == isFavoritePostGridLoading
-          ? _value.isFavoritePostGridLoading
-          : isFavoritePostGridLoading // ignore: cast_nullable_to_non_nullable
+      isReelsGridLoading: null == isReelsGridLoading
+          ? _value.isReelsGridLoading
+          : isReelsGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       isBookmarkPostGridLoading: null == isBookmarkPostGridLoading
           ? _value.isBookmarkPostGridLoading
           : isBookmarkPostGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      postList: null == postList
-          ? _value.postList
-          : postList // ignore: cast_nullable_to_non_nullable
+      picturesList: null == picturesList
+          ? _value.picturesList
+          : picturesList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
-      favoritePostList: null == favoritePostList
-          ? _value.favoritePostList
-          : favoritePostList // ignore: cast_nullable_to_non_nullable
+      reelsList: null == reelsList
+          ? _value.reelsList
+          : reelsList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
       bookmarkPostList: null == bookmarkPostList
           ? _value.bookmarkPostList
@@ -984,11 +984,11 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
-      bool isPostGridLoading,
-      bool isFavoritePostGridLoading,
+      bool isPictureGridLoading,
+      bool isReelsGridLoading,
       bool isBookmarkPostGridLoading,
-      List<PostBO> postList,
-      List<PostBO> favoritePostList,
+      List<PostBO> picturesList,
+      List<PostBO> reelsList,
       List<PostBO> bookmarkPostList,
       List<ProfileTab> profileTabs,
       String? errorMessage});
@@ -1017,11 +1017,11 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
-    Object? isPostGridLoading = null,
-    Object? isFavoritePostGridLoading = null,
+    Object? isPictureGridLoading = null,
+    Object? isReelsGridLoading = null,
     Object? isBookmarkPostGridLoading = null,
-    Object? postList = null,
-    Object? favoritePostList = null,
+    Object? picturesList = null,
+    Object? reelsList = null,
     Object? bookmarkPostList = null,
     Object? profileTabs = null,
     Object? errorMessage = freezed,
@@ -1075,25 +1075,25 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.isAuthUser
           : isAuthUser // ignore: cast_nullable_to_non_nullable
               as bool,
-      isPostGridLoading: null == isPostGridLoading
-          ? _value.isPostGridLoading
-          : isPostGridLoading // ignore: cast_nullable_to_non_nullable
+      isPictureGridLoading: null == isPictureGridLoading
+          ? _value.isPictureGridLoading
+          : isPictureGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isFavoritePostGridLoading: null == isFavoritePostGridLoading
-          ? _value.isFavoritePostGridLoading
-          : isFavoritePostGridLoading // ignore: cast_nullable_to_non_nullable
+      isReelsGridLoading: null == isReelsGridLoading
+          ? _value.isReelsGridLoading
+          : isReelsGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       isBookmarkPostGridLoading: null == isBookmarkPostGridLoading
           ? _value.isBookmarkPostGridLoading
           : isBookmarkPostGridLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      postList: null == postList
-          ? _value._postList
-          : postList // ignore: cast_nullable_to_non_nullable
+      picturesList: null == picturesList
+          ? _value._picturesList
+          : picturesList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
-      favoritePostList: null == favoritePostList
-          ? _value._favoritePostList
-          : favoritePostList // ignore: cast_nullable_to_non_nullable
+      reelsList: null == reelsList
+          ? _value._reelsList
+          : reelsList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
       bookmarkPostList: null == bookmarkPostList
           ? _value._bookmarkPostList
@@ -1127,16 +1127,16 @@ class _$_ProfileState implements _ProfileState {
       this.isLogout = false,
       this.isFollowing = false,
       this.isAuthUser = false,
-      this.isPostGridLoading = false,
-      this.isFavoritePostGridLoading = false,
+      this.isPictureGridLoading = false,
+      this.isReelsGridLoading = false,
       this.isBookmarkPostGridLoading = false,
-      final List<PostBO> postList = const [],
-      final List<PostBO> favoritePostList = const [],
+      final List<PostBO> picturesList = const [],
+      final List<PostBO> reelsList = const [],
       final List<PostBO> bookmarkPostList = const [],
       final List<ProfileTab> profileTabs = ProfileTab.values,
       this.errorMessage})
-      : _postList = postList,
-        _favoritePostList = favoritePostList,
+      : _picturesList = picturesList,
+        _reelsList = reelsList,
         _bookmarkPostList = bookmarkPostList,
         _profileTabs = profileTabs;
 
@@ -1178,30 +1178,29 @@ class _$_ProfileState implements _ProfileState {
   final bool isAuthUser;
   @override
   @JsonKey()
-  final bool isPostGridLoading;
+  final bool isPictureGridLoading;
   @override
   @JsonKey()
-  final bool isFavoritePostGridLoading;
+  final bool isReelsGridLoading;
   @override
   @JsonKey()
   final bool isBookmarkPostGridLoading;
-  final List<PostBO> _postList;
+  final List<PostBO> _picturesList;
   @override
   @JsonKey()
-  List<PostBO> get postList {
-    if (_postList is EqualUnmodifiableListView) return _postList;
+  List<PostBO> get picturesList {
+    if (_picturesList is EqualUnmodifiableListView) return _picturesList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_postList);
+    return EqualUnmodifiableListView(_picturesList);
   }
 
-  final List<PostBO> _favoritePostList;
+  final List<PostBO> _reelsList;
   @override
   @JsonKey()
-  List<PostBO> get favoritePostList {
-    if (_favoritePostList is EqualUnmodifiableListView)
-      return _favoritePostList;
+  List<PostBO> get reelsList {
+    if (_reelsList is EqualUnmodifiableListView) return _reelsList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_favoritePostList);
+    return EqualUnmodifiableListView(_reelsList);
   }
 
   final List<PostBO> _bookmarkPostList;
@@ -1228,7 +1227,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPostGridLoading: $isPostGridLoading, isFavoritePostGridLoading: $isFavoritePostGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, postList: $postList, favoritePostList: $favoritePostList, bookmarkPostList: $bookmarkPostList, profileTabs: $profileTabs, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPictureGridLoading: $isPictureGridLoading, isReelsGridLoading: $isReelsGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, picturesList: $picturesList, reelsList: $reelsList, bookmarkPostList: $bookmarkPostList, profileTabs: $profileTabs, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1257,17 +1256,17 @@ class _$_ProfileState implements _ProfileState {
                 other.isFollowing == isFollowing) &&
             (identical(other.isAuthUser, isAuthUser) ||
                 other.isAuthUser == isAuthUser) &&
-            (identical(other.isPostGridLoading, isPostGridLoading) ||
-                other.isPostGridLoading == isPostGridLoading) &&
-            (identical(other.isFavoritePostGridLoading,
-                    isFavoritePostGridLoading) ||
-                other.isFavoritePostGridLoading == isFavoritePostGridLoading) &&
+            (identical(other.isPictureGridLoading, isPictureGridLoading) ||
+                other.isPictureGridLoading == isPictureGridLoading) &&
+            (identical(other.isReelsGridLoading, isReelsGridLoading) ||
+                other.isReelsGridLoading == isReelsGridLoading) &&
             (identical(other.isBookmarkPostGridLoading,
                     isBookmarkPostGridLoading) ||
                 other.isBookmarkPostGridLoading == isBookmarkPostGridLoading) &&
-            const DeepCollectionEquality().equals(other._postList, _postList) &&
             const DeepCollectionEquality()
-                .equals(other._favoritePostList, _favoritePostList) &&
+                .equals(other._picturesList, _picturesList) &&
+            const DeepCollectionEquality()
+                .equals(other._reelsList, _reelsList) &&
             const DeepCollectionEquality()
                 .equals(other._bookmarkPostList, _bookmarkPostList) &&
             const DeepCollectionEquality()
@@ -1291,11 +1290,11 @@ class _$_ProfileState implements _ProfileState {
         isLogout,
         isFollowing,
         isAuthUser,
-        isPostGridLoading,
-        isFavoritePostGridLoading,
+        isPictureGridLoading,
+        isReelsGridLoading,
         isBookmarkPostGridLoading,
-        const DeepCollectionEquality().hash(_postList),
-        const DeepCollectionEquality().hash(_favoritePostList),
+        const DeepCollectionEquality().hash(_picturesList),
+        const DeepCollectionEquality().hash(_reelsList),
         const DeepCollectionEquality().hash(_bookmarkPostList),
         const DeepCollectionEquality().hash(_profileTabs),
         errorMessage
@@ -1322,11 +1321,11 @@ abstract class _ProfileState implements ProfileState {
       final bool isLogout,
       final bool isFollowing,
       final bool isAuthUser,
-      final bool isPostGridLoading,
-      final bool isFavoritePostGridLoading,
+      final bool isPictureGridLoading,
+      final bool isReelsGridLoading,
       final bool isBookmarkPostGridLoading,
-      final List<PostBO> postList,
-      final List<PostBO> favoritePostList,
+      final List<PostBO> picturesList,
+      final List<PostBO> reelsList,
       final List<PostBO> bookmarkPostList,
       final List<ProfileTab> profileTabs,
       final String? errorMessage}) = _$_ProfileState;
@@ -1356,15 +1355,15 @@ abstract class _ProfileState implements ProfileState {
   @override
   bool get isAuthUser;
   @override
-  bool get isPostGridLoading;
+  bool get isPictureGridLoading;
   @override
-  bool get isFavoritePostGridLoading;
+  bool get isReelsGridLoading;
   @override
   bool get isBookmarkPostGridLoading;
   @override
-  List<PostBO> get postList;
+  List<PostBO> get picturesList;
   @override
-  List<PostBO> get favoritePostList;
+  List<PostBO> get reelsList;
   @override
   List<PostBO> get bookmarkPostList;
   @override

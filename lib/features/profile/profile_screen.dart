@@ -12,14 +12,18 @@ import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final Function(String userUid) onGoToPublications;
+  final Function(String userUid) onGoToPictures;
+  final Function(String userUid) onGoToReels;
+  final Function(String userUid) onGoToBookmarks;
   final Function(String userUid) onGoToFollowersScreen;
   final Function(String userUid) onGoToFollowingScreen;
   final Function(String userUid) onGoToEditProfileScreen;
 
   const ProfileScreen(
       {Key? key,
-      required this.onGoToPublications,
+      required this.onGoToPictures,
+      required this.onGoToReels,
+      required this.onGoToBookmarks,
       required this.onGoToFollowersScreen,
       required this.onGoToFollowingScreen,
       required this.onGoToEditProfileScreen})
@@ -141,11 +145,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 5),
-          child: CircleAvatar(
-            backgroundColor: accentColor,
-            backgroundImage: NetworkImage(state.photoUrl),
-            radius: 40,
-          ),
+          child: buildCircleAvatar(state.photoUrl),
         ),
         Expanded(
           flex: 1,
@@ -160,7 +160,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildStatColumn(state.postLen, l10n.profilePostStats,
-                        () => widget.onGoToPublications(state.userUid)),
+                        () => widget.onGoToPictures(state.userUid)),
                     _buildStatColumn(state.followers, l10n.profileFollowerStats,
                         () => widget.onGoToFollowersScreen(state.userUid)),
                     _buildStatColumn(
@@ -204,7 +204,8 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       backgroundColor: accentColor,
       textColor: primaryColor,
       borderColor: accentColor,
-      onPressed: () => context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid)),
+      onPressed: () =>
+          context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid)),
       sizeType: CommonButtonSizeType.small,
     );
   }
@@ -215,7 +216,8 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
-      onPressed: () => context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid)),
+      onPressed: () =>
+          context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid)),
       sizeType: CommonButtonSizeType.small,
     );
   }
@@ -288,9 +290,8 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
             height: MediaQuery.of(context).size.height,
             color: primaryColor,
             child: TabBarView(children: [
-              _buildPostsGrid(state.postList, state.isPostGridLoading),
-              _buildPostsGrid(
-                  state.favoritePostList, state.isFavoritePostGridLoading),
+              _buildPostsGrid(state.picturesList, state.isPictureGridLoading),
+              _buildPostsGrid(state.reelsList, state.isReelsGridLoading),
               _buildPostsGrid(
                   state.bookmarkPostList, state.isBookmarkPostGridLoading)
             ]),
@@ -328,7 +329,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       ),
       onLongPress: () => showImage(context, post.postUrl),
       onDoubleTap: () => showImage(context, post.postUrl),
-      onTap: () => widget.onGoToPublications(post.postAuthorUid),
+      onTap: () => widget.onGoToPictures(post.postAuthorUid),
     );
   }
 
@@ -368,10 +369,10 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         iconData = tab == _currentProfileTabSelected
             ? Icons.photo_camera_outlined
             : Icons.photo_camera;
-      case ProfileTab.favorites:
+      case ProfileTab.reels:
         iconData = tab == _currentProfileTabSelected
-            ? Icons.favorite_border
-            : Icons.favorite;
+            ? Icons.live_tv
+            : Icons.tv_outlined;
       case ProfileTab.bookmark:
         iconData = tab == _currentProfileTabSelected
             ? Icons.bookmark_border

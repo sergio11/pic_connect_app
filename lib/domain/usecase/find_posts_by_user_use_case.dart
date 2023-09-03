@@ -15,7 +15,14 @@ class FindPostsByUserUseCase extends BaseUseCase<List<PostBO>, FindPostsByUserPa
 
   @override
   Future<Either<Failure, List<PostBO>>> call(FindPostsByUserParams param) async {
-    return await postRepository.findAllByUserUid(param.uid);
+    switch (param.type) {
+      case FindPostTypeEnum.pictures:
+        return await postRepository.findPicturesByUserUidOrderByDatePublished(param.uid);
+      case FindPostTypeEnum.reels:
+        return await postRepository.findReelsByUserUidOrderByDatePublished(param.uid);
+      case FindPostTypeEnum.all:
+        return await postRepository.findAllByUserUidOrderByDatePublished(param.uid);
+    }
   }
 }
 
@@ -23,9 +30,14 @@ class FindPostsByUserUseCase extends BaseUseCase<List<PostBO>, FindPostsByUserPa
 class FindPostsByUserParams extends Equatable {
 
   final String uid;
+  final FindPostTypeEnum type;
 
-  const FindPostsByUserParams(this.uid);
+  const FindPostsByUserParams(this.uid, this.type);
 
   @override
-  List<Object> get props => [uid];
+  List<Object> get props => [uid, type];
+}
+
+enum FindPostTypeEnum {
+  pictures, reels, all;
 }

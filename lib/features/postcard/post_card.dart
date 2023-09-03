@@ -239,7 +239,7 @@ class _PostCardState extends State<PostCard> {
             isAnimating: isSendContentClicked,
             smallAction: true,
             child: IconButton(
-                icon: const Icon(Icons.send, color: accentColor),
+                icon: const Icon(Icons.share, color: accentColor),
                 onPressed: () => _onSendContentClicked())),
         Expanded(
             child: Align(

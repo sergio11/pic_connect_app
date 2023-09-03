@@ -4,19 +4,37 @@ import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/utils/colors.dart';
 
+Widget buildCircleAvatar(String imageUrl) {
+  return imageUrl.isEmpty
+      ? const CommonScreenProgressIndicator()
+      : _buildCachedNetworkImage(
+          imageUrl: imageUrl,
+          imageBuilder: (context, imageProvider) => CircleAvatar(
+                backgroundColor: accentColor,
+                backgroundImage: imageProvider,
+                radius: 40,
+              ));
+}
+
 Widget buildNetworkImage(String imageUrl) {
   return imageUrl.isEmpty
       ? const CommonScreenProgressIndicator()
-      : CachedNetworkImage(
-          imageUrl: imageUrl,
-          fit: BoxFit.cover,
-          progressIndicatorBuilder: (context, url, downloadProgress) =>
-              const CommonScreenProgressIndicator(),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-        );
+      : _buildCachedNetworkImage(imageUrl: imageUrl);
 }
 
-AnimateGradient wrapIntoAnimateGradient({ required Widget child }) {
+CachedNetworkImage _buildCachedNetworkImage(
+    {required String imageUrl, ImageWidgetBuilder? imageBuilder}) {
+  return CachedNetworkImage(
+    imageUrl: imageUrl,
+    fit: BoxFit.cover,
+    imageBuilder: imageBuilder,
+    progressIndicatorBuilder: (context, url, downloadProgress) =>
+        const CommonScreenProgressIndicator(),
+    errorWidget: (context, url, error) => const Icon(Icons.error),
+  );
+}
+
+AnimateGradient wrapIntoAnimateGradient({required Widget child}) {
   return AnimateGradient(
       primaryBegin: Alignment.topLeft,
       primaryEnd: Alignment.bottomLeft,

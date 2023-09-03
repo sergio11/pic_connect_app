@@ -21,7 +21,7 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
   void onRefresh(PublicationsState state) async {
     context
         .read<PublicationsBloc>()
-        .add(OnLoadPublicationsEvent(state.authorUserUid));
+        .add(OnLoadPublicationsEvent(state.authorUserUid, state.type));
   }
 
   @override

@@ -12,8 +12,8 @@ class UserDtoMapper extends Mapper<DocumentSnapshot, UserDTO> {
       email: snapshot["email"],
       photoUrl: snapshot["photoUrl"],
       bio: snapshot["bio"],
-      followers: snapshot["followers"],
-      following: snapshot["following"],
+      followers: snapshot['followers'] is List ? List<String>.from(snapshot['followers'] as List) : [],
+      following: snapshot['following'] is List ? List<String>.from(snapshot['following'] as List) : [],
     );
   }
 }

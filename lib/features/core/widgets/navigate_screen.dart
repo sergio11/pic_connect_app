@@ -100,7 +100,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
               items: [
                 FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
                 FABBottomAppBarItem(iconData: Icons.search, text: 'Search'),
-                FABBottomAppBarItem(iconData: Icons.tv_rounded, text: 'Reels TV'),
+                FABBottomAppBarItem(iconData: Icons.live_tv, text: 'Reels TV'),
                 FABBottomAppBarItem(iconData: Icons.person, text: 'Profile'),
               ],
             )

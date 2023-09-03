@@ -26,7 +26,11 @@ abstract class PostDatasource {
 
   Future<List<CommentDTO>> findAllCommentsByPostId(String postId);
 
-  Future<List<PostDTO>> findAllByUserUid(String userUi);
+  Future<List<PostDTO>> findAllByUserUidOrderByDatePublished(String userUi);
+
+  Future<List<PostDTO>> findReelsByUserUidOrderByDatePublished(String userUi);
+
+  Future<List<PostDTO>> findPicturesByUserUidOrderByDatePublished(String userUi);
 
   Future<List<PostDTO>> findAllOrderByDatePublished();
 

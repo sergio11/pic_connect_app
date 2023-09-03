@@ -97,8 +97,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       String userUid, Emitter<ProfileState> emit) async {
     emit(state.copyWith(
         isLoading: true,
-        isPostGridLoading: true,
-        isFavoritePostGridLoading: true,
+        isPictureGridLoading: true,
+        isReelsGridLoading: true,
         isBookmarkPostGridLoading: true));
     final getUserDetailResponse =
         await getUserDetailsUseCase(GetUserDetailsParams(userUid));
@@ -120,23 +120,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 isFollowing: data.init.followers.contains(data.last),
                 isAuthUser: data.init.uid == data.last)));
 
-    final findPostsByUserResponse =
-        await findPostsByUserUseCase(FindPostsByUserParams(userUid));
-    findPostsByUserResponse.fold(
-        (l) => emit(state.copyWith(isPostGridLoading: false)),
-        (postsByUser) => emit(state.copyWith(
-            isPostGridLoading: false,
-            postList: postsByUser,
-            postLen: postsByUser.length)));
+    final findPicturesByUserResponse = await findPostsByUserUseCase(
+        FindPostsByUserParams(userUid, FindPostTypeEnum.pictures));
+    findPicturesByUserResponse.fold(
+        (l) => emit(state.copyWith(isPictureGridLoading: false)),
+        (picturesByUser) => emit(state.copyWith(
+            isPictureGridLoading: false,
+            picturesList: picturesByUser,
+            postLen: state.postLen + picturesByUser.length)));
 
-    final findFavoritesPostsByUserResponse =
-        await findFavoritesPostsByUserUseCase(
-            FindFavoritesPostsByUserParams(userUid));
-    findFavoritesPostsByUserResponse.fold(
-        (l) => emit(state.copyWith(isFavoritePostGridLoading: false)),
-        (favoritePostsByUser) => emit(state.copyWith(
-            isFavoritePostGridLoading: false,
-            favoritePostList: favoritePostsByUser)));
+    final findReelsByUserResponse = await findPostsByUserUseCase(
+        FindPostsByUserParams(userUid, FindPostTypeEnum.reels));
+    findReelsByUserResponse.fold(
+        (l) => emit(state.copyWith(isReelsGridLoading: false)),
+        (reelsByUser) => emit(state.copyWith(
+            isReelsGridLoading: false,
+            reelsList: reelsByUser,
+            postLen: state.postLen + reelsByUser.length)));
 
     final findBookmarkPostsByUserResponse =
         await findBookmarkPostsByUserUseCase(
