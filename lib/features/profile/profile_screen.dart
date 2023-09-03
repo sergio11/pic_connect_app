@@ -147,7 +147,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 5),
-          child: buildCircleAvatar(state.photoUrl),
+          child: buildCircleAvatar(imageUrl: state.photoUrl),
         ),
         Expanded(
           flex: 1,
@@ -323,15 +323,15 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
               childAspectRatio: 1,
             ),
             itemBuilder: (context, index) {
-              return isLoading
-                  ? _buildProgressIndicator()
-                  : _buildPostItem(data[index]);
+              return _buildPostItem(data[index]);
             },
           )
         : SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
-            child: EmptyStateWidget(
-                message: noDataMessage, iconData: Icons.mood_bad),
+            child: isLoading
+                ? _buildProgressIndicator()
+                : EmptyStateWidget(
+                    message: noDataMessage, iconData: Icons.mood_bad),
           );
   }
 

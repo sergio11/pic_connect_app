@@ -22,7 +22,9 @@ mixin _$AddPostEvent {
         addNewPost,
     required TResult Function(String imageFilePath) onPhotoSelected,
     required TResult Function(String videoFilePath) onVideoSelected,
-    required TResult Function(String description, List<String> tags) uploadPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,7 +33,8 @@ mixin _$AddPostEvent {
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String imageFilePath)? onPhotoSelected,
     TResult? Function(String videoFilePath)? onVideoSelected,
-    TResult? Function(String description, List<String> tags)? uploadPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,7 +43,8 @@ mixin _$AddPostEvent {
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String imageFilePath)? onPhotoSelected,
     TResult Function(String videoFilePath)? onVideoSelected,
-    TResult Function(String description, List<String> tags)? uploadPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) =>
@@ -181,7 +185,9 @@ class _$OnAddNewPostEvent
         addNewPost,
     required TResult Function(String imageFilePath) onPhotoSelected,
     required TResult Function(String videoFilePath) onVideoSelected,
-    required TResult Function(String description, List<String> tags) uploadPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
   }) {
     return addNewPost(imageSource, userUid);
@@ -193,7 +199,8 @@ class _$OnAddNewPostEvent
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String imageFilePath)? onPhotoSelected,
     TResult? Function(String videoFilePath)? onVideoSelected,
-    TResult? Function(String description, List<String> tags)? uploadPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return addNewPost?.call(imageSource, userUid);
@@ -205,7 +212,8 @@ class _$OnAddNewPostEvent
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String imageFilePath)? onPhotoSelected,
     TResult Function(String videoFilePath)? onVideoSelected,
-    TResult Function(String description, List<String> tags)? uploadPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
@@ -348,7 +356,9 @@ class _$OnPhotoSelectedEvent
         addNewPost,
     required TResult Function(String imageFilePath) onPhotoSelected,
     required TResult Function(String videoFilePath) onVideoSelected,
-    required TResult Function(String description, List<String> tags) uploadPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
   }) {
     return onPhotoSelected(imageFilePath);
@@ -360,7 +370,8 @@ class _$OnPhotoSelectedEvent
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String imageFilePath)? onPhotoSelected,
     TResult? Function(String videoFilePath)? onVideoSelected,
-    TResult? Function(String description, List<String> tags)? uploadPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return onPhotoSelected?.call(imageFilePath);
@@ -372,7 +383,8 @@ class _$OnPhotoSelectedEvent
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String imageFilePath)? onPhotoSelected,
     TResult Function(String videoFilePath)? onVideoSelected,
-    TResult Function(String description, List<String> tags)? uploadPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
@@ -513,7 +525,9 @@ class _$OnVideoSelectedEvent
         addNewPost,
     required TResult Function(String imageFilePath) onPhotoSelected,
     required TResult Function(String videoFilePath) onVideoSelected,
-    required TResult Function(String description, List<String> tags) uploadPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
   }) {
     return onVideoSelected(videoFilePath);
@@ -525,7 +539,8 @@ class _$OnVideoSelectedEvent
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String imageFilePath)? onPhotoSelected,
     TResult? Function(String videoFilePath)? onVideoSelected,
-    TResult? Function(String description, List<String> tags)? uploadPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return onVideoSelected?.call(videoFilePath);
@@ -537,7 +552,8 @@ class _$OnVideoSelectedEvent
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String imageFilePath)? onPhotoSelected,
     TResult Function(String videoFilePath)? onVideoSelected,
-    TResult Function(String description, List<String> tags)? uploadPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
@@ -604,7 +620,7 @@ abstract class _$$OnUploadPostEventCopyWith<$Res> {
           _$OnUploadPostEvent value, $Res Function(_$OnUploadPostEvent) then) =
       __$$OnUploadPostEventCopyWithImpl<$Res>;
   @useResult
-  $Res call({String description, List<String> tags});
+  $Res call({String placeInfo, String description, List<String> tags});
 }
 
 /// @nodoc
@@ -618,10 +634,15 @@ class __$$OnUploadPostEventCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? placeInfo = null,
     Object? description = null,
     Object? tags = null,
   }) {
     return _then(_$OnUploadPostEvent(
+      null == placeInfo
+          ? _value.placeInfo
+          : placeInfo // ignore: cast_nullable_to_non_nullable
+              as String,
       null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -639,9 +660,12 @@ class __$$OnUploadPostEventCopyWithImpl<$Res>
 class _$OnUploadPostEvent
     with DiagnosticableTreeMixin
     implements OnUploadPostEvent {
-  const _$OnUploadPostEvent(this.description, final List<String> tags)
+  const _$OnUploadPostEvent(
+      this.placeInfo, this.description, final List<String> tags)
       : _tags = tags;
 
+  @override
+  final String placeInfo;
   @override
   final String description;
   final List<String> _tags;
@@ -654,7 +678,7 @@ class _$OnUploadPostEvent
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AddPostEvent.uploadPost(description: $description, tags: $tags)';
+    return 'AddPostEvent.uploadPost(placeInfo: $placeInfo, description: $description, tags: $tags)';
   }
 
   @override
@@ -662,6 +686,7 @@ class _$OnUploadPostEvent
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AddPostEvent.uploadPost'))
+      ..add(DiagnosticsProperty('placeInfo', placeInfo))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('tags', tags));
   }
@@ -671,14 +696,16 @@ class _$OnUploadPostEvent
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnUploadPostEvent &&
+            (identical(other.placeInfo, placeInfo) ||
+                other.placeInfo == placeInfo) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, description, const DeepCollectionEquality().hash(_tags));
+  int get hashCode => Object.hash(runtimeType, placeInfo, description,
+      const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
@@ -693,10 +720,12 @@ class _$OnUploadPostEvent
         addNewPost,
     required TResult Function(String imageFilePath) onPhotoSelected,
     required TResult Function(String videoFilePath) onVideoSelected,
-    required TResult Function(String description, List<String> tags) uploadPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
   }) {
-    return uploadPost(description, tags);
+    return uploadPost(placeInfo, description, tags);
   }
 
   @override
@@ -705,10 +734,11 @@ class _$OnUploadPostEvent
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String imageFilePath)? onPhotoSelected,
     TResult? Function(String videoFilePath)? onVideoSelected,
-    TResult? Function(String description, List<String> tags)? uploadPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
   }) {
-    return uploadPost?.call(description, tags);
+    return uploadPost?.call(placeInfo, description, tags);
   }
 
   @override
@@ -717,12 +747,13 @@ class _$OnUploadPostEvent
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String imageFilePath)? onPhotoSelected,
     TResult Function(String videoFilePath)? onVideoSelected,
-    TResult Function(String description, List<String> tags)? uploadPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
     if (uploadPost != null) {
-      return uploadPost(description, tags);
+      return uploadPost(placeInfo, description, tags);
     }
     return orElse();
   }
@@ -769,9 +800,10 @@ class _$OnUploadPostEvent
 }
 
 abstract class OnUploadPostEvent implements AddPostEvent {
-  const factory OnUploadPostEvent(
+  const factory OnUploadPostEvent(final String placeInfo,
       final String description, final List<String> tags) = _$OnUploadPostEvent;
 
+  String get placeInfo;
   String get description;
   List<String> get tags;
   @JsonKey(ignore: true)
@@ -859,7 +891,9 @@ class _$OnEditedImageEvent
         addNewPost,
     required TResult Function(String imageFilePath) onPhotoSelected,
     required TResult Function(String videoFilePath) onVideoSelected,
-    required TResult Function(String description, List<String> tags) uploadPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
   }) {
     return editedImage(imageData);
@@ -871,7 +905,8 @@ class _$OnEditedImageEvent
     TResult? Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult? Function(String imageFilePath)? onPhotoSelected,
     TResult? Function(String videoFilePath)? onVideoSelected,
-    TResult? Function(String description, List<String> tags)? uploadPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
   }) {
     return editedImage?.call(imageData);
@@ -883,7 +918,8 @@ class _$OnEditedImageEvent
     TResult Function(ImageSource imageSource, String userUid)? addNewPost,
     TResult Function(String imageFilePath)? onPhotoSelected,
     TResult Function(String videoFilePath)? onVideoSelected,
-    TResult Function(String description, List<String> tags)? uploadPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
     required TResult orElse(),
   }) {
@@ -950,6 +986,7 @@ mixin _$AddPostState {
   String? get authorPhotoUrl => throw _privateConstructorUsedError;
   Uint8List? get imageData => throw _privateConstructorUsedError;
   String? get videoFilePath => throw _privateConstructorUsedError;
+  String? get placeInfo => throw _privateConstructorUsedError;
   bool get imageEditingRequired => throw _privateConstructorUsedError;
   bool get isPostUploading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -972,6 +1009,7 @@ abstract class $AddPostStateCopyWith<$Res> {
       String? authorPhotoUrl,
       Uint8List? imageData,
       String? videoFilePath,
+      String? placeInfo,
       bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
@@ -996,6 +1034,7 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
     Object? authorPhotoUrl = freezed,
     Object? imageData = freezed,
     Object? videoFilePath = freezed,
+    Object? placeInfo = freezed,
     Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
@@ -1018,6 +1057,10 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
       videoFilePath: freezed == videoFilePath
           ? _value.videoFilePath
           : videoFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      placeInfo: freezed == placeInfo
+          ? _value.placeInfo
+          : placeInfo // ignore: cast_nullable_to_non_nullable
               as String?,
       imageEditingRequired: null == imageEditingRequired
           ? _value.imageEditingRequired
@@ -1056,6 +1099,7 @@ abstract class _$$_AddPostStateCopyWith<$Res>
       String? authorPhotoUrl,
       Uint8List? imageData,
       String? videoFilePath,
+      String? placeInfo,
       bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
@@ -1078,6 +1122,7 @@ class __$$_AddPostStateCopyWithImpl<$Res>
     Object? authorPhotoUrl = freezed,
     Object? imageData = freezed,
     Object? videoFilePath = freezed,
+    Object? placeInfo = freezed,
     Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
@@ -1100,6 +1145,10 @@ class __$$_AddPostStateCopyWithImpl<$Res>
       videoFilePath: freezed == videoFilePath
           ? _value.videoFilePath
           : videoFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      placeInfo: freezed == placeInfo
+          ? _value.placeInfo
+          : placeInfo // ignore: cast_nullable_to_non_nullable
               as String?,
       imageEditingRequired: null == imageEditingRequired
           ? _value.imageEditingRequired
@@ -1133,6 +1182,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       this.authorPhotoUrl,
       this.imageData,
       this.videoFilePath,
+      this.placeInfo,
       this.imageEditingRequired = false,
       this.isPostUploading = false,
       this.isLoading = false,
@@ -1150,6 +1200,8 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
   @override
   final String? videoFilePath;
   @override
+  final String? placeInfo;
+  @override
   @JsonKey()
   final bool imageEditingRequired;
   @override
@@ -1166,7 +1218,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, imageData: $imageData, videoFilePath: $videoFilePath, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
+    return 'AddPostState(imageSource: $imageSource, authorPhotoUrl: $authorPhotoUrl, imageData: $imageData, videoFilePath: $videoFilePath, placeInfo: $placeInfo, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1178,6 +1230,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('authorPhotoUrl', authorPhotoUrl))
       ..add(DiagnosticsProperty('imageData', imageData))
       ..add(DiagnosticsProperty('videoFilePath', videoFilePath))
+      ..add(DiagnosticsProperty('placeInfo', placeInfo))
       ..add(DiagnosticsProperty('imageEditingRequired', imageEditingRequired))
       ..add(DiagnosticsProperty('isPostUploading', isPostUploading))
       ..add(DiagnosticsProperty('isLoading', isLoading))
@@ -1198,6 +1251,8 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.imageData, imageData) &&
             (identical(other.videoFilePath, videoFilePath) ||
                 other.videoFilePath == videoFilePath) &&
+            (identical(other.placeInfo, placeInfo) ||
+                other.placeInfo == placeInfo) &&
             (identical(other.imageEditingRequired, imageEditingRequired) ||
                 other.imageEditingRequired == imageEditingRequired) &&
             (identical(other.isPostUploading, isPostUploading) ||
@@ -1219,6 +1274,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       authorPhotoUrl,
       const DeepCollectionEquality().hash(imageData),
       videoFilePath,
+      placeInfo,
       imageEditingRequired,
       isPostUploading,
       isLoading,
@@ -1238,6 +1294,7 @@ abstract class _AddPostState extends AddPostState {
       final String? authorPhotoUrl,
       final Uint8List? imageData,
       final String? videoFilePath,
+      final String? placeInfo,
       final bool imageEditingRequired,
       final bool isPostUploading,
       final bool isLoading,
@@ -1253,6 +1310,8 @@ abstract class _AddPostState extends AddPostState {
   Uint8List? get imageData;
   @override
   String? get videoFilePath;
+  @override
+  String? get placeInfo;
   @override
   bool get imageEditingRequired;
   @override

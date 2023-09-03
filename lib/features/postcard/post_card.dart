@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/helpers.dart';
@@ -77,7 +75,6 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _onSaveBookmark(String postId) async {
-    debugPrint("onSaveBookmark -> $postId CALLED!");
     context.read<PostCardBloc>().add(OnSaveBookmarkEvent(postId));
   }
 
@@ -128,12 +125,7 @@ class _PostCardState extends State<PostCard> {
       ).copyWith(right: 0),
       child: Row(
         children: <Widget>[
-          CircleAvatar(
-            radius: 16,
-            backgroundImage: NetworkImage(
-              state.authorImageUrl,
-            ),
-          ),
+          buildCircleAvatar(imageUrl: state.authorImageUrl, radius: 16),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -149,9 +141,11 @@ class _PostCardState extends State<PostCard> {
                         color: accentColor, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Madrid, Spain",
+                    state.placeInfo,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: accentColor, fontWeight: FontWeight.w400),
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
                   )
                 ],
               ),

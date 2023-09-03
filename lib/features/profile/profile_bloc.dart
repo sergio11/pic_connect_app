@@ -99,7 +99,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         isLoading: true,
         isPictureGridLoading: true,
         isReelsGridLoading: true,
-        isBookmarkPostGridLoading: true));
+        isBookmarkPostGridLoading: true,
+        postLen: 0));
     final getUserDetailResponse =
         await getUserDetailsUseCase(GetUserDetailsParams(userUid));
     final getAuthUserUidResponse =

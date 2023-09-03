@@ -4,11 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:intl/intl.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/usecase/delete_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/like_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/save_bookmark_use_case.dart';
+import 'package:pic_connect/utils/date_formatter.dart';
 
 part 'post_card_event.dart';
 
@@ -46,7 +46,8 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
         tags: event.post.tags,
         isReel: event.post.isReel,
         description: event.post.description,
-        datePublished: DateFormat.yMMMd().format(event.post.datePublished),
+        placeInfo: event.post.placeInfo ?? "",
+        datePublished: DateFormatter.getTimeAgo(event.post.datePublished),
         postImageUrl: event.post.postUrl,
         authorImageUrl: event.post.profImage));
   }
@@ -70,7 +71,6 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
 
   FutureOr<void> onSaveBookmarkEventHandler(
       OnSaveBookmarkEvent event, Emitter<PostCardState> emit) async {
-    debugPrint("onSaveBookmarkEventHandler -> ${event.postId} CALLED!");
     final response =
         await saveBookmarkUseCase(SaveBookmarkParams(event.postId));
     response.fold((failure) => null,

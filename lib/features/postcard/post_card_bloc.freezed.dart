@@ -692,6 +692,7 @@ mixin _$PostCardState {
   String get description => throw _privateConstructorUsedError;
   String get datePublished => throw _privateConstructorUsedError;
   String get postImageUrl => throw _privateConstructorUsedError;
+  String get placeInfo => throw _privateConstructorUsedError;
   bool get isPostDeleted => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
   String get authorImageUrl => throw _privateConstructorUsedError;
@@ -719,6 +720,7 @@ abstract class $PostCardStateCopyWith<$Res> {
       String description,
       String datePublished,
       String postImageUrl,
+      String placeInfo,
       bool isPostDeleted,
       List<String> tags,
       String authorImageUrl});
@@ -748,6 +750,7 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
     Object? description = null,
     Object? datePublished = null,
     Object? postImageUrl = null,
+    Object? placeInfo = null,
     Object? isPostDeleted = null,
     Object? tags = null,
     Object? authorImageUrl = null,
@@ -797,6 +800,10 @@ class _$PostCardStateCopyWithImpl<$Res, $Val extends PostCardState>
           ? _value.postImageUrl
           : postImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      placeInfo: null == placeInfo
+          ? _value.placeInfo
+          : placeInfo // ignore: cast_nullable_to_non_nullable
+              as String,
       isPostDeleted: null == isPostDeleted
           ? _value.isPostDeleted
           : isPostDeleted // ignore: cast_nullable_to_non_nullable
@@ -833,6 +840,7 @@ abstract class _$$_PostCardStateCopyWith<$Res>
       String description,
       String datePublished,
       String postImageUrl,
+      String placeInfo,
       bool isPostDeleted,
       List<String> tags,
       String authorImageUrl});
@@ -860,6 +868,7 @@ class __$$_PostCardStateCopyWithImpl<$Res>
     Object? description = null,
     Object? datePublished = null,
     Object? postImageUrl = null,
+    Object? placeInfo = null,
     Object? isPostDeleted = null,
     Object? tags = null,
     Object? authorImageUrl = null,
@@ -909,6 +918,10 @@ class __$$_PostCardStateCopyWithImpl<$Res>
           ? _value.postImageUrl
           : postImageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      placeInfo: null == placeInfo
+          ? _value.placeInfo
+          : placeInfo // ignore: cast_nullable_to_non_nullable
+              as String,
       isPostDeleted: null == isPostDeleted
           ? _value.isPostDeleted
           : isPostDeleted // ignore: cast_nullable_to_non_nullable
@@ -940,6 +953,7 @@ class _$_PostCardState implements _PostCardState {
       this.description = "",
       this.datePublished = "",
       this.postImageUrl = "",
+      this.placeInfo = "",
       this.isPostDeleted = false,
       final List<String> tags = const [],
       this.authorImageUrl = "https://i.stack.imgur.com/l60Hf.png"})
@@ -980,6 +994,9 @@ class _$_PostCardState implements _PostCardState {
   final String postImageUrl;
   @override
   @JsonKey()
+  final String placeInfo;
+  @override
+  @JsonKey()
   final bool isPostDeleted;
   final List<String> _tags;
   @override
@@ -996,7 +1013,7 @@ class _$_PostCardState implements _PostCardState {
 
   @override
   String toString() {
-    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, isReel: $isReel, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
+    return 'PostCardState(isPostOwner: $isPostOwner, isLikedByAuthUser: $isLikedByAuthUser, isBookmarkedByAuthUser: $isBookmarkedByAuthUser, isReel: $isReel, likes: $likes, commentCount: $commentCount, postId: $postId, username: $username, description: $description, datePublished: $datePublished, postImageUrl: $postImageUrl, placeInfo: $placeInfo, isPostDeleted: $isPostDeleted, tags: $tags, authorImageUrl: $authorImageUrl)';
   }
 
   @override
@@ -1023,6 +1040,8 @@ class _$_PostCardState implements _PostCardState {
                 other.datePublished == datePublished) &&
             (identical(other.postImageUrl, postImageUrl) ||
                 other.postImageUrl == postImageUrl) &&
+            (identical(other.placeInfo, placeInfo) ||
+                other.placeInfo == placeInfo) &&
             (identical(other.isPostDeleted, isPostDeleted) ||
                 other.isPostDeleted == isPostDeleted) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
@@ -1044,6 +1063,7 @@ class _$_PostCardState implements _PostCardState {
       description,
       datePublished,
       postImageUrl,
+      placeInfo,
       isPostDeleted,
       const DeepCollectionEquality().hash(_tags),
       authorImageUrl);
@@ -1068,6 +1088,7 @@ abstract class _PostCardState implements PostCardState {
       final String description,
       final String datePublished,
       final String postImageUrl,
+      final String placeInfo,
       final bool isPostDeleted,
       final List<String> tags,
       final String authorImageUrl}) = _$_PostCardState;
@@ -1094,6 +1115,8 @@ abstract class _PostCardState implements PostCardState {
   String get datePublished;
   @override
   String get postImageUrl;
+  @override
+  String get placeInfo;
   @override
   bool get isPostDeleted;
   @override

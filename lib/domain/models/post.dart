@@ -12,6 +12,7 @@ class PostBO {
   final int commentCount;
   final List<String> tags;
   final bool isReel;
+  final String? placeInfo;
 
   const PostBO({
     required this.description,
@@ -25,6 +26,7 @@ class PostBO {
     required this.profImage,
     required this.commentCount,
     required this.tags,
-    required this.isReel
+    required this.isReel,
+    this.placeInfo
   });
 }

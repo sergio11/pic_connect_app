@@ -13,10 +13,17 @@ class PostDtoMapper extends Mapper<DocumentSnapshot, PostDTO> {
         datePublished: (snapshot['datePublished'] as Timestamp).toDate(),
         postUrl: snapshot['postUrl'],
         isReel: snapshot['isReel'] is bool ? snapshot['isReel'] as bool : false,
-        likes: snapshot['likes'] is List ? List<String>.from(snapshot['likes'] as List) : [],
-        bookmarks: snapshot['bookmarks'] is List ? List<String>.from(snapshot['bookmarks'] as List) : [],
-        commentCount: snapshot['commentsCount'] is int ? snapshot['commentsCount'] : 0,
-        tags: snapshot['tags'] is List ? List<String>.from(snapshot['tags'] as List) : []
-    );
+        likes: snapshot['likes'] is List
+            ? List<String>.from(snapshot['likes'] as List)
+            : [],
+        bookmarks: snapshot['bookmarks'] is List
+            ? List<String>.from(snapshot['bookmarks'] as List)
+            : [],
+        commentCount:
+            snapshot['commentsCount'] is int ? snapshot['commentsCount'] : 0,
+        tags: snapshot['tags'] is List
+            ? List<String>.from(snapshot['tags'] as List)
+            : [],
+        placeInfo: snapshot['placeInfo']);
   }
 }

@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/domain/usecase/get_user_details_use_case.dart';
 import 'package:pic_connect/domain/usecase/publish_post_use_case.dart';
+import 'package:pic_connect/utils/geolocator.dart';
 
 part 'add_post_event.dart';
 part 'add_post_state.dart';
@@ -43,16 +44,22 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
   FutureOr<void> onPhotoSelectedEventHandler(
       OnPhotoSelectedEvent event, Emitter<AddPostState> emit) async {
     final imageData = await File(event.imageFilePath).readAsBytes();
+    final placeInfo = await _fetchPlaceInfo();
     emit(state.copyWith(
-        imageData: imageData, imageEditingRequired: true, videoFilePath: null));
+        imageData: imageData,
+        imageEditingRequired: true,
+        videoFilePath: null,
+        placeInfo: placeInfo));
   }
 
   FutureOr<void> onVideoSelectedEventHandler(
       OnVideoSelectedEvent event, Emitter<AddPostState> emit) async {
+    final placeInfo = await _fetchPlaceInfo();
     emit(state.copyWith(
         videoFilePath: event.videoFilePath,
         imageEditingRequired: false,
-        imageData: null));
+        imageData: null,
+        placeInfo: placeInfo));
   }
 
   FutureOr<void> onUploadPostEventHandler(
@@ -60,10 +67,11 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     if (state.imageData != null || state.videoFilePath != null) {
       if (event.description.isNotEmpty) {
         emit(state.copyWith(isPostUploading: true));
-        final fileData = state.imageData ?? await File(state.videoFilePath!).readAsBytes();
+        final fileData =
+            state.imageData ?? await File(state.videoFilePath!).readAsBytes();
         final isReel = state.videoFilePath != null;
-        final response = await publishPostUseCase(
-            PublishPostUseParams(event.description, fileData, isReel, event.tags));
+        final response = await publishPostUseCase(PublishPostUseParams(
+            event.description, fileData, isReel, event.tags, event.placeInfo));
         response.fold(
             (failure) => emit(state.copyWith(isPostUploading: false)),
             (userDetail) => emit(state.copyWith(
@@ -81,6 +89,14 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
 
   FutureOr<void> onEditedImageEventHandler(
       OnEditedImageEvent event, Emitter<AddPostState> emit) async {
-    emit(state.copyWith(imageData: event.imageData, imageEditingRequired: false));
+    emit(state.copyWith(
+        imageData: event.imageData, imageEditingRequired: false));
+  }
+
+  Future<String?> _fetchPlaceInfo() async {
+    final result = await GeoLocatorFacade.determinePlaceMark();
+    return result != null
+        ? "${result.locality}, ${result.administrativeArea}, ${result.country}"
+        : null;
   }
 }

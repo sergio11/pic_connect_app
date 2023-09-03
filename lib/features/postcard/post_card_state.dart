@@ -14,6 +14,7 @@ class PostCardState with _$PostCardState {
       @Default("") String description,
       @Default("") String datePublished,
       @Default("") String postImageUrl,
+      @Default("") String placeInfo,
       @Default(false) bool isPostDeleted,
       @Default([]) List<String> tags,
       @Default("https://i.stack.imgur.com/l60Hf.png")

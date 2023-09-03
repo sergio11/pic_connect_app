@@ -33,10 +33,10 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
-
   late StreamSubscription<bool> _keyboardSubscription;
   VideoPlayerController? _videoController;
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _placeInfoController = TextEditingController();
   final TextfieldTagsController _textFieldTagsController =
       TextfieldTagsController();
 
@@ -48,7 +48,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   void _onUploadPost() {
-    context.read<AddPostBloc>().add(OnUploadPostEvent(
+    context.read<AddPostBloc>().add(OnUploadPostEvent(_placeInfoController.text,
         _descriptionController.text, _textFieldTagsController.getTags ?? []));
   }
 
@@ -80,13 +80,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   void initState() {
     var keyboardVisibilityController = KeyboardVisibilityController();
-    _keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
-      if(visible) {
-        if(_videoController?.value.isPlaying == true) {
+    _keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (visible) {
+        if (_videoController?.value.isPlaying == true) {
           _videoController?.pause();
         }
       } else {
-        if(_videoController != null && _videoController?.value.isPlaying == false) {
+        if (_videoController != null &&
+            _videoController?.value.isPlaying == false) {
           _videoController?.play();
         }
       }
@@ -105,7 +107,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _onPostUploaded();
       } else if (state.errorMessage != null) {
         showErrorSnackBar(context: context, message: state.errorMessage!);
-      } else if(state.isPostUploading) {
+      } else if (state.isPostUploading) {
         _videoController?.pause();
       }
     }, builder: (context, state) {
@@ -119,6 +121,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     _keyboardSubscription.cancel();
     _descriptionController.dispose();
     _textFieldTagsController.dispose();
+    _placeInfoController.dispose();
     _videoController?.dispose();
   }
 
@@ -126,7 +129,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     if (state.shouldTakeContentFromCamera()) {
       return _buildTakeContentFromCamera(state);
     } else if (state.shouldFillPostData()) {
-      if(state.isPostUploading) {
+      if (state.isPostUploading) {
         return Stack(
           children: [
             _buildFillPostData(state),
@@ -181,8 +184,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
       onMediaTap: (mediaCapture) {
         final filePath = mediaCapture.captureRequest
             .when(single: (single) => single.file?.path);
-        if(filePath != null) {
-          if(mediaCapture.isPicture) {
+        if (filePath != null) {
+          if (mediaCapture.isPicture) {
             context.read<AddPostBloc>().add(OnPhotoSelectedEvent(filePath));
           } else {
             context.read<AddPostBloc>().add(OnVideoSelectedEvent(filePath));
@@ -245,6 +248,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     width: MediaQuery.of(context).size.width - 20,
+                    child: _buildPlaceInfoTextInput(state),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    width: MediaQuery.of(context).size.width - 20,
                     child: _buildPostTagsTextInput(state),
                   ),
                   const SizedBox(
@@ -264,6 +275,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPlaceInfoTextInput(AddPostState state) {
+    if (_placeInfoController.text.isEmpty) {
+      _placeInfoController.text = state.placeInfo ?? "";
+    }
+    return TextFieldInput(
+      hintText: 'Enter Place info',
+      textInputType: TextInputType.text,
+      icon: const Icon(Icons.location_on),
+      textEditingController: _placeInfoController,
+      maxLines: 1,
     );
   }
 
@@ -311,7 +335,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   Widget _buildVideoPreview(String videoPath) {
-    if(_videoController == null) {
+    if (_videoController == null) {
       _videoController = VideoPlayerController.file(File(videoPath));
       _videoController?.initialize();
       _videoController?.play();

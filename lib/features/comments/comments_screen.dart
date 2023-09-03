@@ -82,28 +82,31 @@ class _CommentsScreenState extends State<CommentsScreen> {
             () => onRefresh(state),
           );
         },
-        child: state.commentsByPost.isNotEmpty
-            ? ListView.separated(
-                padding: const EdgeInsets.only(top: 8),
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: state.commentsByPost.length,
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 8,
-                ),
-                itemBuilder: (ctx, index) => GestureDetector(
-                  onTap: () => widget.onShowUserProfile(
-                      state.commentsByPost[index].author.uid),
-                  child: CommentCard(
-                    commentBO: state.commentsByPost[index],
-                  ),
-                ),
-              )
-            : EmptyStateWidget(
-                message: "No comments found",
-                iconData: Icons.mood_bad,
-                onRetry: () => onRefresh(state),
-              ));
+        child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: state.commentsByPost.isNotEmpty
+                ? ListView.separated(
+                    padding: const EdgeInsets.only(top: 8),
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: state.commentsByPost.length,
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 8,
+                    ),
+                    itemBuilder: (ctx, index) => GestureDetector(
+                      onTap: () => widget.onShowUserProfile(
+                          state.commentsByPost[index].author.uid),
+                      child: CommentCard(
+                        commentBO: state.commentsByPost[index],
+                      ),
+                    ),
+                  )
+                : EmptyStateWidget(
+                    message: "No comments found",
+                    iconData: Icons.mood_bad,
+                    onRetry: () => onRefresh(state),
+                  )));
   }
 
   Widget _buildTextInput(CommentsState state) {

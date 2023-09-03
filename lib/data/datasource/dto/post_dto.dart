@@ -12,6 +12,7 @@ class PostDTO {
   final List<String> bookmarks;
   final int commentCount;
   final List<String> tags;
+  final String? placeInfo;
 
   PostDTO({
     required this.postId,
@@ -23,6 +24,7 @@ class PostDTO {
     required this.likes,
     required this.bookmarks,
     required this.commentCount,
-    required this.tags
+    required this.tags,
+    this.placeInfo
   });
 }

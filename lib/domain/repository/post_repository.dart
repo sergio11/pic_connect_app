@@ -11,7 +11,8 @@ abstract class PostRepository {
     required String description,
     required List<String> tags,
     required bool isReel,
-    required Uint8List file
+    required Uint8List file,
+    String? placeInfo
   });
 
   Future<Either<Failure, bool>> likePost({

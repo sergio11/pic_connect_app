@@ -15,7 +15,8 @@ class SavePostDtoMapper extends Mapper<SavePostDTO, Map<String, dynamic>> {
       "authorUid": object.authorUid,
       "datePublished": DateTime.now(),
       'postUrl': object.postUrl,
-      "tags": object.tags
+      "tags": object.tags,
+      "placeInfo": object.placeInfo
     };
   }
 }
