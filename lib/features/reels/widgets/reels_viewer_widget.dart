@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/reel.dart';
 import 'package:pic_connect/features/reels/widgets/reel_page_widget.dart';
 
@@ -7,27 +8,21 @@ import '../../../utils/colors.dart';
 
 class ReelsViewer extends StatefulWidget {
 
-  final List<ReelBO> reelsList;
+  final List<PostBO> reelsList;
   final Function(String postId) onGoToCommentsByPost;
   final Function(String postId) onShareContent;
   final Function(String userUid) onShowUserProfile;
-  final Function(String)? onLike;
+  final Function(String postId) onLikePost;
   final Function(int)? onIndexChanged;
-  final Function()? onClickMoreBtn;
-  final Function()? onFollow;
   final bool showProgressIndicator;
-  final Function()? onClickBackArrow;
 
   const ReelsViewer({
     Key? key,
     required this.reelsList,
-    this.onClickMoreBtn,
     required this.onGoToCommentsByPost,
     required this.onShowUserProfile,
-    this.onFollow,
-    this.onLike,
+    required this.onLikePost,
     required this.onShareContent,
-    this.onClickBackArrow,
     this.onIndexChanged,
     this.showProgressIndicator =true,
   }) : super(key: key);
@@ -49,13 +44,13 @@ class _ReelsViewerState extends State<ReelsViewer> {
     return Swiper(
       itemBuilder: (BuildContext context, int index) {
         return ReelsPage(
-          item: widget.reelsList[index],
+          reelPost: widget.reelsList[index],
           swiperController: controller,
           onShowUserProfile: widget.onShowUserProfile,
           showProgressIndicator: widget.showProgressIndicator,
-          onLikePost: (String postId) {  },
-          onShowCommentsByPost: (String postId) {  },
-          onShareContentClicked: (String postId) {  },
+          onLikePost: (String postId) => widget.onLikePost(postId),
+          onShowCommentsByPost: (String postId) => widget.onGoToCommentsByPost(postId),
+          onShareContentClicked: (String postId) => widget.onShareContent(postId),
           onSaveBookmark: (String postId) {  },
         );
       },

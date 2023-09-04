@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$FavoritesEvent {
+mixin _$ReelsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
@@ -34,33 +34,33 @@ mixin _$FavoritesEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadFavorites value) load,
+    required TResult Function(OnLoadTopReels value) load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadFavorites value)? load,
+    TResult? Function(OnLoadTopReels value)? load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadFavorites value)? load,
+    TResult Function(OnLoadTopReels value)? load,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FavoritesEventCopyWith<$Res> {
-  factory $FavoritesEventCopyWith(
-          FavoritesEvent value, $Res Function(FavoritesEvent) then) =
-      _$FavoritesEventCopyWithImpl<$Res, FavoritesEvent>;
+abstract class $ReelsEventCopyWith<$Res> {
+  factory $ReelsEventCopyWith(
+          ReelsEvent value, $Res Function(ReelsEvent) then) =
+      _$ReelsEventCopyWithImpl<$Res, ReelsEvent>;
 }
 
 /// @nodoc
-class _$FavoritesEventCopyWithImpl<$Res, $Val extends FavoritesEvent>
-    implements $FavoritesEventCopyWith<$Res> {
-  _$FavoritesEventCopyWithImpl(this._value, this._then);
+class _$ReelsEventCopyWithImpl<$Res, $Val extends ReelsEvent>
+    implements $ReelsEventCopyWith<$Res> {
+  _$ReelsEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -69,35 +69,35 @@ class _$FavoritesEventCopyWithImpl<$Res, $Val extends FavoritesEvent>
 }
 
 /// @nodoc
-abstract class _$$OnLoadFavoritesCopyWith<$Res> {
-  factory _$$OnLoadFavoritesCopyWith(
-          _$OnLoadFavorites value, $Res Function(_$OnLoadFavorites) then) =
-      __$$OnLoadFavoritesCopyWithImpl<$Res>;
+abstract class _$$OnLoadTopReelsCopyWith<$Res> {
+  factory _$$OnLoadTopReelsCopyWith(
+          _$OnLoadTopReels value, $Res Function(_$OnLoadTopReels) then) =
+      __$$OnLoadTopReelsCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$OnLoadFavoritesCopyWithImpl<$Res>
-    extends _$FavoritesEventCopyWithImpl<$Res, _$OnLoadFavorites>
-    implements _$$OnLoadFavoritesCopyWith<$Res> {
-  __$$OnLoadFavoritesCopyWithImpl(
-      _$OnLoadFavorites _value, $Res Function(_$OnLoadFavorites) _then)
+class __$$OnLoadTopReelsCopyWithImpl<$Res>
+    extends _$ReelsEventCopyWithImpl<$Res, _$OnLoadTopReels>
+    implements _$$OnLoadTopReelsCopyWith<$Res> {
+  __$$OnLoadTopReelsCopyWithImpl(
+      _$OnLoadTopReels _value, $Res Function(_$OnLoadTopReels) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$OnLoadFavorites implements OnLoadFavorites {
-  const _$OnLoadFavorites();
+class _$OnLoadTopReels implements OnLoadTopReels {
+  const _$OnLoadTopReels();
 
   @override
   String toString() {
-    return 'FavoritesEvent.load()';
+    return 'ReelsEvent.load()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OnLoadFavorites);
+        (other.runtimeType == runtimeType && other is _$OnLoadTopReels);
   }
 
   @override
@@ -134,7 +134,7 @@ class _$OnLoadFavorites implements OnLoadFavorites {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadFavorites value) load,
+    required TResult Function(OnLoadTopReels value) load,
   }) {
     return load(this);
   }
@@ -142,7 +142,7 @@ class _$OnLoadFavorites implements OnLoadFavorites {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadFavorites value)? load,
+    TResult? Function(OnLoadTopReels value)? load,
   }) {
     return load?.call(this);
   }
@@ -150,7 +150,7 @@ class _$OnLoadFavorites implements OnLoadFavorites {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadFavorites value)? load,
+    TResult Function(OnLoadTopReels value)? load,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -160,8 +160,8 @@ class _$OnLoadFavorites implements OnLoadFavorites {
   }
 }
 
-abstract class OnLoadFavorites implements FavoritesEvent {
-  const factory OnLoadFavorites() = _$OnLoadFavorites;
+abstract class OnLoadTopReels implements ReelsEvent {
+  const factory OnLoadTopReels() = _$OnLoadTopReels;
 }
 
 /// @nodoc

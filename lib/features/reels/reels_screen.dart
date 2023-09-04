@@ -5,17 +5,27 @@ import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/reels/reels_bloc.dart';
 import 'package:pic_connect/features/reels/widgets/reels_viewer_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
-import 'package:pic_connect/utils/mock_story_data.dart';
 import 'package:pic_connect/utils/utils.dart';
 
 class ReelsViewerScreen extends StatefulWidget {
-  const ReelsViewerScreen({Key? key}) : super(key: key);
+  final Function(String postId) onGoToCommentsByPost;
+  final Function(String userUid) onShowUserProfile;
+
+  const ReelsViewerScreen(
+      {Key? key,
+      required this.onGoToCommentsByPost,
+      required this.onShowUserProfile})
+      : super(key: key);
 
   @override
   State<ReelsViewerScreen> createState() => _ReelsViewerScreenState();
 }
 
 class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
+  void _refresh() {
+    context.read<ReelsBloc>().add(const OnLoadTopReels());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReelsBloc, ReelsState>(
@@ -33,7 +43,7 @@ class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
         body: state.isLoading
             ? _buildProgressIndicator()
             : state.topReels.isNotEmpty
-                ? _buildReelsViewer()
+                ? _buildReelsViewer(state)
                 : _buildNoDataFound());
   }
 
@@ -41,18 +51,20 @@ class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
     return const CommonScreenProgressIndicator();
   }
 
-  Widget _buildReelsViewer() {
+  Widget _buildReelsViewer(ReelsState state) {
     return ReelsViewer(
-      reelsList: reelsList,
-      onGoToCommentsByPost: (String postId) {},
+      reelsList: state.topReels,
+      onGoToCommentsByPost: widget.onGoToCommentsByPost,
       onShareContent: (String postId) {},
-      onShowUserProfile: (String userUid) {},
+      onShowUserProfile: widget.onShowUserProfile,
+      onLikePost: (String postId) {},
     );
   }
 
   Widget _buildNoDataFound() {
-    return const EmptyStateWidget(
+    return EmptyStateWidget(
         message: "No Reels was found, please try again later",
-        iconData: Icons.mood_bad);
+        iconData: Icons.mood_bad,
+        onRetry: _refresh);
   }
 }

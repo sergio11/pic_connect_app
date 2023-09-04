@@ -1,18 +1,21 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/reel.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
+import 'package:pic_connect/features/reels/reels_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/date_formatter.dart';
 import 'package:pic_connect/utils/url_checker.dart';
 import 'package:video_player/video_player.dart';
 
 class ReelsPage extends StatefulWidget {
-  final ReelBO item;
+  final PostBO reelPost;
 
   final Function(String userUid) onShowUserProfile;
   final Function(String postId) onLikePost;
@@ -24,7 +27,7 @@ class ReelsPage extends StatefulWidget {
 
   const ReelsPage({
     Key? key,
-    required this.item,
+    required this.reelPost,
     required this.onShowUserProfile,
     required this.onLikePost,
     required this.onShowCommentsByPost,
@@ -46,8 +49,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
 
   @override
   void initState() {
-    if (!UrlChecker.isImageUrl(widget.item.url) &&
-        UrlChecker.isValid(widget.item.url)) {
+    if (!UrlChecker.isImageUrl(widget.reelPost.postUrl) &&
+        UrlChecker.isValid(widget.reelPost.postUrl)) {
       initializePlayer();
     }
     super.initState();
@@ -56,8 +59,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
   @override
   void onResumed() {
     debugPrint("ReelsPage - onResumed CALLED!");
-    if (!UrlChecker.isImageUrl(widget.item.url) &&
-        UrlChecker.isValid(widget.item.url)) {
+    if (!UrlChecker.isImageUrl(widget.reelPost.postUrl) &&
+        UrlChecker.isValid(widget.reelPost.postUrl)) {
       initializePlayer();
     }
   }
@@ -99,7 +102,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
   }
 
   Future initializePlayer() async {
-    _videoPlayerController = VideoPlayerController.network(widget.item.url);
+    _videoPlayerController = VideoPlayerController.network(widget.reelPost.postUrl);
     await Future.wait([_videoPlayerController.initialize()]);
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
@@ -168,9 +171,9 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
       child: Row(
         children: <Widget>[
           GestureDetector(
-              onTap: () => widget.onShowUserProfile(widget.item.id),
+              onTap: () => widget.onShowUserProfile(widget.reelPost.postAuthorUid),
               child: buildCircleAvatar(
-                  imageUrl: widget.item.profileUrl, radius: 22)),
+                  imageUrl: widget.reelPost.profImage, radius: 22)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -181,12 +184,12 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Sergio Sánchez",
+                    widget.reelPost.username,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: primaryColor, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Madrid, Spain",
+                    widget.reelPost.placeInfo ?? "",
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: primaryColor, fontWeight: FontWeight.w400),
                     maxLines: 1,
@@ -223,17 +226,17 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                         Icons.favorite_border,
                         color: primaryColor,
                       ),
-                onPressed: () => widget.onLikePost(widget.item.id),
+                onPressed: () => widget.onLikePost(widget.reelPost.postId),
               ),
             ),
             IconButton(
               icon: const Icon(Icons.comment_outlined, color: primaryColor),
-              onPressed: () => widget.onShowCommentsByPost(widget.item.id),
+              onPressed: () => widget.onShowCommentsByPost(widget.reelPost.postId),
             ),
             IconButton(
                 icon: const Icon(Icons.share, color: primaryColor),
                 onPressed: () =>
-                    widget.onShareContentClicked(widget.item.id)),
+                    widget.onShareContentClicked(widget.reelPost.postId)),
             IconButton(
                 icon: true
                     ? const Icon(
@@ -244,7 +247,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                         Icons.bookmark_border,
                         color: primaryColor,
                       ),
-                onPressed: () => widget.onSaveBookmark(widget.item.id))
+                onPressed: () => widget.onSaveBookmark(widget.reelPost.postId))
           ],
         ));
   }
@@ -265,7 +268,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                   .titleSmall!
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
-                '10 likes',
+                '${widget.reelPost.likes.length} likes',
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall
@@ -281,12 +284,12 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                 style: const TextStyle(color: primaryColor),
                 children: [
                   TextSpan(
-                    text: "Sergio Sánchez",
+                    text: widget.reelPost.username,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: primaryColor, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                      text: ' ${widget.item.description}',
+                      text: ' ${widget.reelPost.description}',
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
@@ -299,19 +302,19 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
             child: Container(
               padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'View all 11 comments',
+                'View all ${widget.reelPost.commentCount} comments',
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall
                     ?.copyWith(color: primaryColor, fontWeight: FontWeight.w600),
               ),
             ),
-            onTap: () => widget.onShowCommentsByPost(widget.item.id),
+            onTap: () => widget.onShowCommentsByPost(widget.reelPost.postId),
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Text(
-              "15m ago",
+              DateFormatter.getTimeAgo(widget.reelPost.datePublished),
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
@@ -319,7 +322,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
             ),
           ),
           TagsRow(
-            tags: ["test", "flutter", "hola", "android"],
+            tags: widget.reelPost.tags,
             scrollController: ScrollController(),
             margin: const EdgeInsets.only(top: 10.0, bottom: 15.0, right: 5.0),
           ),

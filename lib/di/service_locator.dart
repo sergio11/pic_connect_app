@@ -45,6 +45,7 @@ import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_users_by_name_use_case.dart';
 import 'package:pic_connect/domain/usecase/follow_user_use_case.dart';
+import 'package:pic_connect/domain/usecase/get_top_reels_with_most_likes_use_case.dart';
 import 'package:pic_connect/domain/usecase/get_user_details_use_case.dart';
 import 'package:pic_connect/domain/usecase/get_auth_user_uid_use_case.dart';
 import 'package:pic_connect/domain/usecase/like_post_use_case.dart';
@@ -132,6 +133,7 @@ setupServiceLocator() async {
   serviceLocator.registerLazySingleton(() => FindBookmarkPostsByUserUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindAllThatUserIsFollowingByUseCase(userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() => FindFollowersByUserUseCase(userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => GetTopReelsWithMostLikesUseCase(postRepository: serviceLocator()));
   /// BloC ///
   serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
   serviceLocator.registerFactory(() =>
@@ -142,7 +144,7 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator(), findPostsByUserUseCase: serviceLocator(), followUserUseCase: serviceLocator(), unFollowUserUseCase: serviceLocator(), findFavoritesPostsByUserUseCase: serviceLocator(), findBookmarkPostsByUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc(findUsersByNameUseCase: serviceLocator(), findPostsOrderByDatePublishedUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => AddPostBloc(getUserDetailsUseCase: serviceLocator(), publishPostUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => ReelsBloc());
+  serviceLocator.registerFactory(() => ReelsBloc(getTopReelsWithMostLikesUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => PostCardBloc(deletePostUseCase: serviceLocator(), likePostUseCase: serviceLocator(), saveBookmarkUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator(), publishCommentUseCase: serviceLocator(), getUserDetailsUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => PublicationsBloc(findPostsByUserUseCase: serviceLocator(), findFavoritesPostsByUserUseCase: serviceLocator(), findBookmarkPostsByUserUseCase: serviceLocator()));

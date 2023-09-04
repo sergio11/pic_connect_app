@@ -299,8 +299,17 @@ class AppRouter {
                   name: AppRoutesEnum.reels.screenName,
                   builder: (BuildContext context, GoRouterState state) =>
                       BlocProvider(
-                        create: (context) => serviceLocator<ReelsBloc>(),
-                        child: const ReelsViewerScreen(),
+                        create: (context) => serviceLocator<ReelsBloc>()..add(const OnLoadTopReels()),
+                        child: ReelsViewerScreen(
+                          onGoToCommentsByPost: (String postId) {
+                            context.go(AppRoutesEnum.comments.screenPath,
+                                extra: postId);
+                          },
+                          onShowUserProfile: (String userUid) {
+                            context.push(AppRoutesEnum.profile.screenPath,
+                                extra: userUid);
+                          },
+                        ),
                       )),
             ],
           ),

@@ -27,20 +27,23 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<bool> likePost({required String postId, required String uid}) async {
-    final DocumentSnapshot snap =
-        await firestore.collection('posts').doc(postId).get();
-    List likes = (snap.data()! as dynamic)['likes'];
+    final DocumentReference postRef = firestore.collection('posts').doc(postId);
+    final DocumentSnapshot snap = await postRef.get();
+    Map<String, dynamic> postData = snap.data() as Map<String, dynamic>;
+    List<String> likes = List<String>.from(postData['likes'] ?? []);
     final bool isLikedByUser;
     if (likes.contains(uid)) {
-      // if the likes list contains the user uid, we need to remove it
-      firestore.collection('posts').doc(postId).update({
-        'likes': FieldValue.arrayRemove([uid])
+      likes.remove(uid);
+      await postRef.update({
+        'likes': likes,
+        'likesCount': FieldValue.increment(-1),
       });
       isLikedByUser = false;
     } else {
-      // else we need to add uid to the likes array
-      firestore.collection('posts').doc(postId).update({
-        'likes': FieldValue.arrayUnion([uid])
+      likes.add(uid);
+      await postRef.update({
+        'likes': likes,
+        'likesCount': FieldValue.increment(1),
       });
       isLikedByUser = true;
     }
@@ -185,5 +188,16 @@ class PostDatasourceImpl extends PostDatasource {
         .orderBy('datePublished', descending: true)
         .get();
     return bookmarkPostsByUser.docs.map((doc) => postMapper(doc)).toList();
+  }
+
+  @override
+  Future<List<PostDTO>> getReelsWithMostLikes(int limit) async {
+    final reelsWithMostLikes = await firestore
+        .collection('posts')
+        .where("isReel", isEqualTo: true)
+        .orderBy('likesCount', descending: true)
+        .limit(limit)
+        .get();
+    return reelsWithMostLikes.docs.map((doc) => postMapper(doc)).toList();
   }
 }

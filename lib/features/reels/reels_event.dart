@@ -1,6 +1,6 @@
 part of 'reels_bloc.dart';
 
 @freezed
-class FavoritesEvent with _$FavoritesEvent {
-  const factory FavoritesEvent.load() = OnLoadFavorites;
+class ReelsEvent with _$ReelsEvent {
+  const factory ReelsEvent.load() = OnLoadTopReels;
 }

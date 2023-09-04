@@ -210,6 +210,18 @@ class PostRepositoryImpl implements PostRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, List<PostBO>>> getReelsWithMostLikes(int limit) async {
+    try {
+      final postListDTO = await postDatasource.getReelsWithMostLikes(limit);
+      final posts = await Future.wait(postListDTO.map((postDTO) async  => _mapToPostBO(postDTO)));
+      return Right(posts);
+    } catch(ex) {
+      debugPrint("getReelsWithMostLikes - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
   Future<PostBO> _mapToPostBO(PostDTO post) async {
     final author = await userDatasource.findByUid(post.authorUid);
     return postBoMapper(PostBoMapperData(

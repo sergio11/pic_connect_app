@@ -48,4 +48,6 @@ abstract class PostRepository {
   Future<Either<Failure, List<PostBO>>> findAllBookmarkByUserUidOrderByDatePublished(String userUi);
 
   Future<Either<Failure, List<PostBO>>> findAllByUserUidListOrderByDatePublished(List<String> userUidList);
+
+  Future<Either<Failure, List<PostBO>>> getReelsWithMostLikes(int limit);
 }

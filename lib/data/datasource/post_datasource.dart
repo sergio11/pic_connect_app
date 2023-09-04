@@ -40,4 +40,6 @@ abstract class PostDatasource {
 
   Future<List<PostDTO>> findAllByUserUidListOrderByDatePublished(List<String> userUidList);
 
+  Future<List<PostDTO>> getReelsWithMostLikes(int limit);
+
 }
