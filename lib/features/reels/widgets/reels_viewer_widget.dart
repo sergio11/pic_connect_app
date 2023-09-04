@@ -8,10 +8,10 @@ import '../../../utils/colors.dart';
 class ReelsViewer extends StatefulWidget {
 
   final List<ReelBO> reelsList;
-  final bool showVerifiedTick;
-  final Function(String)? onShare;
+  final Function(String postId) onGoToCommentsByPost;
+  final Function(String postId) onShareContent;
+  final Function(String userUid) onShowUserProfile;
   final Function(String)? onLike;
-  final Function(String)? onComment;
   final Function(int)? onIndexChanged;
   final Function()? onClickMoreBtn;
   final Function()? onFollow;
@@ -21,12 +21,12 @@ class ReelsViewer extends StatefulWidget {
   const ReelsViewer({
     Key? key,
     required this.reelsList,
-    this.showVerifiedTick = true,
     this.onClickMoreBtn,
-    this.onComment,
+    required this.onGoToCommentsByPost,
+    required this.onShowUserProfile,
     this.onFollow,
     this.onLike,
-    this.onShare,
+    required this.onShareContent,
     this.onClickBackArrow,
     this.onIndexChanged,
     this.showProgressIndicator =true,
@@ -46,34 +46,25 @@ class _ReelsViewerState extends State<ReelsViewer> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: mobileBackgroundColor,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            //We need swiper for every content
-            Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                return ReelsPage(
-                  item: widget.reelsList[index],
-                  onClickMoreBtn: widget.onClickMoreBtn,
-                  onComment: widget.onComment,
-                  onFollow: widget.onFollow,
-                  onLike: widget.onLike,
-                  onShare: widget.onShare,
-                  showVerifiedTick: widget.showVerifiedTick,
-                  swiperController: controller,
-                  showProgressIndicator: widget.showProgressIndicator,
-                );
-              },
-              controller: controller,
-              itemCount: widget.reelsList.length,
-              scrollDirection: Axis.vertical,
-              onIndexChanged: widget.onIndexChanged,
-            ),
-          ],
-        ),
-      ),
+    return Swiper(
+      itemBuilder: (BuildContext context, int index) {
+        return ReelsPage(
+          item: widget.reelsList[index],
+          swiperController: controller,
+          onShowUserProfile: widget.onShowUserProfile,
+          showProgressIndicator: widget.showProgressIndicator,
+          onLikePost: (String postId) {  },
+          onShowCommentsByPost: (String postId) {  },
+          onShareContentClicked: (String postId) {  },
+          onSaveBookmark: (String postId) {  },
+        );
+      },
+      indicatorLayout: PageIndicatorLayout.SCALE,
+      itemCount: widget.reelsList.length,
+      loop: true,
+      controller: controller,
+      scrollDirection: Axis.vertical,
+      onIndexChanged: widget.onIndexChanged,
     );
   }
 }

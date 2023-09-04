@@ -167,6 +167,7 @@ abstract class OnLoadFavorites implements FavoritesEvent {
 /// @nodoc
 mixin _$ReelsState {
   bool get isLoading => throw _privateConstructorUsedError;
+  List<PostBO> get topReels => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -180,7 +181,7 @@ abstract class $ReelsStateCopyWith<$Res> {
           ReelsState value, $Res Function(ReelsState) then) =
       _$ReelsStateCopyWithImpl<$Res, ReelsState>;
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call({bool isLoading, List<PostBO> topReels, String? errorMessage});
 }
 
 /// @nodoc
@@ -197,6 +198,7 @@ class _$ReelsStateCopyWithImpl<$Res, $Val extends ReelsState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? topReels = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -204,6 +206,10 @@ class _$ReelsStateCopyWithImpl<$Res, $Val extends ReelsState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      topReels: null == topReels
+          ? _value.topReels
+          : topReels // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -220,7 +226,7 @@ abstract class _$$_ReelsStateCopyWith<$Res>
       __$$_ReelsStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String? errorMessage});
+  $Res call({bool isLoading, List<PostBO> topReels, String? errorMessage});
 }
 
 /// @nodoc
@@ -235,6 +241,7 @@ class __$$_ReelsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? topReels = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ReelsState(
@@ -242,6 +249,10 @@ class __$$_ReelsStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      topReels: null == topReels
+          ? _value._topReels
+          : topReels // ignore: cast_nullable_to_non_nullable
+              as List<PostBO>,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -253,17 +264,30 @@ class __$$_ReelsStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ReelsState implements _ReelsState {
-  const _$_ReelsState({this.isLoading = false, this.errorMessage});
+  const _$_ReelsState(
+      {this.isLoading = false,
+      final List<PostBO> topReels = const [],
+      this.errorMessage})
+      : _topReels = topReels;
 
   @override
   @JsonKey()
   final bool isLoading;
+  final List<PostBO> _topReels;
+  @override
+  @JsonKey()
+  List<PostBO> get topReels {
+    if (_topReels is EqualUnmodifiableListView) return _topReels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_topReels);
+  }
+
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ReelsState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'ReelsState(isLoading: $isLoading, topReels: $topReels, errorMessage: $errorMessage)';
   }
 
   @override
@@ -273,12 +297,14 @@ class _$_ReelsState implements _ReelsState {
             other is _$_ReelsState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            const DeepCollectionEquality().equals(other._topReels, _topReels) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode => Object.hash(runtimeType, isLoading,
+      const DeepCollectionEquality().hash(_topReels), errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -289,10 +315,14 @@ class _$_ReelsState implements _ReelsState {
 
 abstract class _ReelsState implements ReelsState {
   const factory _ReelsState(
-      {final bool isLoading, final String? errorMessage}) = _$_ReelsState;
+      {final bool isLoading,
+      final List<PostBO> topReels,
+      final String? errorMessage}) = _$_ReelsState;
 
   @override
   bool get isLoading;
+  @override
+  List<PostBO> get topReels;
   @override
   String? get errorMessage;
   @override
