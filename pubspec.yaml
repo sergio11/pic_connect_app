@@ -70,6 +70,7 @@ dependencies:
   autoscale_tabbarview: ^1.0.2
   geocoding: ^2.1.0
   geolocator: ^10.0.0
+  country_picker: ^2.0.21
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

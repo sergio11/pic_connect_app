@@ -45,5 +45,9 @@
   "signUpPasswordNotValid": "Password is not valid.",
   "signUpPasswordNotMatch": "Passwords do not match.",
   "feedScreenNoDataFound": "No data found.",
-  "profileNoDataFound": "No data found on this profile."
+  "profileNoDataFound": "No data found on this profile.",
+  "editProfileEmailTextInput": "",
+  "editProfileUsernameTextInput": "",
+  "editProfileUsernameNoValid": "",
+  "editProfileBioTextInput": ""
 }

@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pic_connect/data/datasource/auth_datasource.dart';
 
 class AuthDatasourceImpl extends AuthDatasource {
-
   final FirebaseAuth auth;
 
-  AuthDatasourceImpl({ required this.auth });
+  AuthDatasourceImpl({required this.auth});
 
   @override
   Future<bool> isLoggedIn() async {
@@ -13,7 +12,8 @@ class AuthDatasourceImpl extends AuthDatasource {
   }
 
   @override
-  Future<String> signInUser({required String email, required String password}) async {
+  Future<String> signInUser(
+      {required String email, required String password}) async {
     final cred = await auth.signInWithEmailAndPassword(
       email: email,
       password: password,
@@ -27,7 +27,8 @@ class AuthDatasourceImpl extends AuthDatasource {
   }
 
   @override
-  Future<String> signUpUser({required String email, required String password}) async {
+  Future<String> signUpUser(
+      {required String email, required String password}) async {
     final cred = await auth.createUserWithEmailAndPassword(
       email: email,
       password: password,

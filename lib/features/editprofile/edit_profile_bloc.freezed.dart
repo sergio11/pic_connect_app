@@ -16,42 +16,59 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EditProfilesEvent {
-  String get uid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String uid) editProfile,
+    required TResult Function(String uid) onEditProfile,
+    required TResult Function(String email, String username, String bio,
+            String birthDate, String country)
+        onUpdateProfile,
+    required TResult Function(ImageSource imageSource)
+        onUpdateProfileImageEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String uid)? editProfile,
+    TResult? Function(String uid)? onEditProfile,
+    TResult? Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult? Function(ImageSource imageSource)? onUpdateProfileImageEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String uid)? editProfile,
+    TResult Function(String uid)? onEditProfile,
+    TResult Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult Function(ImageSource imageSource)? onUpdateProfileImageEvent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnEditProfileEvent value) editProfile,
+    required TResult Function(OnEditProfileEvent value) onEditProfile,
+    required TResult Function(OnUpdateProfileEvent value) onUpdateProfile,
+    required TResult Function(OnUpdateProfileImageEvent value)
+        onUpdateProfileImageEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnEditProfileEvent value)? editProfile,
+    TResult? Function(OnEditProfileEvent value)? onEditProfile,
+    TResult? Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult? Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnEditProfileEvent value)? editProfile,
+    TResult Function(OnEditProfileEvent value)? onEditProfile,
+    TResult Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $EditProfilesEventCopyWith<EditProfilesEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +77,6 @@ abstract class $EditProfilesEventCopyWith<$Res> {
   factory $EditProfilesEventCopyWith(
           EditProfilesEvent value, $Res Function(EditProfilesEvent) then) =
       _$EditProfilesEventCopyWithImpl<$Res, EditProfilesEvent>;
-  @useResult
-  $Res call({String uid});
 }
 
 /// @nodoc
@@ -73,28 +88,13 @@ class _$EditProfilesEventCopyWithImpl<$Res, $Val extends EditProfilesEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? uid = null,
-  }) {
-    return _then(_value.copyWith(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnEditProfileEventCopyWith<$Res>
-    implements $EditProfilesEventCopyWith<$Res> {
+abstract class _$$OnEditProfileEventCopyWith<$Res> {
   factory _$$OnEditProfileEventCopyWith(_$OnEditProfileEvent value,
           $Res Function(_$OnEditProfileEvent) then) =
       __$$OnEditProfileEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String uid});
 }
@@ -131,7 +131,7 @@ class _$OnEditProfileEvent implements OnEditProfileEvent {
 
   @override
   String toString() {
-    return 'EditProfilesEvent.editProfile(uid: $uid)';
+    return 'EditProfilesEvent.onEditProfile(uid: $uid)';
   }
 
   @override
@@ -155,27 +155,40 @@ class _$OnEditProfileEvent implements OnEditProfileEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String uid) editProfile,
+    required TResult Function(String uid) onEditProfile,
+    required TResult Function(String email, String username, String bio,
+            String birthDate, String country)
+        onUpdateProfile,
+    required TResult Function(ImageSource imageSource)
+        onUpdateProfileImageEvent,
   }) {
-    return editProfile(uid);
+    return onEditProfile(uid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String uid)? editProfile,
+    TResult? Function(String uid)? onEditProfile,
+    TResult? Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult? Function(ImageSource imageSource)? onUpdateProfileImageEvent,
   }) {
-    return editProfile?.call(uid);
+    return onEditProfile?.call(uid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String uid)? editProfile,
+    TResult Function(String uid)? onEditProfile,
+    TResult Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult Function(ImageSource imageSource)? onUpdateProfileImageEvent,
     required TResult orElse(),
   }) {
-    if (editProfile != null) {
-      return editProfile(uid);
+    if (onEditProfile != null) {
+      return onEditProfile(uid);
     }
     return orElse();
   }
@@ -183,27 +196,36 @@ class _$OnEditProfileEvent implements OnEditProfileEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnEditProfileEvent value) editProfile,
+    required TResult Function(OnEditProfileEvent value) onEditProfile,
+    required TResult Function(OnUpdateProfileEvent value) onUpdateProfile,
+    required TResult Function(OnUpdateProfileImageEvent value)
+        onUpdateProfileImageEvent,
   }) {
-    return editProfile(this);
+    return onEditProfile(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnEditProfileEvent value)? editProfile,
+    TResult? Function(OnEditProfileEvent value)? onEditProfile,
+    TResult? Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult? Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
   }) {
-    return editProfile?.call(this);
+    return onEditProfile?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnEditProfileEvent value)? editProfile,
+    TResult Function(OnEditProfileEvent value)? onEditProfile,
+    TResult Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
     required TResult orElse(),
   }) {
-    if (editProfile != null) {
-      return editProfile(this);
+    if (onEditProfile != null) {
+      return onEditProfile(this);
     }
     return orElse();
   }
@@ -212,12 +234,367 @@ class _$OnEditProfileEvent implements OnEditProfileEvent {
 abstract class OnEditProfileEvent implements EditProfilesEvent {
   const factory OnEditProfileEvent(final String uid) = _$OnEditProfileEvent;
 
-  @override
   String get uid;
-  @override
   @JsonKey(ignore: true)
   _$$OnEditProfileEventCopyWith<_$OnEditProfileEvent> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnUpdateProfileEventCopyWith<$Res> {
+  factory _$$OnUpdateProfileEventCopyWith(_$OnUpdateProfileEvent value,
+          $Res Function(_$OnUpdateProfileEvent) then) =
+      __$$OnUpdateProfileEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String email,
+      String username,
+      String bio,
+      String birthDate,
+      String country});
+}
+
+/// @nodoc
+class __$$OnUpdateProfileEventCopyWithImpl<$Res>
+    extends _$EditProfilesEventCopyWithImpl<$Res, _$OnUpdateProfileEvent>
+    implements _$$OnUpdateProfileEventCopyWith<$Res> {
+  __$$OnUpdateProfileEventCopyWithImpl(_$OnUpdateProfileEvent _value,
+      $Res Function(_$OnUpdateProfileEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? email = null,
+    Object? username = null,
+    Object? bio = null,
+    Object? birthDate = null,
+    Object? country = null,
+  }) {
+    return _then(_$OnUpdateProfileEvent(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      bio: null == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthDate: null == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUpdateProfileEvent implements OnUpdateProfileEvent {
+  const _$OnUpdateProfileEvent(
+      {required this.email,
+      required this.username,
+      required this.bio,
+      required this.birthDate,
+      required this.country});
+
+  @override
+  final String email;
+  @override
+  final String username;
+  @override
+  final String bio;
+  @override
+  final String birthDate;
+  @override
+  final String country;
+
+  @override
+  String toString() {
+    return 'EditProfilesEvent.onUpdateProfile(email: $email, username: $username, bio: $bio, birthDate: $birthDate, country: $country)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUpdateProfileEvent &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.birthDate, birthDate) ||
+                other.birthDate == birthDate) &&
+            (identical(other.country, country) || other.country == country));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, email, username, bio, birthDate, country);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUpdateProfileEventCopyWith<_$OnUpdateProfileEvent> get copyWith =>
+      __$$OnUpdateProfileEventCopyWithImpl<_$OnUpdateProfileEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uid) onEditProfile,
+    required TResult Function(String email, String username, String bio,
+            String birthDate, String country)
+        onUpdateProfile,
+    required TResult Function(ImageSource imageSource)
+        onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfile(email, username, bio, birthDate, country);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uid)? onEditProfile,
+    TResult? Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult? Function(ImageSource imageSource)? onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfile?.call(email, username, bio, birthDate, country);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uid)? onEditProfile,
+    TResult Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult Function(ImageSource imageSource)? onUpdateProfileImageEvent,
+    required TResult orElse(),
+  }) {
+    if (onUpdateProfile != null) {
+      return onUpdateProfile(email, username, bio, birthDate, country);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnEditProfileEvent value) onEditProfile,
+    required TResult Function(OnUpdateProfileEvent value) onUpdateProfile,
+    required TResult Function(OnUpdateProfileImageEvent value)
+        onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfile(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnEditProfileEvent value)? onEditProfile,
+    TResult? Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult? Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfile?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnEditProfileEvent value)? onEditProfile,
+    TResult Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
+    required TResult orElse(),
+  }) {
+    if (onUpdateProfile != null) {
+      return onUpdateProfile(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUpdateProfileEvent implements EditProfilesEvent {
+  const factory OnUpdateProfileEvent(
+      {required final String email,
+      required final String username,
+      required final String bio,
+      required final String birthDate,
+      required final String country}) = _$OnUpdateProfileEvent;
+
+  String get email;
+  String get username;
+  String get bio;
+  String get birthDate;
+  String get country;
+  @JsonKey(ignore: true)
+  _$$OnUpdateProfileEventCopyWith<_$OnUpdateProfileEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnUpdateProfileImageEventCopyWith<$Res> {
+  factory _$$OnUpdateProfileImageEventCopyWith(
+          _$OnUpdateProfileImageEvent value,
+          $Res Function(_$OnUpdateProfileImageEvent) then) =
+      __$$OnUpdateProfileImageEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ImageSource imageSource});
+}
+
+/// @nodoc
+class __$$OnUpdateProfileImageEventCopyWithImpl<$Res>
+    extends _$EditProfilesEventCopyWithImpl<$Res, _$OnUpdateProfileImageEvent>
+    implements _$$OnUpdateProfileImageEventCopyWith<$Res> {
+  __$$OnUpdateProfileImageEventCopyWithImpl(_$OnUpdateProfileImageEvent _value,
+      $Res Function(_$OnUpdateProfileImageEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? imageSource = null,
+  }) {
+    return _then(_$OnUpdateProfileImageEvent(
+      null == imageSource
+          ? _value.imageSource
+          : imageSource // ignore: cast_nullable_to_non_nullable
+              as ImageSource,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUpdateProfileImageEvent implements OnUpdateProfileImageEvent {
+  const _$OnUpdateProfileImageEvent(this.imageSource);
+
+  @override
+  final ImageSource imageSource;
+
+  @override
+  String toString() {
+    return 'EditProfilesEvent.onUpdateProfileImageEvent(imageSource: $imageSource)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUpdateProfileImageEvent &&
+            (identical(other.imageSource, imageSource) ||
+                other.imageSource == imageSource));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, imageSource);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUpdateProfileImageEventCopyWith<_$OnUpdateProfileImageEvent>
+      get copyWith => __$$OnUpdateProfileImageEventCopyWithImpl<
+          _$OnUpdateProfileImageEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uid) onEditProfile,
+    required TResult Function(String email, String username, String bio,
+            String birthDate, String country)
+        onUpdateProfile,
+    required TResult Function(ImageSource imageSource)
+        onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfileImageEvent(imageSource);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uid)? onEditProfile,
+    TResult? Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult? Function(ImageSource imageSource)? onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfileImageEvent?.call(imageSource);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uid)? onEditProfile,
+    TResult Function(String email, String username, String bio,
+            String birthDate, String country)?
+        onUpdateProfile,
+    TResult Function(ImageSource imageSource)? onUpdateProfileImageEvent,
+    required TResult orElse(),
+  }) {
+    if (onUpdateProfileImageEvent != null) {
+      return onUpdateProfileImageEvent(imageSource);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnEditProfileEvent value) onEditProfile,
+    required TResult Function(OnUpdateProfileEvent value) onUpdateProfile,
+    required TResult Function(OnUpdateProfileImageEvent value)
+        onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfileImageEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnEditProfileEvent value)? onEditProfile,
+    TResult? Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult? Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
+  }) {
+    return onUpdateProfileImageEvent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnEditProfileEvent value)? onEditProfile,
+    TResult Function(OnUpdateProfileEvent value)? onUpdateProfile,
+    TResult Function(OnUpdateProfileImageEvent value)?
+        onUpdateProfileImageEvent,
+    required TResult orElse(),
+  }) {
+    if (onUpdateProfileImageEvent != null) {
+      return onUpdateProfileImageEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUpdateProfileImageEvent implements EditProfilesEvent {
+  const factory OnUpdateProfileImageEvent(final ImageSource imageSource) =
+      _$OnUpdateProfileImageEvent;
+
+  ImageSource get imageSource;
+  @JsonKey(ignore: true)
+  _$$OnUpdateProfileImageEventCopyWith<_$OnUpdateProfileImageEvent>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -225,6 +602,13 @@ mixin _$EditProfileState {
   bool get isLoading => throw _privateConstructorUsedError;
   Uint8List? get image => throw _privateConstructorUsedError;
   bool get allowUserInput => throw _privateConstructorUsedError;
+  String get userUid => throw _privateConstructorUsedError;
+  String get username => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get bio => throw _privateConstructorUsedError;
+  String get photoUrl => throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
+  String get birthDate => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -242,6 +626,13 @@ abstract class $EditProfileStateCopyWith<$Res> {
       {bool isLoading,
       Uint8List? image,
       bool allowUserInput,
+      String userUid,
+      String username,
+      String email,
+      String bio,
+      String photoUrl,
+      String country,
+      String birthDate,
       String? errorMessage});
 }
 
@@ -261,6 +652,13 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
     Object? isLoading = null,
     Object? image = freezed,
     Object? allowUserInput = null,
+    Object? userUid = null,
+    Object? username = null,
+    Object? email = null,
+    Object? bio = null,
+    Object? photoUrl = null,
+    Object? country = null,
+    Object? birthDate = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -276,6 +674,34 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
           ? _value.allowUserInput
           : allowUserInput // ignore: cast_nullable_to_non_nullable
               as bool,
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      bio: null == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: null == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthDate: null == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as String,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -296,6 +722,13 @@ abstract class _$$_EditProfileStateCopyWith<$Res>
       {bool isLoading,
       Uint8List? image,
       bool allowUserInput,
+      String userUid,
+      String username,
+      String email,
+      String bio,
+      String photoUrl,
+      String country,
+      String birthDate,
       String? errorMessage});
 }
 
@@ -313,6 +746,13 @@ class __$$_EditProfileStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? image = freezed,
     Object? allowUserInput = null,
+    Object? userUid = null,
+    Object? username = null,
+    Object? email = null,
+    Object? bio = null,
+    Object? photoUrl = null,
+    Object? country = null,
+    Object? birthDate = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_EditProfileState(
@@ -328,6 +768,34 @@ class __$$_EditProfileStateCopyWithImpl<$Res>
           ? _value.allowUserInput
           : allowUserInput // ignore: cast_nullable_to_non_nullable
               as bool,
+      userUid: null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      bio: null == bio
+          ? _value.bio
+          : bio // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: null == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthDate: null == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
+              as String,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -343,6 +811,13 @@ class _$_EditProfileState implements _EditProfileState {
       {this.isLoading = false,
       this.image,
       this.allowUserInput = true,
+      this.userUid = "",
+      this.username = "",
+      this.email = "",
+      this.bio = "",
+      this.photoUrl = "",
+      this.country = "",
+      this.birthDate = "",
       this.errorMessage});
 
   @override
@@ -354,11 +829,32 @@ class _$_EditProfileState implements _EditProfileState {
   @JsonKey()
   final bool allowUserInput;
   @override
+  @JsonKey()
+  final String userUid;
+  @override
+  @JsonKey()
+  final String username;
+  @override
+  @JsonKey()
+  final String email;
+  @override
+  @JsonKey()
+  final String bio;
+  @override
+  @JsonKey()
+  final String photoUrl;
+  @override
+  @JsonKey()
+  final String country;
+  @override
+  @JsonKey()
+  final String birthDate;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'EditProfileState(isLoading: $isLoading, image: $image, allowUserInput: $allowUserInput, errorMessage: $errorMessage)';
+    return 'EditProfileState(isLoading: $isLoading, image: $image, allowUserInput: $allowUserInput, userUid: $userUid, username: $username, email: $email, bio: $bio, photoUrl: $photoUrl, country: $country, birthDate: $birthDate, errorMessage: $errorMessage)';
   }
 
   @override
@@ -371,13 +867,34 @@ class _$_EditProfileState implements _EditProfileState {
             const DeepCollectionEquality().equals(other.image, image) &&
             (identical(other.allowUserInput, allowUserInput) ||
                 other.allowUserInput == allowUserInput) &&
+            (identical(other.userUid, userUid) || other.userUid == userUid) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.birthDate, birthDate) ||
+                other.birthDate == birthDate) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading,
-      const DeepCollectionEquality().hash(image), allowUserInput, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      const DeepCollectionEquality().hash(image),
+      allowUserInput,
+      userUid,
+      username,
+      email,
+      bio,
+      photoUrl,
+      country,
+      birthDate,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -391,6 +908,13 @@ abstract class _EditProfileState implements EditProfileState {
       {final bool isLoading,
       final Uint8List? image,
       final bool allowUserInput,
+      final String userUid,
+      final String username,
+      final String email,
+      final String bio,
+      final String photoUrl,
+      final String country,
+      final String birthDate,
       final String? errorMessage}) = _$_EditProfileState;
 
   @override
@@ -399,6 +923,20 @@ abstract class _EditProfileState implements EditProfileState {
   Uint8List? get image;
   @override
   bool get allowUserInput;
+  @override
+  String get userUid;
+  @override
+  String get username;
+  @override
+  String get email;
+  @override
+  String get bio;
+  @override
+  String get photoUrl;
+  @override
+  String get country;
+  @override
+  String get birthDate;
   @override
   String? get errorMessage;
   @override

@@ -1,7 +1,4 @@
-
-
 class PostDTO {
-
   final String postId;
   final String description;
   final String authorUid;
@@ -14,17 +11,16 @@ class PostDTO {
   final List<String> tags;
   final String? placeInfo;
 
-  PostDTO({
-    required this.postId,
-    required this.description,
-    required this.authorUid,
-    required this.datePublished,
-    required this.postUrl,
-    required this.isReel,
-    required this.likes,
-    required this.bookmarks,
-    required this.commentCount,
-    required this.tags,
-    this.placeInfo
-  });
+  PostDTO(
+      {required this.postId,
+      required this.description,
+      required this.authorUid,
+      required this.datePublished,
+      required this.postUrl,
+      required this.isReel,
+      required this.likes,
+      required this.bookmarks,
+      required this.commentCount,
+      required this.tags,
+      this.placeInfo});
 }

@@ -5,10 +5,9 @@ import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class CommentBoMapper extends Mapper<CommentBoMapperData, CommentBO> {
-
   final Mapper<UserDTO, UserBO> userMapper;
 
-  CommentBoMapper({ required this.userMapper });
+  CommentBoMapper({required this.userMapper});
 
   @override
   CommentBO call(CommentBoMapperData object) {
@@ -17,8 +16,7 @@ class CommentBoMapper extends Mapper<CommentBoMapperData, CommentBO> {
         postId: object.commentDTO.postId,
         datePublished: object.commentDTO.datePublished,
         text: object.commentDTO.text,
-        author: userMapper(object.userDTO)
-    );
+        author: userMapper(object.userDTO));
   }
 }
 
@@ -26,8 +24,5 @@ class CommentBoMapperData {
   final CommentDTO commentDTO;
   final UserDTO userDTO;
 
-  CommentBoMapperData({
-    required this.commentDTO,
-    required this.userDTO
-  });
+  CommentBoMapperData({required this.commentDTO, required this.userDTO});
 }

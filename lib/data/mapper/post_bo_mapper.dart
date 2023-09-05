@@ -19,8 +19,7 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
         commentCount: object.postDTO.commentCount,
         tags: object.postDTO.tags,
         isReel: object.postDTO.isReel,
-        placeInfo: object.postDTO.placeInfo
-    );
+        placeInfo: object.postDTO.placeInfo);
   }
 }
 

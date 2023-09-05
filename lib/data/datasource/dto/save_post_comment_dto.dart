@@ -1,7 +1,4 @@
-
-
 class SavePostCommentDTO {
-
   final String postId;
   final String text;
   final String authorUid;
@@ -11,5 +8,4 @@ class SavePostCommentDTO {
     required this.text,
     required this.authorUid,
   });
-
 }

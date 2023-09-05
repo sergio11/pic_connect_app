@@ -61,9 +61,7 @@ class UserDatasourceImpl extends UserDatasource {
           isGreaterThanOrEqualTo: username,
         )
         .get();
-    return docSnap.docs
-        .map((doc) => userDtoMapper(doc))
-        .toList();
+    return docSnap.docs.map((doc) => userDtoMapper(doc)).toList();
   }
 
   @override
@@ -72,9 +70,8 @@ class UserDatasourceImpl extends UserDatasource {
         .collection('users')
         .where('followers', arrayContains: uid)
         .get();
-    final followingDTOList = followingSnap.docs
-        .map((doc) => userDtoMapper(doc))
-        .toList();
+    final followingDTOList =
+        followingSnap.docs.map((doc) => userDtoMapper(doc)).toList();
     return followingDTOList;
   }
 
@@ -84,9 +81,8 @@ class UserDatasourceImpl extends UserDatasource {
         .collection('users')
         .where('following', arrayContains: uid)
         .get();
-    final followersDTOList = followersSnap.docs
-        .map((doc) => userDtoMapper(doc))
-        .toList();
+    final followersDTOList =
+        followersSnap.docs.map((doc) => userDtoMapper(doc)).toList();
     return followersDTOList;
   }
 }

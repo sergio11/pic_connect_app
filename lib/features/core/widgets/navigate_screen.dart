@@ -31,9 +31,10 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   bool isBottomBarVisible = true;
   bool showOverlay = true;
 
-  void hideNav() {
+  void hideNav({ bool keepOverlay = true }) {
     setState(() {
       isBottomBarVisible = false;
+      showOverlay = keepOverlay;
     });
   }
 
@@ -41,6 +42,13 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     setState(() {
       isBottomBarVisible = true;
     });
+    if(!showOverlay) {
+      Timer(const Duration(milliseconds: 400), () async {
+        setState(() {
+          showOverlay = true;
+        });
+      });
+    }
   }
 
   @override
@@ -59,7 +67,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     var keyboardVisibilityController = KeyboardVisibilityController();
     keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
       if(visible) {
-        hideNav();
+        hideNav(keepOverlay: false);
       } else {
         showNav();
       }
@@ -71,7 +79,6 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     return Scaffold(
       body: NotificationListener<UserScrollNotification>(
         onNotification: (UserScrollNotification value) {
-          debugPrint("Scroll pixels -> ${value.metrics.pixels}");
           if (value.direction == ScrollDirection.forward ||
               value.direction == ScrollDirection.idle) {
             showNav();
@@ -129,7 +136,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
           );
         },
         child: Opacity(
-          opacity: showOverlay ? 0.0 : 1.0,
+          opacity: 0.0,
           child: FloatingActionButton(
             onPressed: () {
               context.go(AppRoutesEnum.add.screenPath,

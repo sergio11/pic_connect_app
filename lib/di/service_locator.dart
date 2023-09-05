@@ -56,6 +56,7 @@ import 'package:pic_connect/domain/usecase/sign_in_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_out_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_up_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/unfollow_user_use_case.dart';
+import 'package:pic_connect/domain/usecase/update_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
@@ -74,7 +75,6 @@ import 'package:pic_connect/utils/mapper.dart';
 final serviceLocator = GetIt.instance;
 
 setupServiceLocator() async {
-
   /// Firebase ///
   serviceLocator.registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance);
@@ -84,70 +84,150 @@ setupServiceLocator() async {
       .registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
 
   // Mappers //
-  serviceLocator.registerFactory<Mapper<DocumentSnapshot, UserDTO>>(() => UserDtoMapper());
-  serviceLocator.registerFactory<Mapper<SaveUserDTO, Map<String, dynamic>>>(() => SaveUserDtoMapper());
-  serviceLocator.registerFactory<Mapper<SavePostCommentDTO, Map<String, dynamic>>>(() => SavePostCommentDTOMapper());
-  serviceLocator.registerFactory<Mapper<SavePostDTO, Map<String, dynamic>>>(() => SavePostDtoMapper());
+  serviceLocator.registerFactory<Mapper<DocumentSnapshot, UserDTO>>(
+      () => UserDtoMapper());
+  serviceLocator.registerFactory<Mapper<SaveUserDTO, Map<String, dynamic>>>(
+      () => SaveUserDtoMapper());
+  serviceLocator
+      .registerFactory<Mapper<SavePostCommentDTO, Map<String, dynamic>>>(
+          () => SavePostCommentDTOMapper());
+  serviceLocator.registerFactory<Mapper<SavePostDTO, Map<String, dynamic>>>(
+      () => SavePostDtoMapper());
   serviceLocator.registerFactory<Mapper<UserDTO, UserBO>>(() => UserBoMapper());
-  serviceLocator.registerFactory<Mapper<PostBoMapperData, PostBO>>(() => PostBoMapper());
-  serviceLocator.registerFactory<Mapper<CommentBoMapperData, CommentBO>>(() => CommentBoMapper(userMapper: serviceLocator()));
-  serviceLocator.registerFactory<Mapper<DocumentSnapshot, CommentDTO>>(() => CommentDtoMapper());
-  serviceLocator.registerFactory<Mapper<DocumentSnapshot, PostDTO>>(() => PostDtoMapper());
+  serviceLocator
+      .registerFactory<Mapper<PostBoMapperData, PostBO>>(() => PostBoMapper());
+  serviceLocator.registerFactory<Mapper<CommentBoMapperData, CommentBO>>(
+      () => CommentBoMapper(userMapper: serviceLocator()));
+  serviceLocator.registerFactory<Mapper<DocumentSnapshot, CommentDTO>>(
+      () => CommentDtoMapper());
+  serviceLocator.registerFactory<Mapper<DocumentSnapshot, PostDTO>>(
+      () => PostDtoMapper());
   // DataSources //
-  serviceLocator.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(firestore: serviceLocator(), userDtoMapper: serviceLocator(), saveUserDtoMapper: serviceLocator()));
-  serviceLocator.registerLazySingleton<AuthDatasource>(() => AuthDatasourceImpl(auth: serviceLocator()));
-  serviceLocator.registerLazySingleton<PostDatasource>(() => PostDatasourceImpl(firestore: serviceLocator(), savePostCommentMapper: serviceLocator(), savePostMapper: serviceLocator(), commentMapper: serviceLocator(), postMapper: serviceLocator()));
-  serviceLocator.registerLazySingleton<StorageDatasource>(() => StorageDatasourceImpl(storage: serviceLocator()));
+  serviceLocator.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(
+      firestore: serviceLocator(),
+      userDtoMapper: serviceLocator(),
+      saveUserDtoMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<AuthDatasource>(
+      () => AuthDatasourceImpl(auth: serviceLocator()));
+  serviceLocator.registerLazySingleton<PostDatasource>(() => PostDatasourceImpl(
+      firestore: serviceLocator(),
+      savePostCommentMapper: serviceLocator(),
+      savePostMapper: serviceLocator(),
+      commentMapper: serviceLocator(),
+      postMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<StorageDatasource>(
+      () => StorageDatasourceImpl(storage: serviceLocator()));
+
   /// Repository ///
-  serviceLocator.registerLazySingleton<UserRepository>(
-      () => UserRepositoryImpl(userDatasource: serviceLocator(), userBoMapper: serviceLocator()));
-  serviceLocator.registerLazySingleton<AuthRepository>(() =>
-      AuthRepositoryImpl(authDatasource: serviceLocator(), userDatasource: serviceLocator(), storageDatasource: serviceLocator(), userBoMapper: serviceLocator()));
-  serviceLocator.registerLazySingleton<PostRepository>(
-      () => PostRepositoryImpl(postDatasource: serviceLocator(), storageDatasource: serviceLocator(), userDatasource: serviceLocator(), userBoMapper: serviceLocator(), postBoMapper: serviceLocator(), commentBoMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
+      userDatasource: serviceLocator(),
+      userBoMapper: serviceLocator(),
+      storageDatasource: serviceLocator()));
+  serviceLocator.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
+      authDatasource: serviceLocator(),
+      userDatasource: serviceLocator(),
+      storageDatasource: serviceLocator(),
+      userBoMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<PostRepository>(() => PostRepositoryImpl(
+      postDatasource: serviceLocator(),
+      storageDatasource: serviceLocator(),
+      userDatasource: serviceLocator(),
+      userBoMapper: serviceLocator(),
+      postBoMapper: serviceLocator(),
+      commentBoMapper: serviceLocator()));
 
   /// UseCase ///
+  serviceLocator.registerLazySingleton(
+      () => GetAuthUserUidUseCase(authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => SignInUserUseCase(authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => SignOutUseCase(authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => SignUpUserUseCase(authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => GetUserDetailsUseCase(authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindPostsByUserUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FollowUserUseCase(
+      authRepository: serviceLocator(), userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => UnFollowUserUseCase(
+      authRepository: serviceLocator(), userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindUsersByNameUseCase(userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() =>
-      GetAuthUserUidUseCase(authRepository: serviceLocator()));
+      FindPostsOrderByDatePublishedUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindAllCommentsByPostUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FetchUserHomeFeedUseCase(
+      authRepository: serviceLocator(),
+      postRepository: serviceLocator(),
+      userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => PublishPostUseCase(
+      postRepository: serviceLocator(), authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => DeletePostUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => LikePostUseCase(
+      postRepository: serviceLocator(), authRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => PublishCommentUseCase(
+      authRepository: serviceLocator(), postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindFavoritesPostsByUserUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => SaveBookmarkUseCase(
+      authRepository: serviceLocator(), postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindBookmarkPostsByUserUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() =>
-      SignInUserUseCase(authRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() =>
-      SignOutUseCase(authRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() =>
-      SignUpUserUseCase(authRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() =>
-      GetUserDetailsUseCase(authRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindPostsByUserUseCase(postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FollowUserUseCase(authRepository: serviceLocator(), userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => UnFollowUserUseCase(authRepository: serviceLocator(), userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindUsersByNameUseCase(userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindPostsOrderByDatePublishedUseCase(postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindAllCommentsByPostUseCase(postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FetchUserHomeFeedUseCase(authRepository: serviceLocator(), postRepository: serviceLocator(), userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => PublishPostUseCase(postRepository: serviceLocator(), authRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => DeletePostUseCase(postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => LikePostUseCase(postRepository: serviceLocator(), authRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => PublishCommentUseCase(authRepository: serviceLocator(), postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindFavoritesPostsByUserUseCase(postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => SaveBookmarkUseCase(authRepository: serviceLocator(), postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindBookmarkPostsByUserUseCase(postRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindAllThatUserIsFollowingByUseCase(userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FindFollowersByUserUseCase(userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => GetTopReelsWithMostLikesUseCase(postRepository: serviceLocator()));
+      FindAllThatUserIsFollowingByUseCase(userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindFollowersByUserUseCase(userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => GetTopReelsWithMostLikesUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => UpdateUserUseCase(userRepository: serviceLocator()));
+
   /// BloC ///
-  serviceLocator.registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() =>
-      SignInBloc(signInUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() =>
-      SignUpBloc(signUpUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => ProfileBloc(getUserDetailsUseCase: serviceLocator(), getAuthUserUidUseCase: serviceLocator(), signOutUseCase: serviceLocator(), findPostsByUserUseCase: serviceLocator(), followUserUseCase: serviceLocator(), unFollowUserUseCase: serviceLocator(), findFavoritesPostsByUserUseCase: serviceLocator(), findBookmarkPostsByUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => SearchBloc(findUsersByNameUseCase: serviceLocator(), findPostsOrderByDatePublishedUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => AddPostBloc(getUserDetailsUseCase: serviceLocator(), publishPostUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => ReelsBloc(getTopReelsWithMostLikesUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => PostCardBloc(deletePostUseCase: serviceLocator(), likePostUseCase: serviceLocator(), saveBookmarkUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => CommentsBloc(findAllCommentsByPostUseCase: serviceLocator(), publishCommentUseCase: serviceLocator(), getUserDetailsUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => PublicationsBloc(findPostsByUserUseCase: serviceLocator(), findFavoritesPostsByUserUseCase: serviceLocator(), findBookmarkPostsByUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => FollowersBloc(findFollowersByUserUseCase: serviceLocator(), findAllThatUserIsFollowingByUseCase: serviceLocator(), followUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(() => EditProfileBloc(getUserDetailsUseCase: serviceLocator()));
+  serviceLocator
+      .registerFactory(() => AppBloc(getAuthUserUidUseCase: serviceLocator()));
+  serviceLocator
+      .registerFactory(() => SignInBloc(signInUserUseCase: serviceLocator()));
+  serviceLocator
+      .registerFactory(() => SignUpBloc(signUpUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => ProfileBloc(
+      getUserDetailsUseCase: serviceLocator(),
+      getAuthUserUidUseCase: serviceLocator(),
+      signOutUseCase: serviceLocator(),
+      findPostsByUserUseCase: serviceLocator(),
+      followUserUseCase: serviceLocator(),
+      unFollowUserUseCase: serviceLocator(),
+      findFavoritesPostsByUserUseCase: serviceLocator(),
+      findBookmarkPostsByUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => SearchBloc(
+      findUsersByNameUseCase: serviceLocator(),
+      findPostsOrderByDatePublishedUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => AddPostBloc(
+      getUserDetailsUseCase: serviceLocator(),
+      publishPostUseCase: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => ReelsBloc(getTopReelsWithMostLikesUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => PostCardBloc(
+      deletePostUseCase: serviceLocator(),
+      likePostUseCase: serviceLocator(),
+      saveBookmarkUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => CommentsBloc(
+      findAllCommentsByPostUseCase: serviceLocator(),
+      publishCommentUseCase: serviceLocator(),
+      getUserDetailsUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => PublicationsBloc(
+      findPostsByUserUseCase: serviceLocator(),
+      findFavoritesPostsByUserUseCase: serviceLocator(),
+      findBookmarkPostsByUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => FollowersBloc(
+      findFollowersByUserUseCase: serviceLocator(),
+      findAllThatUserIsFollowingByUseCase: serviceLocator(),
+      followUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => EditProfileBloc(getUserDetailsUseCase: serviceLocator(), updateUserUseCase: serviceLocator()));
 }

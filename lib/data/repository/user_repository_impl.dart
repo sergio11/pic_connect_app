@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
+import 'package:pic_connect/data/datasource/storage_datasource.dart';
 import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/user.dart';
@@ -8,14 +10,14 @@ import 'package:pic_connect/domain/repository/user_repository.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class UserRepositoryImpl implements UserRepository {
-
   final UserDatasource userDatasource;
+  final StorageDatasource storageDatasource;
   final Mapper<UserDTO, UserBO> userBoMapper;
 
-  UserRepositoryImpl({
-    required this.userDatasource,
-    required this.userBoMapper
-  });
+  UserRepositoryImpl(
+      {required this.userDatasource,
+      required this.storageDatasource,
+      required this.userBoMapper});
 
   @override
   Future<Either<Failure, bool>> followUser(String uid, String followId) async {
@@ -30,13 +32,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<Failure, UserBO>> findByUid(String uid) async {
-     try {
-       final user = await userDatasource.findByUid(uid);
-       return Right(userBoMapper(user));
-     } catch (ex) {
-       debugPrint("findByUid - ex -> ${ex.toString()}");
-       return Left(Failure(message: ex.toString()));
-     }
+    try {
+      final user = await userDatasource.findByUid(uid);
+      return Right(userBoMapper(user));
+    } catch (ex) {
+      debugPrint("findByUid - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
   }
 
   @override
@@ -51,7 +53,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, List<UserBO>>> findAllThatUserIsFollowingBy(String uid) async {
+  Future<Either<Failure, List<UserBO>>> findAllThatUserIsFollowingBy(
+      String uid) async {
     try {
       final userList = await userDatasource.findAllThatUserIsFollowingBy(uid);
       return Right(userList.map((e) => userBoMapper(e)).toList());
@@ -68,6 +71,35 @@ class UserRepositoryImpl implements UserRepository {
       return Right(userList.map((e) => userBoMapper(e)).toList());
     } catch (ex) {
       debugPrint("findAllFollowersBy - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserBO>> update(
+      {required String uid,
+      required String username,
+      required String email,
+      required Uint8List? file,
+      required String? bio,
+      required String? country,
+      required String? birthDate}) async {
+    try {
+      final userPhotoUrl = file != null
+          ? await storageDatasource.uploadFileToStorage(
+              folderName: 'profilePics', id: uid, file: file)
+          : null;
+      await userDatasource.save(SaveUserDTO(
+          uid: uid,
+          username: username,
+          email: email,
+          photoUrl: userPhotoUrl,
+          bio: bio,
+          country: country,
+          birthDate: birthDate));
+      final userUpdated = await userDatasource.findByUid(uid);
+      return Right(userBoMapper(userUpdated));
+    } catch (ex) {
       return Left(Failure(message: ex.toString()));
     }
   }

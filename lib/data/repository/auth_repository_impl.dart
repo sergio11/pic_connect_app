@@ -13,23 +13,20 @@ import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-
   final AuthDatasource authDatasource;
   final UserDatasource userDatasource;
   final StorageDatasource storageDatasource;
   final Mapper<UserDTO, UserBO> userBoMapper;
 
-  AuthRepositoryImpl({
-    required this.authDatasource,
-    required this.userDatasource,
-    required this.storageDatasource,
-    required this.userBoMapper
-  });
+  AuthRepositoryImpl(
+      {required this.authDatasource,
+      required this.userDatasource,
+      required this.storageDatasource,
+      required this.userBoMapper});
 
   @override
-  Future<Either<Failure, UserBO>> getUserDetails({
-    required String userUid
-  }) async {
+  Future<Either<Failure, UserBO>> getUserDetails(
+      {required String userUid}) async {
     try {
       final user = await userDatasource.findByUid(userUid);
       return Right(userBoMapper(user));
@@ -40,10 +37,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> signInUser({
-    required String email,
-    required String password
-  }) async {
+  Future<Either<Failure, bool>> signInUser(
+      {required String email, required String password}) async {
     try {
       // logging in user with email and password
       await authDatasource.signInUser(email: email, password: password);
@@ -58,33 +53,32 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await authDatasource.signOut();
       return const Right(true);
-    } catch(err) {
-      return Left(Failure(message: err.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> signUpUser({
-    required String email,
-      required String password,
-      required String username,
-      required Uint8List file
-  }) async {
-    try {
-      final userUid = await authDatasource.signUpUser(email: email, password: password);
-      final userPhotoUrl = await storageDatasource.uploadFileToStorage(folderName: 'profilePics', id: userUid, file: file);
-      await userDatasource.save(SaveUserDTO(
-          uid: userUid,
-          username: username,
-          email: email,
-          photoUrl: userPhotoUrl
-      ));
-      return const Right(true);
     } catch (err) {
       return Left(Failure(message: err.toString()));
     }
   }
 
+  @override
+  Future<Either<Failure, bool>> signUpUser(
+      {required String email,
+      required String password,
+      required String username,
+      required Uint8List file}) async {
+    try {
+      final userUid =
+          await authDatasource.signUpUser(email: email, password: password);
+      final userPhotoUrl = await storageDatasource.uploadFileToStorage(
+          folderName: 'profilePics', id: userUid, file: file);
+      await userDatasource.save(SaveUserDTO(
+          uid: userUid,
+          username: username,
+          email: email,
+          photoUrl: userPhotoUrl));
+      return const Right(true);
+    } catch (err) {
+      return Left(Failure(message: err.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, String>> getAuthUserUid() async {

@@ -6,13 +6,15 @@ class UserBoMapper extends Mapper<UserDTO, UserBO> {
   @override
   UserBO call(UserDTO object) {
     return UserBO(
-        username: object.username,
-        uid: object.uid,
-        photoUrl: object.photoUrl,
-        email: object.email,
-        bio: object.bio,
-        followers: object.followers,
-        following: object.following
+      username: object.username,
+      uid: object.uid,
+      photoUrl: object.photoUrl,
+      email: object.email,
+      bio: object.bio,
+      country: object.country,
+      birthDate: object.birthDate,
+      followers: object.followers,
+      following: object.following,
     );
   }
 }

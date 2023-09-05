@@ -1,6 +1,4 @@
-
 abstract class AuthDatasource {
-
   Future<bool> isLoggedIn();
 
   Future<String> getCurrentAuthUserUid();
@@ -10,11 +8,7 @@ abstract class AuthDatasource {
     required String password,
   });
 
-  Future<String> signUpUser({
-    required String email,
-    required String password
-  });
+  Future<String> signUpUser({required String email, required String password});
 
   Future<void> signOut();
-
 }

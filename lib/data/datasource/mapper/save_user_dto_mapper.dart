@@ -11,6 +11,8 @@ class SaveUserDtoMapper extends Mapper<SaveUserDTO, Map<String, dynamic>> {
       "email": object.email,
       "photoUrl": object.photoUrl,
       "bio": object.bio,
+      "country": object.country,
+      "birthDate": object.birthDate,
       "followers": [],
       "following": [],
     };

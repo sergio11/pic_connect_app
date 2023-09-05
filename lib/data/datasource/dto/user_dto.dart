@@ -7,6 +7,8 @@ class UserDTO {
   final String email;
   final String photoUrl;
   final String? bio;
+  final String? country;
+  final String? birthDate;
   final List followers;
   final List following;
 
@@ -16,6 +18,8 @@ class UserDTO {
     required this.photoUrl,
     required this.username,
     required this.bio,
+    required this.country,
+    required this.birthDate,
     required this.followers,
     required this.following
   });
