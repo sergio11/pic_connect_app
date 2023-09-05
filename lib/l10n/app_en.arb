@@ -33,5 +33,17 @@
   "signUpHaveAccountButtonText": " Login.",
   "followersScreenTitle": "Followers",
   "followingScreenTitle": "Following",
-  "signInMainTitle": "Pictures worth a thousand words. Let's enter and discovers!"
+  "signInMainTitle": "Pictures worth a thousand words. Let's enter and discovers!",
+  "signInEmailAndPasswordNotValid": "Email and password are not valid.",
+  "signInEmailNotValid": "Email is not valid.",
+  "signInPasswordNotValid": "Password is not valid.",
+  "signUpDataNotValid": "Invalid data. Please check your input.",
+  "signUpCompletedSuccessTitle": "Registration Completed",
+  "signUpCompletedSuccessDescription": "Your registration was successful.",
+  "signUpUsernameNotValid": "Username is not valid.",
+  "signUpEmailNotValid": "Email is not valid.",
+  "signUpPasswordNotValid": "Password is not valid.",
+  "signUpPasswordNotMatch": "Passwords do not match.",
+  "feedScreenNoDataFound": "No data found.",
+  "profileNoDataFound": "No data found on this profile."
 }

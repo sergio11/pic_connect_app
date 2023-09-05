@@ -31,6 +31,13 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _repeatPasswordController =
       TextEditingController();
+  late AppLocalizations _l10n;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
 
   @override
   void dispose() {
@@ -50,12 +57,17 @@ class _SignupScreenState extends State<SignupScreen> {
           _usernameController.text,
           _repeatPasswordController.text));
     } else {
-      showErrorSnackBar(context: context, message: "The content is not valid");
+      showErrorSnackBar(context: context, message: _l10n.signUpDataNotValid);
     }
   }
 
   void onSignUpSuccess() async {
-    context.read<AppBloc>().add(const OnVerifySession());
+    showConfirmDialog(
+        context: context,
+        title: _l10n.signUpCompletedSuccessTitle,
+        description: _l10n.signUpCompletedSuccessDescription,
+        onAcceptPressed: () =>
+            context.read<AppBloc>().add(const OnVerifySession()));
   }
 
   void onPickUpImageFromGallery() async {
@@ -66,7 +78,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     return BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
       if (context.mounted) {
         if (state.isSignUpSuccess) {
@@ -78,7 +89,7 @@ class _SignupScreenState extends State<SignupScreen> {
     }, builder: (context, state) {
       return Scaffold(
         body: Stack(
-          children: _buildScreenStack(state, l10n),
+          children: _buildScreenStack(state),
         ),
       );
     });
@@ -95,10 +106,10 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  List<Widget> _buildScreenStack(SignUpState state, AppLocalizations l10n) {
+  List<Widget> _buildScreenStack(SignUpState state) {
     final screenStack = [
       _buildScreenBackground(),
-      _buildScreenContent(state, l10n)
+      _buildScreenContent(state)
     ];
     if (state.isLoading) {
       screenStack.add(CommonScreenProgressIndicator(
@@ -109,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return screenStack;
   }
 
-  Widget _buildScreenContent(SignUpState state, AppLocalizations l10n) {
+  Widget _buildScreenContent(SignUpState state) {
     return CommonOnBoardingContainer(
       children: [
         SvgPicture.asset(
@@ -118,8 +129,8 @@ class _SignupScreenState extends State<SignupScreen> {
           height: 74,
         ),
         _buildAvatarInput(state),
-        _buildSignUpForm(state, l10n),
-        _buildNotAccountRow(l10n)
+        _buildSignUpForm(state),
+        _buildNotAccountRow()
       ],
     );
   }
@@ -131,72 +142,77 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildSignUpForm(SignUpState state, AppLocalizations l10n) {
+  Widget _buildSignUpForm(SignUpState state) {
     return Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _buildUsernameTextInput(state, l10n),
-            _buildEmailTextInput(state, l10n),
-            _buildPasswordTextInput(state, l10n),
-            _buildRepeatPasswordTextInput(state, l10n),
+            _buildUsernameTextInput(state),
+            _buildEmailTextInput(state),
+            _buildPasswordTextInput(state),
+            _buildRepeatPasswordTextInput(state),
             const SizedBox(height: 24),
-            _buildSignUpButton(state, l10n),
+            _buildSignUpButton(state),
           ],
         ));
   }
 
-  Widget _buildUsernameTextInput(SignUpState state, AppLocalizations l10n) {
+  Widget _buildUsernameTextInput(SignUpState state) {
     return TextFieldInput(
-        hintText: l10n.signUpUsernameTextInput,
+        hintText: _l10n.signUpUsernameTextInput,
         icon: const Icon(Icons.person, size: 16),
         textInputType: TextInputType.text,
         onValidate: (value) =>
             value != null && value.isNotEmpty && value.isValidName(),
-        errorText: "You must specify your name",
+        errorText: _l10n.signUpUsernameNotValid,
         textEditingController: _usernameController);
   }
 
-  Widget _buildEmailTextInput(SignUpState state, AppLocalizations l10n) {
+  Widget _buildEmailTextInput(SignUpState state) {
     return TextFieldInput(
-      hintText: l10n.signUpEmailTextInput,
+      hintText: _l10n.signUpEmailTextInput,
       icon: const Icon(Icons.mail, size: 16),
       textInputType: TextInputType.emailAddress,
       textEditingController: _emailController,
       onValidate: (value) =>
           value != null && value.isNotEmpty && value.isValidEmail(),
-      errorText: "You must specify a email with correct format",
+      errorText: _l10n.signUpEmailNotValid,
     );
   }
 
-  Widget _buildPasswordTextInput(SignUpState state, AppLocalizations l10n) {
+  Widget _buildPasswordTextInput(SignUpState state) {
     return TextFieldInput(
-      hintText: l10n.signUpPasswordTextInput,
+      hintText: _l10n.signUpPasswordTextInput,
       icon: const Icon(Icons.password, size: 16),
       textInputType: TextInputType.text,
       textEditingController: _passwordController,
       onValidate: (value) =>
           value != null && value.isNotEmpty && value.isValidPassword(),
-      errorText: "You must a specify a secure password",
+      errorText: _l10n.signUpPasswordNotValid,
       isPass: true,
     );
   }
 
   Widget _buildRepeatPasswordTextInput(
-      SignUpState state, AppLocalizations l10n) {
+      SignUpState state) {
     return TextFieldInput(
-      hintText: l10n.signUpRepeatPasswordTextInput,
+      hintText: _l10n.signUpRepeatPasswordTextInput,
       icon: const Icon(Icons.password, size: 16),
       textInputType: TextInputType.text,
       textEditingController: _repeatPasswordController,
+      onValidate: (value) =>
+        value != null && value.isNotEmpty && _passwordController.value.text == value,
+      errorText: _l10n.signUpPasswordNotMatch,
+      isPass: true,
     );
   }
 
-  Widget _buildSignUpButton(SignUpState state, AppLocalizations l10n) {
+  Widget _buildSignUpButton(SignUpState state) {
     return CommonButton(
-      text: l10n.signUpButtonText,
+      text: _l10n.signUpButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -205,11 +221,11 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildNotAccountRow(AppLocalizations l10n) {
+  Widget _buildNotAccountRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(l10n.signUpHaveAccountText,
+        Text(_l10n.signUpHaveAccountText,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -217,7 +233,7 @@ class _SignupScreenState extends State<SignupScreen> {
         GestureDetector(
           onTap: widget.onSignInPressed,
           child: Text(
-            l10n.signUpHaveAccountButtonText,
+            _l10n.signUpHaveAccountButtonText,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium

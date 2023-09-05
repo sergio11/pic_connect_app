@@ -33,5 +33,17 @@
   "signUpHaveAccountButtonText": " Iniciar sesión.",
   "followersScreenTitle": "Seguidores",
   "followingScreenTitle": "Siguiendo",
-  "signInMainTitle": "Imágenes que valen más que mil palabras. Ingresa y descubre."
+  "signInMainTitle": "Imágenes que valen más que mil palabras. Ingresa y descubre.",
+  "signInEmailAndPasswordNotValid": "El email y la contraseña no son válidos.",
+  "signInEmailNotValid": "El email no es válido.",
+  "signInPasswordNotValid": "La contraseña no es válida.",
+  "signUpDataNotValid": "Datos no válidos. Por favor, verifica tu entrada.",
+  "signUpCompletedSuccessTitle": "Registro completado",
+  "signUpCompletedSuccessDescription": "Tu registro se ha realizado con éxito.",
+  "signUpUsernameNotValid": "El nombre de usuario no es válido.",
+  "signUpEmailNotValid": "El email no es válido.",
+  "signUpPasswordNotValid": "La contraseña no es válida.",
+  "signUpPasswordNotMatch": "Las contraseñas no coinciden.",
+  "feedScreenNoDataFound": "No se encontraron datos.",
+  "profileNoDataFound": "No se encontraron datos en este perfil."
 }

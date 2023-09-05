@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/utils.dart';
 import '../moments/moment_story_track.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -33,11 +34,15 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<FeedBloc, FeedState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return _buildScreenContent(state);
-        });
+    return BlocConsumer<FeedBloc, FeedState>(listener: (context, state) {
+      if (context.mounted) {
+        if (state.errorMessage != null) {
+          showErrorSnackBar(context: context, message: state.errorMessage!);
+        }
+      }
+    }, builder: (context, state) {
+      return _buildScreenContent(state);
+    });
   }
 
   Widget _buildScreenContent(FeedState state) {

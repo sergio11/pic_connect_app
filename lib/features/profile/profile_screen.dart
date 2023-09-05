@@ -37,27 +37,38 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
   ProfileTab _currentProfileTabSelected = ProfileTab.pictures;
+  late AppLocalizations _l10n;
 
-  void onLogout(AppLocalizations l10n) {
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
+
+  void onLogout() {
     showAlertDialog(
         context: context,
-        title: l10n.sessionClosedDialogTitle,
-        description: l10n.sessionClosedDialogDescription,
+        title: _l10n.sessionClosedDialogTitle,
+        description: _l10n.sessionClosedDialogDescription,
         onAcceptPressed: () =>
             context.read<AppBloc>().add(const OnVerifySession()));
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     return BlocConsumer<ProfileBloc, ProfileState>(listener: (context, state) {
-      if (state.isLogout) {
-        onLogout(l10n);
+      if (context.mounted) {
+        if (state.errorMessage != null) {
+          showErrorSnackBar(context: context, message: state.errorMessage!);
+        }  else if (state.isLogout) {
+          onLogout();
+        }
       }
     }, builder: (context, state) {
       return state.isLoading
           ? _buildProgressIndicator()
-          : _buildScreenContent(state, l10n);
+          : _buildScreenContent(state);
     });
   }
 
@@ -66,7 +77,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     context.read<ProfileBloc>().add(const OnRefreshEvent());
   }
 
-  Widget _buildScreenContent(ProfileState state, AppLocalizations l10n) {
+  Widget _buildScreenContent(ProfileState state) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -81,8 +92,8 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
             onPressed: () {
               showConfirmDialog(
                   context: context,
-                  title: l10n.signOffDialogTitle,
-                  description: l10n.signOffDialogDescription,
+                  title: _l10n.signOffDialogTitle,
+                  description: _l10n.signOffDialogDescription,
                   onAcceptPressed: () =>
                       context.read<ProfileBloc>().add(const OnSignOutEvent()));
             },
@@ -122,7 +133,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                       ),
                       child: Column(
                         children: [
-                          _buildProfileHeader(state, l10n),
+                          _buildProfileHeader(state),
                           _buildUserNameRow(state),
                           _buildUserBioRow(state)
                         ],
@@ -142,7 +153,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     return const CommonScreenProgressIndicator();
   }
 
-  Widget _buildProfileHeader(ProfileState state, AppLocalizations l10n) {
+  Widget _buildProfileHeader(ProfileState state) {
     return Row(
       children: [
         Padding(
@@ -164,13 +175,13 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildStatColumn(state.postLen, l10n.profilePostStats,
+                    _buildStatColumn(state.postLen, _l10n.profilePostStats,
                         () => widget.onGoToPictures(state.userUid)),
-                    _buildStatColumn(state.followers, l10n.profileFollowerStats,
+                    _buildStatColumn(state.followers, _l10n.profileFollowerStats,
                         () => widget.onGoToFollowersScreen(state.userUid)),
                     _buildStatColumn(
                         state.following,
-                        l10n.profileFollowingStats,
+                        _l10n.profileFollowingStats,
                         () => widget.onGoToFollowingScreen(state.userUid)),
                   ],
                 ),
@@ -178,10 +189,10 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     state.isAuthUser
-                        ? _buildEditProfileButton(state, l10n)
+                        ? _buildEditProfileButton(state)
                         : state.isFollowing
-                            ? _buildUnFollowButton(state, l10n)
-                            : _buildFollowButton(state, l10n)
+                            ? _buildUnFollowButton(state)
+                            : _buildFollowButton(state)
                   ],
                 ),
               ],
@@ -192,9 +203,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     );
   }
 
-  Widget _buildEditProfileButton(ProfileState state, AppLocalizations l10n) {
+  Widget _buildEditProfileButton(ProfileState state) {
     return CommonButton(
-      text: l10n.editProfileButtonText,
+      text: _l10n.editProfileButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -203,9 +214,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     );
   }
 
-  Widget _buildUnFollowButton(ProfileState state, AppLocalizations l10n) {
+  Widget _buildUnFollowButton(ProfileState state) {
     return CommonButton(
-      text: l10n.unFollowButtonText,
+      text: _l10n.unFollowButtonText,
       backgroundColor: accentColor,
       textColor: primaryColor,
       borderColor: accentColor,
@@ -215,9 +226,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     );
   }
 
-  Widget _buildFollowButton(ProfileState state, AppLocalizations l10n) {
+  Widget _buildFollowButton(ProfileState state) {
     return CommonButton(
-      text: l10n.followButtonText,
+      text: _l10n.followButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,

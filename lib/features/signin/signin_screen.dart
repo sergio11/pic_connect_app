@@ -8,6 +8,7 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/textfield_validation.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,8 +23,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late AppLocalizations _l10n;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
 
   @override
   void dispose() {
@@ -33,9 +42,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void onLoginClicked() async {
-    context
-        .read<SignInBloc>()
-        .add(OnDoSignInEvent(_emailController.text, _passwordController.text));
+    debugPrint("onLoginClicked - validate: ${_formKey.currentState?.validate() == true}");
+    if (_formKey.currentState?.validate() == true) {
+      hideKeyboard(context);
+      context.read<SignInBloc>().add(
+          OnDoSignInEvent(_emailController.text, _passwordController.text));
+    } else {
+      showErrorSnackBar(
+          context: context,
+          message: _l10n.signInEmailAndPasswordNotValid);
+    }
   }
 
   void onLoginSuccess() async {
@@ -44,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     return BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
       if (context.mounted) {
         if (state.errorMessage != null) {
@@ -56,16 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
     }, builder: (context, state) {
       return Scaffold(
         body: Stack(
-          children: _buildScreenStack(state, l10n),
+          children: _buildScreenStack(state),
         ),
       );
     });
   }
 
-  List<Widget> _buildScreenStack(SignInState state, AppLocalizations l10n) {
+  List<Widget> _buildScreenStack(SignInState state) {
     final screenStack = [
       _buildScreenBackground(),
-      _buildScreenContent(state, l10n)
+      _buildScreenContent(state)
     ];
     if (state.isLoading) {
       screenStack.add(CommonScreenProgressIndicator(
@@ -76,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return screenStack;
   }
 
-  Widget _buildScreenContent(SignInState state, AppLocalizations l10n) {
+  Widget _buildScreenContent(SignInState state) {
     return CommonOnBoardingContainer(
       children: [
         SvgPicture.asset(
@@ -84,18 +99,18 @@ class _LoginScreenState extends State<LoginScreen> {
           color: primaryColor,
           height: 74,
         ),
-        _buildTitleScreen(l10n),
-        _buildSignInForm(state, l10n),
-        _buildSignUpRow(state, l10n),
+        _buildTitleScreen(),
+        _buildSignInForm(state),
+        _buildSignUpRow(state),
       ],
     );
   }
 
-  Widget _buildTitleScreen(AppLocalizations l10n) {
+  Widget _buildTitleScreen() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(l10n.signInMainTitle,
+        Text(_l10n.signInMainTitle,
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
@@ -105,21 +120,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildEmailTextInput(SignInState state, AppLocalizations l10n) {
+  Widget _buildEmailTextInput(SignInState state) {
     return TextFieldInput(
-      hintText: l10n.signInEmailTextInput,
+      hintText: _l10n.signInEmailTextInput,
       icon: const Icon(
         Icons.mail,
         size: 16,
       ),
       textInputType: TextInputType.emailAddress,
       textEditingController: _emailController,
+      onValidate: (value) =>
+          value != null && value.isNotEmpty && value.isValidEmail(),
+      errorText: _l10n.signInEmailNotValid,
     );
   }
 
-  Widget _buildPasswordTextInput(SignInState state, AppLocalizations l10n) {
+  Widget _buildPasswordTextInput(SignInState state) {
     return TextFieldInput(
-      hintText: l10n.signInPasswordTextInput,
+      hintText: _l10n.signInPasswordTextInput,
       icon: const Icon(
         Icons.password,
         size: 16,
@@ -127,12 +145,15 @@ class _LoginScreenState extends State<LoginScreen> {
       textInputType: TextInputType.text,
       textEditingController: _passwordController,
       isPass: true,
+      onValidate: (value) =>
+          value != null && value.isNotEmpty && value.isValidPassword(),
+      errorText: _l10n.signInPasswordNotValid,
     );
   }
 
-  Widget _buildSignInButton(SignInState state, AppLocalizations l10n) {
+  Widget _buildSignInButton(SignInState state) {
     return CommonButton(
-      text: l10n.signInButtonText,
+      text: _l10n.signInButtonText,
       backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
@@ -141,11 +162,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignUpRow(SignInState state, AppLocalizations l10n) {
+  Widget _buildSignUpRow(SignInState state) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(l10n.signInNotHaveAccount,
+        Text(_l10n.signInNotHaveAccount,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -153,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
         GestureDetector(
           onTap: widget.onSignUpPressed,
           child: Text(
-            l10n.signInNotHaveAccountSignUpButtonText,
+            _l10n.signInNotHaveAccountSignUpButtonText,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -175,18 +196,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInForm(SignInState state, AppLocalizations l10n) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildEmailTextInput(state, l10n),
-        _buildPasswordTextInput(state, l10n),
-        const SizedBox(
-          height: 25,
-        ),
-        _buildSignInButton(state, l10n)
-      ],
-    );
+  Widget _buildSignInForm(SignInState state) {
+    return Form(
+        key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildEmailTextInput(state),
+            _buildPasswordTextInput(state),
+            const SizedBox(
+              height: 25,
+            ),
+            _buildSignInButton(state)
+          ],
+        ));
   }
 }
