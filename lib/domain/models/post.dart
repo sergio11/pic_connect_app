@@ -1,4 +1,10 @@
 
+enum PostType {
+  picture,
+  reel,
+  moment,
+}
+
 class PostBO {
   final String description;
   final String username;
@@ -11,7 +17,7 @@ class PostBO {
   final String profImage;
   final int commentCount;
   final List<String> tags;
-  final bool isReel;
+  final PostType postType;
   final String? placeInfo;
 
   const PostBO({
@@ -26,7 +32,7 @@ class PostBO {
     required this.profImage,
     required this.commentCount,
     required this.tags,
-    required this.isReel,
+    required this.postType,
     this.placeInfo
   });
 }

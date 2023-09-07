@@ -6,20 +6,35 @@ import 'package:pic_connect/utils/mapper.dart';
 class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
   @override
   PostBO call(PostBoMapperData object) {
+    final postDTO = object.postDTO;
+    final userDTO = object.userDTO;
+    PostType postType;
+    switch (postDTO.type) {
+      case "reel":
+        postType = PostType.reel;
+        break;
+      case "moment":
+        postType = PostType.moment;
+        break;
+      default:
+        postType = PostType.picture;
+        break;
+    }
     return PostBO(
-        description: object.postDTO.description,
-        username: object.userDTO.username,
-        likes: object.postDTO.likes,
-        bookmarks: object.postDTO.bookmarks,
-        postId: object.postDTO.postId,
-        datePublished: object.postDTO.datePublished,
-        postUrl: object.postDTO.postUrl,
-        postAuthorUid: object.userDTO.uid,
-        profImage: object.userDTO.photoUrl,
-        commentCount: object.postDTO.commentCount,
-        tags: object.postDTO.tags,
-        isReel: object.postDTO.isReel,
-        placeInfo: object.postDTO.placeInfo);
+      description: postDTO.description,
+      username: userDTO.username,
+      likes: postDTO.likes,
+      bookmarks: postDTO.bookmarks,
+      postId: postDTO.postId,
+      datePublished: postDTO.datePublished,
+      postUrl: postDTO.postUrl,
+      postAuthorUid: userDTO.uid,
+      profImage: userDTO.photoUrl,
+      commentCount: postDTO.commentCount,
+      tags: postDTO.tags,
+      postType: postType,
+      placeInfo: postDTO.placeInfo,
+    );
   }
 }
 

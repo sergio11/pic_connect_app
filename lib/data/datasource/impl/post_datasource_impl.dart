@@ -106,7 +106,7 @@ class PostDatasourceImpl extends PostDatasource {
     final posts = await firestore
         .collection('posts')
         .where('authorUid', isEqualTo: userUi)
-        .where("isReel", isEqualTo: false)
+        .where("type", isEqualTo: "picture")
         .orderBy('datePublished', descending: true)
         .get();
     return posts.docs.map((doc) => postMapper(doc)).toList();
@@ -118,7 +118,7 @@ class PostDatasourceImpl extends PostDatasource {
     final posts = await firestore
         .collection('posts')
         .where('authorUid', isEqualTo: userUi)
-        .where("isReel", isEqualTo: true)
+        .where("type", isEqualTo: "reel")
         .orderBy('datePublished', descending: true)
         .get();
     return posts.docs.map((doc) => postMapper(doc)).toList();
@@ -194,7 +194,7 @@ class PostDatasourceImpl extends PostDatasource {
   Future<List<PostDTO>> getReelsWithMostLikes(int limit) async {
     final reelsWithMostLikes = await firestore
         .collection('posts')
-        .where("isReel", isEqualTo: true)
+        .where("type", isEqualTo: "reel")
         .orderBy('likesCount', descending: true)
         .limit(limit)
         .get();

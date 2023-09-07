@@ -12,7 +12,7 @@ class SavePostDtoMapper extends Mapper<SavePostDTO, Map<String, dynamic>> {
       "bookmarks": [],
       "commentsCount": 0,
       "likesCount": 0,
-      "isReel": object.isReel,
+      "type": object.type,
       "authorUid": object.authorUid,
       "datePublished": DateTime.now(),
       'postUrl': object.postUrl,

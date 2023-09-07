@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/usecase/get_user_details_use_case.dart';
 import 'package:pic_connect/domain/usecase/publish_post_use_case.dart';
 import 'package:pic_connect/utils/geolocator.dart';
@@ -69,9 +70,9 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
         emit(state.copyWith(isPostUploading: true));
         final fileData =
             state.imageData ?? await File(state.videoFilePath!).readAsBytes();
-        final isReel = state.videoFilePath != null;
+        final postType = state.videoFilePath != null ? PostType.reel : PostType.picture;
         final response = await publishPostUseCase(PublishPostUseParams(
-            event.description, fileData, isReel, event.tags, event.placeInfo));
+            event.description, fileData, postType, event.tags, event.placeInfo));
         response.fold(
             (failure) => emit(state.copyWith(isPostUploading: false)),
             (userDetail) => emit(state.copyWith(
