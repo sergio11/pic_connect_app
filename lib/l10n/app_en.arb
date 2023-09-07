@@ -59,5 +59,8 @@
   "postAddDescriptionInputTextHint": "Add description",
   "postAddTopicsInputTextHelper": "Add related topics",
   "postAddTopicsInputTextHint": "Add topics",
-  "postTagAlreadyAdded": "This topic has already been added."
+  "postTagAlreadyAdded": "This topic has already been added.",
+  "postPublishAsMomentSwitchLabel": "Publish as Moment",
+  "postPublishAsMomentSwitchDescription": "This post will be available in your Moments",
+  "addPostMainTitle": "Add new post"
 }

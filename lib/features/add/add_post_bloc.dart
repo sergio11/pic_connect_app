@@ -45,22 +45,20 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
   FutureOr<void> onPhotoSelectedEventHandler(
       OnPhotoSelectedEvent event, Emitter<AddPostState> emit) async {
     final imageData = await File(event.imageFilePath).readAsBytes();
-    final placeInfo = await _fetchPlaceInfo();
     emit(state.copyWith(
         imageData: imageData,
         imageEditingRequired: true,
-        videoFilePath: null,
-        placeInfo: placeInfo));
+        videoFilePath: null));
   }
 
   FutureOr<void> onVideoSelectedEventHandler(
       OnVideoSelectedEvent event, Emitter<AddPostState> emit) async {
-    final placeInfo = await _fetchPlaceInfo();
     emit(state.copyWith(
         videoFilePath: event.videoFilePath,
         imageEditingRequired: false,
-        imageData: null,
-        placeInfo: placeInfo));
+        imageData: null));
+    final placeInfo = await _fetchPlaceInfo();
+    emit(state.copyWith(placeInfo: placeInfo));
   }
 
   FutureOr<void> onUploadPostEventHandler(
@@ -92,6 +90,8 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
       OnEditedImageEvent event, Emitter<AddPostState> emit) async {
     emit(state.copyWith(
         imageData: event.imageData, imageEditingRequired: false));
+    final placeInfo = await _fetchPlaceInfo();
+    emit(state.copyWith(placeInfo: placeInfo));
   }
 
   Future<String?> _fetchPlaceInfo() async {

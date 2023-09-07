@@ -10,6 +10,7 @@ import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
+import 'package:pic_connect/features/core/widgets/common_switch.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -158,7 +159,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   Widget _buildTakeContentFromCamera(AddPostState state) {
     return CameraAwesomeBuilder.awesome(
-      saveConfig: state.postType == PostTypeEnum.picture ? SaveConfig.photo() : SaveConfig.video(),
+      saveConfig: state.postType == PostTypeEnum.picture
+          ? SaveConfig.photo()
+          : SaveConfig.video(),
       sensorConfig: SensorConfig.single(
         flashMode: FlashMode.auto,
         aspectRatio: CameraAspectRatios.ratio_16_9,
@@ -210,7 +213,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 icon: const Icon(Icons.arrow_back),
                 color: accentColor,
                 onPressed: _onBackPressed),
-            title: Text('Post to',
+            title: Text(_l10n.addPostMainTitle,
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -235,52 +238,92 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget _buildFillPostData(AddPostState state) {
     return Scaffold(
       appBar: _buildAppBar(state),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 1.5,
-                child: state.imageData != null
-                    ? _buildImagePreview(state.imageData!)
-                    : _buildVideoPreview(state.videoFilePath!)),
-            const SizedBox(
-              height: 30,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: MediaQuery.of(context).size.height / 1.5,
+            floating: false,
+            pinned: false,
+            flexibleSpace: Stack(
+              children: [
+                FlexibleSpaceBar(
+                  background: state.imageData != null
+                      ? _buildImagePreview(state.imageData!)
+                      : _buildVideoPreview(state.videoFilePath!),
+                ),
+                Positioned(
+                  bottom: -20,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: 65,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(40),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 1),
+                          ),
+                        ]),
+                  ),
+                )
+              ],
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: _buildPlaceInfoTextInput(state),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  color: primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: _buildPlaceInfoTextInput(state),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: _buildPostTagsTextInput(state),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: _buildPostDescriptionTextInput(state),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CommonSwitch(
+                          initialValue: state.postType == PostTypeEnum.moment,
+                          onChanged: (bool value) {},
+                          description:
+                              _l10n.postPublishAsMomentSwitchDescription,
+                          label: _l10n.postPublishAsMomentSwitchLabel,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        )
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: _buildPostTagsTextInput(state),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: _buildPostDescriptionTextInput(state),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -324,8 +367,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 textEditingController: tec,
                 onChanged: onChanged,
                 onSubmitted: onSubmitted,
-                hintText:
-                    _textFieldTagsController.hasTags ? '' : _l10n.postAddTopicsInputTextHint,
+                hintText: _textFieldTagsController.hasTags
+                    ? ''
+                    : _l10n.postAddTopicsInputTextHint,
                 helperText: _l10n.postAddTopicsInputTextHelper,
                 focusNode: fn,
                 errorText: error,

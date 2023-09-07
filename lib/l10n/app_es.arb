@@ -59,5 +59,8 @@
   "postAddDescriptionInputTextHint": "Añadir descripción",
   "postAddTopicsInputTextHelper": "Añadir temas relacionados",
   "postAddTopicsInputTextHint": "Añadir temas",
-  "postTagAlreadyAdded": "Este tema ya ha sido añadido."
+  "postTagAlreadyAdded": "Este tema ya ha sido añadido.",
+  "postPublishAsMomentSwitchLabel": "Publicar como momento",
+  "postPublishAsMomentSwitchDescription": "Esta publicación estará disponible en tus momentos",
+  "addPostMainTitle": "Crear publicación"
 }
