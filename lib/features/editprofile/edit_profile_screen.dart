@@ -9,6 +9,7 @@ import 'package:pic_connect/features/core/widgets/text_field_input.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pic_connect/utils/textfield_validation.dart';
 import 'package:pic_connect/utils/utils.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -35,12 +36,11 @@ class _EditProfileScreen extends State<EditProfileScreen> {
           username: _usernameController.text,
           bio: _bioController.text,
           birthDate: _birthDateController.text,
-          country: _countryController.text
-      ));
+          country: _countryController.text));
     } else {
       showErrorSnackBar(
           context: context,
-          message: ".....");
+          message: _l10n.editProfileInformationProvidedNotValid);
     }
   }
 
@@ -105,7 +105,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
             )
           ],
           backgroundColor: appBarBackgroundColor,
-          title: Text("Edit Profile",
+          title: Text(_l10n.editProfileMainTitle,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -149,7 +149,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
 
   Widget _buildEmailTextInput(EditProfileState state) {
     return TextFieldInput(
-      hintText: _l10n.signUpEmailTextInput,
+      hintText: _l10n.editProfileEmailTextInput,
       icon: const Icon(Icons.mail, size: 16),
       textInputType: TextInputType.emailAddress,
       textEditingController: _emailController,
@@ -158,29 +158,32 @@ class _EditProfileScreen extends State<EditProfileScreen> {
 
   Widget _buildDatePickerTextField(EditProfileState state) {
     return DatePickerTextFieldInput(
-      hintText: _l10n.signUpEmailTextInput,
+      hintText: _l10n.editProfileDatePickerText,
       textEditingController: _birthDateController,
     );
   }
 
   Widget _buildCountryPickerTextField(EditProfileState state) {
     return CountryPickerTextField(
-      hintText: _l10n.signUpEmailTextInput,
+      hintText: _l10n.editProfileCountryPickerText,
       textEditingController: _countryController,
     );
   }
 
   Widget _buildUsernameTextInput(EditProfileState state) {
     return TextFieldInput(
-        hintText: _l10n.signUpUsernameTextInput,
+        hintText: _l10n.editProfileUsernameTextInput,
         icon: const Icon(Icons.person, size: 16),
         textInputType: TextInputType.text,
+        onValidate: (value) =>
+            value != null && value.isNotEmpty && value.isValidName(),
+        errorText: _l10n.editProfileUsernameNoValid,
         textEditingController: _usernameController);
   }
 
   Widget _buildBioTextInput(EditProfileState state) {
     return TextFieldInput(
-      hintText: "",
+      hintText: _l10n.editProfileBioTextInput,
       textInputType: TextInputType.multiline,
       maxLines: 5,
       textEditingController: _bioController,

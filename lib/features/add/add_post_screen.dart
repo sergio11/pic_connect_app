@@ -258,13 +258,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   child: Container(
                     height: 65,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
+                        color: mobileBackgroundColor,
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(40),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black,
+                            color: blackColor,
                             spreadRadius: 2,
                             blurRadius: 5,
                             offset: Offset(0, 1),
@@ -279,7 +279,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  color: primaryColor,
+                  color: mobileBackgroundColor,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(

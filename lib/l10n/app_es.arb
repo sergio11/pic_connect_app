@@ -46,10 +46,6 @@
   "signUpPasswordNotMatch": "Las contraseñas no coinciden.",
   "feedScreenNoDataFound": "No se encontraron datos.",
   "profileNoDataFound": "No se encontraron datos en este perfil.",
-  "editProfileEmailTextInput": "Introduce tu email",
-  "editProfileUsernameTextInput": "Introduce tu nombre de usuario",
-  "editProfileUsernameNoValid": "Nombre de usuario no válido",
-  "editProfileBioTextInput": "Introduce tu biografía",
   "postUploadedAlertTitle": "Publicación subida",
   "postUploadedAlertDescription": "Tu publicación se ha subido con éxito.",
   "cancelUploadPostAlertTitle": "Cancelar subida de publicación",
@@ -62,5 +58,13 @@
   "postTagAlreadyAdded": "Este tema ya ha sido añadido.",
   "postPublishAsMomentSwitchLabel": "Publicar como momento",
   "postPublishAsMomentSwitchDescription": "Esta publicación estará disponible en tus momentos",
-  "addPostMainTitle": "Crear publicación"
+  "addPostMainTitle": "Crear publicación",
+  "editProfileEmailTextInput": "Introduce tu email",
+  "editProfileUsernameTextInput": "Introduce tu nombre de usuario",
+  "editProfileUsernameNoValid": "Nombre de usuario no válido",
+  "editProfileBioTextInput": "Introduce tu biografía",
+  "editProfileMainTitle": "Editar Perfil",
+  "editProfileCountryPickerText": "Selecciona tu País",
+  "editProfileDatePickerText": "Selecciona tu Fecha de Nacimiento",
+  "editProfileInformationProvidedNotValid": "La información proporcionada no es válida."
 }

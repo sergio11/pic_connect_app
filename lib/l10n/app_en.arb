@@ -62,5 +62,9 @@
   "postTagAlreadyAdded": "This topic has already been added.",
   "postPublishAsMomentSwitchLabel": "Publish as Moment",
   "postPublishAsMomentSwitchDescription": "This post will be available in your Moments",
-  "addPostMainTitle": "Add new post"
+  "addPostMainTitle": "Add new post",
+  "editProfileMainTitle": "Edit Profile",
+  "editProfileCountryPickerText": "Select Your Country",
+  "editProfileDatePickerText": "Select Your Birthdate",
+  "editProfileInformationProvidedNotValid": "The provided information is not valid."
 }
