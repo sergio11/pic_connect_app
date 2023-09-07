@@ -44,7 +44,7 @@ class PostCardBloc extends Bloc<PostCardEvent, PostCardState> {
         postId: event.post.postId,
         username: event.post.username,
         tags: event.post.tags,
-        isReel: event.post.postType == PostType.reel,
+        isReel: event.post.postType == PostTypeEnum.reel,
         ownerUid: event.post.postAuthorUid,
         description: event.post.description,
         placeInfo: event.post.placeInfo ?? "",

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
@@ -110,9 +109,12 @@ class AppRouter {
           path: AppRoutesEnum.add.screenPath,
           name: AppRoutesEnum.add.screenName,
           builder: (BuildContext context, GoRouterState state) => BlocProvider(
-                create: (context) => serviceLocator<AddPostBloc>()
-                  ..add(OnAddNewPostEvent(state.extra as ImageSource,
-                      context.read<AppBloc>().state.authUserUid!)),
+                create: (context) {
+                  final args = state.extra as AddPostScreenArgs;
+                  return serviceLocator<AddPostBloc>()
+                    ..add(OnAddNewPostEvent(args.type, args.imageSource,
+                        context.read<AppBloc>().state.authUserUid!));
+                },
                 child: AddPostScreen(
                   onBackPressed: () {
                     context.go(AppRoutesEnum.home.screenPath);
@@ -264,7 +266,7 @@ class AppRouter {
                                         .read<AppBloc>()
                                         .state
                                         .authUserUid!,
-                                    type: PostTypeEnum.favorites));
+                                    type: PublicationsContentTypeEnum.pictures));
                           },
                           onShowUserProfile: (String userUid) {
                             context.push(AppRoutesEnum.profile.screenPath,
@@ -333,7 +335,7 @@ class AppRouter {
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
                                         userUid: userUid,
-                                        type: PostTypeEnum.pictures))
+                                        type: PublicationsContentTypeEnum.pictures))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
                           },
@@ -363,7 +365,7 @@ class AppRouter {
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
                                         userUid: userUid,
-                                        type: PostTypeEnum.reels))
+                                        type: PublicationsContentTypeEnum.reels))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
                           },
@@ -372,7 +374,7 @@ class AppRouter {
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
                                         userUid: userUid,
-                                        type: PostTypeEnum.bookmarks))
+                                        type: PublicationsContentTypeEnum.bookmarks))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
                           },

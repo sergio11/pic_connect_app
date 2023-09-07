@@ -35,19 +35,19 @@ class PublicationsBloc extends Bloc<PublicationsEvent, PublicationsState> {
 
     final Either<Failure, List<PostBO>> response;
     switch (event.type) {
-      case PostTypeEnum.pictures:
+      case PublicationsContentTypeEnum.pictures:
         response = await findPostsByUserUseCase(
             FindPostsByUserParams(event.userUid, FindPostTypeEnum.pictures));
-      case PostTypeEnum.reels:
+      case PublicationsContentTypeEnum.reels:
         response = await findPostsByUserUseCase(
             FindPostsByUserParams(event.userUid, FindPostTypeEnum.reels));
-      case PostTypeEnum.all:
+      case PublicationsContentTypeEnum.all:
         response = await findPostsByUserUseCase(
             FindPostsByUserParams(event.userUid, FindPostTypeEnum.all));
-      case PostTypeEnum.favorites:
+      case PublicationsContentTypeEnum.favorites:
         response = await findFavoritesPostsByUserUseCase(
             FindFavoritesPostsByUserParams(event.userUid));
-      case PostTypeEnum.bookmarks:
+      case PublicationsContentTypeEnum.bookmarks:
         response = await findBookmarkPostsByUserUseCase(FindBookmarkPostsByUserParams(event.userUid));
     }
 

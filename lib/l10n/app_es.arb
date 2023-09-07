@@ -46,8 +46,18 @@
   "signUpPasswordNotMatch": "Las contraseñas no coinciden.",
   "feedScreenNoDataFound": "No se encontraron datos.",
   "profileNoDataFound": "No se encontraron datos en este perfil.",
-  "editProfileEmailTextInput": "",
-  "editProfileUsernameTextInput": "",
-  "editProfileUsernameNoValid": "",
-  "editProfileBioTextInput": ""
+  "editProfileEmailTextInput": "Introduce tu email",
+  "editProfileUsernameTextInput": "Introduce tu nombre de usuario",
+  "editProfileUsernameNoValid": "Nombre de usuario no válido",
+  "editProfileBioTextInput": "Introduce tu biografía",
+  "postUploadedAlertTitle": "Publicación subida",
+  "postUploadedAlertDescription": "Tu publicación se ha subido con éxito.",
+  "cancelUploadPostAlertTitle": "Cancelar subida de publicación",
+  "cancelUploadPostAlertDescription": "¿Estás seguro de que quieres cancelar la subida de esta publicación?",
+  "uploadPostButtonText": "Subir publicación",
+  "postAddPlaceInfoInputTextHint": "Añadir información del lugar",
+  "postAddDescriptionInputTextHint": "Añadir descripción",
+  "postAddTopicsInputTextHelper": "Añadir temas relacionados",
+  "postAddTopicsInputTextHint": "Añadir temas",
+  "postTagAlreadyAdded": "Este tema ya ha sido añadido."
 }

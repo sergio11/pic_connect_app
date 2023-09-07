@@ -10,7 +10,7 @@ abstract class PostRepository {
     required String authorUid,
     required String description,
     required List<String> tags,
-    required PostType type,
+    required PostTypeEnum type,
     required Uint8List file,
     String? placeInfo
   });

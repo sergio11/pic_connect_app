@@ -31,7 +31,7 @@ class PublishPostUseParams extends Equatable {
 
   final String description;
   final Uint8List file;
-  final PostType type;
+  final PostTypeEnum type;
   final List<String> tags;
   final String? placeInfo;
 

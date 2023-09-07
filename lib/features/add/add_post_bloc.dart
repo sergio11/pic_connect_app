@@ -38,7 +38,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
         (failure) => emit(state.copyWith(isLoading: false)),
         (userDetail) => emit(state.copyWith(
             isLoading: false,
-            authorPhotoUrl: userDetail.photoUrl,
+            postType: event.postType,
             imageSource: event.imageSource)));
   }
 
@@ -70,7 +70,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
         emit(state.copyWith(isPostUploading: true));
         final fileData =
             state.imageData ?? await File(state.videoFilePath!).readAsBytes();
-        final postType = state.videoFilePath != null ? PostType.reel : PostType.picture;
+        final postType = state.videoFilePath != null ? PostTypeEnum.reel : PostTypeEnum.picture;
         final response = await publishPostUseCase(PublishPostUseParams(
             event.description, fileData, postType, event.tags, event.placeInfo));
         response.fold(

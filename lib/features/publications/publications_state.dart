@@ -7,7 +7,7 @@ class PublicationsState with _$PublicationsState {
     @Default([]) final List<PostBO> postList,
     @Default(0) final int postLen,
     @Default("") final String authorUserUid,
-    @Default(PostTypeEnum.all) final PostTypeEnum type,
+    @Default(PublicationsContentTypeEnum.all) final PublicationsContentTypeEnum type,
     final String? errorMessage
   }) = _PublicationsState;
 }

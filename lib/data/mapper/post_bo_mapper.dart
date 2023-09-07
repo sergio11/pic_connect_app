@@ -8,16 +8,16 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
   PostBO call(PostBoMapperData object) {
     final postDTO = object.postDTO;
     final userDTO = object.userDTO;
-    PostType postType;
+    PostTypeEnum postType;
     switch (postDTO.type) {
       case "reel":
-        postType = PostType.reel;
+        postType = PostTypeEnum.reel;
         break;
       case "moment":
-        postType = PostType.moment;
+        postType = PostTypeEnum.moment;
         break;
       default:
-        postType = PostType.picture;
+        postType = PostTypeEnum.picture;
         break;
     }
     return PostBO(

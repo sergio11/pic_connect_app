@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
@@ -15,6 +16,7 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddPostScreen extends StatefulWidget {
   final VoidCallback onPostUploaded;
@@ -39,6 +41,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   final TextEditingController _placeInfoController = TextEditingController();
   final TextfieldTagsController _textFieldTagsController =
       TextfieldTagsController();
+  late AppLocalizations _l10n;
 
   void _onPickImageFromGallery() async {
     final file = await pickImage(ImageSource.gallery);
@@ -64,17 +67,23 @@ class _AddPostScreenState extends State<AddPostScreen> {
   void _onPostUploaded() {
     showAlertDialog(
         context: context,
-        title: "Post was uploaded!",
-        description: "The post was uploaded successfully",
+        title: _l10n.postUploadedAlertTitle,
+        description: _l10n.postUploadedAlertDescription,
         onAcceptPressed: widget.onPostUploaded);
   }
 
   void _onBackPressed() {
     showConfirmDialog(
         context: context,
-        title: "Are you sure to cancel process?",
-        description: "The post data will be discarded!",
+        title: _l10n.cancelUploadPostAlertTitle,
+        description: _l10n.cancelUploadPostAlertDescription,
         onAcceptPressed: widget.onBackPressed);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
   }
 
   @override
@@ -149,9 +158,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   Widget _buildTakeContentFromCamera(AddPostState state) {
     return CameraAwesomeBuilder.awesome(
-      saveConfig: SaveConfig.photoAndVideo(
-        initialCaptureMode: CaptureMode.photo,
-      ),
+      saveConfig: state.postType == PostTypeEnum.picture ? SaveConfig.photo() : SaveConfig.video(),
       sensorConfig: SensorConfig.single(
         flashMode: FlashMode.auto,
         aspectRatio: CameraAspectRatios.ratio_16_9,
@@ -213,7 +220,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               TextButton(
                 onPressed: () => _onUploadPost(),
                 child: Text(
-                  "Post",
+                  _l10n.uploadPostButtonText,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
@@ -283,7 +290,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       _placeInfoController.text = state.placeInfo ?? "";
     }
     return TextFieldInput(
-      hintText: 'Enter Place info',
+      hintText: _l10n.postAddPlaceInfoInputTextHint,
       textInputType: TextInputType.text,
       icon: const Icon(Icons.location_on),
       textEditingController: _placeInfoController,
@@ -293,7 +300,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   Widget _buildPostDescriptionTextInput(AddPostState state) {
     return TextFieldInput(
-      hintText: 'Enter description',
+      hintText: _l10n.postAddDescriptionInputTextHint,
       textInputType: TextInputType.multiline,
       textEditingController: _descriptionController,
       maxLines: 5,
@@ -307,7 +314,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         letterCase: LetterCase.normal,
         validator: (String tag) {
           if (_textFieldTagsController.getTags?.contains(tag) == true) {
-            return 'you already entered that';
+            return _l10n.postTagAlreadyAdded;
           }
           return null;
         },
@@ -318,8 +325,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 onChanged: onChanged,
                 onSubmitted: onSubmitted,
                 hintText:
-                    _textFieldTagsController.hasTags ? '' : "Enter tag...",
-                helperText: 'Enter topics...',
+                    _textFieldTagsController.hasTags ? '' : _l10n.postAddTopicsInputTextHint,
+                helperText: _l10n.postAddTopicsInputTextHelper,
                 focusNode: fn,
                 errorText: error,
                 prefixIconConstraints: BoxConstraints(

@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/widgets/fab_bottom_app_bar.dart';
 import 'package:pic_connect/features/core/widgets/fab_with_icons.dart';
 import 'package:pic_connect/features/core/widgets/anchored_overlay.dart';
@@ -26,12 +27,11 @@ class NavigateScreen extends StatefulWidget {
 }
 
 class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
-
   late StreamSubscription<bool> keyboardSubscription;
   bool isBottomBarVisible = true;
   bool showOverlay = true;
 
-  void hideNav({ bool keepOverlay = true }) {
+  void hideNav({bool keepOverlay = true}) {
     setState(() {
       isBottomBarVisible = false;
       showOverlay = keepOverlay;
@@ -42,7 +42,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     setState(() {
       isBottomBarVisible = true;
     });
-    if(!showOverlay) {
+    if (!showOverlay) {
       Timer(const Duration(milliseconds: 400), () async {
         setState(() {
           showOverlay = true;
@@ -65,8 +65,9 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   void initState() {
     super.initState();
     var keyboardVisibilityController = KeyboardVisibilityController();
-    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
-      if(visible) {
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (visible) {
         hideNav(keepOverlay: false);
       } else {
         showNav();
@@ -118,7 +119,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   }
 
   Widget _buildFab(BuildContext context) {
-    final icons = [Icons.camera, Icons.file_open];
+    final icons = [Icons.emergency_recording, Icons.camera, Icons.file_open];
     return AnchoredOverlay(
         showOverlay: showOverlay,
         overlayBuilder: (context, offset) {
@@ -127,10 +128,14 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
             child: FabWithIcons(
               icons: icons,
               onIconTapped: (int tappedIndex) {
-                final imageSource = icons[tappedIndex] == Icons.camera
-                    ? ImageSource.camera
-                    : ImageSource.gallery;
-                context.go(AppRoutesEnum.add.screenPath, extra: imageSource);
+                context.go(AppRoutesEnum.add.screenPath,
+                    extra: AddPostScreenArgs(
+                        imageSource: icons[tappedIndex] == Icons.file_open
+                            ? ImageSource.gallery
+                            : ImageSource.camera,
+                        type: icons[tappedIndex] == Icons.emergency_recording
+                            ? PostTypeEnum.reel
+                            : PostTypeEnum.picture));
               },
             ),
           );

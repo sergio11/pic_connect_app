@@ -4,8 +4,8 @@ part of 'add_post_bloc.dart';
 class AddPostState with _$AddPostState {
   const AddPostState._();
   const factory AddPostState({
-    @Default(null) final ImageSource? imageSource,
-    final String? authorPhotoUrl,
+    final ImageSource? imageSource,
+    final PostTypeEnum? postType,
     final Uint8List? imageData,
     final String? videoFilePath,
     final String? placeInfo,

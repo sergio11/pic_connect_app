@@ -90,7 +90,7 @@ class PostRepositoryImpl implements PostRepository {
       required String description,
       required List<String> tags,
       required Uint8List file,
-      required PostType type,
+      required PostTypeEnum type,
       String? placeInfo}) async {
     try {
       final postUrl = await storageDatasource.uploadFileToStorage(

@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
 
 enum AppRoutesEnum { onBoarding, login, signup, home, error, profile, search, add, reels, comments, publications, imageEditor, following, followers, editProfile }
@@ -125,10 +127,21 @@ extension AppRouteExtension on AppRoutesEnum {
 class PublicationsScreenArgs {
 
   final String userUid;
-  final PostTypeEnum type;
+  final PublicationsContentTypeEnum type;
 
   PublicationsScreenArgs({
     required this.userUid,
+    required this.type
+  });
+}
+
+class AddPostScreenArgs {
+
+  final ImageSource imageSource;
+  final PostTypeEnum type;
+
+  AddPostScreenArgs({
+    required this.imageSource,
     required this.type
   });
 }

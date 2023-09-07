@@ -1,5 +1,5 @@
 
-enum PostType {
+enum PostTypeEnum {
   picture,
   reel,
   moment,
@@ -17,7 +17,7 @@ class PostBO {
   final String profImage;
   final int commentCount;
   final List<String> tags;
-  final PostType postType;
+  final PostTypeEnum postType;
   final String? placeInfo;
 
   const PostBO({
