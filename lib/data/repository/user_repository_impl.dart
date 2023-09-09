@@ -53,7 +53,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, List<UserBO>>> findAllThatUserIsFollowingBy(
+  Future<Either<Failure, List<UserBO>>> findAllFollowedBy(
       String uid) async {
     try {
       final userList = await userDatasource.findAllThatUserIsFollowingBy(uid);

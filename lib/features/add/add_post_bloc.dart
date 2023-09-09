@@ -27,6 +27,12 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     on<OnVideoSelectedEvent>(onVideoSelectedEventHandler);
     on<OnUploadPostEvent>(onUploadPostEventHandler);
     on<OnEditedImageEvent>(onEditedImageEventHandler);
+    on<OnPublishAsStoryMomentEvent>(onPublishAsStoryMomentEventHandler);
+  }
+
+  FutureOr<void> onPublishAsStoryMomentEventHandler(
+      OnPublishAsStoryMomentEvent event, Emitter<AddPostState> emit) async {
+    emit(state.copyWith(isStoryMoment: event.isStoryMoment));
   }
 
   FutureOr<void> onAddNewPostFromEventHandler(
@@ -46,9 +52,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
       OnPhotoSelectedEvent event, Emitter<AddPostState> emit) async {
     final imageData = await File(event.imageFilePath).readAsBytes();
     emit(state.copyWith(
-        imageData: imageData,
-        imageEditingRequired: true,
-        videoFilePath: null));
+        imageData: imageData, imageEditingRequired: true, videoFilePath: null));
   }
 
   FutureOr<void> onVideoSelectedEventHandler(
@@ -68,9 +72,16 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
         emit(state.copyWith(isPostUploading: true));
         final fileData =
             state.imageData ?? await File(state.videoFilePath!).readAsBytes();
-        final postType = state.videoFilePath != null ? PostTypeEnum.reel : PostTypeEnum.picture;
+        final postType = state.videoFilePath != null
+            ? PostTypeEnum.reel
+            : PostTypeEnum.picture;
         final response = await publishPostUseCase(PublishPostUseParams(
-            event.description, fileData, postType, event.tags, event.placeInfo));
+            description: event.description,
+            file: fileData,
+            type: postType,
+            tags: event.tags,
+            placeInfo: event.placeInfo,
+            isStoryMoment: state.isStoryMoment));
         response.fold(
             (failure) => emit(state.copyWith(isPostUploading: false)),
             (userDetail) => emit(state.copyWith(

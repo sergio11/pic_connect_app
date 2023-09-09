@@ -4,6 +4,7 @@ class PostDTO {
   final String authorUid;
   final DateTime datePublished;
   final String postUrl;
+  final bool isStoryMoment;
   final String type;
   final List<String> likes;
   final List<String> bookmarks;
@@ -17,6 +18,7 @@ class PostDTO {
       required this.authorUid,
       required this.datePublished,
       required this.postUrl,
+      required this.isStoryMoment,
       required this.type,
       required this.likes,
       required this.bookmarks,

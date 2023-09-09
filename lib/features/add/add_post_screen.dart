@@ -307,8 +307,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           height: 10,
                         ),
                         CommonSwitch(
-                          initialValue: state.postType == PostTypeEnum.moment,
-                          onChanged: (bool value) {},
+                          initialValue: state.isStoryMoment,
+                          onChanged: (bool value) {
+                            context
+                                .read<AddPostBloc>()
+                                .add(OnPublishAsStoryMomentEvent(value));
+                          },
                           description:
                               _l10n.postPublishAsMomentSwitchDescription,
                           label: _l10n.postPublishAsMomentSwitchLabel,

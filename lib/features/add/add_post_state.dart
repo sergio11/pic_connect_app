@@ -9,6 +9,7 @@ class AddPostState with _$AddPostState {
     final Uint8List? imageData,
     final String? videoFilePath,
     final String? placeInfo,
+    @Default(false) final bool isStoryMoment,
     @Default(false) final bool imageEditingRequired,
     @Default(false) final bool isPostUploading,
     @Default(false) final bool isLoading,

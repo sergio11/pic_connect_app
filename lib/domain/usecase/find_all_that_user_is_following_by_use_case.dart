@@ -12,7 +12,7 @@ class FindAllThatUserIsFollowingByUseCase extends BaseUseCase<List<UserBO>, Find
 
   @override
   Future<Either<Failure, List<UserBO>>> call(FindAllThatUserIsFollowingByParams param) async {
-    return await userRepository.findAllThatUserIsFollowingBy(param.uid);
+    return await userRepository.findAllFollowedBy(param.uid);
   }
 }
 

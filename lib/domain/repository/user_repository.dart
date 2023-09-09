@@ -22,6 +22,6 @@ abstract class UserRepository {
 
   Future<Either<Failure, List<UserBO>>> findAllFollowersBy(String uid);
 
-  Future<Either<Failure, List<UserBO>>> findAllThatUserIsFollowingBy(
+  Future<Either<Failure, List<UserBO>>> findAllFollowedBy(
       String uid);
 }

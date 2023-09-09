@@ -92,10 +92,10 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findAllByUserUidOrderByDatePublished(
-      String userUi) async {
+      String userUuid) async {
     final postByUser = await firestore
         .collection('posts')
-        .where('authorUid', isEqualTo: userUi)
+        .where('authorUid', isEqualTo: userUuid)
         .orderBy('datePublished', descending: true)
         .get();
     return postByUser.docs.map((doc) => postMapper(doc)).toList();
@@ -103,10 +103,10 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findPicturesByUserUidOrderByDatePublished(
-      String userUi) async {
+      String userUuid) async {
     final posts = await firestore
         .collection('posts')
-        .where('authorUid', isEqualTo: userUi)
+        .where('authorUid', isEqualTo: userUuid)
         .where("type", isEqualTo: "picture")
         .orderBy('datePublished', descending: true)
         .get();
@@ -115,10 +115,10 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findReelsByUserUidOrderByDatePublished(
-      String userUi) async {
+      String userUuid) async {
     final posts = await firestore
         .collection('posts')
-        .where('authorUid', isEqualTo: userUi)
+        .where('authorUid', isEqualTo: userUuid)
         .where("type", isEqualTo: "reel")
         .orderBy('datePublished', descending: true)
         .get();
@@ -136,10 +136,10 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findAllByUserUidListOrderByDatePublished(
-      List<String> userUidList) async {
+      List<String> userUuidList) async {
     final postByUser = await firestore
         .collection('posts')
-        .where('authorUid', whereIn: userUidList)
+        .where('authorUid', whereIn: userUuidList)
         .orderBy('datePublished', descending: true)
         .get();
     return postByUser.docs.map((doc) => postMapper(doc)).toList();
@@ -147,10 +147,10 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findAllFavoritesByUserUidOrderByDatePublished(
-      String userUi) async {
+      String userUuid) async {
     final favoritePostsByUser = await firestore
         .collection('posts')
-        .where('likes', arrayContains: userUi)
+        .where('likes', arrayContains: userUuid)
         .orderBy('datePublished', descending: true)
         .get();
     return favoritePostsByUser.docs.map((doc) => postMapper(doc)).toList();
@@ -182,10 +182,10 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findAllBookmarkByUserUidOrderByDatePublished(
-      String userUi) async {
+      String userUuid) async {
     final bookmarkPostsByUser = await firestore
         .collection('posts')
-        .where('bookmarks', arrayContains: userUi)
+        .where('bookmarks', arrayContains: userUuid)
         .orderBy('datePublished', descending: true)
         .get();
     return bookmarkPostsByUser.docs.map((doc) => postMapper(doc)).toList();

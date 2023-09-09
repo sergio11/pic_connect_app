@@ -1,8 +1,7 @@
 
 enum PostTypeEnum {
   picture,
-  reel,
-  moment,
+  reel
 }
 
 class PostBO {
@@ -17,6 +16,7 @@ class PostBO {
   final String profImage;
   final int commentCount;
   final List<String> tags;
+  final bool isStoryMoment;
   final PostTypeEnum postType;
   final String? placeInfo;
 
@@ -32,6 +32,7 @@ class PostBO {
     required this.profImage,
     required this.commentCount,
     required this.tags,
+    required this.isStoryMoment,
     required this.postType,
     this.placeInfo
   });

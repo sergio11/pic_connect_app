@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/user.dart';
-import '../../utils/colors.dart';
+import 'package:pic_connect/utils/colors.dart';
 import 'moment_animated_tray.dart';
 
 class MomentStoryTrack extends StatelessWidget {
@@ -44,12 +44,9 @@ class MomentStoryTrack extends StatelessWidget {
               },
             );
           },
-          trayBuilder: (index) {
-            final moments = momentsByUser.entries.elementAtOrNull(index);
-            return MomentAnimatedTray(
-              profilePic: moments?.key.photoUrl ?? "",
-            );
-          },
+          trayBuilder: (index) => MomentAnimatedTray(
+            user: momentsByUser.entries.elementAtOrNull(index)?.key,
+          ),
         ),
       ),
     );

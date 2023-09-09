@@ -24,7 +24,7 @@ class FetchUserHomeFeedUseCase
   Future<Either<Failure, List<PostBO>>> call(DefaultParams param) async {
     return authRepository.getAuthUserUid().asStream()
         .asyncMap((authUserUid) async =>
-    await userRepository.findAllThatUserIsFollowingBy(
+    await userRepository.findAllFollowedBy(
         authUserUid.getOrElse(() => throw Exception("Auth failed"))))
         .asyncMap((users) async => findPosts(users.getOrElse(() => throw Exception("An error occurred when trying to fetch users"))))
         .last;

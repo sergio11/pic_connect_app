@@ -3,6 +3,7 @@ class SavePostDTO {
   final String description;
   final String postUrl;
   final List<String> tags;
+  final bool isStoryMoment;
   final String type;
   final String? placeInfo;
 
@@ -11,6 +12,7 @@ class SavePostDTO {
       required this.description,
       required this.postUrl,
       required this.tags,
+      required this.isStoryMoment,
       required this.type,
       this.placeInfo});
 }

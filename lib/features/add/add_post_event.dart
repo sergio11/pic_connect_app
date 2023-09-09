@@ -7,5 +7,6 @@ class AddPostEvent with _$AddPostEvent {
   const factory AddPostEvent.onVideoSelected(String videoFilePath) = OnVideoSelectedEvent;
   const factory AddPostEvent.uploadPost(String placeInfo, String description, List<String> tags) = OnUploadPostEvent;
   const factory AddPostEvent.editedImage(Uint8List imageData) = OnEditedImageEvent;
+  const factory AddPostEvent.onPublishAsStoryMoment(bool isStoryMoment) = OnPublishAsStoryMomentEvent;
 }
 

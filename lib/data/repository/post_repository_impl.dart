@@ -90,6 +90,7 @@ class PostRepositoryImpl implements PostRepository {
       required String description,
       required List<String> tags,
       required Uint8List file,
+      required bool isStoryMoment,
       required PostTypeEnum type,
       String? placeInfo}) async {
     try {
@@ -101,6 +102,7 @@ class PostRepositoryImpl implements PostRepository {
           tags: tags,
           postUrl: postUrl,
           type: type.name,
+          isStoryMoment: isStoryMoment,
           placeInfo: placeInfo));
       return const Right(true);
     } catch (err) {

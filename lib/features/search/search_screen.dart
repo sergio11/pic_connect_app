@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
+import 'package:pic_connect/features/core/widgets/video_thumbnail_widget.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -119,7 +121,11 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Stack(
             alignment: AlignmentDirectional.bottomCenter,
             children: [
-              buildNetworkImage(state.posts[index].postUrl),
+              state.posts[index].postType == PostTypeEnum.picture
+                  ? buildNetworkImage(state.posts[index].postUrl)
+                  : VideoThumbnailWidget(
+                      videoUrl: state.posts[index].postUrl,
+                    ),
               TagsRow(
                   tags: state.posts[index].tags,
                   scrollController: ScrollController())

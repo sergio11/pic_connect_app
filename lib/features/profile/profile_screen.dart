@@ -8,6 +8,7 @@ import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
+import 'package:pic_connect/features/core/widgets/video_thumbnail_widget.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
@@ -39,7 +40,6 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
   ProfileTab _currentProfileTabSelected = ProfileTab.pictures;
   late AppLocalizations _l10n;
 
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -61,7 +61,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       if (context.mounted) {
         if (state.errorMessage != null) {
           showErrorSnackBar(context: context, message: state.errorMessage!);
-        }  else if (state.isLogout) {
+        } else if (state.isLogout) {
           onLogout();
         }
       }
@@ -177,7 +177,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                   children: [
                     _buildStatColumn(state.postLen, _l10n.profilePostStats,
                         () => widget.onGoToPictures(state.userUid)),
-                    _buildStatColumn(state.followers, _l10n.profileFollowerStats,
+                    _buildStatColumn(
+                        state.followers,
+                        _l10n.profileFollowerStats,
                         () => widget.onGoToFollowersScreen(state.userUid)),
                     _buildStatColumn(
                         state.following,
@@ -355,7 +357,11 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         color: primaryColor,
         padding: const EdgeInsets.all(1),
         child: SizedBox(
-          child: buildNetworkImage(post.postUrl),
+          child: post.postType == PostTypeEnum.picture
+              ? buildNetworkImage(post.postUrl)
+              : VideoThumbnailWidget(
+                  videoUrl: post.postUrl,
+                ),
         ),
       ),
       onLongPress: () => showImage(context, post.postUrl),

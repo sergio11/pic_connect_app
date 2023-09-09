@@ -10,6 +10,7 @@ abstract class PostRepository {
       required String description,
       required List<String> tags,
       required PostTypeEnum type,
+      required bool isStoryMoment,
       required Uint8List file,
       String? placeInfo});
 
@@ -51,8 +52,9 @@ abstract class PostRepository {
 
   Future<Either<Failure, List<PostBO>>> getReelsWithMostLikes(int limit);
 
-  Future<Either<Failure, List<PostBO>>> findMomentsPublishedLast24HoursByUserUuids(
-      List<String> userUuids);
+  Future<Either<Failure, List<PostBO>>>
+      findMomentsPublishedLast24HoursByUserUuids(List<String> userUuids);
 
-  Future<Either<Failure, List<PostBO>>> findMomentsByUser(String userUid, int maxDays);
+  Future<Either<Failure, List<PostBO>>> findMomentsByUser(
+      String userUid, int maxDays);
 }

@@ -13,9 +13,6 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
       case "reel":
         postType = PostTypeEnum.reel;
         break;
-      case "moment":
-        postType = PostTypeEnum.moment;
-        break;
       default:
         postType = PostTypeEnum.picture;
         break;
@@ -32,6 +29,7 @@ class PostBoMapper extends Mapper<PostBoMapperData, PostBO> {
       profImage: userDTO.photoUrl,
       commentCount: postDTO.commentCount,
       tags: postDTO.tags,
+      isStoryMoment: postDTO.isStoryMoment,
       postType: postType,
       placeInfo: postDTO.placeInfo,
     );

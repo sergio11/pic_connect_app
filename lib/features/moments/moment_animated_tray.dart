@@ -1,13 +1,14 @@
 import 'package:advstory/advstory.dart';
 import 'package:flutter/material.dart';
+import 'package:pic_connect/domain/models/user.dart';
 
 class MomentAnimatedTray extends AnimatedTray {
+  final UserBO? user;
+
   const MomentAnimatedTray({
-    required this.profilePic,
+    required this.user,
     Key? key,
   }) : super(key: key);
-
-  final String profilePic;
 
   @override
   AnimatedTrayState<AnimatedTray> createState() => MomentAnimatedTrayState();
@@ -75,16 +76,16 @@ class MomentAnimatedTrayState extends AnimatedTrayState<MomentAnimatedTray>
         child: ScaleTransition(
             scale: _controller,
             child: AdvStoryTray(
-              url: widget.profilePic,
+              url: widget.user?.photoUrl ?? "",
               size: Size(_width, _height),
               shape: BoxShape.circle,
               borderRadius: _radius,
               borderGradientColors: _selectedColors,
               strokeWidth: _strokeWidth,
               gapSize: _gapSize,
-              username: const Text(
-                "Sergio",
-                style: TextStyle(
+              username: Text(
+                widget.user?.username ?? "",
+                style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 11,
                 ),

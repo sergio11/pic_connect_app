@@ -27,6 +27,7 @@ mixin _$AddPostEvent {
             String placeInfo, String description, List<String> tags)
         uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,6 +40,7 @@ mixin _$AddPostEvent {
     TResult? Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +53,7 @@ mixin _$AddPostEvent {
     TResult Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,6 +64,8 @@ mixin _$AddPostEvent {
     required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
     required TResult Function(OnUploadPostEvent value) uploadPost,
     required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,6 +75,8 @@ mixin _$AddPostEvent {
     TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
     TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,6 +86,7 @@ mixin _$AddPostEvent {
     TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult Function(OnUploadPostEvent value)? uploadPost,
     TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -205,6 +213,7 @@ class _$OnAddNewPostEvent
             String placeInfo, String description, List<String> tags)
         uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
   }) {
     return addNewPost(postType, imageSource, userUid);
   }
@@ -220,6 +229,7 @@ class _$OnAddNewPostEvent
     TResult? Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
   }) {
     return addNewPost?.call(postType, imageSource, userUid);
   }
@@ -235,6 +245,7 @@ class _$OnAddNewPostEvent
     TResult Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (addNewPost != null) {
@@ -251,6 +262,8 @@ class _$OnAddNewPostEvent
     required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
     required TResult Function(OnUploadPostEvent value) uploadPost,
     required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
   }) {
     return addNewPost(this);
   }
@@ -263,6 +276,8 @@ class _$OnAddNewPostEvent
     TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
     TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
   }) {
     return addNewPost?.call(this);
   }
@@ -275,6 +290,7 @@ class _$OnAddNewPostEvent
     TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult Function(OnUploadPostEvent value)? uploadPost,
     TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (addNewPost != null) {
@@ -383,6 +399,7 @@ class _$OnPhotoSelectedEvent
             String placeInfo, String description, List<String> tags)
         uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
   }) {
     return onPhotoSelected(imageFilePath);
   }
@@ -398,6 +415,7 @@ class _$OnPhotoSelectedEvent
     TResult? Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
   }) {
     return onPhotoSelected?.call(imageFilePath);
   }
@@ -413,6 +431,7 @@ class _$OnPhotoSelectedEvent
     TResult Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (onPhotoSelected != null) {
@@ -429,6 +448,8 @@ class _$OnPhotoSelectedEvent
     required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
     required TResult Function(OnUploadPostEvent value) uploadPost,
     required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
   }) {
     return onPhotoSelected(this);
   }
@@ -441,6 +462,8 @@ class _$OnPhotoSelectedEvent
     TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
     TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
   }) {
     return onPhotoSelected?.call(this);
   }
@@ -453,6 +476,7 @@ class _$OnPhotoSelectedEvent
     TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult Function(OnUploadPostEvent value)? uploadPost,
     TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (onPhotoSelected != null) {
@@ -557,6 +581,7 @@ class _$OnVideoSelectedEvent
             String placeInfo, String description, List<String> tags)
         uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
   }) {
     return onVideoSelected(videoFilePath);
   }
@@ -572,6 +597,7 @@ class _$OnVideoSelectedEvent
     TResult? Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
   }) {
     return onVideoSelected?.call(videoFilePath);
   }
@@ -587,6 +613,7 @@ class _$OnVideoSelectedEvent
     TResult Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (onVideoSelected != null) {
@@ -603,6 +630,8 @@ class _$OnVideoSelectedEvent
     required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
     required TResult Function(OnUploadPostEvent value) uploadPost,
     required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
   }) {
     return onVideoSelected(this);
   }
@@ -615,6 +644,8 @@ class _$OnVideoSelectedEvent
     TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
     TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
   }) {
     return onVideoSelected?.call(this);
   }
@@ -627,6 +658,7 @@ class _$OnVideoSelectedEvent
     TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult Function(OnUploadPostEvent value)? uploadPost,
     TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (onVideoSelected != null) {
@@ -757,6 +789,7 @@ class _$OnUploadPostEvent
             String placeInfo, String description, List<String> tags)
         uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
   }) {
     return uploadPost(placeInfo, description, tags);
   }
@@ -772,6 +805,7 @@ class _$OnUploadPostEvent
     TResult? Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
   }) {
     return uploadPost?.call(placeInfo, description, tags);
   }
@@ -787,6 +821,7 @@ class _$OnUploadPostEvent
     TResult Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (uploadPost != null) {
@@ -803,6 +838,8 @@ class _$OnUploadPostEvent
     required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
     required TResult Function(OnUploadPostEvent value) uploadPost,
     required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
   }) {
     return uploadPost(this);
   }
@@ -815,6 +852,8 @@ class _$OnUploadPostEvent
     TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
     TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
   }) {
     return uploadPost?.call(this);
   }
@@ -827,6 +866,7 @@ class _$OnUploadPostEvent
     TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult Function(OnUploadPostEvent value)? uploadPost,
     TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (uploadPost != null) {
@@ -933,6 +973,7 @@ class _$OnEditedImageEvent
             String placeInfo, String description, List<String> tags)
         uploadPost,
     required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
   }) {
     return editedImage(imageData);
   }
@@ -948,6 +989,7 @@ class _$OnEditedImageEvent
     TResult? Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
   }) {
     return editedImage?.call(imageData);
   }
@@ -963,6 +1005,7 @@ class _$OnEditedImageEvent
     TResult Function(String placeInfo, String description, List<String> tags)?
         uploadPost,
     TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (editedImage != null) {
@@ -979,6 +1022,8 @@ class _$OnEditedImageEvent
     required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
     required TResult Function(OnUploadPostEvent value) uploadPost,
     required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
   }) {
     return editedImage(this);
   }
@@ -991,6 +1036,8 @@ class _$OnEditedImageEvent
     TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult? Function(OnUploadPostEvent value)? uploadPost,
     TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
   }) {
     return editedImage?.call(this);
   }
@@ -1003,6 +1050,7 @@ class _$OnEditedImageEvent
     TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
     TResult Function(OnUploadPostEvent value)? uploadPost,
     TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
     required TResult orElse(),
   }) {
     if (editedImage != null) {
@@ -1023,12 +1071,197 @@ abstract class OnEditedImageEvent implements AddPostEvent {
 }
 
 /// @nodoc
+abstract class _$$OnPublishAsStoryMomentEventCopyWith<$Res> {
+  factory _$$OnPublishAsStoryMomentEventCopyWith(
+          _$OnPublishAsStoryMomentEvent value,
+          $Res Function(_$OnPublishAsStoryMomentEvent) then) =
+      __$$OnPublishAsStoryMomentEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isStoryMoment});
+}
+
+/// @nodoc
+class __$$OnPublishAsStoryMomentEventCopyWithImpl<$Res>
+    extends _$AddPostEventCopyWithImpl<$Res, _$OnPublishAsStoryMomentEvent>
+    implements _$$OnPublishAsStoryMomentEventCopyWith<$Res> {
+  __$$OnPublishAsStoryMomentEventCopyWithImpl(
+      _$OnPublishAsStoryMomentEvent _value,
+      $Res Function(_$OnPublishAsStoryMomentEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isStoryMoment = null,
+  }) {
+    return _then(_$OnPublishAsStoryMomentEvent(
+      null == isStoryMoment
+          ? _value.isStoryMoment
+          : isStoryMoment // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnPublishAsStoryMomentEvent
+    with DiagnosticableTreeMixin
+    implements OnPublishAsStoryMomentEvent {
+  const _$OnPublishAsStoryMomentEvent(this.isStoryMoment);
+
+  @override
+  final bool isStoryMoment;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AddPostEvent.onPublishAsStoryMoment(isStoryMoment: $isStoryMoment)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AddPostEvent.onPublishAsStoryMoment'))
+      ..add(DiagnosticsProperty('isStoryMoment', isStoryMoment));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnPublishAsStoryMomentEvent &&
+            (identical(other.isStoryMoment, isStoryMoment) ||
+                other.isStoryMoment == isStoryMoment));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, isStoryMoment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnPublishAsStoryMomentEventCopyWith<_$OnPublishAsStoryMomentEvent>
+      get copyWith => __$$OnPublishAsStoryMomentEventCopyWithImpl<
+          _$OnPublishAsStoryMomentEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            PostTypeEnum postType, ImageSource imageSource, String userUid)
+        addNewPost,
+    required TResult Function(String imageFilePath) onPhotoSelected,
+    required TResult Function(String videoFilePath) onVideoSelected,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        uploadPost,
+    required TResult Function(Uint8List imageData) editedImage,
+    required TResult Function(bool isStoryMoment) onPublishAsStoryMoment,
+  }) {
+    return onPublishAsStoryMoment(isStoryMoment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            PostTypeEnum postType, ImageSource imageSource, String userUid)?
+        addNewPost,
+    TResult? Function(String imageFilePath)? onPhotoSelected,
+    TResult? Function(String videoFilePath)? onVideoSelected,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
+    TResult? Function(Uint8List imageData)? editedImage,
+    TResult? Function(bool isStoryMoment)? onPublishAsStoryMoment,
+  }) {
+    return onPublishAsStoryMoment?.call(isStoryMoment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            PostTypeEnum postType, ImageSource imageSource, String userUid)?
+        addNewPost,
+    TResult Function(String imageFilePath)? onPhotoSelected,
+    TResult Function(String videoFilePath)? onVideoSelected,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        uploadPost,
+    TResult Function(Uint8List imageData)? editedImage,
+    TResult Function(bool isStoryMoment)? onPublishAsStoryMoment,
+    required TResult orElse(),
+  }) {
+    if (onPublishAsStoryMoment != null) {
+      return onPublishAsStoryMoment(isStoryMoment);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnAddNewPostEvent value) addNewPost,
+    required TResult Function(OnPhotoSelectedEvent value) onPhotoSelected,
+    required TResult Function(OnVideoSelectedEvent value) onVideoSelected,
+    required TResult Function(OnUploadPostEvent value) uploadPost,
+    required TResult Function(OnEditedImageEvent value) editedImage,
+    required TResult Function(OnPublishAsStoryMomentEvent value)
+        onPublishAsStoryMoment,
+  }) {
+    return onPublishAsStoryMoment(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnAddNewPostEvent value)? addNewPost,
+    TResult? Function(OnPhotoSelectedEvent value)? onPhotoSelected,
+    TResult? Function(OnVideoSelectedEvent value)? onVideoSelected,
+    TResult? Function(OnUploadPostEvent value)? uploadPost,
+    TResult? Function(OnEditedImageEvent value)? editedImage,
+    TResult? Function(OnPublishAsStoryMomentEvent value)?
+        onPublishAsStoryMoment,
+  }) {
+    return onPublishAsStoryMoment?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnAddNewPostEvent value)? addNewPost,
+    TResult Function(OnPhotoSelectedEvent value)? onPhotoSelected,
+    TResult Function(OnVideoSelectedEvent value)? onVideoSelected,
+    TResult Function(OnUploadPostEvent value)? uploadPost,
+    TResult Function(OnEditedImageEvent value)? editedImage,
+    TResult Function(OnPublishAsStoryMomentEvent value)? onPublishAsStoryMoment,
+    required TResult orElse(),
+  }) {
+    if (onPublishAsStoryMoment != null) {
+      return onPublishAsStoryMoment(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnPublishAsStoryMomentEvent implements AddPostEvent {
+  const factory OnPublishAsStoryMomentEvent(final bool isStoryMoment) =
+      _$OnPublishAsStoryMomentEvent;
+
+  bool get isStoryMoment;
+  @JsonKey(ignore: true)
+  _$$OnPublishAsStoryMomentEventCopyWith<_$OnPublishAsStoryMomentEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$AddPostState {
   ImageSource? get imageSource => throw _privateConstructorUsedError;
   PostTypeEnum? get postType => throw _privateConstructorUsedError;
   Uint8List? get imageData => throw _privateConstructorUsedError;
   String? get videoFilePath => throw _privateConstructorUsedError;
   String? get placeInfo => throw _privateConstructorUsedError;
+  bool get isStoryMoment => throw _privateConstructorUsedError;
   bool get imageEditingRequired => throw _privateConstructorUsedError;
   bool get isPostUploading => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -1052,6 +1285,7 @@ abstract class $AddPostStateCopyWith<$Res> {
       Uint8List? imageData,
       String? videoFilePath,
       String? placeInfo,
+      bool isStoryMoment,
       bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
@@ -1077,6 +1311,7 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
     Object? imageData = freezed,
     Object? videoFilePath = freezed,
     Object? placeInfo = freezed,
+    Object? isStoryMoment = null,
     Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
@@ -1104,6 +1339,10 @@ class _$AddPostStateCopyWithImpl<$Res, $Val extends AddPostState>
           ? _value.placeInfo
           : placeInfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      isStoryMoment: null == isStoryMoment
+          ? _value.isStoryMoment
+          : isStoryMoment // ignore: cast_nullable_to_non_nullable
+              as bool,
       imageEditingRequired: null == imageEditingRequired
           ? _value.imageEditingRequired
           : imageEditingRequired // ignore: cast_nullable_to_non_nullable
@@ -1142,6 +1381,7 @@ abstract class _$$_AddPostStateCopyWith<$Res>
       Uint8List? imageData,
       String? videoFilePath,
       String? placeInfo,
+      bool isStoryMoment,
       bool imageEditingRequired,
       bool isPostUploading,
       bool isLoading,
@@ -1165,6 +1405,7 @@ class __$$_AddPostStateCopyWithImpl<$Res>
     Object? imageData = freezed,
     Object? videoFilePath = freezed,
     Object? placeInfo = freezed,
+    Object? isStoryMoment = null,
     Object? imageEditingRequired = null,
     Object? isPostUploading = null,
     Object? isLoading = null,
@@ -1192,6 +1433,10 @@ class __$$_AddPostStateCopyWithImpl<$Res>
           ? _value.placeInfo
           : placeInfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      isStoryMoment: null == isStoryMoment
+          ? _value.isStoryMoment
+          : isStoryMoment // ignore: cast_nullable_to_non_nullable
+              as bool,
       imageEditingRequired: null == imageEditingRequired
           ? _value.imageEditingRequired
           : imageEditingRequired // ignore: cast_nullable_to_non_nullable
@@ -1225,6 +1470,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       this.imageData,
       this.videoFilePath,
       this.placeInfo,
+      this.isStoryMoment = false,
       this.imageEditingRequired = false,
       this.isPostUploading = false,
       this.isLoading = false,
@@ -1244,6 +1490,9 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
   final String? placeInfo;
   @override
   @JsonKey()
+  final bool isStoryMoment;
+  @override
+  @JsonKey()
   final bool imageEditingRequired;
   @override
   @JsonKey()
@@ -1259,7 +1508,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AddPostState(imageSource: $imageSource, postType: $postType, imageData: $imageData, videoFilePath: $videoFilePath, placeInfo: $placeInfo, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
+    return 'AddPostState(imageSource: $imageSource, postType: $postType, imageData: $imageData, videoFilePath: $videoFilePath, placeInfo: $placeInfo, isStoryMoment: $isStoryMoment, imageEditingRequired: $imageEditingRequired, isPostUploading: $isPostUploading, isLoading: $isLoading, isPostUploadedSuccessfully: $isPostUploadedSuccessfully, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1272,6 +1521,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('imageData', imageData))
       ..add(DiagnosticsProperty('videoFilePath', videoFilePath))
       ..add(DiagnosticsProperty('placeInfo', placeInfo))
+      ..add(DiagnosticsProperty('isStoryMoment', isStoryMoment))
       ..add(DiagnosticsProperty('imageEditingRequired', imageEditingRequired))
       ..add(DiagnosticsProperty('isPostUploading', isPostUploading))
       ..add(DiagnosticsProperty('isLoading', isLoading))
@@ -1294,6 +1544,8 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
                 other.videoFilePath == videoFilePath) &&
             (identical(other.placeInfo, placeInfo) ||
                 other.placeInfo == placeInfo) &&
+            (identical(other.isStoryMoment, isStoryMoment) ||
+                other.isStoryMoment == isStoryMoment) &&
             (identical(other.imageEditingRequired, imageEditingRequired) ||
                 other.imageEditingRequired == imageEditingRequired) &&
             (identical(other.isPostUploading, isPostUploading) ||
@@ -1316,6 +1568,7 @@ class _$_AddPostState extends _AddPostState with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(imageData),
       videoFilePath,
       placeInfo,
+      isStoryMoment,
       imageEditingRequired,
       isPostUploading,
       isLoading,
@@ -1336,6 +1589,7 @@ abstract class _AddPostState extends AddPostState {
       final Uint8List? imageData,
       final String? videoFilePath,
       final String? placeInfo,
+      final bool isStoryMoment,
       final bool imageEditingRequired,
       final bool isPostUploading,
       final bool isLoading,
@@ -1353,6 +1607,8 @@ abstract class _AddPostState extends AddPostState {
   String? get videoFilePath;
   @override
   String? get placeInfo;
+  @override
+  bool get isStoryMoment;
   @override
   bool get imageEditingRequired;
   @override

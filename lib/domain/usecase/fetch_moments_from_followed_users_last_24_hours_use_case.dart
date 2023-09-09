@@ -25,7 +25,7 @@ class FetchMomentsFromFollowedUsersLast24HoursUseCase
         .getAuthUserUid()
         .asStream()
         .asyncMap((authUserUid) async =>
-            await userRepository.findAllThatUserIsFollowingBy(
+            await userRepository.findAllFollowedBy(
                 authUserUid.getOrElse(() => throw Exception("Auth failed"))))
         .asyncMap((users) async => findMomentsGroupByUser(users.getOrElse(() =>
             throw Exception("An error occurred when trying to fetch users"))))
