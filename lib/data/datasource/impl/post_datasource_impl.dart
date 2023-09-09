@@ -203,17 +203,15 @@ class PostDatasourceImpl extends PostDatasource {
   }
 
   @override
-  Future<List<PostDTO>> findMomentsPublishedTodayByUserUuids(
+  Future<List<PostDTO>> findMomentsPublishedLast24HoursByUserUuids(
       List<String> userUuids) async {
     final now = DateTime.now();
-    final startOfToday = DateTime(now.year, now.month, now.day, 0, 0, 0, 0);
-    final endOfToday = DateTime(now.year, now.month, now.day, 23, 59, 59, 999);
+    final twentyFourHoursAgo = now.subtract(const Duration(hours: 24));
     final QuerySnapshot querySnapshot = await firestore
         .collection('posts')
         .where('authorUid', whereIn: userUuids)
         .where('type', isEqualTo: 'moment')
-        .where('datePublished', isGreaterThanOrEqualTo: startOfToday)
-        .where('datePublished', isLessThanOrEqualTo: endOfToday)
+        .where('datePublished', isGreaterThanOrEqualTo: twentyFourHoursAgo)
         .orderBy('datePublished', descending: true)
         .get();
     // Convert the query results into a list of PostDTO objects

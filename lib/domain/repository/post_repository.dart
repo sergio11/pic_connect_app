@@ -51,6 +51,6 @@ abstract class PostRepository {
 
   Future<Either<Failure, List<PostBO>>> getReelsWithMostLikes(int limit);
 
-  Future<Either<Failure, List<PostBO>>> findMomentsPublishedTodayByUserUuids(
+  Future<Either<Failure, List<PostBO>>> findMomentsPublishedLast24HoursByUserUuids(
       List<String> userUuids);
 }

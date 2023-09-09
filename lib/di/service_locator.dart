@@ -187,7 +187,7 @@ setupServiceLocator() async {
   serviceLocator.registerLazySingleton(
       () => UpdateUserUseCase(userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(() =>
-      FetchMomentsFromFollowedUsersTodayUseCase(
+      FetchMomentsFromFollowedUsersLast24HoursUseCase(
           authRepository: serviceLocator(),
           postRepository: serviceLocator(),
           userRepository: serviceLocator()));
@@ -200,7 +200,7 @@ setupServiceLocator() async {
   serviceLocator
       .registerFactory(() => SignUpBloc(signUpUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(
-      () => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator()));
+      () => FeedBloc(fetchUserHomeFeedUseCase: serviceLocator(), fetchMomentsFromFollowedUsersTodayUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => ProfileBloc(
       getUserDetailsUseCase: serviceLocator(),
       getAuthUserUidUseCase: serviceLocator(),

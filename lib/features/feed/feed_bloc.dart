@@ -16,7 +16,7 @@ part 'feed_bloc.freezed.dart';
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
   final FetchUserHomeFeedUseCase fetchUserHomeFeedUseCase;
-  final FetchMomentsFromFollowedUsersTodayUseCase fetchMomentsFromFollowedUsersTodayUseCase;
+  final FetchMomentsFromFollowedUsersLast24HoursUseCase fetchMomentsFromFollowedUsersTodayUseCase;
 
   FeedBloc({
     required this.fetchUserHomeFeedUseCase,

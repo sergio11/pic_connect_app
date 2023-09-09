@@ -7,13 +7,13 @@ import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/repository/user_repository.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 
-class FetchMomentsFromFollowedUsersTodayUseCase
+class FetchMomentsFromFollowedUsersLast24HoursUseCase
     extends BaseUseCase<Map<UserBO, List<PostBO>>, DefaultParams> {
   final AuthRepository authRepository;
   final PostRepository postRepository;
   final UserRepository userRepository;
 
-  FetchMomentsFromFollowedUsersTodayUseCase(
+  FetchMomentsFromFollowedUsersLast24HoursUseCase(
       {required this.authRepository,
       required this.postRepository,
       required this.userRepository});
@@ -35,7 +35,7 @@ class FetchMomentsFromFollowedUsersTodayUseCase
   Future<Either<Failure, Map<UserBO, List<PostBO>>>> findMoments(
       List<UserBO> users) async {
     return await postRepository
-        .findMomentsPublishedTodayByUserUuids(users.map((e) => e.uid).toList())
+        .findMomentsPublishedLast24HoursByUserUuids(users.map((e) => e.uid).toList())
         .then((response) => response.map((moments) {
               final Map<UserBO, List<PostBO>> momentsMap = {};
               for (var moment in moments) {
