@@ -26,21 +26,22 @@ class PostDatasourceImpl extends PostDatasource {
   }
 
   @override
-  Future<bool> likePost({required String postId, required String uid}) async {
+  Future<bool> likePost(
+      {required String postId, required String userUuid}) async {
     final DocumentReference postRef = firestore.collection('posts').doc(postId);
     final DocumentSnapshot snap = await postRef.get();
     Map<String, dynamic> postData = snap.data() as Map<String, dynamic>;
     List<String> likes = List<String>.from(postData['likes'] ?? []);
     final bool isLikedByUser;
-    if (likes.contains(uid)) {
-      likes.remove(uid);
+    if (likes.contains(userUuid)) {
+      likes.remove(userUuid);
       await postRef.update({
         'likes': likes,
         'likesCount': FieldValue.increment(-1),
       });
       isLikedByUser = false;
     } else {
-      likes.add(uid);
+      likes.add(userUuid);
       await postRef.update({
         'likes': likes,
         'likesCount': FieldValue.increment(1),
@@ -157,7 +158,7 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<bool> saveBookmark(
-      {required String postId, required String uid}) async {
+      {required String postId, required String userUuid}) async {
     final DocumentSnapshot snap =
         await firestore.collection('posts').doc(postId).get();
     var data = snap.data() as Map<String, dynamic>;
@@ -165,14 +166,14 @@ class PostDatasourceImpl extends PostDatasource {
         ? List<String>.from(data['bookmarks'] as List)
         : [];
     final bool isBookmarkedByUser;
-    if (bookmarks.contains(uid)) {
+    if (bookmarks.contains(userUuid)) {
       firestore.collection('posts').doc(postId).update({
-        'bookmarks': FieldValue.arrayRemove([uid])
+        'bookmarks': FieldValue.arrayRemove([userUuid])
       });
       isBookmarkedByUser = false;
     } else {
       firestore.collection('posts').doc(postId).update({
-        'bookmarks': FieldValue.arrayUnion([uid])
+        'bookmarks': FieldValue.arrayUnion([userUuid])
       });
       isBookmarkedByUser = true;
     }
@@ -199,5 +200,26 @@ class PostDatasourceImpl extends PostDatasource {
         .limit(limit)
         .get();
     return reelsWithMostLikes.docs.map((doc) => postMapper(doc)).toList();
+  }
+
+  @override
+  Future<List<PostDTO>> findMomentsPublishedTodayByUserUuids(
+      List<String> userUuids) async {
+    final now = DateTime.now();
+    final startOfToday = DateTime(now.year, now.month, now.day, 0, 0, 0, 0);
+    final endOfToday = DateTime(now.year, now.month, now.day, 23, 59, 59, 999);
+    final QuerySnapshot querySnapshot = await firestore
+        .collection('posts')
+        .where('authorUid', whereIn: userUuids)
+        .where('type', isEqualTo: 'moment')
+        .where('datePublished', isGreaterThanOrEqualTo: startOfToday)
+        .where('datePublished', isLessThanOrEqualTo: endOfToday)
+        .orderBy('datePublished', descending: true)
+        .get();
+    // Convert the query results into a list of PostDTO objects
+    final List<PostDTO> moments = querySnapshot.docs
+        .map((QueryDocumentSnapshot doc) => postMapper(doc))
+        .toList();
+    return moments;
   }
 }

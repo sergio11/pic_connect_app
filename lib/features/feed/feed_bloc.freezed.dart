@@ -224,6 +224,8 @@ abstract class OnLoadHomePostsEvent implements FeedEvent {
 mixin _$FeedState {
   String get authUserUid => throw _privateConstructorUsedError;
   List<PostBO> get posts => throw _privateConstructorUsedError;
+  Map<UserBO, List<PostBO>> get momentsByFollowedUsers =>
+      throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -240,6 +242,7 @@ abstract class $FeedStateCopyWith<$Res> {
   $Res call(
       {String authUserUid,
       List<PostBO> posts,
+      Map<UserBO, List<PostBO>> momentsByFollowedUsers,
       bool isLoading,
       String? errorMessage});
 }
@@ -259,6 +262,7 @@ class _$FeedStateCopyWithImpl<$Res, $Val extends FeedState>
   $Res call({
     Object? authUserUid = null,
     Object? posts = null,
+    Object? momentsByFollowedUsers = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
@@ -271,6 +275,10 @@ class _$FeedStateCopyWithImpl<$Res, $Val extends FeedState>
           ? _value.posts
           : posts // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      momentsByFollowedUsers: null == momentsByFollowedUsers
+          ? _value.momentsByFollowedUsers
+          : momentsByFollowedUsers // ignore: cast_nullable_to_non_nullable
+              as Map<UserBO, List<PostBO>>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -293,6 +301,7 @@ abstract class _$$_FeedStateCopyWith<$Res> implements $FeedStateCopyWith<$Res> {
   $Res call(
       {String authUserUid,
       List<PostBO> posts,
+      Map<UserBO, List<PostBO>> momentsByFollowedUsers,
       bool isLoading,
       String? errorMessage});
 }
@@ -310,6 +319,7 @@ class __$$_FeedStateCopyWithImpl<$Res>
   $Res call({
     Object? authUserUid = null,
     Object? posts = null,
+    Object? momentsByFollowedUsers = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
@@ -322,6 +332,10 @@ class __$$_FeedStateCopyWithImpl<$Res>
           ? _value._posts
           : posts // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      momentsByFollowedUsers: null == momentsByFollowedUsers
+          ? _value._momentsByFollowedUsers
+          : momentsByFollowedUsers // ignore: cast_nullable_to_non_nullable
+              as Map<UserBO, List<PostBO>>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -340,9 +354,11 @@ class _$_FeedState implements _FeedState {
   const _$_FeedState(
       {this.authUserUid = "",
       final List<PostBO> posts = const [],
+      final Map<UserBO, List<PostBO>> momentsByFollowedUsers = const {},
       this.isLoading = false,
       this.errorMessage})
-      : _posts = posts;
+      : _posts = posts,
+        _momentsByFollowedUsers = momentsByFollowedUsers;
 
   @override
   @JsonKey()
@@ -356,6 +372,16 @@ class _$_FeedState implements _FeedState {
     return EqualUnmodifiableListView(_posts);
   }
 
+  final Map<UserBO, List<PostBO>> _momentsByFollowedUsers;
+  @override
+  @JsonKey()
+  Map<UserBO, List<PostBO>> get momentsByFollowedUsers {
+    if (_momentsByFollowedUsers is EqualUnmodifiableMapView)
+      return _momentsByFollowedUsers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_momentsByFollowedUsers);
+  }
+
   @override
   @JsonKey()
   final bool isLoading;
@@ -364,7 +390,7 @@ class _$_FeedState implements _FeedState {
 
   @override
   String toString() {
-    return 'FeedState(authUserUid: $authUserUid, posts: $posts, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'FeedState(authUserUid: $authUserUid, posts: $posts, momentsByFollowedUsers: $momentsByFollowedUsers, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -375,6 +401,8 @@ class _$_FeedState implements _FeedState {
             (identical(other.authUserUid, authUserUid) ||
                 other.authUserUid == authUserUid) &&
             const DeepCollectionEquality().equals(other._posts, _posts) &&
+            const DeepCollectionEquality().equals(
+                other._momentsByFollowedUsers, _momentsByFollowedUsers) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -382,8 +410,13 @@ class _$_FeedState implements _FeedState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, authUserUid,
-      const DeepCollectionEquality().hash(_posts), isLoading, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      authUserUid,
+      const DeepCollectionEquality().hash(_posts),
+      const DeepCollectionEquality().hash(_momentsByFollowedUsers),
+      isLoading,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -396,6 +429,7 @@ abstract class _FeedState implements FeedState {
   const factory _FeedState(
       {final String authUserUid,
       final List<PostBO> posts,
+      final Map<UserBO, List<PostBO>> momentsByFollowedUsers,
       final bool isLoading,
       final String? errorMessage}) = _$_FeedState;
 
@@ -403,6 +437,8 @@ abstract class _FeedState implements FeedState {
   String get authUserUid;
   @override
   List<PostBO> get posts;
+  @override
+  Map<UserBO, List<PostBO>> get momentsByFollowedUsers;
   @override
   bool get isLoading;
   @override

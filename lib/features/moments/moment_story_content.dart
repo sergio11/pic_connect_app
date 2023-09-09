@@ -7,6 +7,7 @@ import '../core/widgets/common_screen_progress_indicator.dart';
 
 
 class MomentStoryContent extends StoryContent {
+
   const MomentStoryContent({
     required this.contentIndex,
     Key? key,

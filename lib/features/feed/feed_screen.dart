@@ -59,7 +59,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       () => onRefresh(state),
                     ),
                 child: Column(
-                  children: [_buildStoryTrack(), _buildPostsList(state)],
+                  children: [_buildStoryTrack(state), _buildPostsList(state)],
                 )));
   }
 
@@ -95,8 +95,10 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Widget _buildStoryTrack() {
-    return const MomentStoryTrack();
+  Widget _buildStoryTrack(FeedState state) {
+    return MomentStoryTrack(
+      momentsByUser: state.momentsByFollowedUsers,
+    );
   }
 
   Widget _buildPostsList(FeedState state) {

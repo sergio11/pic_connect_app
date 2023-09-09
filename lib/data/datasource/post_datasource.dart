@@ -10,31 +10,32 @@ abstract class PostDatasource {
 
   Future<CommentDTO> postComment(SavePostCommentDTO commentDTO);
 
-  Future<bool> likePost({required String postId, required String uid});
+  Future<bool> likePost({required String postId, required String userUuid});
 
-  Future<bool> saveBookmark({required String postId, required String uid});
+  Future<bool> saveBookmark({required String postId, required String userUuid});
 
   Future<void> uploadPost(SavePostDTO post);
 
   Future<List<CommentDTO>> findAllCommentsByPostId(String postId);
 
-  Future<List<PostDTO>> findAllByUserUidOrderByDatePublished(String userUi);
+  Future<List<PostDTO>> findAllByUserUidOrderByDatePublished(String userUuid);
 
-  Future<List<PostDTO>> findReelsByUserUidOrderByDatePublished(String userUi);
+  Future<List<PostDTO>> findReelsByUserUidOrderByDatePublished(String userUuid);
 
-  Future<List<PostDTO>> findPicturesByUserUidOrderByDatePublished(
-      String userUi);
+  Future<List<PostDTO>> findPicturesByUserUidOrderByDatePublished(String userUuid);
 
   Future<List<PostDTO>> findAllOrderByDatePublished();
 
   Future<List<PostDTO>> findAllFavoritesByUserUidOrderByDatePublished(
-      String userUi);
+      String userUuid);
 
   Future<List<PostDTO>> findAllBookmarkByUserUidOrderByDatePublished(
-      String userUi);
+      String userUuid);
 
   Future<List<PostDTO>> findAllByUserUidListOrderByDatePublished(
-      List<String> userUidList);
+      List<String> userUuidList);
 
   Future<List<PostDTO>> getReelsWithMostLikes(int limit);
+
+  Future<List<PostDTO>> findMomentsPublishedTodayByUserUuids(List<String> userUuids);
 }

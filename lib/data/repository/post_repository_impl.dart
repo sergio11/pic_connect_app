@@ -50,7 +50,7 @@ class PostRepositoryImpl implements PostRepository {
       {required String postId, required String userUid}) async {
     try {
       final isLikedByUser =
-          await postDatasource.likePost(postId: postId, uid: userUid);
+          await postDatasource.likePost(postId: postId, userUuid: userUid);
       return Right(isLikedByUser);
     } catch (err) {
       return Left(Failure(message: err.toString()));
@@ -62,7 +62,7 @@ class PostRepositoryImpl implements PostRepository {
       {required String postId, required String userUid}) async {
     try {
       final isBookmarkedByUser =
-          await postDatasource.saveBookmark(postId: postId, uid: userUid);
+          await postDatasource.saveBookmark(postId: postId, userUuid: userUid);
       return Right(isBookmarkedByUser);
     } catch (err) {
       debugPrint("saveBookmark - ex -> ${err.toString()}");
@@ -242,6 +242,21 @@ class PostRepositoryImpl implements PostRepository {
     } catch (ex) {
       debugPrint("getReelsWithMostLikes - ex -> ${ex.toString()}");
       return Left(Failure(message: ex.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PostBO>>> findMomentsPublishedTodayByUserUuids(
+    List<String> userUuids,
+  ) async {
+    try {
+      final List<PostDTO> momentsListDTO =
+          await postDatasource.findMomentsPublishedTodayByUserUuids(userUuids);
+      final momentsListBO = await Future.wait(
+          momentsListDTO.map((postDTO) async => _mapToPostBO(postDTO)));
+      return Right(momentsListBO);
+    } catch (err) {
+      return Left(Failure(message: err.toString()));
     }
   }
 

@@ -35,6 +35,7 @@ import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/repository/user_repository.dart';
 import 'package:pic_connect/domain/usecase/delete_post_use_case.dart';
+import 'package:pic_connect/domain/usecase/fetch_moments_from_followed_users_today_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_user_home_feed_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_comments_by_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_that_user_is_following_by_use_case.dart';
@@ -185,6 +186,11 @@ setupServiceLocator() async {
       () => GetTopReelsWithMostLikesUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(
       () => UpdateUserUseCase(userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() =>
+      FetchMomentsFromFollowedUsersTodayUseCase(
+          authRepository: serviceLocator(),
+          postRepository: serviceLocator(),
+          userRepository: serviceLocator()));
 
   /// BloC ///
   serviceLocator
@@ -228,6 +234,7 @@ setupServiceLocator() async {
       findFollowersByUserUseCase: serviceLocator(),
       findAllThatUserIsFollowingByUseCase: serviceLocator(),
       followUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(
-      () => EditProfileBloc(getUserDetailsUseCase: serviceLocator(), updateUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => EditProfileBloc(
+      getUserDetailsUseCase: serviceLocator(),
+      updateUserUseCase: serviceLocator()));
 }
