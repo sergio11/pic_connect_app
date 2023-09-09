@@ -8,6 +8,7 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import 'post_card_bloc.dart';
 
@@ -33,6 +34,7 @@ class _PostCardState extends State<PostCard> {
   bool isOpenCommentsClicked = false;
   bool isSendContentClicked = false;
   bool isVideoReady = false;
+  bool isVideoPlaying = false;
 
   void _startLikeAnimation(String postId) {
     setState(() {
@@ -126,9 +128,9 @@ class _PostCardState extends State<PostCard> {
       child: Row(
         children: <Widget>[
           GestureDetector(
-            onTap: () => widget.onShowUserProfile(state.ownerUid),
-              child: buildCircleAvatar(imageUrl: state.authorImageUrl, radius: 22)
-          ),
+              onTap: () => widget.onShowUserProfile(state.ownerUid),
+              child: buildCircleAvatar(
+                  imageUrl: state.authorImageUrl, radius: 22)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -350,15 +352,38 @@ class _PostCardState extends State<PostCard> {
           setState(() {
             isVideoReady = true;
           });
-          _videoController?.play();
         }
       });
       _videoController?.initialize();
-      _videoController?.setVolume(1);
+      _videoController?.setVolume(5);
       _videoController?.setLooping(true);
     }
     return isVideoReady
-        ? VideoPlayer(_videoController!)
+        ? VisibilityDetector(
+            key: Key(videoPath),
+            onVisibilityChanged: (visibilityInfo) {
+              if (visibilityInfo.visibleFraction == 1) {
+                if (!isVideoPlaying) {
+                  setState(() {
+                    isVideoPlaying = true;
+                  });
+                  _videoController?.play();
+                }
+              } else {
+                setState(() {
+                  isVideoPlaying = false;
+                });
+                _videoController?.pause();
+              }
+            },
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: _videoController!.value.size.width,
+                height: _videoController!.value.size.height,
+                child: VideoPlayer(_videoController!),
+              ),
+            ))
         : const CommonScreenProgressIndicator();
   }
 }

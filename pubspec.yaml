@@ -73,6 +73,7 @@ dependencies:
   country_picker: ^2.0.21
   video_thumbnail: ^0.5.3
   path_provider: ^2.1.1
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
