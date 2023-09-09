@@ -203,6 +203,21 @@ class PostDatasourceImpl extends PostDatasource {
   }
 
   @override
+  Future<List<PostDTO>> findMomentsByUser(String userUid, int maxDays) async {
+    final momentUUIDs = await _getRecentMomentUUIDs(userUid, maxDays);
+    final List<PostDTO> moments = [];
+    for (final momentUUID in momentUUIDs) {
+      final momentDocument =
+          await firestore.collection('posts').doc(momentUUID).get();
+      if (momentDocument.exists) {
+        final moment = postMapper(momentDocument);
+        moments.add(moment);
+      }
+    }
+    return moments;
+  }
+
+  @override
   Future<List<PostDTO>> findMomentsPublishedLast24HoursByUserUuids(
       List<String> userUuids) async {
     final now = DateTime.now();
@@ -219,5 +234,21 @@ class PostDatasourceImpl extends PostDatasource {
         .map((QueryDocumentSnapshot doc) => postMapper(doc))
         .toList();
     return moments;
+  }
+
+  Future<List<String>> _getRecentMomentUUIDs(
+      String userUid, int maxDays) async {
+    final CollectionReference momentsCollection =
+        firestore.collection('moments').doc(userUid).collection('days');
+    final QuerySnapshot querySnapshot = await momentsCollection
+        .orderBy('date', descending: true)
+        .limit(maxDays)
+        .get();
+    final List<String> momentUUIDs = [];
+    for (final QueryDocumentSnapshot daySnapshot in querySnapshot.docs) {
+      final List<dynamic> uuids = daySnapshot['postUUIDs'];
+      momentUUIDs.addAll(uuids.cast<String>());
+    }
+    return momentUUIDs;
   }
 }

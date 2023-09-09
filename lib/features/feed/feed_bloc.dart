@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
-import 'package:pic_connect/domain/usecase/fetch_moments_from_followed_users_today_use_case.dart';
+import 'package:pic_connect/domain/usecase/fetch_moments_from_followed_users_last_24_hours_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_user_home_feed_use_case.dart';
 
 part 'feed_event.dart';

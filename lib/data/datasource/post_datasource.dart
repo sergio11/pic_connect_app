@@ -38,4 +38,6 @@ abstract class PostDatasource {
   Future<List<PostDTO>> getReelsWithMostLikes(int limit);
 
   Future<List<PostDTO>> findMomentsPublishedLast24HoursByUserUuids(List<String> userUuids);
+
+  Future<List<PostDTO>> findMomentsByUser(String userUid, int maxDays);
 }

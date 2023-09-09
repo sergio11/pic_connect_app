@@ -53,4 +53,6 @@ abstract class PostRepository {
 
   Future<Either<Failure, List<PostBO>>> findMomentsPublishedLast24HoursByUserUuids(
       List<String> userUuids);
+
+  Future<Either<Failure, List<PostBO>>> findMomentsByUser(String userUid, int maxDays);
 }

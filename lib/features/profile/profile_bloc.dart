@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
+import 'package:pic_connect/domain/usecase/fetch_moments_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_bookmark_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_favorites_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
@@ -31,6 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UnFollowUserUseCase unFollowUserUseCase;
   final FindFavoritesPostsByUserUseCase findFavoritesPostsByUserUseCase;
   final FindBookmarkPostsByUserUseCase findBookmarkPostsByUserUseCase;
+  final FetchMomentsByUserUseCase fetchMomentsByUserUseCase;
 
   ProfileBloc(
       {required this.getUserDetailsUseCase,
@@ -40,7 +42,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       required this.followUserUseCase,
       required this.unFollowUserUseCase,
       required this.findFavoritesPostsByUserUseCase,
-      required this.findBookmarkPostsByUserUseCase})
+      required this.findBookmarkPostsByUserUseCase,
+      required this.fetchMomentsByUserUseCase})
       : super(const ProfileState()) {
     on<OnLoadProfileEvent>(onLoadProfileEventHandler);
     on<OnSignOutEvent>(onSignOutEventHandler);

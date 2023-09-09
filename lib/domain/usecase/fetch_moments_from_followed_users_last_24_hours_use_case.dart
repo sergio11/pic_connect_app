@@ -27,15 +27,16 @@ class FetchMomentsFromFollowedUsersLast24HoursUseCase
         .asyncMap((authUserUid) async =>
             await userRepository.findAllThatUserIsFollowingBy(
                 authUserUid.getOrElse(() => throw Exception("Auth failed"))))
-        .asyncMap((users) async => findMoments(users.getOrElse(() =>
+        .asyncMap((users) async => findMomentsGroupByUser(users.getOrElse(() =>
             throw Exception("An error occurred when trying to fetch users"))))
         .last;
   }
 
-  Future<Either<Failure, Map<UserBO, List<PostBO>>>> findMoments(
+  Future<Either<Failure, Map<UserBO, List<PostBO>>>> findMomentsGroupByUser(
       List<UserBO> users) async {
     return await postRepository
-        .findMomentsPublishedLast24HoursByUserUuids(users.map((e) => e.uid).toList())
+        .findMomentsPublishedLast24HoursByUserUuids(
+            users.map((e) => e.uid).toList())
         .then((response) => response.map((moments) {
               final Map<UserBO, List<PostBO>> momentsMap = {};
               for (var moment in moments) {

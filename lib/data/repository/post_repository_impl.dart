@@ -246,12 +246,27 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<PostBO>>> findMomentsPublishedLast24HoursByUserUuids(
+  Future<Either<Failure, List<PostBO>>>
+      findMomentsPublishedLast24HoursByUserUuids(
     List<String> userUuids,
   ) async {
     try {
+      final List<PostDTO> momentsListDTO = await postDatasource
+          .findMomentsPublishedLast24HoursByUserUuids(userUuids);
+      final momentsListBO = await Future.wait(
+          momentsListDTO.map((postDTO) async => _mapToPostBO(postDTO)));
+      return Right(momentsListBO);
+    } catch (err) {
+      return Left(Failure(message: err.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PostBO>>> findMomentsByUser(
+      String userUid, int maxDays) async {
+    try {
       final List<PostDTO> momentsListDTO =
-          await postDatasource.findMomentsPublishedLast24HoursByUserUuids(userUuids);
+          await postDatasource.findMomentsByUser(userUid, maxDays);
       final momentsListBO = await Future.wait(
           momentsListDTO.map((postDTO) async => _mapToPostBO(postDTO)));
       return Right(momentsListBO);
