@@ -6,6 +6,7 @@ import 'package:pic_connect/features/reels/reels_bloc.dart';
 import 'package:pic_connect/features/reels/widgets/reels_viewer_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReelsViewerScreen extends StatefulWidget {
   final Function(String postId) onGoToCommentsByPost;
@@ -22,8 +23,17 @@ class ReelsViewerScreen extends StatefulWidget {
 }
 
 class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
+
+  late AppLocalizations _l10n;
+
   void _refresh() {
     context.read<ReelsBloc>().add(const OnLoadTopReels());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
   }
 
   @override
@@ -63,7 +73,7 @@ class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
 
   Widget _buildNoDataFound() {
     return EmptyStateWidget(
-        message: "No Reels was found, please try again later",
+        message: _l10n.reelsScreenNoDataFound,
         iconData: Icons.mood_bad,
         onRetry: _refresh);
   }

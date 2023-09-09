@@ -66,5 +66,6 @@
   "editProfileMainTitle": "Edit Profile",
   "editProfileCountryPickerText": "Select Your Country",
   "editProfileDatePickerText": "Select Your Birthdate",
-  "editProfileInformationProvidedNotValid": "The provided information is not valid."
+  "editProfileInformationProvidedNotValid": "The provided information is not valid.",
+  "reelsScreenNoDataFound": "No Reels was found, please try again later"
 }

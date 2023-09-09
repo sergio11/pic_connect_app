@@ -2,17 +2,17 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:pic_connect/domain/models/post.dart';
-import 'package:pic_connect/domain/models/reel.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
-import 'package:pic_connect/features/reels/reels_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/date_formatter.dart';
 import 'package:pic_connect/utils/url_checker.dart';
+import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ReelsPage extends StatefulWidget {
   final PostBO reelPost;
@@ -42,10 +42,9 @@ class ReelsPage extends StatefulWidget {
 }
 
 class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
-
   late VideoPlayerController _videoPlayerController;
-  final double _videoContainerRatio = 0.49;
   ChewieController? _chewieController;
+  bool isHeaderVisible = false;
 
   @override
   void initState() {
@@ -54,21 +53,6 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
       initializePlayer();
     }
     super.initState();
-  }
-
-  @override
-  void onResumed() {
-    debugPrint("ReelsPage - onResumed CALLED!");
-    if (!UrlChecker.isImageUrl(widget.reelPost.postUrl) &&
-        UrlChecker.isValid(widget.reelPost.postUrl)) {
-      initializePlayer();
-    }
-  }
-
-  @override
-  void onPaused() {
-    debugPrint("ReelsPage - onPaused CALLED!");
-    _closePlayer();
   }
 
   @override
@@ -85,7 +69,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
 
   Widget getVideoView() {
     return Container(
-        color: primaryColor,
+        color: Colors.red,
         child: Stack(
           children: [
             _chewieController != null &&
@@ -102,11 +86,12 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
   }
 
   Future initializePlayer() async {
-    _videoPlayerController = VideoPlayerController.network(widget.reelPost.postUrl);
+    _videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.reelPost.postUrl));
     await Future.wait([_videoPlayerController.initialize()]);
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
-      autoPlay: true,
+      autoPlay: false,
       showControls: false,
       looping: false,
     );
@@ -150,58 +135,89 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
   }
 
   Widget _buildVideoViewer() {
-    return AspectRatio(
-        aspectRatio: _videoContainerRatio,
-        child: Stack(children: <Widget>[
-          Transform.scale(
-            scale: _getScale(),
-            child: AspectRatio(
-              aspectRatio: _videoPlayerController.value.aspectRatio,
+    return VisibilityDetector(
+        key: Key(widget.reelPost.postUrl),
+        onVisibilityChanged: (VisibilityInfo info) {
+          if (info.visibleFraction == 1) {
+            _chewieController?.play();
+          } else {
+            _chewieController?.pause();
+          }
+        },
+        child: Transform.scale(
+          scale: 1.2,
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: Chewie(
                 controller: _chewieController!,
               ),
             ),
           ),
-        ]));
+        ));
   }
 
   Widget _buildPostHeaderSection() {
-    return Container(
-      padding: const EdgeInsets.only(top: 65, left: 10),
-      child: Row(
-        children: <Widget>[
-          GestureDetector(
-              onTap: () => widget.onShowUserProfile(widget.reelPost.postAuthorUid),
-              child: buildCircleAvatar(
-                  imageUrl: widget.reelPost.profImage, radius: 22)),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 8,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.reelPost.username,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: primaryColor, fontWeight: FontWeight.bold),
+    return VisibilityDetector(
+        key: Key(const Uuid().v1()),
+        onVisibilityChanged: (VisibilityInfo info) {
+          if (info.visibleFraction == 1) {
+            setState(() {
+              isHeaderVisible = true;
+            });
+          }
+        },
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 1000),
+          opacity: isHeaderVisible ? 1.0 : 0.0,
+          child: Container(
+            padding: const EdgeInsets.only(top: 65, left: 10),
+            child: Row(
+              children: <Widget>[
+                GestureDetector(
+                    onTap: () =>
+                        widget.onShowUserProfile(widget.reelPost.postAuthorUid),
+                    child: buildCircleAvatar(
+                        imageUrl: widget.reelPost.profImage, radius: 22)),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          widget.reelPost.username,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          widget.reelPost.placeInfo ?? "",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.w400),
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                        )
+                      ],
+                    ),
                   ),
-                  Text(
-                    widget.reelPost.placeInfo ?? "",
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: primaryColor, fontWeight: FontWeight.w400),
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-    );
+        ));
   }
 
   Widget _buildPostActionsSection() {
@@ -231,7 +247,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
             ),
             IconButton(
               icon: const Icon(Icons.comment_outlined, color: primaryColor),
-              onPressed: () => widget.onShowCommentsByPost(widget.reelPost.postId),
+              onPressed: () =>
+                  widget.onShowCommentsByPost(widget.reelPost.postId),
             ),
             IconButton(
                 icon: const Icon(Icons.share, color: primaryColor),
@@ -269,10 +286,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
                 '${widget.reelPost.likes.length} likes',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall
-                    ?.copyWith(color: primaryColor, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: primaryColor, fontWeight: FontWeight.bold),
               )),
           Container(
             width: double.infinity,
@@ -303,10 +318,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 'View all ${widget.reelPost.commentCount} comments',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: primaryColor, fontWeight: FontWeight.w600),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: primaryColor, fontWeight: FontWeight.w600),
               ),
             ),
             onTap: () => widget.onShowCommentsByPost(widget.reelPost.postId),
@@ -329,17 +342,5 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
         ],
       ),
     );
-  }
-
-  double _getScale() {
-    double videoRatio = _videoPlayerController.value.aspectRatio;
-    if (videoRatio < _videoContainerRatio) {
-      ///for tall videos, we just return the inverse of the controller aspect ratio
-      return _videoContainerRatio / videoRatio;
-    } else {
-      ///for wide videos, divide the video AR by the fixed container AR
-      ///so that the video does not over scale
-      return videoRatio / _videoContainerRatio;
-    }
   }
 }
