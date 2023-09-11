@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pic_connect/di/service_locator.dart';
@@ -47,24 +49,39 @@ class _FeedScreenState extends State<FeedScreen> {
 
   Widget _buildScreenContent(FeedState state) {
     return Scaffold(
-        backgroundColor: mobileBackgroundColor,
-        appBar: _buildAppBar(),
-        body: state.isLoading
-            ? _buildProgressIndicator()
-            : RefreshIndicator(
-                backgroundColor: secondaryColor,
-                color: accentColor,
-                onRefresh: () => Future.delayed(
-                      const Duration(seconds: 1),
-                      () => onRefresh(state),
-                    ),
-                child: Column(
-                  children: [_buildStoryTrack(state), _buildPostsList(state)],
-                )));
+      backgroundColor: mobileBackgroundColor,
+      appBar: _buildAppBar(),
+      body: state.isLoading
+          ? _buildProgressIndicator()
+          : RefreshIndicator(
+              backgroundColor: secondaryColor,
+              color: accentColor,
+              onRefresh: () => Future.delayed(
+                    const Duration(seconds: 1),
+                    () => onRefresh(state),
+                  ),
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  _buildSliverAppBar(state),
+                  _buildPostsList(state),
+                ],
+              )),
+    );
   }
 
   Widget _buildProgressIndicator() {
     return const CommonScreenProgressIndicator();
+  }
+
+  Widget _buildSliverAppBar(FeedState state) {
+    return SliverAppBar(
+      expandedHeight: 140,
+      backgroundColor: primaryColor,
+      flexibleSpace: FlexibleSpaceBar(
+        background: _buildStoryTrack(state),
+      ),
+    );
   }
 
   AppBar _buildAppBar() {
@@ -96,40 +113,42 @@ class _FeedScreenState extends State<FeedScreen> {
   }
 
   Widget _buildStoryTrack(FeedState state) {
-    return MomentStoryTrack(
-      momentsByUser: state.momentsByFollowedUsers,
-    );
+    return state.momentsByFollowedUsers.isNotEmpty
+        ? MomentStoryTrack(
+            momentsByUser: state.momentsByFollowedUsers,
+          )
+        : Container();
   }
 
   Widget _buildPostsList(FeedState state) {
-    return Expanded(
-      child: state.posts.isNotEmpty
-          ? ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemCount: state.posts.length,
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 4,
+    return state.posts.isNotEmpty
+        ? SliverList(
+            delegate: SliverChildBuilderDelegate(
+            (context, index) => Container(
+              margin: const EdgeInsets.all(0),
+              child: BlocProvider(
+                create: (context) => serviceLocator<PostCardBloc>()
+                  ..add(
+                    OnShowPostEvent(state.posts[index], state.authUserUid),
+                  ),
+                child: PostCard(
+                  onShowCommentsByPost: (String postId) =>
+                      widget.onShowCommentsByPost(postId),
+                  onPostDeleted: () => onRefresh(state),
+                  onShowUserProfile: (String userUid) =>
+                      widget.onShowUserProfile(userUid),
+                ),
               ),
-              itemBuilder: (ctx, index) => Container(
-                margin: const EdgeInsets.all(0),
-                child: BlocProvider(
-                    create: (context) => serviceLocator<PostCardBloc>()
-                      ..add(OnShowPostEvent(
-                          state.posts[index], state.authUserUid)),
-                    child: PostCard(
-                      onShowCommentsByPost: (String postId) =>
-                          widget.onShowCommentsByPost(postId),
-                      onPostDeleted: () => onRefresh(state),
-                      onShowUserProfile: (String userUid) =>
-                          widget.onShowUserProfile(userUid),
-                    )),
-              ),
-            )
-          : EmptyStateWidget(
+            ),
+            childCount: state.posts.length,
+          ))
+        : SliverFillRemaining(
+            hasScrollBody: false,
+            child: EmptyStateWidget(
               message: 'No publications found',
               iconData: Icons.mood_bad,
               onRetry: () => onRefresh(state),
             ),
-    );
+          );
   }
 }

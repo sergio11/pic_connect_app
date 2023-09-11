@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/user.dart';
@@ -24,9 +25,8 @@ class FetchMomentsFromFollowedUsersLast24HoursUseCase
     return authRepository
         .getAuthUserUid()
         .asStream()
-        .asyncMap((authUserUid) async =>
-            await userRepository.findAllFollowedBy(
-                authUserUid.getOrElse(() => throw Exception("Auth failed"))))
+        .asyncMap((authUserUid) async => await userRepository.findAllFollowedBy(
+            authUserUid.getOrElse(() => throw Exception("Auth failed"))))
         .asyncMap((users) async => findMomentsGroupByUser(users.getOrElse(() =>
             throw Exception("An error occurred when trying to fetch users"))))
         .last;
@@ -38,8 +38,10 @@ class FetchMomentsFromFollowedUsersLast24HoursUseCase
         .findMomentsPublishedLast24HoursByUserUuids(
             users.map((e) => e.uid).toList())
         .then((response) => response.map((moments) {
+              debugPrint("moments -> ${moments.length}");
               final Map<UserBO, List<PostBO>> momentsMap = {};
               for (var moment in moments) {
+                debugPrint("moment -> ${moment.username} / ${moment.postId}");
                 final momentAuthorUid = moment.postAuthorUid;
                 final UserBO user = users.firstWhere(
                     (user) => user.uid == momentAuthorUid,

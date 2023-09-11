@@ -27,10 +27,15 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
   FutureOr<void> onLoadHomePostsEventHandler(OnLoadHomePostsEvent event, Emitter<FeedState> emit) async {
     emit(state.copyWith(isLoading: true, authUserUid: event.userUid));
-    final response = await fetchUserHomeFeedUseCase(const DefaultParams());
-    response.fold(
-            (failure) => emit(state.copyWith(isLoading: false)),
+    final postsResponse = await fetchUserHomeFeedUseCase(const DefaultParams());
+    postsResponse.fold(
+            (failure) => emit(state.copyWith(isLoading: false, errorMessage: failure.message)),
             (posts) => emit(state.copyWith(isLoading: false, posts: posts))
+    );
+    final momentsResponse = await fetchMomentsFromFollowedUsersTodayUseCase(const DefaultParams());
+    momentsResponse.fold(
+            (failure) => emit(state.copyWith(errorMessage: failure.message)),
+            (moments) => emit(state.copyWith(isLoading: false, momentsByFollowedUsers: moments))
     );
   }
 

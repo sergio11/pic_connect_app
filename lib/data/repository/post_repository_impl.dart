@@ -259,6 +259,7 @@ class PostRepositoryImpl implements PostRepository {
           momentsListDTO.map((postDTO) async => _mapToPostBO(postDTO)));
       return Right(momentsListBO);
     } catch (err) {
+      debugPrint("findMomentsPublishedLast24HoursByUserUuids err -> ${err}");
       return Left(Failure(message: err.toString()));
     }
   }

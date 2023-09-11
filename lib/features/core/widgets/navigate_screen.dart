@@ -84,7 +84,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
               value.direction == ScrollDirection.idle) {
             showNav();
           } else {
-            hideNav();
+            hideNav(keepOverlay: false);
           }
           return true;
         },

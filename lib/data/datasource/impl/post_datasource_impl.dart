@@ -22,7 +22,17 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<void> deletePost(String postId) async {
-    await firestore.collection('posts').doc(postId).delete();
+    final DocumentReference postRef = firestore.collection('posts').doc(postId);
+    final DocumentSnapshot postSnapshot = await postRef.get();
+    if (postSnapshot.exists) {
+      final postData = postSnapshot.data() as Map<String, dynamic>;
+      final bool isStoryMoment = postData['isStoryMoment'] ?? false;
+      if (isStoryMoment) {
+        final String authorUid = postData['authorUid'];
+        await _updateMomentsCollection(postId, authorUid, true);
+      }
+      await postRef.delete();
+    }
   }
 
   @override
@@ -54,6 +64,9 @@ class PostDatasourceImpl extends PostDatasource {
   @override
   Future<void> uploadPost(SavePostDTO post) async {
     final postData = savePostMapper(post);
+    if (post.isStoryMoment) {
+      await _updateMomentsCollection(postData['postId'], postData['authorUid'], false);
+    }
     await firestore.collection('posts').doc(postData['postId']).set(postData);
   }
 
@@ -107,6 +120,7 @@ class PostDatasourceImpl extends PostDatasource {
     final posts = await firestore
         .collection('posts')
         .where('authorUid', isEqualTo: userUuid)
+        .where('isStoryMoment', isEqualTo: false)
         .where("type", isEqualTo: "picture")
         .orderBy('datePublished', descending: true)
         .get();
@@ -118,6 +132,7 @@ class PostDatasourceImpl extends PostDatasource {
       String userUuid) async {
     final posts = await firestore
         .collection('posts')
+        .where('isStoryMoment', isEqualTo: false)
         .where('authorUid', isEqualTo: userUuid)
         .where("type", isEqualTo: "reel")
         .orderBy('datePublished', descending: true)
@@ -140,6 +155,7 @@ class PostDatasourceImpl extends PostDatasource {
     final postByUser = await firestore
         .collection('posts')
         .where('authorUid', whereIn: userUuidList)
+        .where('isStoryMoment', isEqualTo: false)
         .orderBy('datePublished', descending: true)
         .get();
     return postByUser.docs.map((doc) => postMapper(doc)).toList();
@@ -196,6 +212,7 @@ class PostDatasourceImpl extends PostDatasource {
     final reelsWithMostLikes = await firestore
         .collection('posts')
         .where("type", isEqualTo: "reel")
+        .where('isStoryMoment', isEqualTo: false)
         .orderBy('likesCount', descending: true)
         .limit(limit)
         .get();
@@ -225,7 +242,7 @@ class PostDatasourceImpl extends PostDatasource {
     final QuerySnapshot querySnapshot = await firestore
         .collection('posts')
         .where('authorUid', whereIn: userUuids)
-        .where('type', isEqualTo: 'moment')
+        .where('isStoryMoment', isEqualTo: true)
         .where('datePublished', isGreaterThanOrEqualTo: twentyFourHoursAgo)
         .orderBy('datePublished', descending: true)
         .get();
@@ -250,5 +267,36 @@ class PostDatasourceImpl extends PostDatasource {
       momentUUIDs.addAll(uuids.cast<String>());
     }
     return momentUUIDs;
+  }
+
+  Future<void> _updateMomentsCollection(String postId, String authorUid, bool isDelete) async {
+    final now = DateTime.now();
+    final String dateString = '${now.year}-${now.month}-${now.day}';
+    final DocumentReference momentDayRef = firestore
+        .collection('moments')
+        .doc(authorUid)
+        .collection('days')
+        .doc(dateString);
+    final DocumentSnapshot momentDaySnapshot = await momentDayRef.get();
+    if (momentDaySnapshot.exists) {
+      final List<dynamic> postUUIDs =
+      List<dynamic>.from(momentDaySnapshot['postUUIDs'] ?? []);
+      if (isDelete) {
+        postUUIDs.remove(postId);
+      } else {
+        if (!postUUIDs.contains(postId)) {
+          postUUIDs.add(postId);
+        }
+      }
+      await momentDayRef.set({
+        'date': dateString,
+        'postUUIDs': postUUIDs,
+      });
+    } else {
+      await momentDayRef.set({
+        'date': dateString,
+        'postUUIDs': [postId],
+      });
+    }
   }
 }

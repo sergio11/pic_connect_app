@@ -40,7 +40,9 @@ class MomentStoryTrack extends StatelessWidget {
               contentCount: moments?.value.length ?? 0,
               contentBuilder: (contentIndex) {
                 final moment = moments?.value.elementAtOrNull(contentIndex);
-                return _buildImageStoryContent(moment);
+                return moment?.postType == PostTypeEnum.picture
+                    ? _buildImageStoryContent(moment)
+                    : _buildVideoStoryContent(moment);
               },
             );
           },
