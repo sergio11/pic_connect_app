@@ -36,6 +36,7 @@ class EditProfileBloc extends Bloc<EditProfilesEvent, EditProfileState> {
             state.copyWith(isLoading: false, errorMessage: failure.message)),
         (userDetail) => emit(state.copyWith(
             isLoading: false,
+            userUid: userDetail.uid,
             username: userDetail.username,
             email: userDetail.email,
             photoUrl: userDetail.photoUrl,

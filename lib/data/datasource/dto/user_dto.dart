@@ -23,4 +23,28 @@ class UserDTO {
     required this.followers,
     required this.following
   });
+
+  UserDTO copyWith({
+    String? uid,
+    String? username,
+    String? email,
+    String? photoUrl,
+    String? bio,
+    String? country,
+    String? birthDate,
+    List? followers,
+    List? following,
+  }) {
+    return UserDTO(
+      uid: uid ?? this.uid,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      photoUrl: photoUrl ?? this.photoUrl,
+      bio: bio ?? this.bio,
+      country: country ?? this.country,
+      birthDate: birthDate ?? this.birthDate,
+      followers: followers ?? this.followers,
+      following: following ?? this.following,
+    );
+  }
 }

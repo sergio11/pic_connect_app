@@ -53,8 +53,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, List<UserBO>>> findAllFollowedBy(
-      String uid) async {
+  Future<Either<Failure, List<UserBO>>> findAllFollowedBy(String uid) async {
     try {
       final userList = await userDatasource.findAllThatUserIsFollowingBy(uid);
       return Right(userList.map((e) => userBoMapper(e)).toList());
@@ -76,30 +75,44 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, UserBO>> update(
-      {required String uid,
-      required String username,
-      required String email,
-      required Uint8List? file,
-      required String? bio,
-      required String? country,
-      required String? birthDate}) async {
+  Future<Either<Failure, UserBO>> update({
+    required String uid,
+    required String username,
+    required String email,
+    required Uint8List? file,
+    required String? bio,
+    required String? country,
+    required String? birthDate,
+  }) async {
     try {
-      final userPhotoUrl = file != null
+      final userCurrent = await userDatasource.findByUid(uid);
+      final String userPhotoUrl = userCurrent.photoUrl;
+      final String? newPhotoUrl = file != null
           ? await storageDatasource.uploadFileToStorage(
-              folderName: 'profilePics', id: uid, file: file)
+              folderName: 'profilePics',
+              id: uid,
+              file: file,
+            )
           : null;
       await userDatasource.save(SaveUserDTO(
           uid: uid,
           username: username,
           email: email,
-          photoUrl: userPhotoUrl,
+          photoUrl: newPhotoUrl ?? userPhotoUrl,
           bio: bio,
           country: country,
           birthDate: birthDate));
-      final userUpdated = await userDatasource.findByUid(uid);
-      return Right(userBoMapper(userUpdated));
+      final updatedUser = userCurrent.copyWith(
+        username: username,
+        email: email,
+        photoUrl: newPhotoUrl ?? userPhotoUrl,
+        bio: bio,
+        country: country,
+        birthDate: birthDate,
+      );
+      return Right(userBoMapper(updatedUser));
     } catch (ex) {
+      debugPrint("update - ex: $ex");
       return Left(Failure(message: ex.toString()));
     }
   }
