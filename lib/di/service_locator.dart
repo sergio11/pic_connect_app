@@ -217,7 +217,8 @@ setupServiceLocator() async {
       fetchMomentsByUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => SearchBloc(
       findUsersByNameUseCase: serviceLocator(),
-      findPostsOrderByDatePublishedUseCase: serviceLocator()));
+      findPostsOrderByDatePublishedUseCase: serviceLocator(),
+      followUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => AddPostBloc(
       getUserDetailsUseCase: serviceLocator(),
       publishPostUseCase: serviceLocator()));

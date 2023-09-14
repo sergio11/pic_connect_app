@@ -10,6 +10,7 @@ import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchScreen extends StatefulWidget {
   final Function(String userUid) onShowUserProfile;
@@ -23,6 +24,21 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
+  late AppLocalizations _l10n;
+
+  void _onFollowUser(String userUid) {
+    context.read<SearchBloc>().add(OnFollowUserEvent(userUid));
+  }
+
+  void _onUnFollowUser(String userUid) {
+    context.read<SearchBloc>().add(OnUnFollowUserEvent(userUid));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
 
   @override
   void dispose() {
@@ -58,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return TextFormField(
       controller: searchController,
       decoration: InputDecoration(
-          labelText: 'Search for a user...',
+          labelText: _l10n.searchMainLabelText,
           labelStyle: Theme.of(context)
               .textTheme
               .labelMedium
@@ -100,12 +116,14 @@ class _SearchScreenState extends State<SearchScreen> {
             child: InkWell(
               onTap: () => widget.onShowUserProfile(state.users[index].uid),
               child: UserListTile(
-                userBO: state.users[index],
-                onFollowPressed: () {},
-                onUnFollowPressed: () {},
-                isFollowedByAuthUser: false,
-                isAuthUser: false,
-              ),
+                  userBO: state.users[index],
+                  onFollowPressed: () => _onFollowUser(state.users[index].uid),
+                  onUnFollowPressed: () =>
+                      _onUnFollowUser(state.users[index].uid),
+                  isFollowedByAuthUser:
+                      state.users[index].followers.contains(state.authUserUuid),
+                  isAuthUser: state.users[index].uid == state.authUserUuid,
+                  isDisabled: !state.allowUserInput),
             ));
       },
     );
@@ -126,9 +144,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   : VideoThumbnailWidget(
                       videoUrl: state.posts[index].postUrl,
                     ),
-              TagsRow(
-                  tags: state.posts[index].tags,
-                  scrollController: ScrollController())
+              if (state.posts[index].tags.isNotEmpty)
+                TagsRow(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 5.0),
+                    tags: [state.posts[index].tags.first],
+                    scrollController: ScrollController())
             ],
           ),
           onTap: () => showImage(context, state.posts[index].postUrl),

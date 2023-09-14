@@ -798,6 +798,8 @@ mixin _$ProfileState {
   String get photoUrl => throw _privateConstructorUsedError;
   String get bio => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
+  String get birthDate => throw _privateConstructorUsedError;
   bool get isLogout => throw _privateConstructorUsedError;
   bool get isFollowing => throw _privateConstructorUsedError;
   bool get isAuthUser => throw _privateConstructorUsedError;
@@ -831,6 +833,8 @@ abstract class $ProfileStateCopyWith<$Res> {
       String photoUrl,
       String bio,
       String username,
+      String country,
+      String birthDate,
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
@@ -866,6 +870,8 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? photoUrl = null,
     Object? bio = null,
     Object? username = null,
+    Object? country = null,
+    Object? birthDate = null,
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
@@ -914,6 +920,14 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthDate: null == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
               as String,
       isLogout: null == isLogout
           ? _value.isLogout
@@ -981,6 +995,8 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       String photoUrl,
       String bio,
       String username,
+      String country,
+      String birthDate,
       bool isLogout,
       bool isFollowing,
       bool isAuthUser,
@@ -1014,6 +1030,8 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? photoUrl = null,
     Object? bio = null,
     Object? username = null,
+    Object? country = null,
+    Object? birthDate = null,
     Object? isLogout = null,
     Object? isFollowing = null,
     Object? isAuthUser = null,
@@ -1062,6 +1080,14 @@ class __$$_ProfileStateCopyWithImpl<$Res>
       username: null == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthDate: null == birthDate
+          ? _value.birthDate
+          : birthDate // ignore: cast_nullable_to_non_nullable
               as String,
       isLogout: null == isLogout
           ? _value.isLogout
@@ -1124,6 +1150,8 @@ class _$_ProfileState implements _ProfileState {
       this.photoUrl = "",
       this.bio = "",
       this.username = "",
+      this.country = "",
+      this.birthDate = "",
       this.isLogout = false,
       this.isFollowing = false,
       this.isAuthUser = false,
@@ -1167,6 +1195,12 @@ class _$_ProfileState implements _ProfileState {
   @override
   @JsonKey()
   final String username;
+  @override
+  @JsonKey()
+  final String country;
+  @override
+  @JsonKey()
+  final String birthDate;
   @override
   @JsonKey()
   final bool isLogout;
@@ -1227,7 +1261,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPictureGridLoading: $isPictureGridLoading, isReelsGridLoading: $isReelsGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, picturesList: $picturesList, reelsList: $reelsList, bookmarkPostList: $bookmarkPostList, profileTabs: $profileTabs, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, country: $country, birthDate: $birthDate, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPictureGridLoading: $isPictureGridLoading, isReelsGridLoading: $isReelsGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, picturesList: $picturesList, reelsList: $reelsList, bookmarkPostList: $bookmarkPostList, profileTabs: $profileTabs, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1250,6 +1284,9 @@ class _$_ProfileState implements _ProfileState {
             (identical(other.bio, bio) || other.bio == bio) &&
             (identical(other.username, username) ||
                 other.username == username) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.birthDate, birthDate) ||
+                other.birthDate == birthDate) &&
             (identical(other.isLogout, isLogout) ||
                 other.isLogout == isLogout) &&
             (identical(other.isFollowing, isFollowing) ||
@@ -1287,6 +1324,8 @@ class _$_ProfileState implements _ProfileState {
         photoUrl,
         bio,
         username,
+        country,
+        birthDate,
         isLogout,
         isFollowing,
         isAuthUser,
@@ -1318,6 +1357,8 @@ abstract class _ProfileState implements ProfileState {
       final String photoUrl,
       final String bio,
       final String username,
+      final String country,
+      final String birthDate,
       final bool isLogout,
       final bool isFollowing,
       final bool isAuthUser,
@@ -1348,6 +1389,10 @@ abstract class _ProfileState implements ProfileState {
   String get bio;
   @override
   String get username;
+  @override
+  String get country;
+  @override
+  String get birthDate;
   @override
   bool get isLogout;
   @override

@@ -7,11 +7,12 @@ import 'package:pic_connect/features/core/widgets/common_screen_progress_indicat
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/features/moments/moment_story_track.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
-import '../moments/moment_story_track.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedScreen extends StatefulWidget {
   final Function() onShowFavoritePosts;
@@ -30,8 +31,16 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  late AppLocalizations _l10n;
+
   void onRefresh(FeedState state) async {
     context.read<FeedBloc>().add(OnLoadHomePostsEvent(state.authUserUid));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
   }
 
   @override
@@ -63,7 +72,8 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),
                 slivers: [
-                  _buildSliverAppBar(state),
+                  if(state.momentsByFollowedUsers.isNotEmpty)
+                    _buildMomentsStoryAppBar(state),
                   _buildPostsList(state),
                 ],
               )),
@@ -74,12 +84,14 @@ class _FeedScreenState extends State<FeedScreen> {
     return const CommonScreenProgressIndicator();
   }
 
-  Widget _buildSliverAppBar(FeedState state) {
+  Widget _buildMomentsStoryAppBar(FeedState state) {
     return SliverAppBar(
       expandedHeight: 140,
       backgroundColor: primaryColor,
       flexibleSpace: FlexibleSpaceBar(
-        background: _buildStoryTrack(state),
+        background: MomentStoryTrack(
+          momentsByUser: state.momentsByFollowedUsers,
+        ),
       ),
     );
   }
@@ -112,14 +124,6 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 
-  Widget _buildStoryTrack(FeedState state) {
-    return state.momentsByFollowedUsers.isNotEmpty
-        ? MomentStoryTrack(
-            momentsByUser: state.momentsByFollowedUsers,
-          )
-        : Container();
-  }
-
   Widget _buildPostsList(FeedState state) {
     return state.posts.isNotEmpty
         ? SliverList(
@@ -145,7 +149,7 @@ class _FeedScreenState extends State<FeedScreen> {
         : SliverFillRemaining(
             hasScrollBody: false,
             child: EmptyStateWidget(
-              message: 'No publications found',
+              message: _l10n.noPublicationsFound,
               iconData: Icons.mood_bad,
               onRetry: () => onRefresh(state),
             ),

@@ -116,6 +116,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 authUserUid: data.last,
                 photoUrl: data.init.photoUrl,
                 bio: data.init.bio ?? "",
+                birthDate: data.init.birthDate ?? "",
+                country: data.init.country ?? "",
                 username: data.init.username,
                 followers: data.init.followers.length,
                 following: data.init.following.length,

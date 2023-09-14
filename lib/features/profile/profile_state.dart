@@ -12,6 +12,8 @@ class ProfileState with _$ProfileState {
     @Default("") final String photoUrl,
     @Default("") final String bio,
     @Default("") final String username,
+    @Default("") final String country,
+    @Default("") final String birthDate,
     @Default(false) final bool isLogout,
     @Default(false) final bool isFollowing,
     @Default(false) final bool isAuthUser,

@@ -4,9 +4,17 @@ import 'package:pic_connect/features/core/widgets/animate_gradient_widget.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/utils/colors.dart';
 
-Widget buildCircleAvatar({ required String imageUrl, double? radius }) {
+Widget buildCircleAvatar({
+  required String imageUrl,
+  double? radius,
+  bool showBackgroundColor = true,
+}) {
   return imageUrl.isEmpty
-      ? const CommonScreenProgressIndicator()
+      ? CommonScreenProgressIndicator(
+          backgroundColor:
+              showBackgroundColor ? primaryColor : Colors.transparent,
+          spinnerSize: radius ?? 40,
+        )
       : _buildCachedNetworkImage(
           imageUrl: imageUrl,
           imageBuilder: (context, imageProvider) => CircleAvatar(

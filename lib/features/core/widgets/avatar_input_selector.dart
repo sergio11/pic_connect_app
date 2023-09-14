@@ -60,7 +60,8 @@ class AvatarInputSelector extends StatelessWidget {
   }
 
   Widget _buildCurrentUserPicture(String profilePictureUrl) {
-    return buildCircleAvatar(imageUrl: profilePictureUrl, radius: 100);
+    return buildCircleAvatar(
+        imageUrl: profilePictureUrl, radius: 100, showBackgroundColor: false);
   }
 
   Widget _buildDefaultAvatarImage() {

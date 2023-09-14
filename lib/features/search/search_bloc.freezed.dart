@@ -19,19 +19,25 @@ mixin _$SearchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String term) searchUsers,
-    required TResult Function() loadPosts,
+    required TResult Function(String authUserUid) loadPosts,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String term)? searchUsers,
-    TResult? Function()? loadPosts,
+    TResult? Function(String authUserUid)? loadPosts,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String term)? searchUsers,
-    TResult Function()? loadPosts,
+    TResult Function(String authUserUid)? loadPosts,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +45,24 @@ mixin _$SearchEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnSearchUsersEvent value) searchUsers,
     required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnSearchUsersEvent value)? searchUsers,
     TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnSearchUsersEvent value)? searchUsers,
     TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -140,7 +152,9 @@ class _$OnSearchUsersEvent implements OnSearchUsersEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String term) searchUsers,
-    required TResult Function() loadPosts,
+    required TResult Function(String authUserUid) loadPosts,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
   }) {
     return searchUsers(term);
   }
@@ -149,7 +163,9 @@ class _$OnSearchUsersEvent implements OnSearchUsersEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String term)? searchUsers,
-    TResult? Function()? loadPosts,
+    TResult? Function(String authUserUid)? loadPosts,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
   }) {
     return searchUsers?.call(term);
   }
@@ -158,7 +174,9 @@ class _$OnSearchUsersEvent implements OnSearchUsersEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String term)? searchUsers,
-    TResult Function()? loadPosts,
+    TResult Function(String authUserUid)? loadPosts,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
     required TResult orElse(),
   }) {
     if (searchUsers != null) {
@@ -172,6 +190,8 @@ class _$OnSearchUsersEvent implements OnSearchUsersEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnSearchUsersEvent value) searchUsers,
     required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) {
     return searchUsers(this);
   }
@@ -181,6 +201,8 @@ class _$OnSearchUsersEvent implements OnSearchUsersEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnSearchUsersEvent value)? searchUsers,
     TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) {
     return searchUsers?.call(this);
   }
@@ -190,6 +212,8 @@ class _$OnSearchUsersEvent implements OnSearchUsersEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnSearchUsersEvent value)? searchUsers,
     TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) {
     if (searchUsers != null) {
@@ -214,6 +238,8 @@ abstract class _$$OnLoadLastPostsPublishedEventCopyWith<$Res> {
           _$OnLoadLastPostsPublishedEvent value,
           $Res Function(_$OnLoadLastPostsPublishedEvent) then) =
       __$$OnLoadLastPostsPublishedEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String authUserUid});
 }
 
 /// @nodoc
@@ -224,55 +250,86 @@ class __$$OnLoadLastPostsPublishedEventCopyWithImpl<$Res>
       _$OnLoadLastPostsPublishedEvent _value,
       $Res Function(_$OnLoadLastPostsPublishedEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? authUserUid = null,
+  }) {
+    return _then(_$OnLoadLastPostsPublishedEvent(
+      null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$OnLoadLastPostsPublishedEvent implements OnLoadLastPostsPublishedEvent {
-  const _$OnLoadLastPostsPublishedEvent();
+  const _$OnLoadLastPostsPublishedEvent(this.authUserUid);
+
+  @override
+  final String authUserUid;
 
   @override
   String toString() {
-    return 'SearchEvent.loadPosts()';
+    return 'SearchEvent.loadPosts(authUserUid: $authUserUid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OnLoadLastPostsPublishedEvent);
+            other is _$OnLoadLastPostsPublishedEvent &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, authUserUid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLoadLastPostsPublishedEventCopyWith<_$OnLoadLastPostsPublishedEvent>
+      get copyWith => __$$OnLoadLastPostsPublishedEventCopyWithImpl<
+          _$OnLoadLastPostsPublishedEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String term) searchUsers,
-    required TResult Function() loadPosts,
+    required TResult Function(String authUserUid) loadPosts,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
   }) {
-    return loadPosts();
+    return loadPosts(authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String term)? searchUsers,
-    TResult? Function()? loadPosts,
+    TResult? Function(String authUserUid)? loadPosts,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
   }) {
-    return loadPosts?.call();
+    return loadPosts?.call(authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String term)? searchUsers,
-    TResult Function()? loadPosts,
+    TResult Function(String authUserUid)? loadPosts,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadPosts != null) {
-      return loadPosts();
+      return loadPosts(authUserUid);
     }
     return orElse();
   }
@@ -282,6 +339,8 @@ class _$OnLoadLastPostsPublishedEvent implements OnLoadLastPostsPublishedEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(OnSearchUsersEvent value) searchUsers,
     required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
   }) {
     return loadPosts(this);
   }
@@ -291,6 +350,8 @@ class _$OnLoadLastPostsPublishedEvent implements OnLoadLastPostsPublishedEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnSearchUsersEvent value)? searchUsers,
     TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
   }) {
     return loadPosts?.call(this);
   }
@@ -300,6 +361,8 @@ class _$OnLoadLastPostsPublishedEvent implements OnLoadLastPostsPublishedEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnSearchUsersEvent value)? searchUsers,
     TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
     required TResult orElse(),
   }) {
     if (loadPosts != null) {
@@ -310,14 +373,313 @@ class _$OnLoadLastPostsPublishedEvent implements OnLoadLastPostsPublishedEvent {
 }
 
 abstract class OnLoadLastPostsPublishedEvent implements SearchEvent {
-  const factory OnLoadLastPostsPublishedEvent() =
+  const factory OnLoadLastPostsPublishedEvent(final String authUserUid) =
       _$OnLoadLastPostsPublishedEvent;
+
+  String get authUserUid;
+  @JsonKey(ignore: true)
+  _$$OnLoadLastPostsPublishedEventCopyWith<_$OnLoadLastPostsPublishedEvent>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnFollowUserEventCopyWith<$Res> {
+  factory _$$OnFollowUserEventCopyWith(
+          _$OnFollowUserEvent value, $Res Function(_$OnFollowUserEvent) then) =
+      __$$OnFollowUserEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String userUid});
+}
+
+/// @nodoc
+class __$$OnFollowUserEventCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$OnFollowUserEvent>
+    implements _$$OnFollowUserEventCopyWith<$Res> {
+  __$$OnFollowUserEventCopyWithImpl(
+      _$OnFollowUserEvent _value, $Res Function(_$OnFollowUserEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userUid = null,
+  }) {
+    return _then(_$OnFollowUserEvent(
+      null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnFollowUserEvent implements OnFollowUserEvent {
+  const _$OnFollowUserEvent(this.userUid);
+
+  @override
+  final String userUid;
+
+  @override
+  String toString() {
+    return 'SearchEvent.followUser(userUid: $userUid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnFollowUserEvent &&
+            (identical(other.userUid, userUid) || other.userUid == userUid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userUid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
+      __$$OnFollowUserEventCopyWithImpl<_$OnFollowUserEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String term) searchUsers,
+    required TResult Function(String authUserUid) loadPosts,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
+  }) {
+    return followUser(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String term)? searchUsers,
+    TResult? Function(String authUserUid)? loadPosts,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
+  }) {
+    return followUser?.call(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String term)? searchUsers,
+    TResult Function(String authUserUid)? loadPosts,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (followUser != null) {
+      return followUser(userUid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnSearchUsersEvent value) searchUsers,
+    required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return followUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnSearchUsersEvent value)? searchUsers,
+    TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return followUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnSearchUsersEvent value)? searchUsers,
+    TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (followUser != null) {
+      return followUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnFollowUserEvent implements SearchEvent {
+  const factory OnFollowUserEvent(final String userUid) = _$OnFollowUserEvent;
+
+  String get userUid;
+  @JsonKey(ignore: true)
+  _$$OnFollowUserEventCopyWith<_$OnFollowUserEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnUnFollowUserEventCopyWith<$Res> {
+  factory _$$OnUnFollowUserEventCopyWith(_$OnUnFollowUserEvent value,
+          $Res Function(_$OnUnFollowUserEvent) then) =
+      __$$OnUnFollowUserEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String userUid});
+}
+
+/// @nodoc
+class __$$OnUnFollowUserEventCopyWithImpl<$Res>
+    extends _$SearchEventCopyWithImpl<$Res, _$OnUnFollowUserEvent>
+    implements _$$OnUnFollowUserEventCopyWith<$Res> {
+  __$$OnUnFollowUserEventCopyWithImpl(
+      _$OnUnFollowUserEvent _value, $Res Function(_$OnUnFollowUserEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userUid = null,
+  }) {
+    return _then(_$OnUnFollowUserEvent(
+      null == userUid
+          ? _value.userUid
+          : userUid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUnFollowUserEvent implements OnUnFollowUserEvent {
+  const _$OnUnFollowUserEvent(this.userUid);
+
+  @override
+  final String userUid;
+
+  @override
+  String toString() {
+    return 'SearchEvent.unFollowUser(userUid: $userUid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUnFollowUserEvent &&
+            (identical(other.userUid, userUid) || other.userUid == userUid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userUid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
+      __$$OnUnFollowUserEventCopyWithImpl<_$OnUnFollowUserEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String term) searchUsers,
+    required TResult Function(String authUserUid) loadPosts,
+    required TResult Function(String userUid) followUser,
+    required TResult Function(String userUid) unFollowUser,
+  }) {
+    return unFollowUser(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String term)? searchUsers,
+    TResult? Function(String authUserUid)? loadPosts,
+    TResult? Function(String userUid)? followUser,
+    TResult? Function(String userUid)? unFollowUser,
+  }) {
+    return unFollowUser?.call(userUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String term)? searchUsers,
+    TResult Function(String authUserUid)? loadPosts,
+    TResult Function(String userUid)? followUser,
+    TResult Function(String userUid)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (unFollowUser != null) {
+      return unFollowUser(userUid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnSearchUsersEvent value) searchUsers,
+    required TResult Function(OnLoadLastPostsPublishedEvent value) loadPosts,
+    required TResult Function(OnFollowUserEvent value) followUser,
+    required TResult Function(OnUnFollowUserEvent value) unFollowUser,
+  }) {
+    return unFollowUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnSearchUsersEvent value)? searchUsers,
+    TResult? Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult? Function(OnFollowUserEvent value)? followUser,
+    TResult? Function(OnUnFollowUserEvent value)? unFollowUser,
+  }) {
+    return unFollowUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnSearchUsersEvent value)? searchUsers,
+    TResult Function(OnLoadLastPostsPublishedEvent value)? loadPosts,
+    TResult Function(OnFollowUserEvent value)? followUser,
+    TResult Function(OnUnFollowUserEvent value)? unFollowUser,
+    required TResult orElse(),
+  }) {
+    if (unFollowUser != null) {
+      return unFollowUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUnFollowUserEvent implements SearchEvent {
+  const factory OnUnFollowUserEvent(final String userUid) =
+      _$OnUnFollowUserEvent;
+
+  String get userUid;
+  @JsonKey(ignore: true)
+  _$$OnUnFollowUserEventCopyWith<_$OnUnFollowUserEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$SearchState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isShowUsers => throw _privateConstructorUsedError;
+  bool get allowUserInput => throw _privateConstructorUsedError;
+  String get authUserUuid => throw _privateConstructorUsedError;
   List<UserBO> get users => throw _privateConstructorUsedError;
   List<PostBO> get posts => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
@@ -336,6 +698,8 @@ abstract class $SearchStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool isShowUsers,
+      bool allowUserInput,
+      String authUserUuid,
       List<UserBO> users,
       List<PostBO> posts,
       String? errorMessage});
@@ -356,6 +720,8 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   $Res call({
     Object? isLoading = null,
     Object? isShowUsers = null,
+    Object? allowUserInput = null,
+    Object? authUserUuid = null,
     Object? users = null,
     Object? posts = null,
     Object? errorMessage = freezed,
@@ -369,6 +735,14 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.isShowUsers
           : isShowUsers // ignore: cast_nullable_to_non_nullable
               as bool,
+      allowUserInput: null == allowUserInput
+          ? _value.allowUserInput
+          : allowUserInput // ignore: cast_nullable_to_non_nullable
+              as bool,
+      authUserUuid: null == authUserUuid
+          ? _value.authUserUuid
+          : authUserUuid // ignore: cast_nullable_to_non_nullable
+              as String,
       users: null == users
           ? _value.users
           : users // ignore: cast_nullable_to_non_nullable
@@ -396,6 +770,8 @@ abstract class _$$_SearchStateCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool isShowUsers,
+      bool allowUserInput,
+      String authUserUuid,
       List<UserBO> users,
       List<PostBO> posts,
       String? errorMessage});
@@ -414,6 +790,8 @@ class __$$_SearchStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? isShowUsers = null,
+    Object? allowUserInput = null,
+    Object? authUserUuid = null,
     Object? users = null,
     Object? posts = null,
     Object? errorMessage = freezed,
@@ -427,6 +805,14 @@ class __$$_SearchStateCopyWithImpl<$Res>
           ? _value.isShowUsers
           : isShowUsers // ignore: cast_nullable_to_non_nullable
               as bool,
+      allowUserInput: null == allowUserInput
+          ? _value.allowUserInput
+          : allowUserInput // ignore: cast_nullable_to_non_nullable
+              as bool,
+      authUserUuid: null == authUserUuid
+          ? _value.authUserUuid
+          : authUserUuid // ignore: cast_nullable_to_non_nullable
+              as String,
       users: null == users
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
@@ -449,6 +835,8 @@ class _$_SearchState implements _SearchState {
   const _$_SearchState(
       {this.isLoading = false,
       this.isShowUsers = false,
+      this.allowUserInput = true,
+      this.authUserUuid = "",
       final List<UserBO> users = const [],
       final List<PostBO> posts = const [],
       this.errorMessage})
@@ -461,6 +849,12 @@ class _$_SearchState implements _SearchState {
   @override
   @JsonKey()
   final bool isShowUsers;
+  @override
+  @JsonKey()
+  final bool allowUserInput;
+  @override
+  @JsonKey()
+  final String authUserUuid;
   final List<UserBO> _users;
   @override
   @JsonKey()
@@ -484,7 +878,7 @@ class _$_SearchState implements _SearchState {
 
   @override
   String toString() {
-    return 'SearchState(isLoading: $isLoading, isShowUsers: $isShowUsers, users: $users, posts: $posts, errorMessage: $errorMessage)';
+    return 'SearchState(isLoading: $isLoading, isShowUsers: $isShowUsers, allowUserInput: $allowUserInput, authUserUuid: $authUserUuid, users: $users, posts: $posts, errorMessage: $errorMessage)';
   }
 
   @override
@@ -496,6 +890,10 @@ class _$_SearchState implements _SearchState {
                 other.isLoading == isLoading) &&
             (identical(other.isShowUsers, isShowUsers) ||
                 other.isShowUsers == isShowUsers) &&
+            (identical(other.allowUserInput, allowUserInput) ||
+                other.allowUserInput == allowUserInput) &&
+            (identical(other.authUserUuid, authUserUuid) ||
+                other.authUserUuid == authUserUuid) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
             const DeepCollectionEquality().equals(other._posts, _posts) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -507,6 +905,8 @@ class _$_SearchState implements _SearchState {
       runtimeType,
       isLoading,
       isShowUsers,
+      allowUserInput,
+      authUserUuid,
       const DeepCollectionEquality().hash(_users),
       const DeepCollectionEquality().hash(_posts),
       errorMessage);
@@ -522,6 +922,8 @@ abstract class _SearchState implements SearchState {
   const factory _SearchState(
       {final bool isLoading,
       final bool isShowUsers,
+      final bool allowUserInput,
+      final String authUserUuid,
       final List<UserBO> users,
       final List<PostBO> posts,
       final String? errorMessage}) = _$_SearchState;
@@ -530,6 +932,10 @@ abstract class _SearchState implements SearchState {
   bool get isLoading;
   @override
   bool get isShowUsers;
+  @override
+  bool get allowUserInput;
+  @override
+  String get authUserUuid;
   @override
   List<UserBO> get users;
   @override

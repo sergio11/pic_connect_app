@@ -10,6 +10,7 @@ import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
 import 'package:pic_connect/features/core/widgets/video_thumbnail_widget.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
+import 'package:pic_connect/utils/calculate_age_from_birthdate.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -135,6 +136,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                         children: [
                           _buildProfileHeader(state),
                           _buildUserNameRow(state),
+                          _buildUserAgeAndCountry(state),
                           _buildUserBioRow(state)
                         ],
                       ),
@@ -165,40 +167,37 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         ),
         Expanded(
           flex: 1,
-          child: SizedBox(
-            height: 120,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildStatColumn(state.postLen, _l10n.profilePostStats,
-                        () => widget.onGoToPictures(state.userUid)),
-                    _buildStatColumn(
-                        state.followers,
-                        _l10n.profileFollowerStats,
-                        () => widget.onGoToFollowersScreen(state.userUid)),
-                    _buildStatColumn(
-                        state.following,
-                        _l10n.profileFollowingStats,
-                        () => widget.onGoToFollowingScreen(state.userUid)),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    state.isAuthUser
-                        ? _buildEditProfileButton(state)
-                        : state.isFollowing
-                            ? _buildUnFollowButton(state)
-                            : _buildFollowButton(state)
-                  ],
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildStatColumn(state.postLen, _l10n.profilePostStats,
+                          () => widget.onGoToPictures(state.userUid)),
+                  _buildStatColumn(
+                      state.followers,
+                      _l10n.profileFollowerStats,
+                          () => widget.onGoToFollowersScreen(state.userUid)),
+                  _buildStatColumn(
+                      state.following,
+                      _l10n.profileFollowingStats,
+                          () => widget.onGoToFollowingScreen(state.userUid)),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  state.isAuthUser
+                      ? _buildEditProfileButton(state)
+                      : state.isFollowing
+                      ? _buildUnFollowButton(state)
+                      : _buildFollowButton(state)
+                ],
+              ),
+            ],
           ),
         ),
       ],
@@ -259,10 +258,44 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(top: 3, left: 15),
       child: Text(state.bio,
+          maxLines: 5,
           style: Theme.of(context)
               .textTheme
               .bodyMedium
               ?.copyWith(color: accentColor, fontWeight: FontWeight.w400)),
+    );
+  }
+
+  Widget _buildUserAgeAndCountry(ProfileState state) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(top: 10, left: 15, bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if(state.birthDate.isNotEmpty)
+            const Icon(Icons.cake, color: accentColor),
+            const SizedBox(width: 6),
+            Text(
+              "${state.birthDate.calculateAgeFromBirthDate()} años",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(width: 6),
+          if(state.country.isNotEmpty)
+            Text(
+              state.country,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
+            )
+        ],
+      ),
     );
   }
 

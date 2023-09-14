@@ -68,21 +68,18 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
   }
 
   Widget getVideoView() {
-    return Container(
-        color: Colors.red,
-        child: Stack(
-          children: [
-            _chewieController != null &&
-                    _chewieController!.videoPlayerController.value.isInitialized
-                ? _buildVideoViewer()
-                : _buildLoadingView(),
-            _buildPostHeaderSection(),
-            _buildPostActionsSection(),
-            _buildPostBottomSection(),
-            if (widget.showProgressIndicator)
-              _buildVideoPlayerProgressIndicator(),
-          ],
-        ));
+    return Stack(
+      children: [
+        _chewieController != null &&
+                _chewieController!.videoPlayerController.value.isInitialized
+            ? _buildVideoViewer()
+            : _buildLoadingView(),
+        _buildPostHeaderSection(),
+        _buildPostActionsSection(),
+        _buildPostBottomSection(),
+        if (widget.showProgressIndicator) _buildVideoPlayerProgressIndicator(),
+      ],
+    );
   }
 
   Future initializePlayer() async {
@@ -163,7 +160,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
     return VisibilityDetector(
         key: Key(const Uuid().v1()),
         onVisibilityChanged: (VisibilityInfo info) {
-          if (info.visibleFraction == 1) {
+          if (info.visibleFraction == 1 && !isHeaderVisible) {
             setState(() {
               isHeaderVisible = true;
             });
@@ -180,7 +177,9 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                     onTap: () =>
                         widget.onShowUserProfile(widget.reelPost.postAuthorUid),
                     child: buildCircleAvatar(
-                        imageUrl: widget.reelPost.profImage, radius: 22)),
+                        imageUrl: widget.reelPost.profImage,
+                        radius: 22,
+                        showBackgroundColor: false)),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(

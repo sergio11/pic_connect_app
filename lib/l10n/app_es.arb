@@ -67,5 +67,11 @@
   "editProfileCountryPickerText": "Selecciona tu País",
   "editProfileDatePickerText": "Selecciona tu Fecha de Nacimiento",
   "editProfileInformationProvidedNotValid": "La información proporcionada no es válida.",
-  "reelsScreenNoDataFound": "No hay Reels disponibles por favor, inténtalo más tarde"
+  "reelsScreenNoDataFound": "No hay Reels disponibles por favor, inténtalo más tarde",
+  "searchMainLabelText": "Buscar usuarios ...",
+  "commentsMainTitleText": "Comentarios",
+  "commentsNotFoundText": "No se han encontrado comentarios",
+  "commentsPostButtonText": "Publicar",
+  "commentAsHintText": "Comentar como ",
+  "noPublicationsFound": "No se han encontrado publicaciones"
 }

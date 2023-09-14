@@ -38,10 +38,50 @@ class CountryPickerTextField extends StatelessWidget {
   }
 
   void _showCountryPicker(BuildContext context) {
+    const errorBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(7.0)),
+      borderSide: BorderSide(color: Colors.redAccent),
+    );
+    const inputBorder = OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(7.0)),
+        borderSide: BorderSide(color: accentColor, width: 1));
     showCountryPicker(
       context: context,
+      countryListTheme: CountryListThemeData(
+          inputDecoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: accentColor),
+            helperText: errorText == null ? helperText : null,
+            helperStyle: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: accentColor),
+            prefixIcon: const Icon(Icons.search),
+            border: errorText != null ? errorBorder : inputBorder,
+            prefixIconColor: accentColor,
+            focusedBorder: errorText != null ? errorBorder : inputBorder,
+            enabledBorder: errorText != null ? errorBorder : inputBorder,
+            filled: true,
+            fillColor: whiteColor.withOpacity(0.75),
+            contentPadding: const EdgeInsets.all(8),
+          ),
+          margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          backgroundColor: primaryColor,
+          textStyle: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: accentColor, fontWeight: FontWeight.w400),
+          searchTextStyle: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: accentColor, fontWeight: FontWeight.bold)),
+      useSafeArea: true,
       onSelect: (Country country) {
-        textEditingController.text = "${country.displayName}:${country.flagEmoji}";
+        textEditingController.text = "${country.flagEmoji} ${country.name}";
       },
     );
   }

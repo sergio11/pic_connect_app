@@ -181,11 +181,14 @@ class AppRouter {
                 key: state.pageKey,
                 child: BlocProvider(
                   create: (context) {
-                    final authUserUid = context.read<AppBloc>().state.authUserUid!;
+                    final authUserUid =
+                        context.read<AppBloc>().state.authUserUid!;
                     return serviceLocator<CommentsBloc>()
-                      ..add(OnLoadCommentsByPostEvent(state.extra is String
-                        ? state.extra as String
-                        : authUserUid, authUserUid));
+                      ..add(OnLoadCommentsByPostEvent(
+                          state.extra is String
+                              ? state.extra as String
+                              : authUserUid,
+                          authUserUid));
                   },
                   child: CommentsScreen(
                     onBackPressed: () {
@@ -266,7 +269,8 @@ class AppRouter {
                                         .read<AppBloc>()
                                         .state
                                         .authUserUid!,
-                                    type: PublicationsContentTypeEnum.pictures));
+                                    type:
+                                        PublicationsContentTypeEnum.pictures));
                           },
                           onShowUserProfile: (String userUid) {
                             context.push(AppRoutesEnum.profile.screenPath,
@@ -284,7 +288,8 @@ class AppRouter {
                   builder: (BuildContext context, GoRouterState state) =>
                       BlocProvider(
                         create: (context) => serviceLocator<SearchBloc>()
-                          ..add(const OnLoadLastPostsPublishedEvent()),
+                          ..add(OnLoadLastPostsPublishedEvent(
+                              context.read<AppBloc>().state.authUserUid!)),
                         child: SearchScreen(
                           onShowUserProfile: (String userUid) {
                             context.push(AppRoutesEnum.profile.screenPath,
@@ -301,7 +306,8 @@ class AppRouter {
                   name: AppRoutesEnum.reels.screenName,
                   builder: (BuildContext context, GoRouterState state) =>
                       BlocProvider(
-                        create: (context) => serviceLocator<ReelsBloc>()..add(const OnLoadTopReels()),
+                        create: (context) => serviceLocator<ReelsBloc>()
+                          ..add(const OnLoadTopReels()),
                         child: ReelsViewerScreen(
                           onGoToCommentsByPost: (String postId) {
                             context.go(AppRoutesEnum.comments.screenPath,
@@ -335,7 +341,8 @@ class AppRouter {
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
                                         userUid: userUid,
-                                        type: PublicationsContentTypeEnum.pictures))
+                                        type: PublicationsContentTypeEnum
+                                            .pictures))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
                           },
@@ -365,7 +372,8 @@ class AppRouter {
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
                                         userUid: userUid,
-                                        type: PublicationsContentTypeEnum.reels))
+                                        type:
+                                            PublicationsContentTypeEnum.reels))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
                           },
@@ -374,7 +382,8 @@ class AppRouter {
                                 .push(AppRoutesEnum.publications.screenPath,
                                     extra: PublicationsScreenArgs(
                                         userUid: userUid,
-                                        type: PublicationsContentTypeEnum.bookmarks))
+                                        type: PublicationsContentTypeEnum
+                                            .bookmarks))
                                 .then((value) =>
                                     screenBloc..add(const OnRefreshEvent()));
                           },

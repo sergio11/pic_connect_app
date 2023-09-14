@@ -5,6 +5,7 @@ import 'package:pic_connect/features/core/widgets/comment_card.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CommentsScreen extends StatefulWidget {
   final VoidCallback onBackPressed;
@@ -21,6 +22,13 @@ class CommentsScreen extends StatefulWidget {
 class _CommentsScreenState extends State<CommentsScreen> {
   final TextEditingController commentEditingController =
       TextEditingController();
+  late AppLocalizations _l10n;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
 
   @override
   void dispose() {
@@ -57,7 +65,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               icon: const Icon(Icons.arrow_back),
               color: accentColor,
               onPressed: () => widget.onBackPressed()),
-          title: Text('Comments',
+          title: Text(_l10n.commentsMainTitleText,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -103,7 +111,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     ),
                   )
                 : EmptyStateWidget(
-                    message: "No comments found",
+                    message: _l10n.commentsNotFoundText,
                     iconData: Icons.mood_bad,
                     onRetry: () => onRefresh(state),
                   )));
@@ -135,7 +143,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 child: TextField(
                     controller: commentEditingController,
                     decoration: InputDecoration(
-                      hintText: 'Comment as ',
+                      hintText: _l10n.commentAsHintText,
                       hintStyle: Theme.of(context)
                           .textTheme
                           .bodyLarge
@@ -157,7 +165,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 child: Text(
-                  'Post',
+                  _l10n.commentsPostButtonText,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: secondaryColor, fontWeight: FontWeight.bold),
                 ),

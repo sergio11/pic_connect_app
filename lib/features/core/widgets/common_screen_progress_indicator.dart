@@ -5,13 +5,17 @@ import 'package:pic_connect/utils/colors.dart';
 
 class CommonScreenProgressIndicator extends StatelessWidget {
 
+  static const double DEFAULT_SPINNER_SIZE = 60.0;
+
   final Color backgroundColor;
   final Color spinnerColor;
+  final double spinnerSize;
 
   const CommonScreenProgressIndicator({
     super.key,
     this.backgroundColor = primaryColor,
-    this.spinnerColor = secondaryColor
+    this.spinnerColor = secondaryColor,
+    this.spinnerSize = DEFAULT_SPINNER_SIZE
   });
 
   @override
@@ -21,7 +25,7 @@ class CommonScreenProgressIndicator extends StatelessWidget {
       child: Center(
           child: SpinKitChasingDots(
             color: spinnerColor,
-            size: 80.0,
+            size: spinnerSize,
           )),
     );
   }
