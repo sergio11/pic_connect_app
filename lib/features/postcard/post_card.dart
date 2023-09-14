@@ -59,7 +59,7 @@ class _PostCardState extends State<PostCard> {
     });
   }
 
-  void _onSendContentClicked() {
+  void _onShareContentClicked() {
     setState(() {
       isSendContentClicked = true;
     });
@@ -241,7 +241,7 @@ class _PostCardState extends State<PostCard> {
             smallAction: true,
             child: IconButton(
                 icon: const Icon(Icons.share, color: accentColor),
-                onPressed: () => _onSendContentClicked())),
+                onPressed: () => _onShareContentClicked())),
         Expanded(
             child: Align(
                 alignment: Alignment.bottomRight,

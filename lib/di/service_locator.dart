@@ -222,8 +222,10 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => AddPostBloc(
       getUserDetailsUseCase: serviceLocator(),
       publishPostUseCase: serviceLocator()));
-  serviceLocator.registerFactory(
-      () => ReelsBloc(getTopReelsWithMostLikesUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => ReelsBloc(
+      getTopReelsWithMostLikesUseCase: serviceLocator(),
+      likePostUseCase: serviceLocator(),
+      saveBookmarkUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => PostCardBloc(
       deletePostUseCase: serviceLocator(),
       likePostUseCase: serviceLocator(),

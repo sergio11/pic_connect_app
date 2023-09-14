@@ -307,7 +307,7 @@ class AppRouter {
                   builder: (BuildContext context, GoRouterState state) =>
                       BlocProvider(
                         create: (context) => serviceLocator<ReelsBloc>()
-                          ..add(const OnLoadTopReels()),
+                          ..add(OnLoadTopReelsEvent(context.read<AppBloc>().state.authUserUid!)),
                         child: ReelsViewerScreen(
                           onGoToCommentsByPost: (String postId) {
                             context.go(AppRoutesEnum.comments.screenPath,

@@ -73,5 +73,7 @@
   "commentsNotFoundText": "No se han encontrado comentarios",
   "commentsPostButtonText": "Publicar",
   "commentAsHintText": "Comentar como ",
-  "noPublicationsFound": "No se han encontrado publicaciones"
+  "noPublicationsFound": "No se han encontrado publicaciones",
+  "postViewAllComments": "Ver los %s comentarios",
+  "postLikesCount": "%s likes"
 }

@@ -7,6 +7,7 @@ import 'package:pic_connect/features/reels/widgets/reels_viewer_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReelsViewerScreen extends StatefulWidget {
   final Function(String postId) onGoToCommentsByPost;
@@ -26,8 +27,20 @@ class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
 
   late AppLocalizations _l10n;
 
-  void _refresh() {
-    context.read<ReelsBloc>().add(const OnLoadTopReels());
+  void _refresh(ReelsState state) {
+    context.read<ReelsBloc>().add(OnLoadTopReelsEvent(state.authUserUid));
+  }
+
+  void _onLikePost(String postId) async {
+    context.read<ReelsBloc>().add(OnLikePostEvent(postId));
+  }
+
+  void _onSaveBookmark(String postId) async {
+    context.read<ReelsBloc>().add(OnSaveBookmarkEvent(postId));
+  }
+
+  void _onShareContentClicked(String postId) {
+    Share.share('Shared this content!');
   }
 
   @override
@@ -54,7 +67,7 @@ class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
             ? _buildProgressIndicator()
             : state.topReels.isNotEmpty
                 ? _buildReelsViewer(state)
-                : _buildNoDataFound());
+                : _buildNoDataFound(state));
   }
 
   Widget _buildProgressIndicator() {
@@ -65,16 +78,17 @@ class _ReelsViewerScreenState extends State<ReelsViewerScreen> {
     return ReelsViewer(
       reelsList: state.topReels,
       onGoToCommentsByPost: widget.onGoToCommentsByPost,
-      onShareContent: (String postId) {},
+      onShareContent: (String postId) => _onShareContentClicked(postId),
       onShowUserProfile: widget.onShowUserProfile,
-      onLikePost: (String postId) {},
+      onLikePost: (String postId) => _onLikePost(postId), 
+      onSaveBookmark: (String postId) => _onSaveBookmark(postId),
     );
   }
 
-  Widget _buildNoDataFound() {
+  Widget _buildNoDataFound(ReelsState state) {
     return EmptyStateWidget(
         message: _l10n.reelsScreenNoDataFound,
         iconData: Icons.mood_bad,
-        onRetry: _refresh);
+        onRetry: () => _refresh(state));
   }
 }

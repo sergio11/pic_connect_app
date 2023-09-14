@@ -13,8 +13,9 @@ import 'package:pic_connect/utils/url_checker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ReelsPage extends StatefulWidget {
+class ReelsPreview extends StatefulWidget {
   final PostBO reelPost;
 
   final Function(String userUid) onShowUserProfile;
@@ -24,8 +25,10 @@ class ReelsPage extends StatefulWidget {
   final Function(String postId) onSaveBookmark;
   final SwiperController swiperController;
   final bool showProgressIndicator;
+  final bool isLikedByAuthUser;
+  final bool isBookmarkedByAuthUser;
 
-  const ReelsPage({
+  const ReelsPreview({
     Key? key,
     required this.reelPost,
     required this.onShowUserProfile,
@@ -34,17 +37,26 @@ class ReelsPage extends StatefulWidget {
     required this.onShareContentClicked,
     required this.onSaveBookmark,
     this.showProgressIndicator = true,
+    this.isLikedByAuthUser = false,
+    this.isBookmarkedByAuthUser = false,
     required this.swiperController,
   }) : super(key: key);
 
   @override
-  State<ReelsPage> createState() => _ReelsPageState();
+  State<ReelsPreview> createState() => _ReelsPreviewState();
 }
 
-class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
+class _ReelsPreviewState extends LifecycleWatcherState<ReelsPreview> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   bool isHeaderVisible = false;
+  late AppLocalizations _l10n;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
 
   @override
   void initState() {
@@ -57,7 +69,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
 
   @override
   void dispose() {
-    debugPrint("ReelsPage - dispose CALLED!");
+    debugPrint("ReelsPreview - dispose CALLED!");
     _closePlayer();
     super.dispose();
   }
@@ -176,10 +188,14 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                 GestureDetector(
                     onTap: () =>
                         widget.onShowUserProfile(widget.reelPost.postAuthorUid),
-                    child: buildCircleAvatar(
-                        imageUrl: widget.reelPost.profImage,
-                        radius: 22,
-                        showBackgroundColor: false)),
+                    child: SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: buildCircleAvatar(
+                          imageUrl: widget.reelPost.profImage,
+                          radius: 22,
+                          showBackgroundColor: false),
+                    )),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -229,10 +245,10 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             IconActionAnimation(
-              isAnimating: true,
+              isAnimating: widget.isLikedByAuthUser,
               smallAction: true,
               child: IconButton(
-                icon: true
+                icon: widget.isLikedByAuthUser
                     ? const Icon(
                         Icons.favorite,
                         color: Colors.redAccent,
@@ -254,7 +270,7 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                 onPressed: () =>
                     widget.onShareContentClicked(widget.reelPost.postId)),
             IconButton(
-                icon: true
+                icon: widget.isBookmarkedByAuthUser
                     ? const Icon(
                         Icons.bookmark,
                         color: primaryColor,
@@ -284,7 +300,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
                   .titleSmall!
                   .copyWith(fontWeight: FontWeight.w800),
               child: Text(
-                '${widget.reelPost.likes.length} likes',
+                _l10n.postLikesCount
+                    .replaceAll("%s", widget.reelPost.likes.length.toString()),
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: primaryColor, fontWeight: FontWeight.bold),
               )),
@@ -316,7 +333,8 @@ class _ReelsPageState extends LifecycleWatcherState<ReelsPage> {
             child: Container(
               padding: const EdgeInsets.only(top: 8),
               child: Text(
-                'View all ${widget.reelPost.commentCount} comments',
+                _l10n.postViewAllComments
+                    .replaceAll("%s", widget.reelPost.commentCount.toString()),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: primaryColor, fontWeight: FontWeight.w600),
               ),

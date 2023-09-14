@@ -18,33 +18,45 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ReelsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() load,
+    required TResult Function(String authUserUid) load,
+    required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
+    TResult? Function(String authUserUid)? load,
+    TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
+    TResult Function(String authUserUid)? load,
+    TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadTopReels value) load,
+    required TResult Function(OnLoadTopReelsEvent value) load,
+    required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadTopReels value)? load,
+    TResult? Function(OnLoadTopReelsEvent value)? load,
+    TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadTopReels value)? load,
+    TResult Function(OnLoadTopReelsEvent value)? load,
+    TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,64 +81,98 @@ class _$ReelsEventCopyWithImpl<$Res, $Val extends ReelsEvent>
 }
 
 /// @nodoc
-abstract class _$$OnLoadTopReelsCopyWith<$Res> {
-  factory _$$OnLoadTopReelsCopyWith(
-          _$OnLoadTopReels value, $Res Function(_$OnLoadTopReels) then) =
-      __$$OnLoadTopReelsCopyWithImpl<$Res>;
+abstract class _$$OnLoadTopReelsEventCopyWith<$Res> {
+  factory _$$OnLoadTopReelsEventCopyWith(_$OnLoadTopReelsEvent value,
+          $Res Function(_$OnLoadTopReelsEvent) then) =
+      __$$OnLoadTopReelsEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String authUserUid});
 }
 
 /// @nodoc
-class __$$OnLoadTopReelsCopyWithImpl<$Res>
-    extends _$ReelsEventCopyWithImpl<$Res, _$OnLoadTopReels>
-    implements _$$OnLoadTopReelsCopyWith<$Res> {
-  __$$OnLoadTopReelsCopyWithImpl(
-      _$OnLoadTopReels _value, $Res Function(_$OnLoadTopReels) _then)
+class __$$OnLoadTopReelsEventCopyWithImpl<$Res>
+    extends _$ReelsEventCopyWithImpl<$Res, _$OnLoadTopReelsEvent>
+    implements _$$OnLoadTopReelsEventCopyWith<$Res> {
+  __$$OnLoadTopReelsEventCopyWithImpl(
+      _$OnLoadTopReelsEvent _value, $Res Function(_$OnLoadTopReelsEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? authUserUid = null,
+  }) {
+    return _then(_$OnLoadTopReelsEvent(
+      null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$OnLoadTopReels implements OnLoadTopReels {
-  const _$OnLoadTopReels();
+class _$OnLoadTopReelsEvent implements OnLoadTopReelsEvent {
+  const _$OnLoadTopReelsEvent(this.authUserUid);
+
+  @override
+  final String authUserUid;
 
   @override
   String toString() {
-    return 'ReelsEvent.load()';
+    return 'ReelsEvent.load(authUserUid: $authUserUid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$OnLoadTopReels);
+        (other.runtimeType == runtimeType &&
+            other is _$OnLoadTopReelsEvent &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, authUserUid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLoadTopReelsEventCopyWith<_$OnLoadTopReelsEvent> get copyWith =>
+      __$$OnLoadTopReelsEventCopyWithImpl<_$OnLoadTopReelsEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() load,
+    required TResult Function(String authUserUid) load,
+    required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
   }) {
-    return load();
+    return load(authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? load,
+    TResult? Function(String authUserUid)? load,
+    TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
   }) {
-    return load?.call();
+    return load?.call(authUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? load,
+    TResult Function(String authUserUid)? load,
+    TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
     required TResult orElse(),
   }) {
     if (load != null) {
-      return load();
+      return load(authUserUid);
     }
     return orElse();
   }
@@ -134,7 +180,9 @@ class _$OnLoadTopReels implements OnLoadTopReels {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(OnLoadTopReels value) load,
+    required TResult Function(OnLoadTopReelsEvent value) load,
+    required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
   }) {
     return load(this);
   }
@@ -142,7 +190,9 @@ class _$OnLoadTopReels implements OnLoadTopReels {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(OnLoadTopReels value)? load,
+    TResult? Function(OnLoadTopReelsEvent value)? load,
+    TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
   }) {
     return load?.call(this);
   }
@@ -150,7 +200,9 @@ class _$OnLoadTopReels implements OnLoadTopReels {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(OnLoadTopReels value)? load,
+    TResult Function(OnLoadTopReelsEvent value)? load,
+    TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -160,14 +212,301 @@ class _$OnLoadTopReels implements OnLoadTopReels {
   }
 }
 
-abstract class OnLoadTopReels implements ReelsEvent {
-  const factory OnLoadTopReels() = _$OnLoadTopReels;
+abstract class OnLoadTopReelsEvent implements ReelsEvent {
+  const factory OnLoadTopReelsEvent(final String authUserUid) =
+      _$OnLoadTopReelsEvent;
+
+  String get authUserUid;
+  @JsonKey(ignore: true)
+  _$$OnLoadTopReelsEventCopyWith<_$OnLoadTopReelsEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnLikePostEventCopyWith<$Res> {
+  factory _$$OnLikePostEventCopyWith(
+          _$OnLikePostEvent value, $Res Function(_$OnLikePostEvent) then) =
+      __$$OnLikePostEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String postId});
+}
+
+/// @nodoc
+class __$$OnLikePostEventCopyWithImpl<$Res>
+    extends _$ReelsEventCopyWithImpl<$Res, _$OnLikePostEvent>
+    implements _$$OnLikePostEventCopyWith<$Res> {
+  __$$OnLikePostEventCopyWithImpl(
+      _$OnLikePostEvent _value, $Res Function(_$OnLikePostEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnLikePostEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnLikePostEvent implements OnLikePostEvent {
+  const _$OnLikePostEvent(this.postId);
+
+  @override
+  final String postId;
+
+  @override
+  String toString() {
+    return 'ReelsEvent.likePost(postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnLikePostEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLikePostEventCopyWith<_$OnLikePostEvent> get copyWith =>
+      __$$OnLikePostEventCopyWithImpl<_$OnLikePostEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String authUserUid) load,
+    required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
+  }) {
+    return likePost(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String authUserUid)? load,
+    TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
+  }) {
+    return likePost?.call(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String authUserUid)? load,
+    TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
+    required TResult orElse(),
+  }) {
+    if (likePost != null) {
+      return likePost(postId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadTopReelsEvent value) load,
+    required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
+  }) {
+    return likePost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadTopReelsEvent value)? load,
+    TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
+  }) {
+    return likePost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadTopReelsEvent value)? load,
+    TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
+    required TResult orElse(),
+  }) {
+    if (likePost != null) {
+      return likePost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnLikePostEvent implements ReelsEvent {
+  const factory OnLikePostEvent(final String postId) = _$OnLikePostEvent;
+
+  String get postId;
+  @JsonKey(ignore: true)
+  _$$OnLikePostEventCopyWith<_$OnLikePostEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnSaveBookmarkEventCopyWith<$Res> {
+  factory _$$OnSaveBookmarkEventCopyWith(_$OnSaveBookmarkEvent value,
+          $Res Function(_$OnSaveBookmarkEvent) then) =
+      __$$OnSaveBookmarkEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String postId});
+}
+
+/// @nodoc
+class __$$OnSaveBookmarkEventCopyWithImpl<$Res>
+    extends _$ReelsEventCopyWithImpl<$Res, _$OnSaveBookmarkEvent>
+    implements _$$OnSaveBookmarkEventCopyWith<$Res> {
+  __$$OnSaveBookmarkEventCopyWithImpl(
+      _$OnSaveBookmarkEvent _value, $Res Function(_$OnSaveBookmarkEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? postId = null,
+  }) {
+    return _then(_$OnSaveBookmarkEvent(
+      null == postId
+          ? _value.postId
+          : postId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnSaveBookmarkEvent implements OnSaveBookmarkEvent {
+  const _$OnSaveBookmarkEvent(this.postId);
+
+  @override
+  final String postId;
+
+  @override
+  String toString() {
+    return 'ReelsEvent.saveBookmark(postId: $postId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnSaveBookmarkEvent &&
+            (identical(other.postId, postId) || other.postId == postId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, postId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnSaveBookmarkEventCopyWith<_$OnSaveBookmarkEvent> get copyWith =>
+      __$$OnSaveBookmarkEventCopyWithImpl<_$OnSaveBookmarkEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String authUserUid) load,
+    required TResult Function(String postId) likePost,
+    required TResult Function(String postId) saveBookmark,
+  }) {
+    return saveBookmark(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String authUserUid)? load,
+    TResult? Function(String postId)? likePost,
+    TResult? Function(String postId)? saveBookmark,
+  }) {
+    return saveBookmark?.call(postId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String authUserUid)? load,
+    TResult Function(String postId)? likePost,
+    TResult Function(String postId)? saveBookmark,
+    required TResult orElse(),
+  }) {
+    if (saveBookmark != null) {
+      return saveBookmark(postId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadTopReelsEvent value) load,
+    required TResult Function(OnLikePostEvent value) likePost,
+    required TResult Function(OnSaveBookmarkEvent value) saveBookmark,
+  }) {
+    return saveBookmark(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadTopReelsEvent value)? load,
+    TResult? Function(OnLikePostEvent value)? likePost,
+    TResult? Function(OnSaveBookmarkEvent value)? saveBookmark,
+  }) {
+    return saveBookmark?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadTopReelsEvent value)? load,
+    TResult Function(OnLikePostEvent value)? likePost,
+    TResult Function(OnSaveBookmarkEvent value)? saveBookmark,
+    required TResult orElse(),
+  }) {
+    if (saveBookmark != null) {
+      return saveBookmark(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnSaveBookmarkEvent implements ReelsEvent {
+  const factory OnSaveBookmarkEvent(final String postId) =
+      _$OnSaveBookmarkEvent;
+
+  String get postId;
+  @JsonKey(ignore: true)
+  _$$OnSaveBookmarkEventCopyWith<_$OnSaveBookmarkEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$ReelsState {
   bool get isLoading => throw _privateConstructorUsedError;
   List<PostBO> get topReels => throw _privateConstructorUsedError;
+  String get authUserUid => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -181,7 +520,11 @@ abstract class $ReelsStateCopyWith<$Res> {
           ReelsState value, $Res Function(ReelsState) then) =
       _$ReelsStateCopyWithImpl<$Res, ReelsState>;
   @useResult
-  $Res call({bool isLoading, List<PostBO> topReels, String? errorMessage});
+  $Res call(
+      {bool isLoading,
+      List<PostBO> topReels,
+      String authUserUid,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -199,6 +542,7 @@ class _$ReelsStateCopyWithImpl<$Res, $Val extends ReelsState>
   $Res call({
     Object? isLoading = null,
     Object? topReels = null,
+    Object? authUserUid = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -210,6 +554,10 @@ class _$ReelsStateCopyWithImpl<$Res, $Val extends ReelsState>
           ? _value.topReels
           : topReels // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      authUserUid: null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -226,7 +574,11 @@ abstract class _$$_ReelsStateCopyWith<$Res>
       __$$_ReelsStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, List<PostBO> topReels, String? errorMessage});
+  $Res call(
+      {bool isLoading,
+      List<PostBO> topReels,
+      String authUserUid,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -242,6 +594,7 @@ class __$$_ReelsStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? topReels = null,
+    Object? authUserUid = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_ReelsState(
@@ -253,6 +606,10 @@ class __$$_ReelsStateCopyWithImpl<$Res>
           ? _value._topReels
           : topReels // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      authUserUid: null == authUserUid
+          ? _value.authUserUid
+          : authUserUid // ignore: cast_nullable_to_non_nullable
+              as String,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -267,6 +624,7 @@ class _$_ReelsState implements _ReelsState {
   const _$_ReelsState(
       {this.isLoading = false,
       final List<PostBO> topReels = const [],
+      this.authUserUid = "",
       this.errorMessage})
       : _topReels = topReels;
 
@@ -283,11 +641,14 @@ class _$_ReelsState implements _ReelsState {
   }
 
   @override
+  @JsonKey()
+  final String authUserUid;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'ReelsState(isLoading: $isLoading, topReels: $topReels, errorMessage: $errorMessage)';
+    return 'ReelsState(isLoading: $isLoading, topReels: $topReels, authUserUid: $authUserUid, errorMessage: $errorMessage)';
   }
 
   @override
@@ -298,13 +659,19 @@ class _$_ReelsState implements _ReelsState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             const DeepCollectionEquality().equals(other._topReels, _topReels) &&
+            (identical(other.authUserUid, authUserUid) ||
+                other.authUserUid == authUserUid) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading,
-      const DeepCollectionEquality().hash(_topReels), errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      const DeepCollectionEquality().hash(_topReels),
+      authUserUid,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -317,12 +684,15 @@ abstract class _ReelsState implements ReelsState {
   const factory _ReelsState(
       {final bool isLoading,
       final List<PostBO> topReels,
+      final String authUserUid,
       final String? errorMessage}) = _$_ReelsState;
 
   @override
   bool get isLoading;
   @override
   List<PostBO> get topReels;
+  @override
+  String get authUserUid;
   @override
   String? get errorMessage;
   @override

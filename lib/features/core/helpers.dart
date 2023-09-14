@@ -21,7 +21,8 @@ Widget buildCircleAvatar({
                 backgroundColor: accentColor,
                 backgroundImage: imageProvider,
                 radius: radius ?? 40,
-              ));
+              ),
+          showBackgroundColor: showBackgroundColor);
 }
 
 Widget buildNetworkImage(String imageUrl) {
@@ -31,13 +32,17 @@ Widget buildNetworkImage(String imageUrl) {
 }
 
 CachedNetworkImage _buildCachedNetworkImage(
-    {required String imageUrl, ImageWidgetBuilder? imageBuilder}) {
+    {required String imageUrl,
+    ImageWidgetBuilder? imageBuilder,
+    bool showBackgroundColor = true}) {
   return CachedNetworkImage(
     imageUrl: imageUrl,
     fit: BoxFit.cover,
     imageBuilder: imageBuilder,
     progressIndicatorBuilder: (context, url, downloadProgress) =>
-        const CommonScreenProgressIndicator(),
+        CommonScreenProgressIndicator(
+      backgroundColor: showBackgroundColor ? primaryColor : Colors.transparent,
+    ),
     errorWidget: (context, url, error) => const Icon(Icons.error),
   );
 }
