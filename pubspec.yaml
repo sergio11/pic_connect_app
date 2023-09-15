@@ -74,6 +74,13 @@ dependencies:
   video_thumbnail: ^0.5.3
   path_provider: ^2.1.1
   visibility_detector: ^0.4.0+2
+  flutter_chat_types: ^3.6.1
+  flutter_chat_ui: ^1.6.8
+  flutter_firebase_chat_core: ^1.6.7
+  open_filex: ^4.3.2
+  file_picker: ^5.3.0
+  mime: ^1.0.4
+  http: ^0.13.6
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -75,5 +75,7 @@
   "commentAsHintText": "Comentar como ",
   "noPublicationsFound": "No se han encontrado publicaciones",
   "postViewAllComments": "Ver los %s comentarios",
-  "postLikesCount": "%s likes"
+  "postLikesCount": "%s likes",
+  "exitAppDialogTitle": "¿Salir de la Aplicación?",
+  "exitAppDialogDescription": "¿Estás seguro de que quieres salir de la aplicación?"
 }

@@ -18,12 +18,14 @@ class FeedScreen extends StatefulWidget {
   final Function() onShowFavoritePosts;
   final Function(String postId) onShowCommentsByPost;
   final Function(String userUid) onShowUserProfile;
+  final Function() onGoToMessages;
 
   const FeedScreen(
       {Key? key,
       required this.onShowUserProfile,
       required this.onShowCommentsByPost,
-      required this.onShowFavoritePosts})
+      required this.onShowFavoritePosts,
+      required this.onGoToMessages})
       : super(key: key);
 
   @override
@@ -118,7 +120,7 @@ class _FeedScreenState extends State<FeedScreen> {
             Icons.send,
             color: accentColor,
           ),
-          onPressed: () {},
+          onPressed: widget.onGoToMessages,
         ),
       ],
     );

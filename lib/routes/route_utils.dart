@@ -2,14 +2,35 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
 
-enum AppRoutesEnum { onBoarding, login, signup, home, error, profile, search, add, reels, comments, publications, imageEditor, following, followers, editProfile }
+enum AppRoutesEnum {
+  onBoarding,
+  login,
+  signup,
+  home,
+  error,
+  profile,
+  search,
+  add,
+  reels,
+  comments,
+  publications,
+  imageEditor,
+  following,
+  followers,
+  editProfile,
+  messages
+}
 
-const List<AppRoutesEnum> unProtectedPaths = [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup];
+const List<AppRoutesEnum> unProtectedPaths = [
+  AppRoutesEnum.onBoarding,
+  AppRoutesEnum.login,
+  AppRoutesEnum.signup
+];
 
 extension AppRouteExtension on AppRoutesEnum {
-
   bool get requireImmersiveMode {
-    return [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup].contains(this);
+    return [AppRoutesEnum.onBoarding, AppRoutesEnum.login, AppRoutesEnum.signup]
+        .contains(this);
   }
 
   String get screenPath {
@@ -44,6 +65,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "/following";
       case AppRoutesEnum.editProfile:
         return "/editProfile";
+      case AppRoutesEnum.messages:
+        return "/messages";
       default:
         return "/";
     }
@@ -81,6 +104,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "FOLLOWING";
       case AppRoutesEnum.editProfile:
         return "EDIT_PROFILE";
+      case AppRoutesEnum.messages:
+        return "MESSAGES";
       default:
         return "HOME";
     }
@@ -118,6 +143,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "Following";
       case AppRoutesEnum.editProfile:
         return "EditProfile";
+      case AppRoutesEnum.messages:
+        return "Message";
       default:
         return "Home";
     }
@@ -125,23 +152,15 @@ extension AppRouteExtension on AppRoutesEnum {
 }
 
 class PublicationsScreenArgs {
-
   final String userUid;
   final PublicationsContentTypeEnum type;
 
-  PublicationsScreenArgs({
-    required this.userUid,
-    required this.type
-  });
+  PublicationsScreenArgs({required this.userUid, required this.type});
 }
 
 class AddPostScreenArgs {
-
   final ImageSource imageSource;
   final PostTypeEnum type;
 
-  AddPostScreenArgs({
-    required this.imageSource,
-    required this.type
-  });
+  AddPostScreenArgs({required this.imageSource, required this.type});
 }

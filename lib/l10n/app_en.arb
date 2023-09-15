@@ -75,5 +75,7 @@
   "commentAsHintText": "Comment as ",
   "noPublicationsFound": "No publications found",
   "postViewAllComments": "View all %s comments",
-  "postLikesCount": "%s likes"
+  "postLikesCount": "%s likes",
+  "exitAppDialogTitle": "Exit the Application?",
+  "exitAppDialogDescription": "Are you sure you want to exit the application?"
 }

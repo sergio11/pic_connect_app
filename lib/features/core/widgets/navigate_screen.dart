@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,8 @@ import 'package:pic_connect/features/core/widgets/fab_with_icons.dart';
 import 'package:pic_connect/features/core/widgets/anchored_overlay.dart';
 import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'lifecycle_watcher_state.dart';
 
@@ -28,8 +31,17 @@ class NavigateScreen extends StatefulWidget {
 
 class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   late StreamSubscription<bool> keyboardSubscription;
+  late AppLocalizations _l10n;
   bool isBottomBarVisible = true;
   bool showOverlay = true;
+  int selectedIndex = 0;
+
+  void onTapSelected(int indexTapped) {
+    widget.navigationShell.goBranch(indexTapped);
+    setState(() {
+      selectedIndex = indexTapped;
+    });
+  }
 
   void hideNav({bool keepOverlay = true}) {
     setState(() {
@@ -49,6 +61,12 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
         });
       });
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
   }
 
   @override
@@ -77,45 +95,67 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NotificationListener<UserScrollNotification>(
-        onNotification: (UserScrollNotification value) {
-          if (value.direction == ScrollDirection.forward ||
-              value.direction == ScrollDirection.idle) {
-            showNav();
-          } else {
-            hideNav(keepOverlay: false);
-          }
-          return true;
-        },
-        child: widget.navigationShell,
+    return WillPopScope(
+      onWillPop: () => _onWillPop(),
+      child: Scaffold(
+        body: NotificationListener<UserScrollNotification>(
+            onNotification: (UserScrollNotification value) {
+              if (value.direction == ScrollDirection.forward ||
+                  value.direction == ScrollDirection.idle) {
+                showNav();
+              } else {
+                hideNav(keepOverlay: false);
+              }
+              return true;
+            },
+            child: widget.navigationShell),
+        extendBody: true,
+        bottomNavigationBar: AnimatedContainer(
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.fastLinearToSlowEaseIn,
+            height: isBottomBarVisible ? kBottomNavigationBarHeight : 0,
+            child: Wrap(children: [
+              FABBottomAppBar(
+                centerItemText: '',
+                color: accentColor,
+                selectedColor: secondaryColor,
+                selectedIndex: selectedIndex,
+                notchedShape: const CircularNotchedRectangle(),
+                onTabSelected: onTapSelected,
+                backgroundColor: bottomBarBackgroundColor,
+                items: [
+                  FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
+                  FABBottomAppBarItem(iconData: Icons.search, text: 'Search'),
+                  FABBottomAppBarItem(
+                      iconData: Icons.live_tv, text: 'Reels TV'),
+                  FABBottomAppBarItem(iconData: Icons.person, text: 'Profile'),
+                ],
+              )
+            ])),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: _buildFab(context),
       ),
-      extendBody: true,
-      bottomNavigationBar: AnimatedContainer(
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.fastLinearToSlowEaseIn,
-          height: isBottomBarVisible ? kBottomNavigationBarHeight : 0,
-          child: Wrap(children: [
-            FABBottomAppBar(
-              centerItemText: '',
-              color: accentColor,
-              selectedColor: secondaryColor,
-              notchedShape: const CircularNotchedRectangle(),
-              onTabSelected: (int tappedIndex) {
-                widget.navigationShell.goBranch(tappedIndex);
-              },
-              backgroundColor: bottomBarBackgroundColor,
-              items: [
-                FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
-                FABBottomAppBarItem(iconData: Icons.search, text: 'Search'),
-                FABBottomAppBarItem(iconData: Icons.live_tv, text: 'Reels TV'),
-                FABBottomAppBarItem(iconData: Icons.person, text: 'Profile'),
-              ],
-            )
-          ])),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: _buildFab(context),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    if (isBottomBarVisible) {
+      if (widget.navigationShell.currentIndex ==
+          BottomNavigationBarIndex.home) {
+        showConfirmDialog(
+            context: context,
+            title: _l10n.exitAppDialogTitle,
+            description: _l10n.exitAppDialogDescription,
+            onAcceptPressed: () {
+              SystemNavigator.pop();
+            });
+      } else {
+        onTapSelected(BottomNavigationBarIndex.home);
+      }
+    } else {
+      showNav();
+    }
+    return false;
   }
 
   Widget _buildFab(BuildContext context) {
@@ -160,4 +200,11 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     keyboardSubscription.cancel();
     super.dispose();
   }
+}
+
+class BottomNavigationBarIndex {
+  static const int home = 0;
+  static const int search = 1;
+  static const int reels = 2;
+  static const int profile = 3;
 }

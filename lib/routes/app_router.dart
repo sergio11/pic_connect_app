@@ -7,6 +7,8 @@ import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/chat/chat_screen.dart';
+import 'package:pic_connect/features/chat/rooms_screen.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/comments/comments_screen.dart';
 import 'package:pic_connect/features/core/widgets/navigate_screen.dart';
@@ -235,6 +237,13 @@ class AppRouter {
                 ),
               )),
       GoRoute(
+          path: AppRoutesEnum.messages.screenPath,
+          name: AppRoutesEnum.messages.screenName,
+          pageBuilder: (context, state) => CommonTransitionPage(
+            key: state.pageKey,
+            child: const RoomsPage(),
+          )),
+      GoRoute(
           path: AppRoutesEnum.imageEditor.screenPath,
           name: AppRoutesEnum.imageEditor.screenName,
           pageBuilder: (context, state) => CommonTransitionPage(
@@ -276,6 +285,9 @@ class AppRouter {
                             context.push(AppRoutesEnum.profile.screenPath,
                                 extra: userUid);
                           },
+                          onGoToMessages: () {
+                            context.push(AppRoutesEnum.messages.screenPath);
+                          },
                         ),
                       ))
             ],
@@ -307,7 +319,8 @@ class AppRouter {
                   builder: (BuildContext context, GoRouterState state) =>
                       BlocProvider(
                         create: (context) => serviceLocator<ReelsBloc>()
-                          ..add(OnLoadTopReelsEvent(context.read<AppBloc>().state.authUserUid!)),
+                          ..add(OnLoadTopReelsEvent(
+                              context.read<AppBloc>().state.authUserUid!)),
                         child: ReelsViewerScreen(
                           onGoToCommentsByPost: (String postId) {
                             context.go(AppRoutesEnum.comments.screenPath,
