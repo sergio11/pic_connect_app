@@ -309,18 +309,20 @@ class _PostCardState extends State<PostCard> {
               ),
             ),
           ),
-          InkWell(
-            child: Container(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                'View all ${state.commentCount} comments',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
+          if (state.commentCount > 0)
+            InkWell(
+              child: Container(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  'View all ${state.commentCount} comments',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: accentColor, fontWeight: FontWeight.w600),
+                ),
               ),
+              onTap: () => widget.onShowCommentsByPost(state.postId),
             ),
-            onTap: () => widget.onShowCommentsByPost(state.postId),
+          const SizedBox(
+            height: 5.0,
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -332,11 +334,10 @@ class _PostCardState extends State<PostCard> {
                   ?.copyWith(color: accentColor),
             ),
           ),
-          TagsRow(
-            tags: state.tags,
-            scrollController: ScrollController(),
-            margin: const EdgeInsets.only(top: 10.0, bottom: 15.0, right: 5.0),
+          const SizedBox(
+            height: 5.0,
           ),
+          TagsRow(tags: state.tags, scrollController: ScrollController()),
         ],
       ),
     );

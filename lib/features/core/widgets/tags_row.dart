@@ -16,35 +16,31 @@ class TagsRow extends StatelessWidget {
     required this.tags,
     this.onTagDeleted,
     required this.scrollController,
-    this.margin = const EdgeInsets.symmetric(horizontal: 5.0),
+    this.margin = const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
     this.padding = const EdgeInsets.symmetric(
         horizontal: 10.0, vertical: 5.0)
   });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: scrollController,
-      scrollDirection: Axis.horizontal,
-      child: Row(
-          children: tags.map((String tag) {
-            return Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20.0),
-                ),
-                color: secondaryColor,
+    return Wrap(
+        runSpacing: 0.0,
+        children: tags.map((String tag) {
+          return Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0),
               ),
-              margin: margin,
-              padding: padding,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: onTagDeleted != null ? buildRemovableTag(context, tag)
-                    : buildReadOnlyTag(context, tag),
-              ),
-            );
-          }).toList()),
-    );
+              color: secondaryColor,
+            ),
+            margin: margin,
+            padding: padding,
+            child: Wrap(
+              children: onTagDeleted != null ? buildRemovableTag(context, tag)
+                  : buildReadOnlyTag(context, tag),
+            ),
+          );
+        }).toList());
   }
 
   List<Widget> buildReadOnlyTag(BuildContext context, String tag) {
