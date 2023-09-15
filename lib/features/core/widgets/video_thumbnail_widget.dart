@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class VideoThumbnailWidget extends StatefulWidget {
@@ -43,6 +44,6 @@ class VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
             fit: BoxFit.cover,
             child: Image(image: FileImage(File(thumbnailFileName!))),
           )
-        : const CircularProgressIndicator();
+        : const CommonScreenProgressIndicator();
   }
 }

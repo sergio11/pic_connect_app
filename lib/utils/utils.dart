@@ -1,9 +1,12 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/widgets/common_dialog_box.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:pic_connect/features/core/widgets/reel_preview_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
 
 showImage(BuildContext context, String imageUrl) async {
@@ -119,4 +122,32 @@ showConfirmDialog(
           onCancelled: onCancelPressed,
         );
       });
+}
+
+Future<void> showReelPreviewDialog(
+    BuildContext context, PostBO reelPost) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return Dialog(
+        insetPadding: EdgeInsets.zero,
+        child: SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: ReelsPreview(
+              reelPost: reelPost,
+              onShowUserProfile: (userUid) {},
+              onLikePost: (postId) {},
+              onShowCommentsByPost: (postId) {},
+              onShareContentClicked: (postId) {},
+              onSaveBookmark: (postId) {},
+              swiperController: SwiperController(),
+              showProgressIndicator: true,
+              isLikedByAuthUser: false,
+              isBookmarkedByAuthUser: false,
+            )),
+      );
+    },
+  );
 }

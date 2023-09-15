@@ -102,7 +102,7 @@ class _ReelsPreviewState extends LifecycleWatcherState<ReelsPreview> {
       videoPlayerController: _videoPlayerController,
       autoPlay: false,
       showControls: false,
-      looping: false,
+      looping: true,
     );
     setState(() {});
     _videoPlayerController.addListener(() {

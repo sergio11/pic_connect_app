@@ -152,7 +152,14 @@ class _SearchScreenState extends State<SearchScreen> {
                     scrollController: ScrollController())
             ],
           ),
-          onTap: () => showImage(context, state.posts[index].postUrl),
+          onTap: () {
+            final post = state.posts[index];
+            if (post.postType == PostTypeEnum.picture) {
+              showImage(context, post.postUrl);
+            } else {
+              showReelPreviewDialog(context, post);
+            }
+          },
         ),
         mainAxisSpacing: 1,
         crossAxisSpacing: 1,

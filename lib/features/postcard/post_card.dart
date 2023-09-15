@@ -206,7 +206,9 @@ class _PostCardState extends State<PostCard> {
             ),
           )
         ]),
-        onLongPress: () => showImage(context, state.postImageUrl),
+        onLongPress: () => {
+              if (!state.isReel) {showImage(context, state.postImageUrl)}
+            },
         onDoubleTap: () => _startLikeAnimation(state.postId));
   }
 

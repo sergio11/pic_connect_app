@@ -397,8 +397,20 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                 ),
         ),
       ),
-      onLongPress: () => showImage(context, post.postUrl),
-      onDoubleTap: () => showImage(context, post.postUrl),
+      onLongPress: () => {
+        if(post.postType == PostTypeEnum.picture) {
+          showImage(context, post.postUrl)
+        } else {
+          showReelPreviewDialog(context, post)
+        }
+      },
+      onDoubleTap: () => {
+        if(post.postType == PostTypeEnum.picture) {
+          showImage(context, post.postUrl)
+        } else {
+          showReelPreviewDialog(context, post)
+        }
+      },
       onTap: () => widget.onGoToPictures(post.postAuthorUid),
     );
   }
