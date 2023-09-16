@@ -1,23 +1,18 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:camerawesome/camerawesome_plugin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
-import 'package:pic_connect/features/core/widgets/common_switch.dart';
-import 'package:pic_connect/features/core/widgets/tags_row.dart';
-import 'package:pic_connect/features/core/widgets/text_field_input.dart';
+import 'package:pic_connect/features/core/widgets/edit_post_data.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
-import 'package:textfield_tags/textfield_tags.dart';
-import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 
 class AddPostScreen extends StatefulWidget {
   final VoidCallback onPostUploaded;
@@ -36,8 +31,6 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
-  late StreamSubscription<bool> _keyboardSubscription;
-  VideoPlayerController? _videoController;
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _placeInfoController = TextEditingController();
   final TextfieldTagsController _textFieldTagsController =
@@ -88,22 +81,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   @override
-  void initState() {
-    var keyboardVisibilityController = KeyboardVisibilityController();
-    _keyboardSubscription =
-        keyboardVisibilityController.onChange.listen((bool visible) {
-      if (visible) {
-        if (_videoController?.value.isPlaying == true) {
-          _videoController?.pause();
-        }
-      } else {
-        if (_videoController != null &&
-            _videoController?.value.isPlaying == false) {
-          _videoController?.play();
-        }
-      }
-    });
-    super.initState();
+  void dispose() {
+    super.dispose();
+    _descriptionController.clear();
+    _placeInfoController.clear();
+    _textFieldTagsController.clearTags();
   }
 
   @override
@@ -117,22 +99,20 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _onPostUploaded();
       } else if (state.errorMessage != null) {
         showErrorSnackBar(context: context, message: state.errorMessage!);
-      } else if (state.isPostUploading) {
-        _videoController?.pause();
+      } else {
+        if(state.placeInfo != null && _placeInfoController.text.isEmpty) {
+          _placeInfoController.text = state.placeInfo ?? '';
+        }
       }
     }, builder: (context, state) {
-      return _buildScreenContent(state);
+      return WillPopScope(
+        onWillPop: () async {
+          _onBackPressed();
+          return false;
+        },
+        child: _buildScreenContent(state),
+      );
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _keyboardSubscription.cancel();
-    _descriptionController.dispose();
-    _textFieldTagsController.dispose();
-    _placeInfoController.dispose();
-    _videoController?.dispose();
   }
 
   Widget _buildScreenContent(AddPostState state) {
@@ -237,174 +217,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   Widget _buildFillPostData(AddPostState state) {
     return Scaffold(
-      appBar: _buildAppBar(state),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: MediaQuery.of(context).size.height * 0.5,
-            floating: false,
-            pinned: false,
-            flexibleSpace: Stack(
-              children: [
-                FlexibleSpaceBar(
-                  background: state.imageData != null
-                      ? _buildImagePreview(state.imageData!)
-                      : _buildVideoPreview(state.videoFilePath!),
-                ),
-                Positioned(
-                  bottom: -20,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 65,
-                    decoration: const BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(40),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: blackColor,
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 1),
-                          ),
-                        ]),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Container(
-                  color: primaryColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: _buildPlaceInfoTextInput(state),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: _buildPostTagsTextInput(state),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: _buildPostDescriptionTextInput(state),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CommonSwitch(
-                          initialValue: state.isStoryMoment,
-                          onChanged: (bool value) {
-                            context
-                                .read<AddPostBloc>()
-                                .add(OnPublishAsStoryMomentEvent(value));
-                          },
-                          description:
-                              _l10n.postPublishAsMomentSwitchDescription,
-                          label: _l10n.postPublishAsMomentSwitchLabel,
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPlaceInfoTextInput(AddPostState state) {
-    if (_placeInfoController.text.isEmpty) {
-      _placeInfoController.text = state.placeInfo ?? "";
-    }
-    return TextFieldInput(
-      hintText: _l10n.postAddPlaceInfoInputTextHint,
-      textInputType: TextInputType.text,
-      icon: const Icon(Icons.location_on),
-      textEditingController: _placeInfoController,
-      maxLines: 1,
-    );
-  }
-
-  Widget _buildPostDescriptionTextInput(AddPostState state) {
-    return TextFieldInput(
-      hintText: _l10n.postAddDescriptionInputTextHint,
-      textInputType: TextInputType.multiline,
-      textEditingController: _descriptionController,
-      maxLines: 5,
-    );
-  }
-
-  Widget _buildPostTagsTextInput(AddPostState state) {
-    return TextFieldTags(
-        textfieldTagsController: _textFieldTagsController,
-        textSeparators: const [' ', ','],
-        letterCase: LetterCase.normal,
-        validator: (String tag) {
-          if (_textFieldTagsController.getTags?.contains(tag) == true) {
-            return _l10n.postTagAlreadyAdded;
-          }
-          return null;
-        },
-        inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
-          return ((context, sc, tags, onTagDelete) {
-            return TextFieldInput(
-                textEditingController: tec,
-                onChanged: onChanged,
-                onSubmitted: onSubmitted,
-                hintText: _textFieldTagsController.hasTags
-                    ? ''
-                    : _l10n.postAddTopicsInputTextHint,
-                helperText: _l10n.postAddTopicsInputTextHelper,
-                focusNode: fn,
-                errorText: error,
-                prefixIconConstraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.74),
-                icon: tags.isNotEmpty
-                    ? TagsRow(tags: tags, onTagDeleted: onTagDelete)
-                    : null);
-          });
-        });
-  }
-
-  Widget _buildVideoPreview(String videoPath) {
-    if (_videoController == null) {
-      _videoController = VideoPlayerController.file(File(videoPath));
-      _videoController?.initialize();
-      _videoController?.play();
-      _videoController?.setVolume(1);
-      _videoController?.setLooping(true);
-    }
-    return VideoPlayer(_videoController!);
-  }
-
-  Widget _buildImagePreview(Uint8List imageData) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            image: MemoryImage(imageData)),
-      ),
-    );
+        appBar: _buildAppBar(state),
+        body: EditPostData(
+          descriptionController: _descriptionController,
+          placeInfoController: _placeInfoController,
+          textFieldTagsController: _textFieldTagsController,
+          imageData: state.imageData,
+          isStoryMoment: state.isStoryMoment,
+          videoFilePath: state.videoFilePath,
+          onIsStoryMomentSwitchChanged: (bool value) {
+            context.read<AddPostBloc>().add(OnPublishAsStoryMomentEvent(value));
+          },
+        ));
   }
 }

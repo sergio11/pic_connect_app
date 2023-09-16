@@ -132,7 +132,7 @@ class _FeedScreenState extends State<FeedScreen> {
         ? SliverList(
             delegate: SliverChildBuilderDelegate(
             (context, index) => Container(
-              margin: const EdgeInsets.all(0),
+              margin: const EdgeInsets.only(bottom: 3.0),
               child: BlocProvider(
                 create: (context) => serviceLocator<PostCardBloc>()
                   ..add(
@@ -144,6 +144,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   onPostDeleted: () => onRefresh(state),
                   onShowUserProfile: (String userUid) =>
                       widget.onShowUserProfile(userUid),
+                  onEditPost: (String postId) {  },
                 ),
               ),
             ),

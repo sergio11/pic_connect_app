@@ -16,12 +16,14 @@ class PostCard extends StatefulWidget {
   final Function(String userUid) onShowUserProfile;
   final Function(String postId) onShowCommentsByPost;
   final Function() onPostDeleted;
+  final Function(String postId) onEditPost;
 
   const PostCard(
       {Key? key,
       required this.onShowUserProfile,
       required this.onShowCommentsByPost,
-      required this.onPostDeleted})
+      required this.onPostDeleted,
+      required this.onEditPost})
       : super(key: key);
 
   @override
@@ -165,6 +167,15 @@ class _PostCardState extends State<PostCard> {
           ),
           state.isPostOwner
               ? IconButton(
+                  onPressed: () => widget.onEditPost(state.postId),
+                  icon: const Icon(
+                    Icons.edit,
+                    color: accentColor,
+                  ),
+                )
+              : Container(),
+          state.isPostOwner
+              ? IconButton(
                   onPressed: () {
                     showConfirmDialog(
                         context: context,
@@ -177,7 +188,7 @@ class _PostCardState extends State<PostCard> {
                     color: accentColor,
                   ),
                 )
-              : Container(),
+              : Container()
         ],
       ),
     );

@@ -95,7 +95,7 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
                         widget.onShowCommentsByPost(postId),
                     onPostDeleted: () => onRefresh(state),
                     onShowUserProfile: (String userUid) =>
-                        widget.onShowUserProfile(userUid),
+                        widget.onShowUserProfile(userUid), onEditPost: (String postId) {  },
                   )),
             ),
           );
