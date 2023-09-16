@@ -87,7 +87,10 @@ class _SearchScreenState extends State<SearchScreen> {
           filled: true,
           fillColor: whiteColor,
           suffixIcon: IconButton(
-            onPressed: searchController.clear,
+            onPressed: () {
+              searchController.clear();
+              context.read<SearchBloc>().add(const OnSearchUsersEvent(""));
+            },
             icon: const Icon(Icons.clear, color: accentColor),
           )),
       onFieldSubmitted: (String term) {
@@ -145,11 +148,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       videoUrl: state.posts[index].postUrl,
                     ),
               if (state.posts[index].tags.isNotEmpty)
-                TagsRow(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 5.0),
-                    tags: [state.posts[index].tags.first],
-                    scrollController: ScrollController())
+                TagsRow(tags: [state.posts[index].tags.first])
             ],
           ),
           onTap: () {

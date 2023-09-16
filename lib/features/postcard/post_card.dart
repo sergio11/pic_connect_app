@@ -337,7 +337,7 @@ class _PostCardState extends State<PostCard> {
           const SizedBox(
             height: 5.0,
           ),
-          TagsRow(tags: state.tags, scrollController: ScrollController()),
+          TagsRow(tags: state.tags),
         ],
       ),
     );

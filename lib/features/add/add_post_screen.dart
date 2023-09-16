@@ -380,10 +380,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 prefixIconConstraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.74),
                 icon: tags.isNotEmpty
-                    ? TagsRow(
-                        tags: tags,
-                        scrollController: sc,
-                        onTagDeleted: onTagDelete)
+                    ? TagsRow(tags: tags, onTagDeleted: onTagDelete)
                     : null);
           });
         });

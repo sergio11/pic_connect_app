@@ -49,13 +49,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   FutureOr<void> onSearchUsersEventHandler(
       OnSearchUsersEvent event, Emitter<SearchState> emit) async {
-    emit(state.copyWith(isLoading: true));
-    final response =
-        await findUsersByNameUseCase(FindUsersByNameParams(event.term));
-    response.fold(
-        (fail) => emit(state.copyWith(isLoading: false, isShowUsers: false)),
-        (users) => emit(
-            state.copyWith(isLoading: false, users: users, isShowUsers: true)));
+    if(event.term.isNotEmpty) {
+      emit(state.copyWith(isLoading: true));
+      final response =
+      await findUsersByNameUseCase(FindUsersByNameParams(event.term));
+      response.fold(
+              (fail) => emit(state.copyWith(isLoading: false, isShowUsers: false)),
+              (users) => emit(
+              state.copyWith(isLoading: false, users: users, isShowUsers: true)));
+    } else {
+      emit(state.copyWith(isShowUsers: false, users: []));
+    }
   }
 
   FutureOr<void> onFollowUserEventHandler(

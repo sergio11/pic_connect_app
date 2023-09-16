@@ -6,7 +6,6 @@ class TagsRow extends StatelessWidget {
 
   final List<String> tags;
   final void Function(String)? onTagDeleted;
-  final ScrollController scrollController;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
 
@@ -15,7 +14,6 @@ class TagsRow extends StatelessWidget {
     super.key,
     required this.tags,
     this.onTagDeleted,
-    required this.scrollController,
     this.margin = const EdgeInsets.symmetric(vertical: 5.0, horizontal: 3.0),
     this.padding = const EdgeInsets.symmetric(
         horizontal: 10.0, vertical: 5.0)

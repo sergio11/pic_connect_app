@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pic_connect/utils/colors.dart';
 
-enum CommonButtonSizeType { small, medium, large }
+enum CommonButtonSizeType { tiny, small, medium, large }
 
 class CommonButton extends StatelessWidget {
+  static const double defaultTinyButtonWidth = 120;
+  static const double defaultTinyButtonHeight = 35;
   static const double defaultSmallButtonWidth = 150;
   static const double defaultSmallButtonHeight = 40;
   static const double defaultMediumButtonWidth = 240;
@@ -38,11 +40,13 @@ class CommonButton extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         child: Container(
             height: switch (sizeType) {
+              CommonButtonSizeType.tiny => defaultTinyButtonHeight,
               CommonButtonSizeType.small => defaultSmallButtonHeight,
               CommonButtonSizeType.medium => defaultMediumButtonHeight,
               CommonButtonSizeType.large => defaultLargeButtonHeight
             },
             width: switch (sizeType) {
+              CommonButtonSizeType.tiny => defaultTinyButtonWidth,
               CommonButtonSizeType.small => defaultSmallButtonWidth,
               CommonButtonSizeType.medium => defaultMediumButtonWidth,
               CommonButtonSizeType.large => defaultLargeButtonWidth
@@ -78,6 +82,8 @@ class CommonButton extends StatelessWidget {
                   disabledBackgroundColor: accentColor,
                   disabledForegroundColor: primaryColor,
                   fixedSize: switch (sizeType) {
+                    CommonButtonSizeType.tiny => const Size(
+                        defaultTinyButtonWidth, defaultTinyButtonHeight),
                     CommonButtonSizeType.small => const Size(
                         defaultSmallButtonWidth, defaultSmallButtonHeight),
                     CommonButtonSizeType.medium => const Size(
@@ -98,6 +104,7 @@ class CommonButton extends StatelessWidget {
   TextStyle? getTextStyle(BuildContext context, CommonButtonSizeType sizeType) {
     final textTheme = Theme.of(context).textTheme;
     final style = switch (sizeType) {
+      CommonButtonSizeType.tiny => textTheme.labelSmall,
       CommonButtonSizeType.small => textTheme.labelSmall,
       CommonButtonSizeType.medium => textTheme.labelMedium,
       CommonButtonSizeType.large => textTheme.labelLarge

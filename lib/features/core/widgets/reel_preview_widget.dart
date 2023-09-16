@@ -353,8 +353,6 @@ class _ReelsPreviewState extends LifecycleWatcherState<ReelsPreview> {
           ),
           TagsRow(
             tags: widget.reelPost.tags,
-            scrollController: ScrollController(),
-            margin: const EdgeInsets.only(top: 10.0, bottom: 15.0, right: 5.0),
           ),
         ],
       ),
