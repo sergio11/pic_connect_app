@@ -12,6 +12,7 @@
   "followButtonText": "Seguir",
   "unFollowButtonText": "Dejar de seguir",
   "editProfileButtonText": "Editar Perfil",
+  "shareProfileButtonText": "Compartir Profile",
   "profilePostStats": "publicaciones",
   "profileFollowerStats": "seguidores",
   "profileFollowingStats": "siguiendo",
@@ -77,5 +78,6 @@
   "postViewAllComments": "Ver los %s comentarios",
   "postLikesCount": "%s likes",
   "exitAppDialogTitle": "¿Salir de la Aplicación?",
-  "exitAppDialogDescription": "¿Estás seguro de que quieres salir de la aplicación?"
+  "exitAppDialogDescription": "¿Estás seguro de que quieres salir de la aplicación?",
+  "shareProfileText": "¡Comparte el perfil de %s y descubre su mundo! \uD83C\uDF0D✨"
 }

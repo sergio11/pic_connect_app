@@ -90,7 +90,7 @@ class MomentAnimatedTrayState extends AnimatedTrayState<MomentAnimatedTray>
         username: Text(widget.label,
             style: Theme.of(context)
                 .textTheme
-                .bodyMedium
+                .bodySmall
                 ?.copyWith(color: accentColor, fontWeight: FontWeight.bold)),
       ),
     ));

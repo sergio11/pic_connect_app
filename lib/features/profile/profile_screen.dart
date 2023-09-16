@@ -15,6 +15,7 @@ import 'package:pic_connect/utils/calculate_age_from_birthdate.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Function(String userUid) onGoToPictures;
@@ -55,6 +56,10 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         description: _l10n.sessionClosedDialogDescription,
         onAcceptPressed: () =>
             context.read<AppBloc>().add(const OnVerifySession()));
+  }
+
+  void _onShareProfile(ProfileState state) {
+    Share.share(_l10n.shareProfileText.replaceAll("%s", state.username));
   }
 
   @override
@@ -138,12 +143,13 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                           _buildProfileHeader(state),
                           _buildUserNameRow(state),
                           _buildUserAgeAndCountry(state),
-                          _buildUserBioRow(state)
+                          _buildUserBioRow(state),
+                          _buildProfileActions(state),
+                          _buildMomentsStoryTrack(state),
                         ],
                       ),
                     ),
                   ),
-                  _buildMomentsStoryTrack(state),
                   const Divider(
                     height: 20,
                   ),
@@ -158,53 +164,71 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
   }
 
   Widget _buildProfileHeader(ProfileState state) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
-          child: GestureDetector(
+    return Container(
+      margin: const EdgeInsets.only(top: 10.0, left: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
             child: buildCircleAvatar(imageUrl: state.photoUrl),
             onTap: () => showImage(context, state.photoUrl),
           ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 5.0,),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildStatColumn(state.postLen, _l10n.profilePostStats,
-                          () => widget.onGoToPictures(state.userUid)),
-                  _buildStatColumn(
-                      state.followers,
-                      _l10n.profileFollowerStats,
-                          () => widget.onGoToFollowersScreen(state.userUid)),
-                  _buildStatColumn(
-                      state.following,
-                      _l10n.profileFollowingStats,
-                          () => widget.onGoToFollowingScreen(state.userUid)),
-                ],
-              ),
-              const SizedBox(height: 10.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  state.isAuthUser
-                      ? _buildEditProfileButton(state)
-                      : state.isFollowing
-                      ? _buildUnFollowButton(state)
-                      : _buildFollowButton(state)
-                ],
-              ),
-            ],
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildStatColumn(state.postLen, _l10n.profilePostStats,
+                        () => widget.onGoToPictures(state.userUid)),
+                    _buildStatColumn(
+                        state.followers,
+                        _l10n.profileFollowerStats,
+                        () => widget.onGoToFollowersScreen(state.userUid)),
+                    _buildStatColumn(
+                        state.following,
+                        _l10n.profileFollowingStats,
+                        () => widget.onGoToFollowingScreen(state.userUid)),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProfileActions(ProfileState state) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          state.isAuthUser
+              ? _buildEditProfileButton(state)
+              : state.isFollowing
+                  ? _buildUnFollowButton(state)
+                  : _buildFollowButton(state),
+          _buildShareProfileButton(state)
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShareProfileButton(ProfileState state) {
+    return CommonButton(
+      text: _l10n.shareProfileButtonText,
+      backgroundColor: accentColor,
+      textColor: primaryColor,
+      borderColor: accentColor,
+      reverseStyle: true,
+      onPressed: () => _onShareProfile(state),
+      sizeType: CommonButtonSizeType.tiny,
     );
   }
 
@@ -215,7 +239,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: () => widget.onGoToEditProfileScreen(state.userUid),
-      sizeType: CommonButtonSizeType.small,
+      sizeType: CommonButtonSizeType.tiny,
     );
   }
 
@@ -227,7 +251,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       borderColor: accentColor,
       onPressed: () =>
           context.read<ProfileBloc>().add(OnUnFollowUserEvent(state.userUid)),
-      sizeType: CommonButtonSizeType.small,
+      sizeType: CommonButtonSizeType.tiny,
     );
   }
 
@@ -239,7 +263,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       borderColor: secondaryColor,
       onPressed: () =>
           context.read<ProfileBloc>().add(OnFollowUserEvent(state.userUid)),
-      sizeType: CommonButtonSizeType.small,
+      sizeType: CommonButtonSizeType.tiny,
     );
   }
 
@@ -278,22 +302,21 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          if(state.birthDate.isNotEmpty)
+          if (state.birthDate.isNotEmpty)
             const Icon(Icons.cake, color: accentColor),
-            const SizedBox(width: 6),
-            Text(
-              "${state.birthDate.calculateAgeFromBirthDate()} años",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(width: 6),
-          if(state.country.isNotEmpty)
+          const SizedBox(width: 6),
+          Text(
+            "${state.birthDate.calculateAgeFromBirthDate()} años",
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(width: 6),
+          if (state.country.isNotEmpty)
             Text(
               state.country,
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .bodyMedium
                   ?.copyWith(color: accentColor, fontWeight: FontWeight.w600),
@@ -304,9 +327,13 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
   }
 
   Widget _buildMomentsStoryTrack(ProfileState state) {
-    return state.momentsByDate.isNotEmpty ? MomentStoryTrack(
-      momentStoryDataList: state.momentsByDate,
-    ) : Container();
+    return state.momentsByDate.isNotEmpty
+        ? MomentStoryTrack(
+            momentStoryDataList: state.momentsByDate,
+            backgroundColor: Colors.transparent,
+            margin: const EdgeInsets.only(top: 10, bottom: 5),
+          )
+        : Container();
   }
 
   Widget _buildTabController(ProfileState state) {
@@ -408,18 +435,16 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         ),
       ),
       onLongPress: () => {
-        if(post.postType == PostTypeEnum.picture) {
-          showImage(context, post.postUrl)
-        } else {
-          showReelPreviewDialog(context, post)
-        }
+        if (post.postType == PostTypeEnum.picture)
+          {showImage(context, post.postUrl)}
+        else
+          {showReelPreviewDialog(context, post)}
       },
       onDoubleTap: () => {
-        if(post.postType == PostTypeEnum.picture) {
-          showImage(context, post.postUrl)
-        } else {
-          showReelPreviewDialog(context, post)
-        }
+        if (post.postType == PostTypeEnum.picture)
+          {showImage(context, post.postUrl)}
+        else
+          {showReelPreviewDialog(context, post)}
       },
       onTap: () => widget.onGoToPictures(post.postAuthorUid),
     );

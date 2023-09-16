@@ -2,23 +2,28 @@ import 'package:advstory/advstory.dart';
 import 'package:flutter/material.dart';
 import 'package:pic_connect/domain/models/moment_story_data.dart';
 import 'package:pic_connect/domain/models/post.dart';
-import 'package:pic_connect/utils/colors.dart';
 import 'moment_animated_tray.dart';
 
 class MomentStoryTrack extends StatelessWidget {
+
+  final Color backgroundColor;
   final List<MomentStoryDataBO> momentStoryDataList;
+  final EdgeInsets margin;
 
   const MomentStoryTrack({
     Key? key,
+    required this.backgroundColor,
     required this.momentStoryDataList,
+    this.margin = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: margin,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-      decoration: const BoxDecoration(
-        color: primaryColor,
+      decoration: BoxDecoration(
+        color: backgroundColor,
       ),
       child: SizedBox(
         height: 110,

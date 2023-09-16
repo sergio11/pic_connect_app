@@ -56,8 +56,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         child: FittedBox(
             fit: BoxFit.cover,
             child: SizedBox(
-              width: _videoController.value.size.width ?? 0,
-              height: _videoController.value.size.height ?? 0,
+              width: _videoController.value.size.width,
+              height: _videoController.value.size.height,
               child: VideoPlayer(_videoController),
             )));
   }

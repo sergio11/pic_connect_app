@@ -74,7 +74,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),
                 slivers: [
-                  if(state.momentsByFollowedUsers.isNotEmpty)
+                  if (state.momentsByFollowedUsers.isNotEmpty)
                     _buildMomentsStoryAppBar(state),
                   _buildPostsList(state),
                 ],
@@ -93,6 +93,7 @@ class _FeedScreenState extends State<FeedScreen> {
       flexibleSpace: FlexibleSpaceBar(
         background: MomentStoryTrack(
           momentStoryDataList: state.momentsByFollowedUsers,
+          backgroundColor: primaryColor,
         ),
       ),
     );
