@@ -7,15 +7,20 @@ import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/widgets/common_dialog_box.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:pic_connect/features/core/widgets/reel_preview_widget.dart';
+import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 showImage(BuildContext context, String imageUrl) async {
-  showImageViewer(context, NetworkImage(imageUrl),
+  final eventController = context.read<EventController>();
+  eventController.launchEvent(HideBottomBarEvent());
+  await showImageViewer(context, NetworkImage(imageUrl),
       immersive: false,
       useSafeArea: true,
       doubleTapZoomable: true,
       backgroundColor: primaryColor,
       closeButtonColor: accentColor);
+  eventController.launchEvent(ShowBottomBarEvent());
 }
 
 disableSystemUI() {
@@ -126,7 +131,9 @@ showConfirmDialog(
 
 Future<void> showReelPreviewDialog(
     BuildContext context, PostBO reelPost) async {
-  return showDialog<void>(
+  final eventController = context.read<EventController>();
+  eventController.launchEvent(HideBottomBarEvent());
+  await showDialog<void>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
@@ -146,8 +153,10 @@ Future<void> showReelPreviewDialog(
               showProgressIndicator: true,
               isLikedByAuthUser: false,
               isBookmarkedByAuthUser: false,
+              looping: true,
             )),
       );
     },
   );
+  eventController.launchEvent(ShowBottomBarEvent());
 }

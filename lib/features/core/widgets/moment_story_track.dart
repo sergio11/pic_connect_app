@@ -80,7 +80,7 @@ class MomentStoryTrack extends StatelessWidget {
       footer: storyContentFooter,
       timeout: const Duration(seconds: 5),
       errorBuilder: () => const Center(
-        child: Text("An error occured!"),
+        child: Text("An error occurred!"),
       )
     );
   }
@@ -93,7 +93,7 @@ class MomentStoryTrack extends StatelessWidget {
       footer: storyContentFooter,
       timeout: const Duration(seconds: 15),
       errorBuilder: () => const Center(
-        child: Text("An error occured!"),
+        child: Text("An error occurred!"),
       ),
     );
   }

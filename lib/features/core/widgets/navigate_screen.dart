@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,7 @@ import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/widgets/fab_bottom_app_bar.dart';
 import 'package:pic_connect/features/core/widgets/fab_with_icons.dart';
 import 'package:pic_connect/features/core/widgets/anchored_overlay.dart';
+import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/routes/route_utils.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
@@ -31,6 +33,7 @@ class NavigateScreen extends StatefulWidget {
 
 class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   late StreamSubscription<bool> keyboardSubscription;
+  late StreamSubscription<AbstractEvent> eventControllerSubscription;
   late AppLocalizations _l10n;
   bool isBottomBarVisible = true;
   bool showOverlay = true;
@@ -89,6 +92,14 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
         hideNav(keepOverlay: false);
       } else {
         showNav();
+      }
+    });
+    eventControllerSubscription =
+        context.read<EventController>().eventStream.listen((event) {
+      if (event is ShowBottomBarEvent) {
+        showNav();
+      } else if (event is HideBottomBarEvent) {
+        hideNav(keepOverlay: false);
       }
     });
   }
@@ -198,6 +209,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   @override
   void dispose() {
     keyboardSubscription.cancel();
+    eventControllerSubscription.cancel();
     super.dispose();
   }
 }

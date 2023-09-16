@@ -7,6 +7,7 @@ import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/app/app.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/routes/app_router.dart';
 import 'package:pic_connect/routes/router_refresh_stream.dart';
 import 'package:provider/provider.dart';
@@ -17,16 +18,17 @@ void main() async {
   await Firebase.initializeApp();
   await setupServiceLocator();
   runApp(BlocProvider(
-      create: (context) => serviceLocator<AppBloc>()
-        ..add(const OnVerifySession()),
-      child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (context) => RouterRefreshStream(context.read<AppBloc>().stream)),
-            ProxyProvider<RouterRefreshStream, AppRouter>(
-                update: (context, routerRefreshStream, _) => AppRouter(routerRefreshStream: routerRefreshStream))
-          ],
-          child: const MainApp())
-  ));
+      create: (context) =>
+          serviceLocator<AppBloc>()..add(const OnVerifySession()),
+      child: MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => EventController()),
+        ChangeNotifierProvider(
+            create: (context) =>
+                RouterRefreshStream(context.read<AppBloc>().stream)),
+        ProxyProvider<RouterRefreshStream, AppRouter>(
+            update: (context, routerRefreshStream, _) =>
+                AppRouter(routerRefreshStream: routerRefreshStream))
+      ], child: const MainApp())));
   Future.delayed(const Duration(seconds: 3), () {
     FlutterNativeSplash.remove();
   });
