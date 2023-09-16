@@ -9,7 +9,7 @@ import 'package:pic_connect/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'post_card_bloc.dart';
 
 class PostCard extends StatefulWidget {
@@ -29,12 +29,19 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+  late AppLocalizations _l10n;
   VideoPlayerController? _videoController;
   bool isLikeAnimating = false;
   bool isOpenCommentsClicked = false;
   bool isSendContentClicked = false;
   bool isVideoReady = false;
   bool isVideoPlaying = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
 
   void _startLikeAnimation(String postId) {
     setState(() {
@@ -84,8 +91,8 @@ class _PostCardState extends State<PostCard> {
   void _onPostDeleted() async {
     showAlertDialog(
         context: context,
-        title: "Post was deleted!",
-        description: "The post was deleted successfully",
+        title: _l10n.postDeletedSuccessDialogTitle,
+        description: _l10n.postDeletedSuccessDialogDescription,
         onAcceptPressed: widget.onPostDeleted);
   }
 
@@ -161,8 +168,8 @@ class _PostCardState extends State<PostCard> {
                   onPressed: () {
                     showConfirmDialog(
                         context: context,
-                        title: "Remove this post?",
-                        description: "Are you sure to remove this post?",
+                        title: _l10n.removePostDialogTitle,
+                        description: _l10n.removePostDialogDescription,
                         onAcceptPressed: () => _onDeletePost(state.postId));
                   },
                   icon: const Icon(

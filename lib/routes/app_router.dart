@@ -7,7 +7,6 @@ import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
-import 'package:pic_connect/features/chat/chat_screen.dart';
 import 'package:pic_connect/features/chat/rooms_screen.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/comments/comments_screen.dart';
@@ -122,7 +121,7 @@ class AppRouter {
                     context.go(AppRoutesEnum.home.screenPath);
                   },
                   onPostUploaded: () {
-                    context.go(AppRoutesEnum.profile.screenPath);
+                    context.go(AppRoutesEnum.home.screenPath);
                   },
                   onEditImageRequired: (Uint8List imageData) => context
                       .push<Uint8List>(AppRoutesEnum.imageEditor.screenPath,

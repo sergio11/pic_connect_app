@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
+import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/comment_card.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
@@ -133,10 +134,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
         padding: const EdgeInsets.only(left: 16, right: 8),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(state.authUserImageUrl),
-              radius: 18,
-            ),
+            buildCircleAvatar(imageUrl: state.authUserImageUrl, radius: 22),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 8),

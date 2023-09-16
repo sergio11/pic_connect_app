@@ -79,5 +79,9 @@
   "postLikesCount": "%s likes",
   "exitAppDialogTitle": "Exit the Application?",
   "exitAppDialogDescription": "Are you sure you want to exit the application?",
-  "shareProfileText": "Share %s's profile and explore their world! \uD83C\uDF0D✨"
+  "shareProfileText": "Share %s's profile and explore their world! \uD83C\uDF0D✨",
+  "removePostDialogTitle": "Remove this post?",
+  "removePostDialogDescription": "Are you sure to remove this post?",
+  "postDeletedSuccessDialogTitle": "Post was deleted!",
+  "postDeletedSuccessDialogDescription": "The post was deleted successfully"
 }

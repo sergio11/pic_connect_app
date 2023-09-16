@@ -79,5 +79,9 @@
   "postLikesCount": "%s likes",
   "exitAppDialogTitle": "¿Salir de la Aplicación?",
   "exitAppDialogDescription": "¿Estás seguro de que quieres salir de la aplicación?",
-  "shareProfileText": "¡Comparte el perfil de %s y descubre su mundo! \uD83C\uDF0D✨"
+  "shareProfileText": "¡Comparte el perfil de %s y descubre su mundo! \uD83C\uDF0D✨",
+  "removePostDialogTitle": "¿Quieres borrar esta publicación?",
+  "removePostDialogDescription": "¿Estás seguro de que quieres borrar esta publicación? La operación es irreversible.",
+  "postDeletedSuccessDialogTitle": "La publicación fue borrada!",
+  "postDeletedSuccessDialogDescription": "La publicación fue borrada con éxito!"
 }
