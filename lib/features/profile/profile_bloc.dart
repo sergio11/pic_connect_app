@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pic_connect/domain/models/moments_by_date.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_moments_by_user_use_case.dart';
@@ -123,6 +124,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 following: data.init.following.length,
                 isFollowing: data.init.followers.contains(data.last),
                 isAuthUser: userUid == data.last)));
+
+    final fetchMomentsByUserResponse =
+    await fetchMomentsByUserUseCase(FetchMomentsByUserParams(userUid));
+    fetchMomentsByUserResponse.fold(
+            (l) => emit(state.copyWith(momentsByDate: [])),
+            (momentsByUser) => emit(state.copyWith(momentsByDate: momentsByUser)));
 
     final findPicturesByUserResponse = await findPostsByUserUseCase(
         FindPostsByUserParams(userUid, FindPostTypeEnum.pictures));

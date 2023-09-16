@@ -192,8 +192,8 @@ setupServiceLocator() async {
           authRepository: serviceLocator(),
           postRepository: serviceLocator(),
           userRepository: serviceLocator()));
-  serviceLocator.registerLazySingleton(() => FetchMomentsByUserUseCase(
-      authRepository: serviceLocator(), postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FetchMomentsByUserUseCase(postRepository: serviceLocator()));
 
   /// BloC ///
   serviceLocator

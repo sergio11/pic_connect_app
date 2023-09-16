@@ -241,7 +241,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: MediaQuery.of(context).size.height / 1.5,
+            expandedHeight: MediaQuery.of(context).size.height * 0.5,
             floating: false,
             pinned: false,
             flexibleSpace: Stack(
@@ -405,7 +405,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       decoration: BoxDecoration(
         image: DecorationImage(
             fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
+            alignment: Alignment.center,
             image: MemoryImage(imageData)),
       ),
     );

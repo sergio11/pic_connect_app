@@ -7,7 +7,7 @@ import 'package:pic_connect/features/core/widgets/common_screen_progress_indicat
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pic_connect/features/moments/moment_story_track.dart';
+import 'package:pic_connect/features/core/widgets/moment_story_track.dart';
 import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -92,7 +92,7 @@ class _FeedScreenState extends State<FeedScreen> {
       backgroundColor: primaryColor,
       flexibleSpace: FlexibleSpaceBar(
         background: MomentStoryTrack(
-          momentsByUser: state.momentsByFollowedUsers,
+          momentStoryDataList: state.momentsByFollowedUsers,
         ),
       ),
     );

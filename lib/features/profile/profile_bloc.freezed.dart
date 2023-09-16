@@ -809,6 +809,7 @@ mixin _$ProfileState {
   List<PostBO> get picturesList => throw _privateConstructorUsedError;
   List<PostBO> get reelsList => throw _privateConstructorUsedError;
   List<PostBO> get bookmarkPostList => throw _privateConstructorUsedError;
+  List<MomentsByDateBO> get momentsByDate => throw _privateConstructorUsedError;
   List<ProfileTab> get profileTabs => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -844,6 +845,7 @@ abstract class $ProfileStateCopyWith<$Res> {
       List<PostBO> picturesList,
       List<PostBO> reelsList,
       List<PostBO> bookmarkPostList,
+      List<MomentsByDateBO> momentsByDate,
       List<ProfileTab> profileTabs,
       String? errorMessage});
 }
@@ -881,6 +883,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? picturesList = null,
     Object? reelsList = null,
     Object? bookmarkPostList = null,
+    Object? momentsByDate = null,
     Object? profileTabs = null,
     Object? errorMessage = freezed,
   }) {
@@ -965,6 +968,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.bookmarkPostList
           : bookmarkPostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      momentsByDate: null == momentsByDate
+          ? _value.momentsByDate
+          : momentsByDate // ignore: cast_nullable_to_non_nullable
+              as List<MomentsByDateBO>,
       profileTabs: null == profileTabs
           ? _value.profileTabs
           : profileTabs // ignore: cast_nullable_to_non_nullable
@@ -1006,6 +1013,7 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       List<PostBO> picturesList,
       List<PostBO> reelsList,
       List<PostBO> bookmarkPostList,
+      List<MomentsByDateBO> momentsByDate,
       List<ProfileTab> profileTabs,
       String? errorMessage});
 }
@@ -1041,6 +1049,7 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? picturesList = null,
     Object? reelsList = null,
     Object? bookmarkPostList = null,
+    Object? momentsByDate = null,
     Object? profileTabs = null,
     Object? errorMessage = freezed,
   }) {
@@ -1125,6 +1134,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value._bookmarkPostList
           : bookmarkPostList // ignore: cast_nullable_to_non_nullable
               as List<PostBO>,
+      momentsByDate: null == momentsByDate
+          ? _value._momentsByDate
+          : momentsByDate // ignore: cast_nullable_to_non_nullable
+              as List<MomentsByDateBO>,
       profileTabs: null == profileTabs
           ? _value._profileTabs
           : profileTabs // ignore: cast_nullable_to_non_nullable
@@ -1161,11 +1174,13 @@ class _$_ProfileState implements _ProfileState {
       final List<PostBO> picturesList = const [],
       final List<PostBO> reelsList = const [],
       final List<PostBO> bookmarkPostList = const [],
+      final List<MomentsByDateBO> momentsByDate = const [],
       final List<ProfileTab> profileTabs = ProfileTab.values,
       this.errorMessage})
       : _picturesList = picturesList,
         _reelsList = reelsList,
         _bookmarkPostList = bookmarkPostList,
+        _momentsByDate = momentsByDate,
         _profileTabs = profileTabs;
 
   @override
@@ -1247,6 +1262,15 @@ class _$_ProfileState implements _ProfileState {
     return EqualUnmodifiableListView(_bookmarkPostList);
   }
 
+  final List<MomentsByDateBO> _momentsByDate;
+  @override
+  @JsonKey()
+  List<MomentsByDateBO> get momentsByDate {
+    if (_momentsByDate is EqualUnmodifiableListView) return _momentsByDate;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_momentsByDate);
+  }
+
   final List<ProfileTab> _profileTabs;
   @override
   @JsonKey()
@@ -1261,7 +1285,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, country: $country, birthDate: $birthDate, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPictureGridLoading: $isPictureGridLoading, isReelsGridLoading: $isReelsGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, picturesList: $picturesList, reelsList: $reelsList, bookmarkPostList: $bookmarkPostList, profileTabs: $profileTabs, errorMessage: $errorMessage)';
+    return 'ProfileState(isLoading: $isLoading, postLen: $postLen, followers: $followers, following: $following, userUid: $userUid, authUserUid: $authUserUid, photoUrl: $photoUrl, bio: $bio, username: $username, country: $country, birthDate: $birthDate, isLogout: $isLogout, isFollowing: $isFollowing, isAuthUser: $isAuthUser, isPictureGridLoading: $isPictureGridLoading, isReelsGridLoading: $isReelsGridLoading, isBookmarkPostGridLoading: $isBookmarkPostGridLoading, picturesList: $picturesList, reelsList: $reelsList, bookmarkPostList: $bookmarkPostList, momentsByDate: $momentsByDate, profileTabs: $profileTabs, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1307,6 +1331,8 @@ class _$_ProfileState implements _ProfileState {
             const DeepCollectionEquality()
                 .equals(other._bookmarkPostList, _bookmarkPostList) &&
             const DeepCollectionEquality()
+                .equals(other._momentsByDate, _momentsByDate) &&
+            const DeepCollectionEquality()
                 .equals(other._profileTabs, _profileTabs) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -1335,6 +1361,7 @@ class _$_ProfileState implements _ProfileState {
         const DeepCollectionEquality().hash(_picturesList),
         const DeepCollectionEquality().hash(_reelsList),
         const DeepCollectionEquality().hash(_bookmarkPostList),
+        const DeepCollectionEquality().hash(_momentsByDate),
         const DeepCollectionEquality().hash(_profileTabs),
         errorMessage
       ]);
@@ -1368,6 +1395,7 @@ abstract class _ProfileState implements ProfileState {
       final List<PostBO> picturesList,
       final List<PostBO> reelsList,
       final List<PostBO> bookmarkPostList,
+      final List<MomentsByDateBO> momentsByDate,
       final List<ProfileTab> profileTabs,
       final String? errorMessage}) = _$_ProfileState;
 
@@ -1411,6 +1439,8 @@ abstract class _ProfileState implements ProfileState {
   List<PostBO> get reelsList;
   @override
   List<PostBO> get bookmarkPostList;
+  @override
+  List<MomentsByDateBO> get momentsByDate;
   @override
   List<ProfileTab> get profileTabs;
   @override

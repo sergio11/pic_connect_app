@@ -1,17 +1,16 @@
 import 'package:advstory/advstory.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pic_connect/domain/models/moment_story_data.dart';
 import 'package:pic_connect/domain/models/post.dart';
-import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'moment_animated_tray.dart';
 
 class MomentStoryTrack extends StatelessWidget {
-  final Map<UserBO, List<PostBO>> momentsByUser;
+  final List<MomentStoryDataBO> momentStoryDataList;
 
   const MomentStoryTrack({
     Key? key,
-    required this.momentsByUser,
+    required this.momentStoryDataList,
   }) : super(key: key);
 
   @override
@@ -33,22 +32,26 @@ class MomentStoryTrack extends StatelessWidget {
                 direction: Axis.horizontal,
               ),
               hideBars: false),
-          storyCount: momentsByUser.length,
+          storyCount: momentStoryDataList.length,
           storyBuilder: (index) {
-            final moments = momentsByUser.entries.elementAtOrNull(index);
+            final moments = momentStoryDataList.elementAt(index).getMoments();
             return Story(
-              contentCount: moments?.value.length ?? 0,
+              contentCount: moments.length,
               contentBuilder: (contentIndex) {
-                final moment = moments?.value.elementAtOrNull(contentIndex);
-                return moment?.postType == PostTypeEnum.picture
+                final moment = moments.elementAt(contentIndex);
+                return moment.postType == PostTypeEnum.picture
                     ? _buildImageStoryContent(moment)
                     : _buildVideoStoryContent(moment);
               },
             );
           },
-          trayBuilder: (index) => MomentAnimatedTray(
-            user: momentsByUser.entries.elementAtOrNull(index)?.key,
-          ),
+          trayBuilder: (index) {
+            final momentStoryData = momentStoryDataList.elementAt(index);
+            return MomentAnimatedTray(
+              imageUrl: momentStoryData.getTrayImageUrl(),
+              label: momentStoryData.getTrayTitle(),
+            );
+          },
         ),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
+import 'package:pic_connect/features/core/widgets/moment_story_track.dart';
 import 'package:pic_connect/features/core/widgets/video_thumbnail_widget.dart';
 import 'package:pic_connect/features/profile/profile_bloc.dart';
 import 'package:pic_connect/utils/calculate_age_from_birthdate.dart';
@@ -142,6 +143,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                       ),
                     ),
                   ),
+                  _buildMomentsStoryTrack(state),
                   const Divider(
                     height: 20,
                   ),
@@ -171,6 +173,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 5.0,),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -187,6 +190,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
                           () => widget.onGoToFollowingScreen(state.userUid)),
                 ],
               ),
+              const SizedBox(height: 10.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -297,6 +301,12 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  Widget _buildMomentsStoryTrack(ProfileState state) {
+    return state.momentsByDate.isNotEmpty ? MomentStoryTrack(
+      momentStoryDataList: state.momentsByDate,
+    ) : Container();
   }
 
   Widget _buildTabController(ProfileState state) {
@@ -454,7 +464,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
       case ProfileTab.reels:
         iconData = tab == _currentProfileTabSelected
             ? Icons.live_tv
-            : Icons.tv_outlined;
+            : Icons.live_tv_outlined;
       case ProfileTab.bookmark:
         iconData = tab == _currentProfileTabSelected
             ? Icons.bookmark_border

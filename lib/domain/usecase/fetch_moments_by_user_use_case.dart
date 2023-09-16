@@ -1,33 +1,29 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:pic_connect/domain/models/failure.dart';
+import 'package:pic_connect/domain/models/moments_by_date.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 
 class FetchMomentsByUserUseCase
-    extends BaseUseCase<Map<DateTime, List<PostBO>>, DefaultParams> {
+    extends BaseUseCase<List<MomentsByDateBO>, FetchMomentsByUserParams> {
   static const int MAX_DAYS_LIMIT = 7;
 
-  final AuthRepository authRepository;
   final PostRepository postRepository;
 
   FetchMomentsByUserUseCase(
-      {required this.authRepository, required this.postRepository});
+      {required this.postRepository});
 
   @override
-  Future<Either<Failure, Map<DateTime, List<PostBO>>>> call(
-      DefaultParams param) async {
-    return authRepository
-        .getAuthUserUid()
-        .asStream()
-        .asyncMap((authUserUuid) async => findMomentsByUserGroupByDate(
-            authUserUuid.getOrElse(() => throw Exception("Auth failed"))))
-        .last;
+  Future<Either<Failure, List<MomentsByDateBO>>> call(
+      FetchMomentsByUserParams param) async {
+    return await findMomentsByUserGroupByDate(param.userUuid);
   }
 
-  Future<Either<Failure, Map<DateTime, List<PostBO>>>>
-      findMomentsByUserGroupByDate(String authUserUuid) async {
+  Future<Either<Failure, List<MomentsByDateBO>>> findMomentsByUserGroupByDate(
+      String authUserUuid) async {
     return await postRepository
         .findMomentsByUser(authUserUuid, MAX_DAYS_LIMIT)
         .then((response) => response.map((moments) {
@@ -41,7 +37,21 @@ class FetchMomentsByUserUseCase
                 }
                 momentsMap[dateKey]!.add(moment);
               }
-              return momentsMap;
+              return momentsMap.entries
+                  .map((entry) => MomentsByDateBO(
+                      dateTime: entry.key, moments: entry.value))
+                  .toList();
             }));
   }
+}
+
+class FetchMomentsByUserParams extends Equatable {
+
+  final String userUuid;
+
+
+  const FetchMomentsByUserParams(this.userUuid);
+
+  @override
+  List<Object> get props => [userUuid];
 }

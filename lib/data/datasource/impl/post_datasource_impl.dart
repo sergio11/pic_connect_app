@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pic_connect/data/datasource/dto/comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
@@ -221,6 +222,7 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findMomentsByUser(String userUid, int maxDays) async {
+    debugPrint("findMomentsByUser -> userUid: $userUid, maxDays: $maxDays");
     final momentUUIDs = await _getRecentMomentUUIDs(userUid, maxDays);
     final List<PostDTO> moments = [];
     for (final momentUUID in momentUUIDs) {
