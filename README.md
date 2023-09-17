@@ -106,6 +106,108 @@ In this project, we've encapsulated business requirements in **UseCases**, which
 
 This architecture provides a robust foundation for your project, enabling efficient development, testing, and future expansion. It allows you to focus on implementing business logic while abstracting away the complexities of data storage and retrieval using Firestore and FireStorage.
 
+# Dependencies
+
+## Flutter SDK
+- **flutter:** [![pub package](https://img.shields.io/pub/v/flutter.svg)](https://pub.dev/packages/flutter)
+- **flutter_localizations:** [![pub package](https://img.shields.io/pub/v/flutter_localizations.svg)](https://pub.dev/packages/flutter_localizations)
+- **cupertino_icons:** [![pub package](https://img.shields.io/pub/v/cupertino_icons.svg)](https://pub.dev/packages/cupertino_icons)
+
+## Firebase
+- **cloud_firestore:** [![pub package](https://img.shields.io/pub/v/cloud_firestore.svg)](https://pub.dev/packages/cloud_firestore)
+- **firebase_auth:** [![pub package](https://img.shields.io/pub/v/firebase_auth.svg)](https://pub.dev/packages/firebase_auth)
+- **firebase_core:** [![pub package](https://img.shields.io/pub/v/firebase_core.svg)](https://pub.dev/packages/firebase_core)
+- **firebase_storage:** [![pub package](https://img.shields.io/pub/v/firebase_storage.svg)](https://pub.dev/packages/firebase_storage)
+
+## UI
+- **flutter_staggered_grid_view:** [![pub package](https://img.shields.io/pub/v/flutter_staggered_grid_view.svg)](https://pub.dev/packages/flutter_staggered_grid_view)
+- **flutter_svg:** [![pub package](https://img.shields.io/pub/v/flutter_svg.svg)](https://pub.dev/packages/flutter_svg)
+- **image_picker:** [![pub package](https://img.shields.io/pub/v/image_picker.svg)](https://pub.dev/packages/image_picker)
+- **intl:** [![pub package](https://img.shields.io/pub/v/intl.svg)](https://pub.dev/packages/intl)
+- **provider:** [![pub package](https://img.shields.io/pub/v/provider.svg)](https://pub.dev/packages/provider)
+- **uuid:** [![pub package](https://img.shields.io/pub/v/uuid.svg)](https://pub.dev/packages/uuid)
+
+## State Management & Dependency Injection
+- **get_it:** [![pub package](https://img.shields.io/pub/v/get_it.svg)](https://pub.dev/packages/get_it)
+- **equatable:** [![pub package](https://img.shields.io/pub/v/equatable.svg)](https://pub.dev/packages/equatable)
+- **flutter_bloc:** [![pub package](https://img.shields.io/pub/v/flutter_bloc.svg)](https://pub.dev/packages/flutter_bloc)
+
+## Routing
+- **go_router:** [![pub package](https://img.shields.io/pub/v/go_router.svg)](https://pub.dev/packages/go_router)
+
+## Functional Programming
+- **dartz:** [![pub package](https://img.shields.io/pub/v/dartz.svg)](https://pub.dev/packages/dartz)
+
+## JSON Serialization
+- **json_annotation:** [![pub package](https://img.shields.io/pub/v/json_annotation.svg)](https://pub.dev/packages/json_annotation)
+- **freezed_annotation:** [![pub package](https://img.shields.io/pub/v/freezed_annotation.svg)](https://pub.dev/packages/freezed_annotation)
+
+## Splash Screen
+- **flutter_native_splash:** [![pub package](https://img.shields.io/pub/v/flutter_native_splash.svg)](https://pub.dev/packages/flutter_native_splash)
+
+## Camera
+- **camera:** [![pub package](https://img.shields.io/pub/v/camera.svg)](https://pub.dev/packages/camera)
+
+## Image Carousel
+- **carousel_slider:** [![pub package](https://img.shields.io/pub/v/carousel_slider.svg)](https://pub.dev/packages/carousel_slider)
+
+## Keyboard Visibility
+- **flutter_keyboard_visibility:** [![pub package](https://img.shields.io/pub/v/flutter_keyboard_visibility.svg)](https://pub.dev/packages/flutter_keyboard_visibility)
+
+## Video Player
+- **video_player:** [![pub package](https://img.shields.io/pub/v/video_player.svg)](https://pub.dev/packages/video_player)
+
+## Snackbar
+- **awesome_snackbar_content:** [![pub package](https://img.shields.io/pub/v/awesome_snackbar_content.svg)](https://pub.dev/packages/awesome_snackbar_content)
+
+## Loading Spinner
+- **flutter_spinkit:** [![pub package](https://img.shields.io/pub/v/flutter_spinkit.svg)](https://pub.dev/packages/flutter_spinkit)
+
+## Image Viewer
+- **easy_image_viewer:** [![pub package](https://img.shields.io/pub/v/easy_image_viewer.svg)](https://pub.dev/packages/easy_image_viewer)
+
+## Image Editing
+- **image_editor_plus:** [![pub package](https://img.shields.io/pub/v/image_editor_plus.svg)](https://pub.dev/packages/image_editor_plus)
+
+## Cached Network Images
+- **cached_network_image:** [![pub package](https://img.shields.io/pub/v/cached_network_image.svg)](https://pub.dev/packages/cached_network_image)
+
+## Stories
+- **advstory:** [![pub package](https://img.shields.io/pub/v/advstory.svg)](https://pub.dev/packages/advstory)
+
+## Social Sharing
+- **share_plus:** [![pub package](https://img.shields.io/pub/v/share_plus.svg)](https://pub.dev/packages/share_plus)
+
+## Video Player for Chat
+- **chewie:** [![pub package](https://img.shields.io/pub/v/chewie.svg)](https://pub.dev/packages/chewie)
+
+## Card Swiper
+- **card_swiper:** [![pub package](https://img.shields.io/pub/v/card_swiper.svg)](https://pub.dev/packages/card_swiper)
+
+## Camera Awesomeness
+- **camerawesome:** [![pub package](https://img.shields.io/pub/v/camerawesome.svg)](https://pub.dev/packages/camerawesome)
+
+## Auto-Scaling TabBarView
+- **autoscale_tabbarview:** [![pub package](https://img.shields.io/pub/v/autoscale_tabbarview.svg)](https://pub.dev/packages/autoscale_tabbarview)
+
+## Geocoding
+- **geocoding:** [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dev/packages/geocoding)
+
+## Geolocation
+- **geolocator:** [![pub package](https://img.shields.io/pub/v/geolocator.svg)](https://pub.dev/packages/geolocator)
+
+## Country Picker
+- **country_picker:** [![pub package](https://img.shields.io/pub/v/country_picker.svg)](https://pub.dev/packages/country_picker)
+
+## Video Thumbnail
+- **video_thumbnail:** [![pub package](https://img.shields.io/pub/v/video_thumbnail.svg)](https://pub.dev/packages/video_thumbnail)
+
+## Path Provider
+- **path_provider:** [![pub package](https://img.shields.io/pub/v/path_provider.svg)](https://pub.dev/packages/path_provider)
+
+## Visibility Detector
+- **visibility_detector:** [![pub package](https://img.shields.io/pub/v/visibility_detector.svg)](https
+
 ## Getting Started
 
 To get started with PicConnect, follow these steps:
