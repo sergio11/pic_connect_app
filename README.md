@@ -106,6 +106,18 @@ In this project, we've encapsulated business requirements in **UseCases**, which
 
 This architecture provides a robust foundation for your project, enabling efficient development, testing, and future expansion. It allows you to focus on implementing business logic while abstracting away the complexities of data storage and retrieval using Firestore and FireStorage.
 
+## App Screenshots
+
+Here are some screenshots from our app to give you a glimpse of its design and functionality.
+
+### Onboarding Screens
+
+| ![Onboarding 1](screenshots/picture_5.png) |  ![Onboarding 2](screenshots/picture_1.png) | ![Onboarding 3](screenshots/picture_2.png) |
+
+### Login & Registration
+
+| ![Login Screen](screenshots/picture_3.png) | ![Registration Screen](screenshots/picture_4.png) |
+
 # Dependencies
 
 ## Flutter SDK
