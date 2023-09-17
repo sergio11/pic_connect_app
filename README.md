@@ -1,4 +1,4 @@
-# PicConnect
+# PicConnect - Explore and connect through photography.
 
 PicConnect is a social media app for sharing photos and videos with your friends and followers. This README provides a comprehensive overview of the project, its features, and the technology stack choices.
 
@@ -51,6 +51,162 @@ We chose Flutter and Firebase for PicConnect for the following reasons:
 - **Real-Time Features**: Firebase offers real-time database capabilities, making it perfect for features like real-time messaging and notifications in PicConnect.
 
 - **Scalability**: Firebase scales effortlessly with the growth of our user base, ensuring a seamless experience for all users.
+
+# Software Architecture
+
+## Clean Architecture
+
+This project adheres to the principles of **Clean Architecture**, a design approach that promotes separation of concerns and independence of layers within an application. It offers advantages such as testability, scalability, and code maintainability.
+
+The architecture is organized into the following layers:
+
+### 1. Presentation Layer (UI)
+
+- **Description**: The presentation layer handles the user interface and user interactions. In this layer, we implement the BLoC pattern to manage UI state and user actions.
+
+- **Technology**: We leverage Flutter's capabilities to efficiently develop the presentation layer.
+
+### 2. Business Layer (BLoC - Business Logic Component)
+
+- **Description**: The business layer contains application logic not directly tied to the user interface. Here, we define UseCases that encapsulate specific business requirements. These UseCases manage the application state and control data flow.
+
+- **Technology**: In Flutter, we utilize packages like `flutter_bloc` to effectively implement BLoCs and organize business logic.
+
+### 3. Data Layer
+
+- **Description**: The data layer is responsible for accessing and managing application data. It interfaces with different data sources, abstracting their implementation details. Repositories act as bridges between UseCases and data sources.
+
+- **Technology**: We use packages like `http` for making HTTP requests and databases like SQLite or ORM packages for local storage. The use of data sources allows us to connect with Firestore and FireStorage.
+
+### 4. Domain Layer
+
+- **Description**: The domain layer hosts pure business logic and application business rules. It should be isolated from specific data layer or presentation layer implementations. Here, we define the core business entities.
+
+- **Technology**: This layer is generally free from external libraries and should remain technology-agnostic.
+
+## UseCases, Repositories, and Data Sources
+
+In this project, we've encapsulated business requirements in **UseCases**, which are responsible for orchestrating various operations. These UseCases interact with one or more repositories, injecting them via Inversion of Control (IoC) using GetIt.
+
+- **UseCases**: These are the heart of the application's business logic, serving as intermediaries between the presentation and data layers. They encapsulate specific use cases, such as creating a new post, fetching user data, or handling authentication.
+
+- **Repositories**: Repositories serve as interfaces between UseCases and data sources. They abstract the data layer's implementation, allowing us to switch between different data sources (Firestore, FireStorage, HTTP, local database) without affecting the business logic.
+
+- **Data Sources**: Data sources manage concrete aspects of data storage. In your project, Firestore and FireStorage are the primary data sources for handling persistence. These data sources are encapsulated within repositories and accessed through well-defined interfaces.
+
+## Advantages of Clean Architecture and Abstraction
+
+- **Maintainability**: Clean architecture promotes separation of concerns, making it easier to maintain and update different parts of the application independently.
+
+- **Scalability**: The architecture accommodates application growth, allowing you to extend functionality without causing major disruptions.
+
+- **Testability**: By isolating business logic in UseCases and abstracting data sources, the codebase becomes highly testable, enabling efficient unit testing.
+
+- **Flexibility**: The abstraction of data sources through repositories makes it possible to switch or add new data sources seamlessly, without extensive code modifications.
+
+This architecture provides a robust foundation for your project, enabling efficient development, testing, and future expansion. It allows you to focus on implementing business logic while abstracting away the complexities of data storage and retrieval using Firestore and FireStorage.
+
+# Dependencies
+
+## Flutter SDK
+- **flutter:** [![pub package](https://img.shields.io/pub/v/flutter.svg)](https://pub.dev/packages/flutter)
+- **flutter_localizations:** [![pub package](https://img.shields.io/pub/v/flutter_localizations.svg)](https://pub.dev/packages/flutter_localizations)
+- **cupertino_icons:** [![pub package](https://img.shields.io/pub/v/cupertino_icons.svg)](https://pub.dev/packages/cupertino_icons)
+
+## Firebase
+- **cloud_firestore:** [![pub package](https://img.shields.io/pub/v/cloud_firestore.svg)](https://pub.dev/packages/cloud_firestore)
+- **firebase_auth:** [![pub package](https://img.shields.io/pub/v/firebase_auth.svg)](https://pub.dev/packages/firebase_auth)
+- **firebase_core:** [![pub package](https://img.shields.io/pub/v/firebase_core.svg)](https://pub.dev/packages/firebase_core)
+- **firebase_storage:** [![pub package](https://img.shields.io/pub/v/firebase_storage.svg)](https://pub.dev/packages/firebase_storage)
+
+## UI
+- **flutter_staggered_grid_view:** [![pub package](https://img.shields.io/pub/v/flutter_staggered_grid_view.svg)](https://pub.dev/packages/flutter_staggered_grid_view)
+- **flutter_svg:** [![pub package](https://img.shields.io/pub/v/flutter_svg.svg)](https://pub.dev/packages/flutter_svg)
+- **image_picker:** [![pub package](https://img.shields.io/pub/v/image_picker.svg)](https://pub.dev/packages/image_picker)
+- **intl:** [![pub package](https://img.shields.io/pub/v/intl.svg)](https://pub.dev/packages/intl)
+- **provider:** [![pub package](https://img.shields.io/pub/v/provider.svg)](https://pub.dev/packages/provider)
+- **uuid:** [![pub package](https://img.shields.io/pub/v/uuid.svg)](https://pub.dev/packages/uuid)
+
+## State Management & Dependency Injection
+- **get_it:** [![pub package](https://img.shields.io/pub/v/get_it.svg)](https://pub.dev/packages/get_it)
+- **equatable:** [![pub package](https://img.shields.io/pub/v/equatable.svg)](https://pub.dev/packages/equatable)
+- **flutter_bloc:** [![pub package](https://img.shields.io/pub/v/flutter_bloc.svg)](https://pub.dev/packages/flutter_bloc)
+
+## Routing
+- **go_router:** [![pub package](https://img.shields.io/pub/v/go_router.svg)](https://pub.dev/packages/go_router)
+
+## Functional Programming
+- **dartz:** [![pub package](https://img.shields.io/pub/v/dartz.svg)](https://pub.dev/packages/dartz)
+
+## JSON Serialization
+- **json_annotation:** [![pub package](https://img.shields.io/pub/v/json_annotation.svg)](https://pub.dev/packages/json_annotation)
+- **freezed_annotation:** [![pub package](https://img.shields.io/pub/v/freezed_annotation.svg)](https://pub.dev/packages/freezed_annotation)
+
+## Splash Screen
+- **flutter_native_splash:** [![pub package](https://img.shields.io/pub/v/flutter_native_splash.svg)](https://pub.dev/packages/flutter_native_splash)
+
+## Camera
+- **camera:** [![pub package](https://img.shields.io/pub/v/camera.svg)](https://pub.dev/packages/camera)
+
+## Image Carousel
+- **carousel_slider:** [![pub package](https://img.shields.io/pub/v/carousel_slider.svg)](https://pub.dev/packages/carousel_slider)
+
+## Keyboard Visibility
+- **flutter_keyboard_visibility:** [![pub package](https://img.shields.io/pub/v/flutter_keyboard_visibility.svg)](https://pub.dev/packages/flutter_keyboard_visibility)
+
+## Video Player
+- **video_player:** [![pub package](https://img.shields.io/pub/v/video_player.svg)](https://pub.dev/packages/video_player)
+
+## Snackbar
+- **awesome_snackbar_content:** [![pub package](https://img.shields.io/pub/v/awesome_snackbar_content.svg)](https://pub.dev/packages/awesome_snackbar_content)
+
+## Loading Spinner
+- **flutter_spinkit:** [![pub package](https://img.shields.io/pub/v/flutter_spinkit.svg)](https://pub.dev/packages/flutter_spinkit)
+
+## Image Viewer
+- **easy_image_viewer:** [![pub package](https://img.shields.io/pub/v/easy_image_viewer.svg)](https://pub.dev/packages/easy_image_viewer)
+
+## Image Editing
+- **image_editor_plus:** [![pub package](https://img.shields.io/pub/v/image_editor_plus.svg)](https://pub.dev/packages/image_editor_plus)
+
+## Cached Network Images
+- **cached_network_image:** [![pub package](https://img.shields.io/pub/v/cached_network_image.svg)](https://pub.dev/packages/cached_network_image)
+
+## Stories
+- **advstory:** [![pub package](https://img.shields.io/pub/v/advstory.svg)](https://pub.dev/packages/advstory)
+
+## Social Sharing
+- **share_plus:** [![pub package](https://img.shields.io/pub/v/share_plus.svg)](https://pub.dev/packages/share_plus)
+
+## Video Player for Chat
+- **chewie:** [![pub package](https://img.shields.io/pub/v/chewie.svg)](https://pub.dev/packages/chewie)
+
+## Card Swiper
+- **card_swiper:** [![pub package](https://img.shields.io/pub/v/card_swiper.svg)](https://pub.dev/packages/card_swiper)
+
+## Camera Awesomeness
+- **camerawesome:** [![pub package](https://img.shields.io/pub/v/camerawesome.svg)](https://pub.dev/packages/camerawesome)
+
+## Auto-Scaling TabBarView
+- **autoscale_tabbarview:** [![pub package](https://img.shields.io/pub/v/autoscale_tabbarview.svg)](https://pub.dev/packages/autoscale_tabbarview)
+
+## Geocoding
+- **geocoding:** [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dev/packages/geocoding)
+
+## Geolocation
+- **geolocator:** [![pub package](https://img.shields.io/pub/v/geolocator.svg)](https://pub.dev/packages/geolocator)
+
+## Country Picker
+- **country_picker:** [![pub package](https://img.shields.io/pub/v/country_picker.svg)](https://pub.dev/packages/country_picker)
+
+## Video Thumbnail
+- **video_thumbnail:** [![pub package](https://img.shields.io/pub/v/video_thumbnail.svg)](https://pub.dev/packages/video_thumbnail)
+
+## Path Provider
+- **path_provider:** [![pub package](https://img.shields.io/pub/v/path_provider.svg)](https://pub.dev/packages/path_provider)
+
+## Visibility Detector
+- **visibility_detector:** [![pub package](https://img.shields.io/pub/v/visibility_detector.svg)](https
 
 ## Getting Started
 
