@@ -18,6 +18,8 @@ enum AppRoutesEnum {
   following,
   followers,
   editProfile,
+  rooms,
+  createRoom,
   messages,
   editPost
 }
@@ -66,8 +68,12 @@ extension AppRouteExtension on AppRoutesEnum {
         return "/following";
       case AppRoutesEnum.editProfile:
         return "/editProfile";
+      case AppRoutesEnum.rooms:
+        return "/rooms";
       case AppRoutesEnum.messages:
         return "/messages";
+      case AppRoutesEnum.createRoom:
+        return "/createRoom";
       case AppRoutesEnum.editPost:
         return "/editPost";
       default:
@@ -107,8 +113,12 @@ extension AppRouteExtension on AppRoutesEnum {
         return "FOLLOWING";
       case AppRoutesEnum.editProfile:
         return "EDIT_PROFILE";
+      case AppRoutesEnum.rooms:
+        return "ROOMS";
       case AppRoutesEnum.messages:
         return "MESSAGES";
+      case AppRoutesEnum.createRoom:
+        return "CREATE_ROOM";
       case AppRoutesEnum.editPost:
         return "EDIT_POST";
       default:
@@ -148,8 +158,12 @@ extension AppRouteExtension on AppRoutesEnum {
         return "Following";
       case AppRoutesEnum.editProfile:
         return "EditProfile";
+      case AppRoutesEnum.rooms:
+        return "Rooms";
       case AppRoutesEnum.messages:
-        return "Message";
+        return "Messages";
+      case AppRoutesEnum.createRoom:
+        return "CreateRoom";
       case AppRoutesEnum.editPost:
         return "EditPost";
       default:

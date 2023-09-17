@@ -7,6 +7,7 @@ import 'package:pic_connect/features/core/widgets/common_screen_progress_indicat
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class CommentsScreen extends StatefulWidget {
   final VoidCallback onBackPressed;
@@ -50,6 +51,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<CommentsBloc, CommentsState>(
         listener: (context, state) {
+      if (context.mounted) {
+        if (state.errorMessage != null) {
+          showErrorSnackBar(context: context, message: state.errorMessage!);
+        }
+      }
       if (!state.isPublishingComment) {
         commentEditingController.clear();
       }

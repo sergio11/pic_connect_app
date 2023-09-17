@@ -32,6 +32,7 @@ import 'package:pic_connect/data/datasource/post_datasource.dart';
 import 'package:pic_connect/data/datasource/storage_datasource.dart';
 import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/data/mapper/comment_bo_mapper.dart';
+import 'package:pic_connect/data/mapper/message_bo_mapper.dart';
 import 'package:pic_connect/data/mapper/post_bo_mapper.dart';
 import 'package:pic_connect/data/mapper/room_bo_mapper.dart';
 import 'package:pic_connect/data/mapper/user_bo_mapper.dart';
@@ -40,6 +41,7 @@ import 'package:pic_connect/data/repository/chat_repository_impl.dart';
 import 'package:pic_connect/data/repository/post_repository_impl.dart';
 import 'package:pic_connect/data/repository/user_repository_impl.dart';
 import 'package:pic_connect/domain/models/comment.dart';
+import 'package:pic_connect/domain/models/message.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/domain/models/room.dart';
 import 'package:pic_connect/domain/models/user.dart';
@@ -54,6 +56,7 @@ import 'package:pic_connect/domain/usecase/fetch_moments_from_followed_users_las
 import 'package:pic_connect/domain/usecase/fetch_user_home_feed_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_comments_by_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_all_that_user_is_following_by_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_all_users_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_bookmark_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_favorites_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_followers_by_user_use_case.dart';
@@ -77,8 +80,8 @@ import 'package:pic_connect/domain/usecase/unfollow_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/update_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/chat/createRoom/create_room_bloc.dart';
 import 'package:pic_connect/features/chat/rooms/rooms_bloc.dart';
-import 'package:pic_connect/features/chat/users/users_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/editpost/edit_post_bloc.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
@@ -133,6 +136,8 @@ setupServiceLocator() async {
   serviceLocator
       .registerFactory<FullMapper<User, UserDTO>>(() => UserChatDtoMapper());
   serviceLocator.registerFactory<Mapper<RoomDTO, RoomBO>>(() => RoomBoMapper());
+  serviceLocator.registerFactory<Mapper<MessageDTO, MessageBO>>(
+      () => MessageBoMapper(userMapper: serviceLocator()));
   // DataSources //
   serviceLocator.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(
       firestore: serviceLocator(),
@@ -237,6 +242,8 @@ setupServiceLocator() async {
       () => FindUserAuthRoomsUseCase(chatRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(
       () => CreateNewRoomUseCase(chatRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindAllUsersUseCase(userRepository: serviceLocator()));
 
   /// BloC ///
   serviceLocator
@@ -290,8 +297,9 @@ setupServiceLocator() async {
       updateUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(
       () => EditPostBloc(findPostByIdUseCase: serviceLocator()));
-  serviceLocator
-      .registerFactory(() => UsersBloc(createNewRoomUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => CreateRoomBloc(
+      createNewRoomUseCase: serviceLocator(),
+      findAllUsersUseCase: serviceLocator()));
   serviceLocator.registerFactory(
       () => RoomsBloc(findUserAuthRoomsUseCase: serviceLocator()));
 }

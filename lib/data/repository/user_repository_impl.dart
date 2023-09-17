@@ -116,4 +116,15 @@ class UserRepositoryImpl implements UserRepository {
       return Left(Failure(message: ex.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<UserBO>>> findAll() async {
+    try {
+      final userList = await userDatasource.findAll();
+      return Right(userList.map((e) => userBoMapper(e)).toList());
+    } catch (ex) {
+      debugPrint("findAll - ex -> ${ex.toString()}");
+      return Left(Failure(message: ex.toString()));
+    }
+  }
 }

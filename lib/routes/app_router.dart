@@ -7,6 +7,8 @@ import 'package:pic_connect/di/service_locator.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/chat/createRoom/create_room_bloc.dart';
+import 'package:pic_connect/features/chat/createRoom/create_room_screen.dart';
 import 'package:pic_connect/features/chat/rooms/rooms_bloc.dart';
 import 'package:pic_connect/features/chat/rooms/rooms_screen.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
@@ -250,17 +252,43 @@ class AppRouter {
                 ),
               )),
       GoRoute(
-          path: AppRoutesEnum.messages.screenPath,
-          name: AppRoutesEnum.messages.screenName,
+          path: AppRoutesEnum.createRoom.screenPath,
+          name: AppRoutesEnum.createRoom.screenName,
           pageBuilder: (context, state) => CommonTransitionPage(
                 key: state.pageKey,
                 child: BlocProvider(
-                  create: (context) => serviceLocator<RoomsBloc>()
-                    ..add(OnLoadUserRoomsEvent(
+                  create: (context) => serviceLocator<CreateRoomBloc>()
+                    ..add(OnLoadUsersEvent(
                         context.read<AppBloc>().state.authUserUid!)),
-                  child: const RoomsScreen(),
+                  child: CreateRoomScreen(
+                    onRoomCreated: (String roomId) {
+                      if (context.canPop()) {
+                        context.pop();
+                      }
+                    },
+                  ),
                 ),
               )),
+      GoRoute(
+          path: AppRoutesEnum.rooms.screenPath,
+          name: AppRoutesEnum.rooms.screenName,
+          pageBuilder: (context, state) {
+            final roomsBloc = serviceLocator<RoomsBloc>();
+            return CommonTransitionPage(
+                key: state.pageKey,
+                child: BlocProvider(
+                    create: (context) => roomsBloc
+                      ..add(OnLoadUserRoomsEvent(
+                          context.read<AppBloc>().state.authUserUid!)),
+                    child: RoomsScreen(onCreateNewRoom: () {
+                      context
+                          .push(AppRoutesEnum.createRoom.screenPath)
+                          .then((value) {
+                        roomsBloc.add(OnLoadUserRoomsEvent(
+                            context.read<AppBloc>().state.authUserUid!));
+                      });
+                    })));
+          }),
       GoRoute(
           path: AppRoutesEnum.imageEditor.screenPath,
           name: AppRoutesEnum.imageEditor.screenName,
@@ -304,7 +332,7 @@ class AppRouter {
                                 extra: userUid);
                           },
                           onGoToMessages: () {
-                            context.push(AppRoutesEnum.messages.screenPath);
+                            context.push(AppRoutesEnum.rooms.screenPath);
                           },
                         ),
                       ))

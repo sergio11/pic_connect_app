@@ -2,6 +2,9 @@ import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 
 abstract class UserDatasource {
+
+  Future<List<UserDTO>> findAll();
+
   Future<UserDTO> findByUid(String uid);
 
   Future<void> save(SaveUserDTO user);

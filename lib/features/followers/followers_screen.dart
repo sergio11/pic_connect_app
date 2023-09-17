@@ -6,6 +6,7 @@ import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
 import 'package:pic_connect/features/followers/followers_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class FollowersScreen extends StatefulWidget {
   final Function(String userUid) onShowUserProfile;
@@ -33,7 +34,13 @@ class _FollowersScreen extends State<FollowersScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FollowersBloc, FollowersState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (context.mounted) {
+            if (state.errorMessage != null) {
+              showErrorSnackBar(context: context, message: state.errorMessage!);
+            }
+          }
+        },
         builder: (context, state) {
           return state.isLoading
               ? _buildProgressIndicator()

@@ -49,7 +49,13 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SearchBloc, SearchState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (context.mounted) {
+            if (state.errorMessage != null) {
+              showErrorSnackBar(context: context, message: state.errorMessage!);
+            }
+          }
+        },
         builder: (context, state) {
           return state.isLoading
               ? _buildProgressIndicator()

@@ -7,6 +7,7 @@ import 'package:pic_connect/features/postcard/post_card.dart';
 import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class PublicationsScreen extends StatefulWidget {
   final Function(String postId) onShowCommentsByPost;
@@ -32,7 +33,13 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PublicationsBloc, PublicationsState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (context.mounted) {
+            if (state.errorMessage != null) {
+              showErrorSnackBar(context: context, message: state.errorMessage!);
+            }
+          }
+        },
         builder: (context, state) {
           return _buildScreenContent(context, state);
         });

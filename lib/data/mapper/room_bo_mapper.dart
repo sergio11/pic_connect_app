@@ -5,6 +5,14 @@ import 'package:pic_connect/utils/mapper.dart';
 class RoomBoMapper extends Mapper<RoomDTO, RoomBO> {
   @override
   RoomBO call(RoomDTO object) {
-    return RoomBO();
+    return RoomBO(
+        uid: object.uid,
+        name: object.name,
+        type: object.type,
+        imageUrl: object.imageUrl,
+        users: [],
+        lastMessages: [],
+        updatedAt: object.updatedAt,
+        createAt: object.createAt);
   }
 }

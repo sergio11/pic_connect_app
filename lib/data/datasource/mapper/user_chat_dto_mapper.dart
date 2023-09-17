@@ -20,7 +20,10 @@ class UserChatDtoMapper extends FullMapper<User, UserDTO> {
 
   @override
   User mapToFrom(UserDTO object) {
-    return User(id: '');
+    return User(
+        id: object.uid,
+        imageUrl: object.photoUrl,
+        firstName: object.username,
+        lastSeen: object.lastSeen);
   }
-
 }
