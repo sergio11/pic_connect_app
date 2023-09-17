@@ -278,6 +278,16 @@ class PostRepositoryImpl implements PostRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, PostBO>> findPostById(String uuid) async {
+    try {
+      final postDTO = await postDatasource.findById(uuid);
+      return Right(await _mapToPostBO(postDTO));
+    } catch (err) {
+      return Left(Failure(message: err.toString()));
+    }
+  }
+
   Future<PostBO> _mapToPostBO(PostDTO post) async {
     final author = await userDatasource.findByUid(post.authorUid);
     return postBoMapper(PostBoMapperData(postDTO: post, userDTO: author));

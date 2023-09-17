@@ -43,6 +43,7 @@ import 'package:pic_connect/domain/usecase/find_all_that_user_is_following_by_us
 import 'package:pic_connect/domain/usecase/find_bookmark_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_favorites_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_followers_by_user_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_post_by_id_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_users_by_name_use_case.dart';
@@ -62,6 +63,7 @@ import 'package:pic_connect/domain/usecase/update_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
+import 'package:pic_connect/features/editpost/edit_post_bloc.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
 import 'package:pic_connect/features/followers/followers_bloc.dart';
@@ -194,6 +196,8 @@ setupServiceLocator() async {
           userRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(
       () => FetchMomentsByUserUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindPostByIdUseCase(postRepository: serviceLocator()));
 
   /// BloC ///
   serviceLocator
@@ -245,4 +249,6 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => EditProfileBloc(
       getUserDetailsUseCase: serviceLocator(),
       updateUserUseCase: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => EditPostBloc(findPostByIdUseCase: serviceLocator()));
 }

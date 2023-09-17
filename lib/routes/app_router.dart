@@ -11,6 +11,8 @@ import 'package:pic_connect/features/chat/rooms_screen.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/comments/comments_screen.dart';
 import 'package:pic_connect/features/core/widgets/navigate_screen.dart';
+import 'package:pic_connect/features/editpost/edit_post_bloc.dart';
+import 'package:pic_connect/features/editpost/edit_post_screen.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_screen.dart';
 import 'package:pic_connect/features/feed/feed_bloc.dart';
@@ -235,6 +237,17 @@ class AppRouter {
                   child: const EditProfileScreen(),
                 ),
               )),
+      GoRoute(
+          path: AppRoutesEnum.editPost.screenPath,
+          name: AppRoutesEnum.editPost.screenName,
+          pageBuilder: (context, state) => CommonTransitionPage(
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (context) => serviceLocator<EditPostBloc>()
+                ..add(OnEditPostEvent(state.extra as String)),
+              child: const EditPostScreen(),
+            ),
+          )),
       GoRoute(
           path: AppRoutesEnum.messages.screenPath,
           name: AppRoutesEnum.messages.screenName,

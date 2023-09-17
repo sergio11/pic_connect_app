@@ -18,7 +18,8 @@ enum AppRoutesEnum {
   following,
   followers,
   editProfile,
-  messages
+  messages,
+  editPost
 }
 
 const List<AppRoutesEnum> unProtectedPaths = [
@@ -67,6 +68,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "/editProfile";
       case AppRoutesEnum.messages:
         return "/messages";
+      case AppRoutesEnum.editPost:
+        return "/editPost";
       default:
         return "/";
     }
@@ -106,6 +109,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "EDIT_PROFILE";
       case AppRoutesEnum.messages:
         return "MESSAGES";
+      case AppRoutesEnum.editPost:
+        return "EDIT_POST";
       default:
         return "HOME";
     }
@@ -145,6 +150,8 @@ extension AppRouteExtension on AppRoutesEnum {
         return "EditProfile";
       case AppRoutesEnum.messages:
         return "Message";
+      case AppRoutesEnum.editPost:
+        return "EditPost";
       default:
         return "Home";
     }
