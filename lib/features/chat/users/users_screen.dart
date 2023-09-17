@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
-import 'package:pic_connect/features/chat/chat_screen.dart';
+import 'package:pic_connect/features/chat/messages/messages_screen.dart';
 
-import 'util.dart';
+import '../util.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});
@@ -37,7 +37,7 @@ class UsersScreen extends StatelessWidget {
     navigator.pop();
     await navigator.push(
       MaterialPageRoute(
-        builder: (context) => ChatScreen(
+        builder: (context) => MessagesScreen(
           room: room,
         ),
       ),

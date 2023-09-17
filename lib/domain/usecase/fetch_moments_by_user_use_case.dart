@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:pic_connect/domain/models/failure.dart';
 import 'package:pic_connect/domain/models/moments_by_date.dart';
 import 'package:pic_connect/domain/models/post.dart';
-import 'package:pic_connect/domain/repository/auth_repository.dart';
 import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 

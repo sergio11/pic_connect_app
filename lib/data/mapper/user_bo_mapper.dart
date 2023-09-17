@@ -15,6 +15,7 @@ class UserBoMapper extends Mapper<UserDTO, UserBO> {
       birthDate: object.birthDate,
       followers: object.followers,
       following: object.following,
+      lastSeen: object.lastSeen,
     );
   }
 }

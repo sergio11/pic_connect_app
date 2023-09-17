@@ -1,39 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pic_connect/data/datasource/auth_datasource.dart';
+import 'package:pic_connect/data/datasource/chat_datasource.dart';
 import 'package:pic_connect/data/datasource/dto/comment_dto.dart';
+import 'package:pic_connect/data/datasource/dto/message_dto.dart';
 import 'package:pic_connect/data/datasource/dto/post_dto.dart';
+import 'package:pic_connect/data/datasource/dto/room_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 import 'package:pic_connect/data/datasource/impl/auth_datasource_impl.dart';
+import 'package:pic_connect/data/datasource/impl/chat_datasource_impl.dart';
 import 'package:pic_connect/data/datasource/impl/post_datasource_impl.dart';
 import 'package:pic_connect/data/datasource/impl/storage_datasource_impl.dart';
 import 'package:pic_connect/data/datasource/impl/user_datasource_impl.dart';
 import 'package:pic_connect/data/datasource/mapper/comment_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/message_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/post_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/room_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/save_post_comment_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/save_post_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/save_user_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/user_chat_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/user_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/post_datasource.dart';
 import 'package:pic_connect/data/datasource/storage_datasource.dart';
 import 'package:pic_connect/data/datasource/user_datasource.dart';
 import 'package:pic_connect/data/mapper/comment_bo_mapper.dart';
 import 'package:pic_connect/data/mapper/post_bo_mapper.dart';
+import 'package:pic_connect/data/mapper/room_bo_mapper.dart';
 import 'package:pic_connect/data/mapper/user_bo_mapper.dart';
 import 'package:pic_connect/data/repository/auth_repository_impl.dart';
+import 'package:pic_connect/data/repository/chat_repository_impl.dart';
 import 'package:pic_connect/data/repository/post_repository_impl.dart';
 import 'package:pic_connect/data/repository/user_repository_impl.dart';
 import 'package:pic_connect/domain/models/comment.dart';
 import 'package:pic_connect/domain/models/post.dart';
+import 'package:pic_connect/domain/models/room.dart';
 import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/repository/auth_repository.dart';
+import 'package:pic_connect/domain/repository/chat_repository.dart';
 import 'package:pic_connect/domain/repository/post_repository.dart';
 import 'package:pic_connect/domain/repository/user_repository.dart';
+import 'package:pic_connect/domain/usecase/create_new_roow_use_case.dart';
 import 'package:pic_connect/domain/usecase/delete_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_moments_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/fetch_moments_from_followed_users_last_24_hours_use_case.dart';
@@ -46,6 +60,7 @@ import 'package:pic_connect/domain/usecase/find_followers_by_user_use_case.dart'
 import 'package:pic_connect/domain/usecase/find_post_by_id_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_by_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_posts_order_by_date_published_use_case.dart';
+import 'package:pic_connect/domain/usecase/find_user_auth_rooms_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_users_by_name_use_case.dart';
 import 'package:pic_connect/domain/usecase/follow_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/get_top_reels_with_most_likes_use_case.dart';
@@ -62,6 +77,8 @@ import 'package:pic_connect/domain/usecase/unfollow_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/update_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
+import 'package:pic_connect/features/chat/rooms/rooms_bloc.dart';
+import 'package:pic_connect/features/chat/users/users_bloc.dart';
 import 'package:pic_connect/features/comments/comments_bloc.dart';
 import 'package:pic_connect/features/editpost/edit_post_bloc.dart';
 import 'package:pic_connect/features/editprofile/edit_profile_bloc.dart';
@@ -74,6 +91,7 @@ import 'package:pic_connect/features/reels/reels_bloc.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
 import 'package:pic_connect/features/signin/signin_bloc.dart';
 import 'package:pic_connect/features/signup/signup_bloc.dart';
+import 'package:pic_connect/utils/full_mapper.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 final serviceLocator = GetIt.instance;
@@ -86,6 +104,8 @@ setupServiceLocator() async {
       .registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
   serviceLocator
       .registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
+  serviceLocator
+      .registerLazySingleton<FirebaseChatCore>(() => FirebaseChatCore.instance);
 
   // Mappers //
   serviceLocator.registerFactory<Mapper<DocumentSnapshot, UserDTO>>(
@@ -106,6 +126,13 @@ setupServiceLocator() async {
       () => CommentDtoMapper());
   serviceLocator.registerFactory<Mapper<DocumentSnapshot, PostDTO>>(
       () => PostDtoMapper());
+  serviceLocator.registerFactory<Mapper<Room, RoomDTO>>(() => RoomDtoMapper(
+      messageMapper: serviceLocator(), userChatMapper: serviceLocator()));
+  serviceLocator.registerFactory<Mapper<Message, MessageDTO>>(
+      () => MessageDtoMapper(userChatMapper: serviceLocator()));
+  serviceLocator
+      .registerFactory<FullMapper<User, UserDTO>>(() => UserChatDtoMapper());
+  serviceLocator.registerFactory<Mapper<RoomDTO, RoomBO>>(() => RoomBoMapper());
   // DataSources //
   serviceLocator.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(
       firestore: serviceLocator(),
@@ -121,6 +148,10 @@ setupServiceLocator() async {
       postMapper: serviceLocator()));
   serviceLocator.registerLazySingleton<StorageDatasource>(
       () => StorageDatasourceImpl(storage: serviceLocator()));
+  serviceLocator.registerLazySingleton<ChatDatasource>(() => ChatDatasourceImpl(
+      firebaseChatCore: serviceLocator(),
+      userMapper: serviceLocator(),
+      roomMapper: serviceLocator()));
 
   /// Repository ///
   serviceLocator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
@@ -139,6 +170,10 @@ setupServiceLocator() async {
       userBoMapper: serviceLocator(),
       postBoMapper: serviceLocator(),
       commentBoMapper: serviceLocator()));
+  serviceLocator.registerLazySingleton<ChatRepository>(() => ChatRepositoryImpl(
+      userDatasource: serviceLocator(),
+      chatDatasource: serviceLocator(),
+      roomBoMapper: serviceLocator()));
 
   /// UseCase ///
   serviceLocator.registerLazySingleton(
@@ -198,6 +233,10 @@ setupServiceLocator() async {
       () => FetchMomentsByUserUseCase(postRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(
       () => FindPostByIdUseCase(postRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => FindUserAuthRoomsUseCase(chatRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(
+      () => CreateNewRoomUseCase(chatRepository: serviceLocator()));
 
   /// BloC ///
   serviceLocator
@@ -251,4 +290,8 @@ setupServiceLocator() async {
       updateUserUseCase: serviceLocator()));
   serviceLocator.registerFactory(
       () => EditPostBloc(findPostByIdUseCase: serviceLocator()));
+  serviceLocator
+      .registerFactory(() => UsersBloc(createNewRoomUseCase: serviceLocator()));
+  serviceLocator.registerFactory(
+      () => RoomsBloc(findUserAuthRoomsUseCase: serviceLocator()));
 }

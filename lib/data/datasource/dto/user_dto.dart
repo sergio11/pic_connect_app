@@ -9,6 +9,7 @@ class UserDTO {
   final String? bio;
   final String? country;
   final String? birthDate;
+  final int? lastSeen;
   final List followers;
   final List following;
 
@@ -20,6 +21,7 @@ class UserDTO {
     required this.bio,
     required this.country,
     required this.birthDate,
+    required this.lastSeen,
     required this.followers,
     required this.following
   });
@@ -32,6 +34,7 @@ class UserDTO {
     String? bio,
     String? country,
     String? birthDate,
+    int? lastSeen,
     List? followers,
     List? following,
   }) {
@@ -43,6 +46,7 @@ class UserDTO {
       bio: bio ?? this.bio,
       country: country ?? this.country,
       birthDate: birthDate ?? this.birthDate,
+      lastSeen: lastSeen ?? this.lastSeen,
       followers: followers ?? this.followers,
       following: following ?? this.following,
     );

@@ -14,8 +14,8 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pic_connect/utils/colors.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({
+class MessagesScreen extends StatefulWidget {
+  const MessagesScreen({
     super.key,
     required this.room,
   });
@@ -23,10 +23,10 @@ class ChatScreen extends StatefulWidget {
   final types.Room room;
 
   @override
-  State<ChatScreen> createState() => ChatScreenState();
+  State<MessagesScreen> createState() => MessagesScreenState();
 }
 
-class ChatScreenState extends State<ChatScreen> {
+class MessagesScreenState extends State<MessagesScreen> {
   bool _isAttachmentUploading = false;
 
   void _handleAttachmentPressed() {

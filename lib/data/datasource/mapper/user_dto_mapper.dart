@@ -7,19 +7,20 @@ class UserDtoMapper extends Mapper<DocumentSnapshot, UserDTO> {
   UserDTO call(DocumentSnapshot<Object?> object) {
     var snapshot = object.data() as Map<String, dynamic>;
     return UserDTO(
-      username: snapshot["username"],
-      uid: snapshot["uid"],
-      email: snapshot["email"],
-      photoUrl: snapshot["photoUrl"],
-      bio: snapshot["bio"],
-      country: snapshot["country"],
-      birthDate: snapshot["birthDate"],
-      followers: snapshot['followers'] is List
-          ? List<String>.from(snapshot['followers'] as List)
-          : [],
-      following: snapshot['following'] is List
-          ? List<String>.from(snapshot['following'] as List)
-          : [],
-    );
+        username: snapshot["username"],
+        uid: snapshot["uid"],
+        email: snapshot["email"],
+        photoUrl: snapshot["photoUrl"],
+        bio: snapshot["bio"],
+        country: snapshot["country"],
+        birthDate: snapshot["birthDate"],
+        followers: snapshot['followers'] is List
+            ? List<String>.from(snapshot['followers'] as List)
+            : [],
+        following: snapshot['following'] is List
+            ? List<String>.from(snapshot['following'] as List)
+            : [],
+        lastSeen:
+            snapshot['lastSeen'] is int ? snapshot['lastSeen'] as int : null);
   }
 }

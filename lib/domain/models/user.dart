@@ -8,6 +8,7 @@ class UserBO {
   final String? bio;
   final String? country;
   final String? birthDate;
+  final int? lastSeen;
   final List followers;
   final List following;
 
@@ -20,7 +21,8 @@ class UserBO {
       required this.country,
       required this.birthDate,
       required this.followers,
-      required this.following});
+      required this.following,
+      required this.lastSeen});
 
   static const UserBO unknownUser = UserBO(
     email: '',
@@ -32,6 +34,7 @@ class UserBO {
     birthDate: '',
     followers: [],
     following: [],
+    lastSeen: null,
   );
 
   UserBO copyWith(
@@ -42,6 +45,7 @@ class UserBO {
       String? bio,
       String? country,
       String? birthDate,
+      int? lastSeen,
       List? followers,
       List? following}) {
     return UserBO(
@@ -54,6 +58,7 @@ class UserBO {
       birthDate: birthDate ?? this.birthDate,
       followers: followers ?? this.followers,
       following: following ?? this.following,
+      lastSeen: lastSeen ?? this.lastSeen,
     );
   }
 
