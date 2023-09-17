@@ -1,4 +1,4 @@
-# PicConnect
+# PicConnect - Explore and connect through photography.
 
 PicConnect is a social media app for sharing photos and videos with your friends and followers. This README provides a comprehensive overview of the project, its features, and the technology stack choices.
 
