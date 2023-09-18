@@ -307,35 +307,46 @@ class AppRouter {
               GoRoute(
                   path: AppRoutesEnum.home.screenPath,
                   name: AppRoutesEnum.home.screenName,
-                  builder: (BuildContext context, GoRouterState state) =>
-                      BlocProvider(
-                        create: (context) => serviceLocator<FeedBloc>()
-                          ..add(OnLoadHomePostsEvent(
-                              context.read<AppBloc>().state.authUserUid!)),
-                        child: FeedScreen(
-                          onShowCommentsByPost: (String postId) {
-                            context.go(AppRoutesEnum.comments.screenPath,
-                                extra: postId);
-                          },
-                          onShowFavoritePosts: () {
-                            context.push(AppRoutesEnum.publications.screenPath,
-                                extra: PublicationsScreenArgs(
-                                    userUid: context
-                                        .read<AppBloc>()
-                                        .state
-                                        .authUserUid!,
-                                    type:
-                                        PublicationsContentTypeEnum.pictures));
-                          },
-                          onShowUserProfile: (String userUid) {
-                            context.push(AppRoutesEnum.profile.screenPath,
-                                extra: userUid);
-                          },
-                          onGoToMessages: () {
-                            context.push(AppRoutesEnum.rooms.screenPath);
-                          },
-                        ),
-                      ))
+                  builder: (BuildContext context, GoRouterState state) {
+                    final feedBloc = serviceLocator<FeedBloc>();
+                    return BlocProvider(
+                      create: (context) => feedBloc
+                        ..add(OnLoadHomePostsEvent(
+                            context.read<AppBloc>().state.authUserUid!)),
+                      child: FeedScreen(
+                        onShowCommentsByPost: (String postId) {
+                          context.go(AppRoutesEnum.comments.screenPath,
+                              extra: postId);
+                        },
+                        onShowFavoritePosts: () {
+                          context.push(AppRoutesEnum.publications.screenPath,
+                              extra: PublicationsScreenArgs(
+                                  userUid: context
+                                      .read<AppBloc>()
+                                      .state
+                                      .authUserUid!,
+                                  type: PublicationsContentTypeEnum.pictures));
+                        },
+                        onShowUserProfile: (String userUid) {
+                          context.push(AppRoutesEnum.profile.screenPath,
+                              extra: userUid);
+                        },
+                        onGoToMessages: () {
+                          context.push(AppRoutesEnum.rooms.screenPath);
+                        },
+                        onEditPost: (String postUuid) {
+                          context
+                              .push(AppRoutesEnum.editPost.screenPath,
+                                  extra: postUuid)
+                              .then((value) => feedBloc
+                                ..add(OnLoadHomePostsEvent(context
+                                    .read<AppBloc>()
+                                    .state
+                                    .authUserUid!)));
+                        },
+                      ),
+                    );
+                  })
             ],
           ),
           StatefulShellBranch(

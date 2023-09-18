@@ -83,5 +83,6 @@
   "removePostDialogTitle": "Remove this post?",
   "removePostDialogDescription": "Are you sure to remove this post?",
   "postDeletedSuccessDialogTitle": "Post was deleted!",
-  "postDeletedSuccessDialogDescription": "The post was deleted successfully"
+  "postDeletedSuccessDialogDescription": "The post was deleted successfully",
+  "editPostMainTitle": "Edit Post"
 }

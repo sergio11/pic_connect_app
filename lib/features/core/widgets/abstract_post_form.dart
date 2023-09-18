@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:io';
 
@@ -14,33 +12,25 @@ import 'package:textfield_tags/textfield_tags.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class EditPostData extends StatefulWidget {
-
+abstract class AbstractPostForm extends StatefulWidget {
   final TextEditingController descriptionController;
   final TextEditingController placeInfoController;
   final TextfieldTagsController textFieldTagsController;
-  final Uint8List? imageData;
-  final String? videoFilePath;
   final bool isStoryMoment;
-  final ValueChanged<bool> onIsStoryMomentSwitchChanged;
+  final ValueChanged<bool>? onIsStoryMomentSwitchChanged;
 
-  const EditPostData({
+  const AbstractPostForm({
     Key? key,
     required this.descriptionController,
     required this.placeInfoController,
     required this.textFieldTagsController,
-    required this.onIsStoryMomentSwitchChanged,
+    this.onIsStoryMomentSwitchChanged,
     this.isStoryMoment = false,
-    this.imageData,
-    this.videoFilePath
   }) : super(key: key);
-
-  @override
-  EditPostDataState createState() => EditPostDataState();
 }
 
-class EditPostDataState extends State<EditPostData> {
-
+abstract class AbstractPostFormState<T extends AbstractPostForm>
+    extends State<T> {
   late StreamSubscription<bool> _keyboardSubscription;
   VideoPlayerController? _videoController;
   late AppLocalizations _l10n;
@@ -56,17 +46,17 @@ class EditPostDataState extends State<EditPostData> {
     var keyboardVisibilityController = KeyboardVisibilityController();
     _keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
-          if (visible) {
-            if (_videoController?.value.isPlaying == true) {
-              _videoController?.pause();
-            }
-          } else {
-            if (_videoController != null &&
-                _videoController?.value.isPlaying == false) {
-              _videoController?.play();
-            }
-          }
-        });
+      if (visible) {
+        if (_videoController?.value.isPlaying == true) {
+          _videoController?.pause();
+        }
+      } else {
+        if (_videoController != null &&
+            _videoController?.value.isPlaying == false) {
+          _videoController?.play();
+        }
+      }
+    });
     super.initState();
   }
 
@@ -88,9 +78,7 @@ class EditPostDataState extends State<EditPostData> {
           flexibleSpace: Stack(
             children: [
               FlexibleSpaceBar(
-                background: widget.imageData != null
-                    ? _buildImagePreview(widget.imageData!)
-                    : widget.videoFilePath != null ? _buildVideoPreview(widget.videoFilePath!) : Container(),
+                background: onBuildPostPreview(),
               ),
               Positioned(
                 bottom: -20,
@@ -150,8 +138,7 @@ class EditPostDataState extends State<EditPostData> {
                       CommonSwitch(
                         initialValue: widget.isStoryMoment,
                         onChanged: widget.onIsStoryMomentSwitchChanged,
-                        description:
-                        _l10n.postPublishAsMomentSwitchDescription,
+                        description: _l10n.postPublishAsMomentSwitchDescription,
                         label: _l10n.postPublishAsMomentSwitchLabel,
                       ),
                       const SizedBox(
@@ -167,6 +154,8 @@ class EditPostDataState extends State<EditPostData> {
       ],
     );
   }
+
+  Widget onBuildPostPreview();
 
   Widget _buildPlaceInfoTextInput() {
     return TextFieldInput(
@@ -219,7 +208,7 @@ class EditPostDataState extends State<EditPostData> {
         });
   }
 
-  Widget _buildVideoPreview(String videoPath) {
+  Widget buildVideoPreview(String videoPath) {
     if (_videoController == null) {
       _videoController = VideoPlayerController.file(File(videoPath));
       _videoController?.initialize();
@@ -228,16 +217,5 @@ class EditPostDataState extends State<EditPostData> {
       _videoController?.setLooping(true);
     }
     return VideoPlayer(_videoController!);
-  }
-
-  Widget _buildImagePreview(Uint8List imageData) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-            image: MemoryImage(imageData)),
-      ),
-    );
   }
 }

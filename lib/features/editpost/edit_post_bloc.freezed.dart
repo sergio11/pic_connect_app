@@ -224,7 +224,10 @@ abstract class OnEditPostEvent implements EditPostEvent {
 mixin _$EditPostState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get placeInfo => throw _privateConstructorUsedError;
+  String get postUrl => throw _privateConstructorUsedError;
+  bool get isReel => throw _privateConstructorUsedError;
   bool get isStoryMoment => throw _privateConstructorUsedError;
+  bool get isPostUploading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -241,7 +244,10 @@ abstract class $EditPostStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       String placeInfo,
+      String postUrl,
+      bool isReel,
       bool isStoryMoment,
+      bool isPostUploading,
       String? errorMessage});
 }
 
@@ -260,7 +266,10 @@ class _$EditPostStateCopyWithImpl<$Res, $Val extends EditPostState>
   $Res call({
     Object? isLoading = null,
     Object? placeInfo = null,
+    Object? postUrl = null,
+    Object? isReel = null,
     Object? isStoryMoment = null,
+    Object? isPostUploading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -272,9 +281,21 @@ class _$EditPostStateCopyWithImpl<$Res, $Val extends EditPostState>
           ? _value.placeInfo
           : placeInfo // ignore: cast_nullable_to_non_nullable
               as String,
+      postUrl: null == postUrl
+          ? _value.postUrl
+          : postUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      isReel: null == isReel
+          ? _value.isReel
+          : isReel // ignore: cast_nullable_to_non_nullable
+              as bool,
       isStoryMoment: null == isStoryMoment
           ? _value.isStoryMoment
           : isStoryMoment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPostUploading: null == isPostUploading
+          ? _value.isPostUploading
+          : isPostUploading // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -295,7 +316,10 @@ abstract class _$$_EditPostStateCopyWith<$Res>
   $Res call(
       {bool isLoading,
       String placeInfo,
+      String postUrl,
+      bool isReel,
       bool isStoryMoment,
+      bool isPostUploading,
       String? errorMessage});
 }
 
@@ -312,7 +336,10 @@ class __$$_EditPostStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? placeInfo = null,
+    Object? postUrl = null,
+    Object? isReel = null,
     Object? isStoryMoment = null,
+    Object? isPostUploading = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_EditPostState(
@@ -324,9 +351,21 @@ class __$$_EditPostStateCopyWithImpl<$Res>
           ? _value.placeInfo
           : placeInfo // ignore: cast_nullable_to_non_nullable
               as String,
+      postUrl: null == postUrl
+          ? _value.postUrl
+          : postUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      isReel: null == isReel
+          ? _value.isReel
+          : isReel // ignore: cast_nullable_to_non_nullable
+              as bool,
       isStoryMoment: null == isStoryMoment
           ? _value.isStoryMoment
           : isStoryMoment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPostUploading: null == isPostUploading
+          ? _value.isPostUploading
+          : isPostUploading // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -342,7 +381,10 @@ class _$_EditPostState implements _EditPostState {
   const _$_EditPostState(
       {this.isLoading = false,
       this.placeInfo = "",
+      this.postUrl = "",
+      this.isReel = false,
       this.isStoryMoment = false,
+      this.isPostUploading = false,
       this.errorMessage});
 
   @override
@@ -353,13 +395,22 @@ class _$_EditPostState implements _EditPostState {
   final String placeInfo;
   @override
   @JsonKey()
+  final String postUrl;
+  @override
+  @JsonKey()
+  final bool isReel;
+  @override
+  @JsonKey()
   final bool isStoryMoment;
+  @override
+  @JsonKey()
+  final bool isPostUploading;
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'EditPostState(isLoading: $isLoading, placeInfo: $placeInfo, isStoryMoment: $isStoryMoment, errorMessage: $errorMessage)';
+    return 'EditPostState(isLoading: $isLoading, placeInfo: $placeInfo, postUrl: $postUrl, isReel: $isReel, isStoryMoment: $isStoryMoment, isPostUploading: $isPostUploading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -371,15 +422,19 @@ class _$_EditPostState implements _EditPostState {
                 other.isLoading == isLoading) &&
             (identical(other.placeInfo, placeInfo) ||
                 other.placeInfo == placeInfo) &&
+            (identical(other.postUrl, postUrl) || other.postUrl == postUrl) &&
+            (identical(other.isReel, isReel) || other.isReel == isReel) &&
             (identical(other.isStoryMoment, isStoryMoment) ||
                 other.isStoryMoment == isStoryMoment) &&
+            (identical(other.isPostUploading, isPostUploading) ||
+                other.isPostUploading == isPostUploading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, isLoading, placeInfo, isStoryMoment, errorMessage);
+  int get hashCode => Object.hash(runtimeType, isLoading, placeInfo, postUrl,
+      isReel, isStoryMoment, isPostUploading, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -392,7 +447,10 @@ abstract class _EditPostState implements EditPostState {
   const factory _EditPostState(
       {final bool isLoading,
       final String placeInfo,
+      final String postUrl,
+      final bool isReel,
       final bool isStoryMoment,
+      final bool isPostUploading,
       final String? errorMessage}) = _$_EditPostState;
 
   @override
@@ -400,7 +458,13 @@ abstract class _EditPostState implements EditPostState {
   @override
   String get placeInfo;
   @override
+  String get postUrl;
+  @override
+  bool get isReel;
+  @override
   bool get isStoryMoment;
+  @override
+  bool get isPostUploading;
   @override
   String? get errorMessage;
   @override

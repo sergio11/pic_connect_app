@@ -3,16 +3,16 @@ import 'package:pic_connect/utils/colors.dart';
 
 class CommonSwitch extends StatefulWidget {
   final bool initialValue;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
   final String label;
   final String description;
 
   const CommonSwitch({
     Key? key,
     required this.initialValue,
-    required this.onChanged,
     required this.label,
     required this.description,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -41,21 +41,28 @@ class CommonSwitchState extends State<CommonSwitch> {
                     .textTheme
                     .titleMedium
                     ?.copyWith(color: accentColor)),
-            Transform.scale(
-                scale: 1.5,
-                child: Switch(
-                  value: _value,
-                  activeColor: secondaryColor,
-                  activeTrackColor: secondaryColor,
-                  inactiveTrackColor: accentColor,
-                  inactiveThumbColor: accentColor,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _value = newValue;
-                    });
-                    widget.onChanged(newValue);
-                  },
-                ))
+            Opacity(
+              opacity: widget.onChanged != null ? 1.0 : 0.5,
+              child: IgnorePointer(
+                ignoring: widget.onChanged == null,
+                child: Transform.scale(
+                  scale: 1.5,
+                  child: Switch(
+                    value: _value,
+                    activeColor: secondaryColor,
+                    activeTrackColor: secondaryColor,
+                    inactiveTrackColor: accentColor,
+                    inactiveThumbColor: accentColor,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _value = newValue;
+                      });
+                      widget.onChanged?.call(newValue);
+                    },
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
         Padding(

@@ -8,7 +8,8 @@ import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
-import 'package:pic_connect/features/core/widgets/edit_post_data.dart';
+import 'package:pic_connect/features/core/widgets/abstract_post_form.dart';
+import 'package:pic_connect/features/core/widgets/create_post_form.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -218,7 +219,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget _buildFillPostData(AddPostState state) {
     return Scaffold(
         appBar: _buildAppBar(state),
-        body: EditPostData(
+        body: CreatePostForm(
           descriptionController: _descriptionController,
           placeInfoController: _placeInfoController,
           textFieldTagsController: _textFieldTagsController,

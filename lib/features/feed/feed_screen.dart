@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +17,7 @@ class FeedScreen extends StatefulWidget {
   final Function() onShowFavoritePosts;
   final Function(String postId) onShowCommentsByPost;
   final Function(String userUid) onShowUserProfile;
+  final Function(String postUuid) onEditPost;
   final Function() onGoToMessages;
 
   const FeedScreen(
@@ -25,6 +25,7 @@ class FeedScreen extends StatefulWidget {
       required this.onShowUserProfile,
       required this.onShowCommentsByPost,
       required this.onShowFavoritePosts,
+      required this.onEditPost,
       required this.onGoToMessages})
       : super(key: key);
 
@@ -144,7 +145,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   onPostDeleted: () => onRefresh(state),
                   onShowUserProfile: (String userUid) =>
                       widget.onShowUserProfile(userUid),
-                  onEditPost: (String postId) {  },
+                  onEditPost: (String postId) => widget.onEditPost(postId),
                 ),
               ),
             ),

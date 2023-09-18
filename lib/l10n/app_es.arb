@@ -83,5 +83,6 @@
   "removePostDialogTitle": "¿Quieres borrar esta publicación?",
   "removePostDialogDescription": "¿Estás seguro de que quieres borrar esta publicación? La operación es irreversible.",
   "postDeletedSuccessDialogTitle": "La publicación fue borrada!",
-  "postDeletedSuccessDialogDescription": "La publicación fue borrada con éxito!"
+  "postDeletedSuccessDialogDescription": "La publicación fue borrada con éxito!",
+  "editPostMainTitle": "Editar publicación"
 }
