@@ -809,7 +809,7 @@ mixin _$ProfileState {
   List<PostBO> get picturesList => throw _privateConstructorUsedError;
   List<PostBO> get reelsList => throw _privateConstructorUsedError;
   List<PostBO> get bookmarkPostList => throw _privateConstructorUsedError;
-  List<MomentsByDateBO> get momentsByDate => throw _privateConstructorUsedError;
+  List<MomentsByMonthAndYearBO> get momentsByDate => throw _privateConstructorUsedError;
   List<ProfileTab> get profileTabs => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -845,7 +845,7 @@ abstract class $ProfileStateCopyWith<$Res> {
       List<PostBO> picturesList,
       List<PostBO> reelsList,
       List<PostBO> bookmarkPostList,
-      List<MomentsByDateBO> momentsByDate,
+      List<MomentsByMonthAndYearBO> momentsByDate,
       List<ProfileTab> profileTabs,
       String? errorMessage});
 }
@@ -971,7 +971,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
       momentsByDate: null == momentsByDate
           ? _value.momentsByDate
           : momentsByDate // ignore: cast_nullable_to_non_nullable
-              as List<MomentsByDateBO>,
+              as List<MomentsByMonthAndYearBO>,
       profileTabs: null == profileTabs
           ? _value.profileTabs
           : profileTabs // ignore: cast_nullable_to_non_nullable
@@ -1013,7 +1013,7 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       List<PostBO> picturesList,
       List<PostBO> reelsList,
       List<PostBO> bookmarkPostList,
-      List<MomentsByDateBO> momentsByDate,
+      List<MomentsByMonthAndYearBO> momentsByDate,
       List<ProfileTab> profileTabs,
       String? errorMessage});
 }
@@ -1137,7 +1137,7 @@ class __$$_ProfileStateCopyWithImpl<$Res>
       momentsByDate: null == momentsByDate
           ? _value._momentsByDate
           : momentsByDate // ignore: cast_nullable_to_non_nullable
-              as List<MomentsByDateBO>,
+              as List<MomentsByMonthAndYearBO>,
       profileTabs: null == profileTabs
           ? _value._profileTabs
           : profileTabs // ignore: cast_nullable_to_non_nullable
@@ -1174,7 +1174,7 @@ class _$_ProfileState implements _ProfileState {
       final List<PostBO> picturesList = const [],
       final List<PostBO> reelsList = const [],
       final List<PostBO> bookmarkPostList = const [],
-      final List<MomentsByDateBO> momentsByDate = const [],
+      final List<MomentsByMonthAndYearBO> momentsByDate = const [],
       final List<ProfileTab> profileTabs = ProfileTab.values,
       this.errorMessage})
       : _picturesList = picturesList,
@@ -1262,10 +1262,10 @@ class _$_ProfileState implements _ProfileState {
     return EqualUnmodifiableListView(_bookmarkPostList);
   }
 
-  final List<MomentsByDateBO> _momentsByDate;
+  final List<MomentsByMonthAndYearBO> _momentsByDate;
   @override
   @JsonKey()
-  List<MomentsByDateBO> get momentsByDate {
+  List<MomentsByMonthAndYearBO> get momentsByDate {
     if (_momentsByDate is EqualUnmodifiableListView) return _momentsByDate;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_momentsByDate);
@@ -1395,7 +1395,7 @@ abstract class _ProfileState implements ProfileState {
       final List<PostBO> picturesList,
       final List<PostBO> reelsList,
       final List<PostBO> bookmarkPostList,
-      final List<MomentsByDateBO> momentsByDate,
+      final List<MomentsByMonthAndYearBO> momentsByDate,
       final List<ProfileTab> profileTabs,
       final String? errorMessage}) = _$_ProfileState;
 
@@ -1440,7 +1440,7 @@ abstract class _ProfileState implements ProfileState {
   @override
   List<PostBO> get bookmarkPostList;
   @override
-  List<MomentsByDateBO> get momentsByDate;
+  List<MomentsByMonthAndYearBO> get momentsByDate;
   @override
   List<ProfileTab> get profileTabs;
   @override

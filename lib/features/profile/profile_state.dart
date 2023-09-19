@@ -23,7 +23,7 @@ class ProfileState with _$ProfileState {
       @Default([]) final List<PostBO> picturesList,
       @Default([]) final List<PostBO> reelsList,
       @Default([]) final List<PostBO> bookmarkPostList,
-      @Default([]) final List<MomentsByDateBO> momentsByDate,
+      @Default([]) final List<MomentsByMonthAndYearBO> momentsByDate,
       @Default(ProfileTab.values) final List<ProfileTab> profileTabs,
       final String? errorMessage}) = _ProfileState;
 }
