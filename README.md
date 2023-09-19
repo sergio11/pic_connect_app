@@ -122,13 +122,13 @@ Here are some screenshots from our app to give you a glimpse of its design and f
 
 This section could display the main feed of posts and activities from the users you follow.
 
-| ![Home Screen](screenshots/picture_14.png) |
+| ![Home Screen](screenshots/picture_14.png) | ![Home Screen](screenshots/picture_16.png) | ![Home Screen](screenshots/picture_17.png) |
 
 ### Explore (Discover)
 
-| ![Search Screen](screenshots/picture_13.png) |
-
 Here, users can search for other users, explore new popular posts, or discover interesting content.
+
+| ![Search Screen](screenshots/picture_13.png) | ![Search Screen](screenshots/picture_15.png) |
 
 
 ## Dependencies
