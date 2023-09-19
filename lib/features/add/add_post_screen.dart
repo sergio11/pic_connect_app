@@ -34,8 +34,7 @@ class AddPostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<AddPostScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _placeInfoController = TextEditingController();
-  final TextfieldTagsController _textFieldTagsController =
-      TextfieldTagsController();
+  final TextfieldTagsController _textFieldTagsController = TextfieldTagsController();
   late AppLocalizations _l10n;
 
   void _onPickImageFromGallery() async {

@@ -39,15 +39,14 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
+class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   ProfileTab _currentProfileTabSelected = ProfileTab.pictures;
   late AppLocalizations _l10n;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _l10n = AppLocalizations.of(context);
-  }
+  final bodyGlobalKey = GlobalKey();
+  late TabController _tabController;
+  late ScrollController _scrollController;
 
   void onLogout() {
     showAlertDialog(
@@ -60,6 +59,40 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
 
   void _onShareProfile(ProfileState state) {
     Share.share(_l10n.shareProfileText.replaceAll("%s", state.username));
+  }
+
+  void _smoothScrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(microseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_smoothScrollToTop);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void onResumed() {
+    context.read<ProfileBloc>().add(const OnRefreshEvent());
   }
 
   @override
@@ -79,83 +112,130 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     });
   }
 
-  @override
-  void onResumed() {
-    context.read<ProfileBloc>().add(const OnRefreshEvent());
-  }
-
   Widget _buildScreenContent(ProfileState state) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: accentColor, //change your color here
-        ),
-        actions: [
-          IconButton(
-            icon: const ImageIcon(
-              AssetImage("assets/sign_out.png"),
-              color: accentColor,
-            ),
-            onPressed: () {
-              showConfirmDialog(
-                  context: context,
-                  title: _l10n.signOffDialogTitle,
-                  description: _l10n.signOffDialogDescription,
-                  onAcceptPressed: () =>
-                      context.read<ProfileBloc>().add(const OnSignOutEvent()));
-            },
-          ),
-        ],
-        backgroundColor: appBarBackgroundColor,
-        title: Text(state.username,
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(color: accentColor)),
-        centerTitle: false,
-      ),
-      body: RefreshIndicator(
+        appBar: _buildAppBar(state),
+        body: RefreshIndicator(
           backgroundColor: secondaryColor,
           color: accentColor,
           onRefresh: () => Future.delayed(
-                const Duration(seconds: 1),
-                () => context.read<ProfileBloc>().add(const OnRefreshEvent()),
+            const Duration(seconds: 1),
+            () => context.read<ProfileBloc>().add(const OnRefreshEvent()),
+          ),
+          child: NestedScrollView(
+            controller: _scrollController,
+            headerSliverBuilder: (context, value) {
+              return [
+                SliverToBoxAdapter(child: _buildProfileDetail(state)),
+                SliverToBoxAdapter(child: _buildTabBar(state))
+              ];
+            },
+            body: Container(
+                color: primaryColor,
+                child: TabBarView(controller: _tabController, children: [
+                  _buildPostsGrid(state.picturesList,
+                      state.isPictureGridLoading, "No pictures found"),
+                  _buildPostsGrid(state.reelsList, state.isReelsGridLoading,
+                      "No Reels found"),
+                  _buildPostsGrid(state.bookmarkPostList,
+                      state.isBookmarkPostGridLoading, "No Bookmarks saved")
+                ])),
+          ),
+        ));
+  }
+
+  PreferredSizeWidget _buildAppBar(ProfileState state) {
+    return AppBar(
+      iconTheme: const IconThemeData(
+        color: accentColor, //change your color here
+      ),
+      actions: [
+        IconButton(
+          icon: const ImageIcon(
+            AssetImage("assets/sign_out.png"),
+            color: accentColor,
+          ),
+          onPressed: () {
+            showConfirmDialog(
+                context: context,
+                title: _l10n.signOffDialogTitle,
+                description: _l10n.signOffDialogDescription,
+                onAcceptPressed: () =>
+                    context.read<ProfileBloc>().add(const OnSignOutEvent()));
+          },
+        ),
+      ],
+      backgroundColor: appBarBackgroundColor,
+      title: Text(state.username,
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(color: accentColor)),
+      centerTitle: false,
+    );
+  }
+
+  Widget _buildTabBar(ProfileState state) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 60,
+      child: TabBar(
+          controller: _tabController,
+          padding: const EdgeInsets.only(bottom: 8, left: 10, right: 10),
+          indicatorSize: TabBarIndicatorSize.tab,
+          unselectedLabelColor: accentColor,
+          indicatorColor: accentColor,
+          labelColor: primaryColor,
+          indicator: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                    color: blackColor, offset: Offset(0, 0), blurRadius: 8.0),
+              ],
+              border: Border.all(color: primaryColor, width: 3),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0.0, 1.0],
+                colors: [secondaryColor, secondaryColorExtraLight],
               ),
-          child: ListView(children: [
-            Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: primaryColor,
-                        boxShadow: const [
-                          BoxShadow(color: blackColor, blurRadius: 8),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          _buildProfileHeader(state),
-                          _buildUserNameRow(state),
-                          _buildUserAgeAndCountry(state),
-                          _buildUserBioRow(state),
-                          _buildProfileActions(state),
-                          _buildMomentsStoryTrack(state),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    height: 20,
-                  ),
-                  _buildTabController(state)
-                ])
-          ])),
+              borderRadius: BorderRadius.circular(50)),
+          onTap: (tabIdx) => {
+                setState(() {
+                  _currentProfileTabSelected = state.profileTabs[tabIdx];
+                })
+              },
+          tabs: state.profileTabs
+              .map((tab) => Tab(
+                    height: 45,
+                    icon: _buildTabIcon(tab),
+                  ))
+              .toList()),
+    );
+  }
+
+  Widget _buildProfileDetail(ProfileState state) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: primaryColor,
+          boxShadow: const [
+            BoxShadow(color: blackColor, blurRadius: 8),
+          ],
+        ),
+        child: Column(
+          children: [
+            _buildProfileHeader(state),
+            _buildUserNameRow(state),
+            _buildUserAgeAndCountry(state),
+            _buildUserBioRow(state),
+            _buildProfileActions(state),
+            _buildMomentsStoryTrack(state),
+          ],
+        ),
+      ),
     );
   }
 
@@ -336,118 +416,23 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
         : Container();
   }
 
-  Widget _buildTabController(ProfileState state) {
-    return DefaultTabController(
-      length: state.profileTabs.length,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 60,
-            child: TabBar(
-                padding: const EdgeInsets.only(bottom: 8, left: 10, right: 10),
-                indicatorSize: TabBarIndicatorSize.tab,
-                unselectedLabelColor: accentColor,
-                indicatorColor: accentColor,
-                labelColor: primaryColor,
-                indicator: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                          color: blackColor,
-                          offset: Offset(0, 0),
-                          blurRadius: 8.0),
-                    ],
-                    border: Border.all(color: primaryColor, width: 3),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0.0, 1.0],
-                      colors: [secondaryColor, secondaryColorExtraLight],
-                    ),
-                    borderRadius: BorderRadius.circular(50)),
-                onTap: (tabIdx) => {
-                      setState(() {
-                        _currentProfileTabSelected = state.profileTabs[tabIdx];
-                      })
-                    },
-                tabs: state.profileTabs
-                    .map((tab) => Tab(
-                          height: 45,
-                          icon: _buildTabIcon(tab),
-                        ))
-                    .toList()),
-          ),
-          Container(
-              color: primaryColor,
-              constraints: BoxConstraints(
-                minWidth: MediaQuery.of(context).size.width,
-                minHeight: MediaQuery.of(context).size.height * 0.5,
-              ),
-              child: AutoScaleTabBarView(children: [
-                _buildPostsGrid(state.picturesList, state.isPictureGridLoading,
-                    "No pictures found"),
-                _buildPostsGrid(state.reelsList, state.isReelsGridLoading,
-                    "No Reels found"),
-                _buildPostsGrid(state.bookmarkPostList,
-                    state.isBookmarkPostGridLoading, "No Bookmarks saved")
-              ]))
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPostsGrid(
-      List<PostBO> data, bool isLoading, String noDataMessage) {
-    return data.isNotEmpty
-        ? GridView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            itemCount: data.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 1,
-            ),
-            itemBuilder: (context, index) {
-              return _buildPostItem(data[index]);
-            },
-          )
-        : SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: isLoading
-                ? _buildProgressIndicator()
-                : EmptyStateWidget(
-                    message: noDataMessage, iconData: Icons.mood_bad),
-          );
-  }
-
-  Widget _buildPostItem(PostBO post) {
-    return GestureDetector(
-      child: Container(
-        color: primaryColor,
-        padding: const EdgeInsets.all(1),
-        child: SizedBox(
-          child: post.postType == PostTypeEnum.picture
-              ? buildNetworkImage(post.postUrl)
-              : VideoThumbnailWidget(
-                  videoUrl: post.postUrl,
-                ),
-        ),
-      ),
-      onLongPress: () => {
-        if (post.postType == PostTypeEnum.picture)
-          {showImage(context, post.postUrl)}
-        else
-          {showReelPreviewDialog(context, post)}
-      },
-      onDoubleTap: () => {
-        if (post.postType == PostTypeEnum.picture)
-          {showImage(context, post.postUrl)}
-        else
-          {showReelPreviewDialog(context, post)}
-      },
-      onTap: () => widget.onGoToPictures(post.postAuthorUid),
-    );
+  Widget _buildTabIcon(ProfileTab tab) {
+    final IconData iconData;
+    switch (tab) {
+      case ProfileTab.pictures:
+        iconData = tab == _currentProfileTabSelected
+            ? Icons.photo_camera_outlined
+            : Icons.photo_camera;
+      case ProfileTab.reels:
+        iconData = tab == _currentProfileTabSelected
+            ? Icons.live_tv
+            : Icons.live_tv_outlined;
+      case ProfileTab.bookmark:
+        iconData = tab == _currentProfileTabSelected
+            ? Icons.bookmark_border
+            : Icons.bookmark;
+    }
+    return Icon(iconData, size: tab == _currentProfileTabSelected ? 35 : 30);
   }
 
   Widget _buildStatColumn(int num, String label, Function()? onTag) {
@@ -479,22 +464,53 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen> {
     );
   }
 
-  Widget _buildTabIcon(ProfileTab tab) {
-    final IconData iconData;
-    switch (tab) {
-      case ProfileTab.pictures:
-        iconData = tab == _currentProfileTabSelected
-            ? Icons.photo_camera_outlined
-            : Icons.photo_camera;
-      case ProfileTab.reels:
-        iconData = tab == _currentProfileTabSelected
-            ? Icons.live_tv
-            : Icons.live_tv_outlined;
-      case ProfileTab.bookmark:
-        iconData = tab == _currentProfileTabSelected
-            ? Icons.bookmark_border
-            : Icons.bookmark;
-    }
-    return Icon(iconData, size: tab == _currentProfileTabSelected ? 35 : 30);
+  Widget _buildPostsGrid(
+      List<PostBO> data, bool isLoading, String noDataMessage) {
+    return data.isNotEmpty
+        ? GridView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            itemCount: data.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1,
+            ),
+            itemBuilder: (context, index) {
+              return _buildPostItem(data[index]);
+            },
+          )
+        : isLoading
+            ? _buildProgressIndicator()
+            : Expanded(child: EmptyStateWidget(
+        message: noDataMessage, iconData: Icons.mood_bad));
+  }
+
+  Widget _buildPostItem(PostBO post) {
+    return GestureDetector(
+      child: Container(
+        color: primaryColor,
+        padding: const EdgeInsets.all(1),
+        child: SizedBox(
+          child: post.postType == PostTypeEnum.picture
+              ? buildNetworkImage(post.postUrl)
+              : VideoThumbnailWidget(
+                  videoUrl: post.postUrl,
+                ),
+        ),
+      ),
+      onLongPress: () => {
+        if (post.postType == PostTypeEnum.picture)
+          {showImage(context, post.postUrl)}
+        else
+          {showReelPreviewDialog(context, post)}
+      },
+      onDoubleTap: () => {
+        if (post.postType == PostTypeEnum.picture)
+          {showImage(context, post.postUrl)}
+        else
+          {showReelPreviewDialog(context, post)}
+      },
+      onTap: () => widget.onGoToPictures(post.postAuthorUid),
+    );
   }
 }

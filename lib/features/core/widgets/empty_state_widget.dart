@@ -17,7 +17,7 @@ class EmptyStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,7 +27,6 @@ class EmptyStateWidget extends StatelessWidget {
             size: 120.0,
             color: accentColor,
           ),
-          const SizedBox(height: 16.0),
           Text(
             message,
             style: Theme.of(context)
@@ -36,8 +35,7 @@ class EmptyStateWidget extends StatelessWidget {
                 ?.copyWith(color: accentColor),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16.0),
-          if(onRetry != null)
+          if (onRetry != null)
             CommonButton(
               text: "Retry",
               backgroundColor: secondaryColor,

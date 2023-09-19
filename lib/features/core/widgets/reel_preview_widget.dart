@@ -1,14 +1,12 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/icon_action_animation.dart';
 import 'package:pic_connect/features/core/widgets/lifecycle_watcher_state.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
-import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/date_formatter.dart';
 import 'package:pic_connect/utils/url_checker.dart';
@@ -68,7 +66,6 @@ class _ReelsPreviewState extends LifecycleWatcherState<ReelsPreview> {
         UrlChecker.isValid(widget.reelPost.postUrl)) {
       initializePlayer();
     }
-    context.read<EventController>().launchEvent(HideBottomBarEvent());
     super.initState();
   }
 
@@ -76,7 +73,6 @@ class _ReelsPreviewState extends LifecycleWatcherState<ReelsPreview> {
   void dispose() {
     debugPrint("ReelsPreview - dispose CALLED!");
     _closePlayer();
-    context.read<EventController>().launchEvent(ShowBottomBarEvent());
     super.dispose();
   }
 
