@@ -118,6 +118,19 @@ Here are some screenshots from our app to give you a glimpse of its design and f
 
 | ![Login Screen](screenshots/picture_3.png) | ![Registration Screen](screenshots/picture_4.png) |
 
+### Home
+
+This section could display the main feed of posts and activities from the users you follow.
+
+| ![Home Screen](screenshots/picture_14.png) |
+
+### Explore (Discover)
+
+| ![Search Screen](screenshots/picture_13.png) |
+
+Here, users can search for other users, explore new popular posts, or discover interesting content.
+
+
 ## Dependencies
 
 **Flutter SDK**
