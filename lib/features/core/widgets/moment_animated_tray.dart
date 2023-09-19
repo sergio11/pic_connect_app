@@ -88,6 +88,8 @@ class MomentAnimatedTrayState extends AnimatedTrayState<MomentAnimatedTray>
         strokeWidth: widget.strokeWidth,
         gapSize: widget.gapSize,
         username: Text(widget.label,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall

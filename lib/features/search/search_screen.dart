@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
-import 'package:pic_connect/features/core/widgets/tags_row.dart';
 import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
 import 'package:pic_connect/features/core/widgets/video_thumbnail_widget.dart';
 import 'package:pic_connect/features/search/search_bloc.dart';
@@ -153,8 +152,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   : VideoThumbnailWidget(
                       videoUrl: state.posts[index].postUrl,
                     ),
-              if (state.posts[index].tags.isNotEmpty)
-                TagsRow(tags: [state.posts[index].tags.first])
             ],
           ),
           onTap: () {
