@@ -67,7 +67,6 @@ dependencies:
   chewie: ^1.7.0
   card_swiper: ^3.0.1
   camerawesome: ^2.0.0-dev.1
-  autoscale_tabbarview: ^1.0.2
   geocoding: ^2.1.0
   geolocator: ^10.0.0
   country_picker: ^2.0.21
