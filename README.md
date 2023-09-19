@@ -131,6 +131,15 @@ Here, users can search for other users, explore new popular posts, or discover i
 | ![Search Screen](screenshots/picture_13.png) | ![Search Screen](screenshots/picture_15.png) |
 
 
+### User Profile
+
+The user profile section is where you can view and manage your own profile. You can customize your profile picture, update your bio, and see all your posts, including photos and videos. You can also view your followers, the people you're following, and any saved posts. It's your personal space to showcase your content and connect with others in the community.
+
+| ![User Profile Screen](screenshots/picture_18.png) | ![User Profile Screen](screenshots/picture_19.png) | ![User Profile Screen](screenshots/picture_20.png) |
+
+
+| ![User Profile Screen](screenshots/picture_21.png) | ![User Profile Screen](screenshots/picture_6.png) | ![User Profile Screen](screenshots/picture_7.png) |
+
 ## Dependencies
 
 **Flutter SDK**
