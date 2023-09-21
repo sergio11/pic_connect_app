@@ -130,7 +130,13 @@ This section could display the main feed of posts and activities from the users 
 
 Here, users can search for other users, explore new popular posts, or discover interesting content.
 
-| ![Search Screen](screenshots/picture_13.png) | ![Search Screen](screenshots/picture_15.png) |
+| ![Search Screen](screenshots/picture_13.png) | ![Search Screen](screenshots/picture_15.png) | ![Search Screen](screenshots/picture_34.png) |
+
+### Explore Reels
+
+Dive into the exciting world of Reels. Discover short and entertaining content created by people from around the world. From music videos and quick tutorials to comedy moments and more, Reels will keep you entertained for hours. Swipe up to uncover the hottest Reels and find inspiration with every scroll!
+
+| ![Explore Reels Screen](screenshots/picture_30.png) | ![Explore Reels Screen](screenshots/picture_31.png) | ![Explore Reels Screen](screenshots/picture_32.png) |
 
 
 ### User Profile
