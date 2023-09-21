@@ -126,6 +126,8 @@ This section could display the main feed of posts and activities from the users 
 
 | ![Home Screen](screenshots/picture_14.png) | ![Home Screen](screenshots/picture_16.png) | ![Home Screen](screenshots/picture_17.png) |
 
+| ![Home Screen](screenshots/picture_29.png) |
+
 ### Explore (Discover)
 
 Here, users can search for other users, explore new popular posts, or discover interesting content.
@@ -145,8 +147,9 @@ The user profile section is where you can view and manage your own profile. You 
 
 | ![User Profile Screen](screenshots/picture_18.png) | ![User Profile Screen](screenshots/picture_19.png) | ![User Profile Screen](screenshots/picture_20.png) |
 
-
 | ![User Profile Screen](screenshots/picture_21.png) | ![User Profile Screen](screenshots/picture_6.png) | ![User Profile Screen](screenshots/picture_7.png) |
+
+| ![User Profile Screen](screenshots/picture_33.png) |
 
 
 ### Create Posts
