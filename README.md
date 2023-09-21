@@ -121,7 +121,9 @@ Here are some screenshots from our app to give you a glimpse of its design and f
 
 ### Login & Registration
 
-| ![Login Screen](screenshots/picture_3.png) | ![Registration Screen](screenshots/picture_4.png) |
+| ![Login Screen](screenshots/picture_3.png) | ![Registration Screen](screenshots/picture_4.png) | ![Login Screen](screenshots/picture_35.png) |
+
+| ![Registration Screen](screenshots/picture_36.png) |
 
 ### Home
 
@@ -129,7 +131,7 @@ This section could display the main feed of posts and activities from the users 
 
 | ![Home Screen](screenshots/picture_14.png) | ![Home Screen](screenshots/picture_16.png) | ![Home Screen](screenshots/picture_17.png) |
 
-| ![Home Screen](screenshots/picture_29.png) | ![Home Screen](screenshots/gif_2.gif) |
+| ![Home Screen](screenshots/picture_29.png) | ![Home Screen](screenshots/gif_2.gif) | ![Home Screen](screenshots/picture_37.png) |
 
 ### Explore (Discover)
 
