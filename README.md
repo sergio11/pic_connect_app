@@ -4,6 +4,9 @@ PicConnect is a social media app for sharing photos and videos with your friends
 
 ![App Logo](screenshots/app_logo.png) 
 
+| ![Gif 1](screenshots/gif_1.gif) |
+
+
 ## Table of Contents
 
 - [Features](#features)
