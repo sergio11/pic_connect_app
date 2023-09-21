@@ -24,7 +24,12 @@ class EditPostScreenState extends State<EditPostScreen> {
   late AppLocalizations _l10n;
   late EventController _eventController;
 
-  void _onUpdatePostClicked() {}
+  void _onUpdatePostClicked() {
+    context.read<EditPostBloc>().add(OnUpdatePostEvent(
+        _placeInfoController.text,
+        _descriptionController.text,
+        _textFieldTagsController.getTags ?? []));
+  }
 
   @override
   void didChangeDependencies() {
@@ -58,6 +63,17 @@ class EditPostScreenState extends State<EditPostScreen> {
           showErrorSnackBar(context: context, message: state.errorMessage!);
         }
       }
+      if (_descriptionController.text.isEmpty) {
+        _descriptionController.text = state.description;
+      }
+      if (_placeInfoController.text.isEmpty) {
+        _placeInfoController.text = state.placeInfo;
+      }
+      if (_textFieldTagsController.getTags?.isEmpty == true) {
+        for (var tag in state.tags) {
+          _textFieldTagsController.addTag = tag;
+        }
+      }
     }, builder: (context, state) {
       return _buildScreenContent(state);
     });
@@ -66,10 +82,9 @@ class EditPostScreenState extends State<EditPostScreen> {
   PreferredSizeWidget? _buildAppBar(EditPostState state) {
     return AppBar(
       backgroundColor: appBarBackgroundColor,
-      leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: accentColor,
-          onPressed: () {}),
+      iconTheme: const IconThemeData(
+        color: accentColor,
+      ),
       title: Text(_l10n.editPostMainTitle,
           style: Theme.of(context)
               .textTheme
@@ -82,7 +97,7 @@ class EditPostScreenState extends State<EditPostScreen> {
             Icons.save_outlined,
             color: accentColor,
           ),
-          onPressed: () => _onUpdatePostClicked(),
+          onPressed: _onUpdatePostClicked,
         )
       ],
     );

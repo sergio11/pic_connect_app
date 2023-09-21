@@ -14,6 +14,12 @@ abstract class PostRepository {
       required Uint8List file,
       String? placeInfo});
 
+  Future<Either<Failure, bool>> updatePost(
+      {required String postUuid,
+      required String description,
+      required List<String> tags,
+      required String? placeInfo});
+
   Future<Either<Failure, bool>> likePost(
       {required String postId, required String userUid});
 

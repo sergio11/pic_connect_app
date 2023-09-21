@@ -16,42 +16,47 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EditPostEvent {
-  String get postUuid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postUuid) onEditPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        onUpdatePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String postUuid)? onEditPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        onUpdatePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postUuid)? onEditPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        onUpdatePost,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnEditPostEvent value) onEditPost,
+    required TResult Function(OnUpdatePostEvent value) onUpdatePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnEditPostEvent value)? onEditPost,
+    TResult? Function(OnUpdatePostEvent value)? onUpdatePost,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnEditPostEvent value)? onEditPost,
+    TResult Function(OnUpdatePostEvent value)? onUpdatePost,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $EditPostEventCopyWith<EditPostEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +65,6 @@ abstract class $EditPostEventCopyWith<$Res> {
   factory $EditPostEventCopyWith(
           EditPostEvent value, $Res Function(EditPostEvent) then) =
       _$EditPostEventCopyWithImpl<$Res, EditPostEvent>;
-  @useResult
-  $Res call({String postUuid});
 }
 
 /// @nodoc
@@ -73,28 +76,13 @@ class _$EditPostEventCopyWithImpl<$Res, $Val extends EditPostEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? postUuid = null,
-  }) {
-    return _then(_value.copyWith(
-      postUuid: null == postUuid
-          ? _value.postUuid
-          : postUuid // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnEditPostEventCopyWith<$Res>
-    implements $EditPostEventCopyWith<$Res> {
+abstract class _$$OnEditPostEventCopyWith<$Res> {
   factory _$$OnEditPostEventCopyWith(
           _$OnEditPostEvent value, $Res Function(_$OnEditPostEvent) then) =
       __$$OnEditPostEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String postUuid});
 }
@@ -156,6 +144,9 @@ class _$OnEditPostEvent implements OnEditPostEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String postUuid) onEditPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        onUpdatePost,
   }) {
     return onEditPost(postUuid);
   }
@@ -164,6 +155,8 @@ class _$OnEditPostEvent implements OnEditPostEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String postUuid)? onEditPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        onUpdatePost,
   }) {
     return onEditPost?.call(postUuid);
   }
@@ -172,6 +165,8 @@ class _$OnEditPostEvent implements OnEditPostEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String postUuid)? onEditPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        onUpdatePost,
     required TResult orElse(),
   }) {
     if (onEditPost != null) {
@@ -184,6 +179,7 @@ class _$OnEditPostEvent implements OnEditPostEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnEditPostEvent value) onEditPost,
+    required TResult Function(OnUpdatePostEvent value) onUpdatePost,
   }) {
     return onEditPost(this);
   }
@@ -192,6 +188,7 @@ class _$OnEditPostEvent implements OnEditPostEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnEditPostEvent value)? onEditPost,
+    TResult? Function(OnUpdatePostEvent value)? onUpdatePost,
   }) {
     return onEditPost?.call(this);
   }
@@ -200,6 +197,7 @@ class _$OnEditPostEvent implements OnEditPostEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnEditPostEvent value)? onEditPost,
+    TResult Function(OnUpdatePostEvent value)? onUpdatePost,
     required TResult orElse(),
   }) {
     if (onEditPost != null) {
@@ -212,18 +210,185 @@ class _$OnEditPostEvent implements OnEditPostEvent {
 abstract class OnEditPostEvent implements EditPostEvent {
   const factory OnEditPostEvent(final String postUuid) = _$OnEditPostEvent;
 
-  @override
   String get postUuid;
-  @override
   @JsonKey(ignore: true)
   _$$OnEditPostEventCopyWith<_$OnEditPostEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$OnUpdatePostEventCopyWith<$Res> {
+  factory _$$OnUpdatePostEventCopyWith(
+          _$OnUpdatePostEvent value, $Res Function(_$OnUpdatePostEvent) then) =
+      __$$OnUpdatePostEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String placeInfo, String description, List<String> tags});
+}
+
+/// @nodoc
+class __$$OnUpdatePostEventCopyWithImpl<$Res>
+    extends _$EditPostEventCopyWithImpl<$Res, _$OnUpdatePostEvent>
+    implements _$$OnUpdatePostEventCopyWith<$Res> {
+  __$$OnUpdatePostEventCopyWithImpl(
+      _$OnUpdatePostEvent _value, $Res Function(_$OnUpdatePostEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? placeInfo = null,
+    Object? description = null,
+    Object? tags = null,
+  }) {
+    return _then(_$OnUpdatePostEvent(
+      null == placeInfo
+          ? _value.placeInfo
+          : placeInfo // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnUpdatePostEvent implements OnUpdatePostEvent {
+  const _$OnUpdatePostEvent(
+      this.placeInfo, this.description, final List<String> tags)
+      : _tags = tags;
+
+  @override
+  final String placeInfo;
+  @override
+  final String description;
+  final List<String> _tags;
+  @override
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
+  @override
+  String toString() {
+    return 'EditPostEvent.onUpdatePost(placeInfo: $placeInfo, description: $description, tags: $tags)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnUpdatePostEvent &&
+            (identical(other.placeInfo, placeInfo) ||
+                other.placeInfo == placeInfo) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, placeInfo, description,
+      const DeepCollectionEquality().hash(_tags));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnUpdatePostEventCopyWith<_$OnUpdatePostEvent> get copyWith =>
+      __$$OnUpdatePostEventCopyWithImpl<_$OnUpdatePostEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String postUuid) onEditPost,
+    required TResult Function(
+            String placeInfo, String description, List<String> tags)
+        onUpdatePost,
+  }) {
+    return onUpdatePost(placeInfo, description, tags);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String postUuid)? onEditPost,
+    TResult? Function(String placeInfo, String description, List<String> tags)?
+        onUpdatePost,
+  }) {
+    return onUpdatePost?.call(placeInfo, description, tags);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String postUuid)? onEditPost,
+    TResult Function(String placeInfo, String description, List<String> tags)?
+        onUpdatePost,
+    required TResult orElse(),
+  }) {
+    if (onUpdatePost != null) {
+      return onUpdatePost(placeInfo, description, tags);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnEditPostEvent value) onEditPost,
+    required TResult Function(OnUpdatePostEvent value) onUpdatePost,
+  }) {
+    return onUpdatePost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnEditPostEvent value)? onEditPost,
+    TResult? Function(OnUpdatePostEvent value)? onUpdatePost,
+  }) {
+    return onUpdatePost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnEditPostEvent value)? onEditPost,
+    TResult Function(OnUpdatePostEvent value)? onUpdatePost,
+    required TResult orElse(),
+  }) {
+    if (onUpdatePost != null) {
+      return onUpdatePost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnUpdatePostEvent implements EditPostEvent {
+  const factory OnUpdatePostEvent(final String placeInfo,
+      final String description, final List<String> tags) = _$OnUpdatePostEvent;
+
+  String get placeInfo;
+  String get description;
+  List<String> get tags;
+  @JsonKey(ignore: true)
+  _$$OnUpdatePostEventCopyWith<_$OnUpdatePostEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$EditPostState {
   bool get isLoading => throw _privateConstructorUsedError;
+  String get postUuid => throw _privateConstructorUsedError;
   String get placeInfo => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   String get postUrl => throw _privateConstructorUsedError;
   bool get isReel => throw _privateConstructorUsedError;
   bool get isStoryMoment => throw _privateConstructorUsedError;
@@ -243,7 +408,10 @@ abstract class $EditPostStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
+      String postUuid,
       String placeInfo,
+      String description,
+      List<String> tags,
       String postUrl,
       bool isReel,
       bool isStoryMoment,
@@ -265,7 +433,10 @@ class _$EditPostStateCopyWithImpl<$Res, $Val extends EditPostState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? postUuid = null,
     Object? placeInfo = null,
+    Object? description = null,
+    Object? tags = null,
     Object? postUrl = null,
     Object? isReel = null,
     Object? isStoryMoment = null,
@@ -277,10 +448,22 @@ class _$EditPostStateCopyWithImpl<$Res, $Val extends EditPostState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      postUuid: null == postUuid
+          ? _value.postUuid
+          : postUuid // ignore: cast_nullable_to_non_nullable
+              as String,
       placeInfo: null == placeInfo
           ? _value.placeInfo
           : placeInfo // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       postUrl: null == postUrl
           ? _value.postUrl
           : postUrl // ignore: cast_nullable_to_non_nullable
@@ -315,7 +498,10 @@ abstract class _$$_EditPostStateCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
+      String postUuid,
       String placeInfo,
+      String description,
+      List<String> tags,
       String postUrl,
       bool isReel,
       bool isStoryMoment,
@@ -335,7 +521,10 @@ class __$$_EditPostStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? postUuid = null,
     Object? placeInfo = null,
+    Object? description = null,
+    Object? tags = null,
     Object? postUrl = null,
     Object? isReel = null,
     Object? isStoryMoment = null,
@@ -347,10 +536,22 @@ class __$$_EditPostStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      postUuid: null == postUuid
+          ? _value.postUuid
+          : postUuid // ignore: cast_nullable_to_non_nullable
+              as String,
       placeInfo: null == placeInfo
           ? _value.placeInfo
           : placeInfo // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       postUrl: null == postUrl
           ? _value.postUrl
           : postUrl // ignore: cast_nullable_to_non_nullable
@@ -380,19 +581,38 @@ class __$$_EditPostStateCopyWithImpl<$Res>
 class _$_EditPostState implements _EditPostState {
   const _$_EditPostState(
       {this.isLoading = false,
+      this.postUuid = "",
       this.placeInfo = "",
+      this.description = "",
+      final List<String> tags = const [],
       this.postUrl = "",
       this.isReel = false,
       this.isStoryMoment = false,
       this.isPostUploading = false,
-      this.errorMessage});
+      this.errorMessage})
+      : _tags = tags;
 
   @override
   @JsonKey()
   final bool isLoading;
   @override
   @JsonKey()
+  final String postUuid;
+  @override
+  @JsonKey()
   final String placeInfo;
+  @override
+  @JsonKey()
+  final String description;
+  final List<String> _tags;
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
   @override
   @JsonKey()
   final String postUrl;
@@ -410,7 +630,7 @@ class _$_EditPostState implements _EditPostState {
 
   @override
   String toString() {
-    return 'EditPostState(isLoading: $isLoading, placeInfo: $placeInfo, postUrl: $postUrl, isReel: $isReel, isStoryMoment: $isStoryMoment, isPostUploading: $isPostUploading, errorMessage: $errorMessage)';
+    return 'EditPostState(isLoading: $isLoading, postUuid: $postUuid, placeInfo: $placeInfo, description: $description, tags: $tags, postUrl: $postUrl, isReel: $isReel, isStoryMoment: $isStoryMoment, isPostUploading: $isPostUploading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -420,8 +640,13 @@ class _$_EditPostState implements _EditPostState {
             other is _$_EditPostState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.postUuid, postUuid) ||
+                other.postUuid == postUuid) &&
             (identical(other.placeInfo, placeInfo) ||
                 other.placeInfo == placeInfo) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.postUrl, postUrl) || other.postUrl == postUrl) &&
             (identical(other.isReel, isReel) || other.isReel == isReel) &&
             (identical(other.isStoryMoment, isStoryMoment) ||
@@ -433,8 +658,18 @@ class _$_EditPostState implements _EditPostState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, placeInfo, postUrl,
-      isReel, isStoryMoment, isPostUploading, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      postUuid,
+      placeInfo,
+      description,
+      const DeepCollectionEquality().hash(_tags),
+      postUrl,
+      isReel,
+      isStoryMoment,
+      isPostUploading,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -446,7 +681,10 @@ class _$_EditPostState implements _EditPostState {
 abstract class _EditPostState implements EditPostState {
   const factory _EditPostState(
       {final bool isLoading,
+      final String postUuid,
       final String placeInfo,
+      final String description,
+      final List<String> tags,
       final String postUrl,
       final bool isReel,
       final bool isStoryMoment,
@@ -456,7 +694,13 @@ abstract class _EditPostState implements EditPostState {
   @override
   bool get isLoading;
   @override
+  String get postUuid;
+  @override
   String get placeInfo;
+  @override
+  String get description;
+  @override
+  List<String> get tags;
   @override
   String get postUrl;
   @override

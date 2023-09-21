@@ -12,11 +12,13 @@ import 'package:pic_connect/utils/utils.dart';
 class PublicationsScreen extends StatefulWidget {
   final Function(String postId) onShowCommentsByPost;
   final Function(String userUid) onShowUserProfile;
+  final Function(String postUuid) onEditPost;
 
   const PublicationsScreen(
       {Key? key,
       required this.onShowUserProfile,
-      required this.onShowCommentsByPost})
+      required this.onShowCommentsByPost,
+      required this.onEditPost})
       : super(key: key);
 
   @override
@@ -34,22 +36,21 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<PublicationsBloc, PublicationsState>(
         listener: (context, state) {
-          if (context.mounted) {
-            if (state.errorMessage != null) {
-              showErrorSnackBar(context: context, message: state.errorMessage!);
-            }
-          }
-        },
-        builder: (context, state) {
-          return _buildScreenContent(context, state);
-        });
+      if (context.mounted) {
+        if (state.errorMessage != null) {
+          showErrorSnackBar(context: context, message: state.errorMessage!);
+        }
+      }
+    }, builder: (context, state) {
+      return _buildScreenContent(context, state);
+    });
   }
 
   Widget _buildScreenContent(BuildContext context, PublicationsState state) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: accentColor, //change your color here
+          color: accentColor,
         ),
         backgroundColor: appBarBackgroundColor,
         title: Text("Publications (${state.postLen})",
@@ -102,7 +103,8 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
                         widget.onShowCommentsByPost(postId),
                     onPostDeleted: () => onRefresh(state),
                     onShowUserProfile: (String userUid) =>
-                        widget.onShowUserProfile(userUid), onEditPost: (String postId) {  },
+                        widget.onShowUserProfile(userUid),
+                    onEditPost: (String postId) => widget.onEditPost(postId),
                   )),
             ),
           );

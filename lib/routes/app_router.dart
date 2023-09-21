@@ -210,25 +210,32 @@ class AppRouter {
       GoRoute(
           path: AppRoutesEnum.publications.screenPath,
           name: AppRoutesEnum.publications.screenName,
-          pageBuilder: (context, state) => CommonTransitionPage(
-                key: state.pageKey,
-                child: BlocProvider(
-                  create: (context) => serviceLocator<PublicationsBloc>()
-                    ..add(OnLoadPublicationsEvent(
-                        (state.extra as PublicationsScreenArgs).userUid,
-                        (state.extra as PublicationsScreenArgs).type)),
-                  child: PublicationsScreen(
-                    onShowCommentsByPost: (String postId) {
-                      context.go(AppRoutesEnum.comments.screenPath,
-                          extra: postId);
-                    },
-                    onShowUserProfile: (String userUid) {
-                      context.push(AppRoutesEnum.profile.screenPath,
-                          extra: userUid);
-                    },
-                  ),
+          pageBuilder: (context, state) {
+            final publicationsBloc = serviceLocator<PublicationsBloc>();
+            return CommonTransitionPage(
+              key: state.pageKey,
+              child: BlocProvider(
+                create: (context) => publicationsBloc
+                  ..add(OnLoadPublicationsEvent(
+                      (state.extra as PublicationsScreenArgs).userUid,
+                      (state.extra as PublicationsScreenArgs).type)),
+                child: PublicationsScreen(
+                  onShowCommentsByPost: (String postId) {
+                    context.go(AppRoutesEnum.comments.screenPath,
+                        extra: postId);
+                  },
+                  onShowUserProfile: (String userUid) {
+                    context.push(AppRoutesEnum.profile.screenPath,
+                        extra: userUid);
+                  },
+                  onEditPost: (String postUuid) {
+                    context.push(AppRoutesEnum.editPost.screenPath,
+                        extra: postUuid);
+                  },
                 ),
-              )),
+              ),
+            );
+          }),
       GoRoute(
           path: AppRoutesEnum.editProfile.screenPath,
           name: AppRoutesEnum.editProfile.screenName,

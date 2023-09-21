@@ -2,6 +2,7 @@ import 'package:pic_connect/data/datasource/dto/comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
+import 'package:pic_connect/data/datasource/dto/update_post_dto.dart';
 
 abstract class PostDatasource {
   Future<PostDTO> findById(String id);
@@ -14,7 +15,9 @@ abstract class PostDatasource {
 
   Future<bool> saveBookmark({required String postId, required String userUuid});
 
-  Future<void> uploadPost(SavePostDTO post);
+  Future<void> uploadPost(CreatePostDTO post);
+
+  Future<void> updatePost(UpdatePostDTO post);
 
   Future<List<CommentDTO>> findAllCommentsByPostId(String postId);
 

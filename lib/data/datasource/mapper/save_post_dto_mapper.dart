@@ -2,9 +2,9 @@ import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
 import 'package:pic_connect/utils/mapper.dart';
 import 'package:uuid/uuid.dart';
 
-class SavePostDtoMapper extends Mapper<SavePostDTO, Map<String, dynamic>> {
+class SavePostDtoMapper extends Mapper<CreatePostDTO, Map<String, dynamic>> {
   @override
-  Map<String, dynamic> call(SavePostDTO object) {
+  Map<String, dynamic> call(CreatePostDTO object) {
     return {
       "description": object.description,
       "postId": const Uuid().v1(),

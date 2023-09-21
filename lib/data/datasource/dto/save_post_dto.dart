@@ -1,4 +1,4 @@
-class SavePostDTO {
+class CreatePostDTO {
   final String authorUid;
   final String description;
   final String postUrl;
@@ -7,7 +7,7 @@ class SavePostDTO {
   final String type;
   final String? placeInfo;
 
-  SavePostDTO(
+  CreatePostDTO(
       {required this.authorUid,
       required this.description,
       required this.postUrl,

@@ -4,13 +4,15 @@ import 'package:pic_connect/data/datasource/dto/comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
+import 'package:pic_connect/data/datasource/dto/update_post_dto.dart';
 import 'package:pic_connect/data/datasource/post_datasource.dart';
 import 'package:pic_connect/utils/mapper.dart';
 
 class PostDatasourceImpl extends PostDatasource {
   final FirebaseFirestore firestore;
   final Mapper<SavePostCommentDTO, Map<String, dynamic>> savePostCommentMapper;
-  final Mapper<SavePostDTO, Map<String, dynamic>> savePostMapper;
+  final Mapper<CreatePostDTO, Map<String, dynamic>> savePostMapper;
+  final Mapper<UpdatePostDTO, Map<String, dynamic>> updatePostMapper;
   final Mapper<DocumentSnapshot, CommentDTO> commentMapper;
   final Mapper<DocumentSnapshot, PostDTO> postMapper;
 
@@ -18,6 +20,7 @@ class PostDatasourceImpl extends PostDatasource {
       {required this.firestore,
       required this.savePostCommentMapper,
       required this.savePostMapper,
+      required this.updatePostMapper,
       required this.commentMapper,
       required this.postMapper});
 
@@ -63,12 +66,20 @@ class PostDatasourceImpl extends PostDatasource {
   }
 
   @override
-  Future<void> uploadPost(SavePostDTO post) async {
+  Future<void> uploadPost(CreatePostDTO post) async {
     final postData = savePostMapper(post);
     if (post.isStoryMoment) {
-      await _updateMomentsCollection(postData['postId'], postData['authorUid'], false);
+      await _updateMomentsCollection(
+          postData['postId'], postData['authorUid'], false);
     }
     await firestore.collection('posts').doc(postData['postId']).set(postData);
+  }
+
+  @override
+  Future<void> updatePost(UpdatePostDTO post) async {
+    final postRef = firestore.collection('posts').doc(post.postUuid);
+    final updateData = updatePostMapper(post);
+    await postRef.update(updateData);
   }
 
   @override
@@ -222,7 +233,6 @@ class PostDatasourceImpl extends PostDatasource {
 
   @override
   Future<List<PostDTO>> findMomentsByUser(String userUid, int maxDays) async {
-    debugPrint("findMomentsByUser -> userUid: $userUid, maxDays: $maxDays");
     final momentUUIDs = await _getRecentMomentUUIDs(userUid, maxDays);
     final List<PostDTO> moments = [];
     for (final momentUUID in momentUUIDs) {
@@ -271,7 +281,8 @@ class PostDatasourceImpl extends PostDatasource {
     return momentUUIDs;
   }
 
-  Future<void> _updateMomentsCollection(String postId, String authorUid, bool isDelete) async {
+  Future<void> _updateMomentsCollection(
+      String postId, String authorUid, bool isDelete) async {
     final now = DateTime.now();
     final String dateString = '${now.year}-${now.month}-${now.day}';
     final DocumentReference momentDayRef = firestore
@@ -282,7 +293,7 @@ class PostDatasourceImpl extends PostDatasource {
     final DocumentSnapshot momentDaySnapshot = await momentDayRef.get();
     if (momentDaySnapshot.exists) {
       final List<dynamic> postUUIDs =
-      List<dynamic>.from(momentDaySnapshot['postUUIDs'] ?? []);
+          List<dynamic>.from(momentDaySnapshot['postUUIDs'] ?? []);
       if (isDelete) {
         postUUIDs.remove(postId);
       } else {

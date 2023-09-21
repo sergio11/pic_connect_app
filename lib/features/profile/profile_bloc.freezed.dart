@@ -809,7 +809,8 @@ mixin _$ProfileState {
   List<PostBO> get picturesList => throw _privateConstructorUsedError;
   List<PostBO> get reelsList => throw _privateConstructorUsedError;
   List<PostBO> get bookmarkPostList => throw _privateConstructorUsedError;
-  List<MomentsByMonthAndYearBO> get momentsByDate => throw _privateConstructorUsedError;
+  List<MomentsByMonthAndYearBO> get momentsByDate =>
+      throw _privateConstructorUsedError;
   List<ProfileTab> get profileTabs => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 

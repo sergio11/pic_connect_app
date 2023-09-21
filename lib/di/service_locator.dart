@@ -13,6 +13,7 @@ import 'package:pic_connect/data/datasource/dto/room_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_user_dto.dart';
+import 'package:pic_connect/data/datasource/dto/update_post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 import 'package:pic_connect/data/datasource/impl/auth_datasource_impl.dart';
 import 'package:pic_connect/data/datasource/impl/chat_datasource_impl.dart';
@@ -26,6 +27,7 @@ import 'package:pic_connect/data/datasource/mapper/room_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/save_post_comment_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/save_post_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/save_user_dto_mapper.dart';
+import 'package:pic_connect/data/datasource/mapper/update_post_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/user_chat_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/mapper/user_dto_mapper.dart';
 import 'package:pic_connect/data/datasource/post_datasource.dart';
@@ -77,6 +79,7 @@ import 'package:pic_connect/domain/usecase/sign_in_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_out_use_case.dart';
 import 'package:pic_connect/domain/usecase/sign_up_user_use_case.dart';
 import 'package:pic_connect/domain/usecase/unfollow_user_use_case.dart';
+import 'package:pic_connect/domain/usecase/update_post_use_case.dart';
 import 'package:pic_connect/domain/usecase/update_user_use_case.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
@@ -118,8 +121,10 @@ setupServiceLocator() async {
   serviceLocator
       .registerFactory<Mapper<SavePostCommentDTO, Map<String, dynamic>>>(
           () => SavePostCommentDTOMapper());
-  serviceLocator.registerFactory<Mapper<SavePostDTO, Map<String, dynamic>>>(
+  serviceLocator.registerFactory<Mapper<CreatePostDTO, Map<String, dynamic>>>(
       () => SavePostDtoMapper());
+  serviceLocator.registerFactory<Mapper<UpdatePostDTO, Map<String, dynamic>>>(
+      () => UpdatePostDtoMapper());
   serviceLocator.registerFactory<Mapper<UserDTO, UserBO>>(() => UserBoMapper());
   serviceLocator
       .registerFactory<Mapper<PostBoMapperData, PostBO>>(() => PostBoMapper());
@@ -150,7 +155,8 @@ setupServiceLocator() async {
       savePostCommentMapper: serviceLocator(),
       savePostMapper: serviceLocator(),
       commentMapper: serviceLocator(),
-      postMapper: serviceLocator()));
+      postMapper: serviceLocator(),
+      updatePostMapper: serviceLocator()));
   serviceLocator.registerLazySingleton<StorageDatasource>(
       () => StorageDatasourceImpl(storage: serviceLocator()));
   serviceLocator.registerLazySingleton<ChatDatasource>(() => ChatDatasourceImpl(
@@ -244,6 +250,8 @@ setupServiceLocator() async {
       () => CreateNewRoomUseCase(chatRepository: serviceLocator()));
   serviceLocator.registerLazySingleton(
       () => FindAllUsersUseCase(userRepository: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => UpdatePostUseCase(
+      authRepository: serviceLocator(), postRepository: serviceLocator()));
 
   /// BloC ///
   serviceLocator
@@ -295,8 +303,9 @@ setupServiceLocator() async {
   serviceLocator.registerFactory(() => EditProfileBloc(
       getUserDetailsUseCase: serviceLocator(),
       updateUserUseCase: serviceLocator()));
-  serviceLocator.registerFactory(
-      () => EditPostBloc(findPostByIdUseCase: serviceLocator()));
+  serviceLocator.registerFactory(() => EditPostBloc(
+      findPostByIdUseCase: serviceLocator(),
+      updatePostUseCase: serviceLocator()));
   serviceLocator.registerFactory(() => CreateRoomBloc(
       createNewRoomUseCase: serviceLocator(),
       findAllUsersUseCase: serviceLocator()));

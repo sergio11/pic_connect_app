@@ -38,6 +38,7 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   bool isBottomBarVisible = true;
   bool showOverlay = true;
   int selectedIndex = 0;
+  bool freezeBottomBar = false;
 
   void onTapSelected(int indexTapped) {
     widget.navigationShell.goBranch(indexTapped);
@@ -88,17 +89,21 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
     var keyboardVisibilityController = KeyboardVisibilityController();
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
-      if (visible) {
-        hideNav(keepOverlay: false);
-      } else {
-        showNav();
+      if (!freezeBottomBar) {
+        if (visible) {
+          hideNav(keepOverlay: false);
+        } else {
+          showNav();
+        }
       }
     });
     eventControllerSubscription =
         context.read<EventController>().eventStream.listen((event) {
       if (event is ShowBottomBarEvent) {
+        freezeBottomBar = false;
         showNav();
       } else if (event is HideBottomBarEvent) {
+        freezeBottomBar = true;
         hideNav(keepOverlay: false);
       }
     });
@@ -111,11 +116,13 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
       child: Scaffold(
         body: NotificationListener<UserScrollNotification>(
             onNotification: (UserScrollNotification value) {
-              if (value.direction == ScrollDirection.forward ||
-                  value.direction == ScrollDirection.idle) {
-                showNav();
-              } else {
-                hideNav(keepOverlay: false);
+              if (!freezeBottomBar) {
+                if (value.direction == ScrollDirection.forward ||
+                    value.direction == ScrollDirection.idle) {
+                  showNav();
+                } else {
+                  hideNav(keepOverlay: false);
+                }
               }
               return true;
             },

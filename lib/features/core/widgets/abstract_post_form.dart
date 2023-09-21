@@ -72,6 +72,7 @@ abstract class AbstractPostFormState<T extends AbstractPostForm>
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
+          automaticallyImplyLeading: false,
           expandedHeight: MediaQuery.of(context).size.height * 0.5,
           floating: false,
           pinned: false,

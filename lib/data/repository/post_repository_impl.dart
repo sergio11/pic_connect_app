@@ -5,6 +5,7 @@ import 'package:pic_connect/data/datasource/dto/comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_comment_dto.dart';
 import 'package:pic_connect/data/datasource/dto/save_post_dto.dart';
+import 'package:pic_connect/data/datasource/dto/update_post_dto.dart';
 import 'package:pic_connect/data/datasource/dto/user_dto.dart';
 import 'package:pic_connect/data/datasource/post_datasource.dart';
 import 'package:pic_connect/data/datasource/storage_datasource.dart';
@@ -96,7 +97,7 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final postUrl = await storageDatasource.uploadFileToStorage(
           folderName: 'posts', id: const Uuid().v1(), file: file);
-      postDatasource.uploadPost(SavePostDTO(
+      postDatasource.uploadPost(CreatePostDTO(
           authorUid: authorUid,
           description: description,
           tags: tags,
@@ -242,7 +243,6 @@ class PostRepositoryImpl implements PostRepository {
           postListDTO.map((postDTO) async => _mapToPostBO(postDTO)));
       return Right(posts);
     } catch (ex) {
-      debugPrint("getReelsWithMostLikes - ex -> ${ex.toString()}");
       return Left(Failure(message: ex.toString()));
     }
   }
@@ -259,7 +259,6 @@ class PostRepositoryImpl implements PostRepository {
           momentsListDTO.map((postDTO) async => _mapToPostBO(postDTO)));
       return Right(momentsListBO);
     } catch (err) {
-      debugPrint("findMomentsPublishedLast24HoursByUserUuids err -> ${err}");
       return Left(Failure(message: err.toString()));
     }
   }
@@ -283,6 +282,24 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final postDTO = await postDatasource.findById(uuid);
       return Right(await _mapToPostBO(postDTO));
+    } catch (err) {
+      return Left(Failure(message: err.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> updatePost(
+      {required String postUuid,
+      required String description,
+      required List<String> tags,
+      required String? placeInfo}) async {
+    try {
+      await postDatasource.updatePost(UpdatePostDTO(
+          postUuid: postUuid,
+          description: description,
+          tags: tags,
+          placeInfo: placeInfo));
+      return const Right(true);
     } catch (err) {
       return Left(Failure(message: err.toString()));
     }
