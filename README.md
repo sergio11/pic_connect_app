@@ -2,6 +2,8 @@
 
 PicConnect is a social media app for sharing photos and videos with your friends and followers. This README provides a comprehensive overview of the project, its features, and the technology stack choices.
 
+![App Logo](screenshots/app_logo.png) 
+
 ## Table of Contents
 
 - [Features](#features)
@@ -52,39 +54,39 @@ We chose Flutter and Firebase for PicConnect for the following reasons:
 
 - **Scalability**: Firebase scales effortlessly with the growth of our user base, ensuring a seamless experience for all users.
 
-# Software Architecture
+## Software Architecture
 
-## Clean Architecture
+### Clean Architecture
 
 This project adheres to the principles of **Clean Architecture**, a design approach that promotes separation of concerns and independence of layers within an application. It offers advantages such as testability, scalability, and code maintainability.
 
 The architecture is organized into the following layers:
 
-### 1. Presentation Layer (UI)
+#### 1. Presentation Layer (UI)
 
 - **Description**: The presentation layer handles the user interface and user interactions. In this layer, we implement the BLoC pattern to manage UI state and user actions.
 
 - **Technology**: We leverage Flutter's capabilities to efficiently develop the presentation layer.
 
-### 2. Business Layer (BLoC - Business Logic Component)
+#### 2. Business Layer (BLoC - Business Logic Component)
 
 - **Description**: The business layer contains application logic not directly tied to the user interface. Here, we define UseCases that encapsulate specific business requirements. These UseCases manage the application state and control data flow.
 
 - **Technology**: In Flutter, we utilize packages like `flutter_bloc` to effectively implement BLoCs and organize business logic.
 
-### 3. Data Layer
+#### 3. Data Layer
 
 - **Description**: The data layer is responsible for accessing and managing application data. It interfaces with different data sources, abstracting their implementation details. Repositories act as bridges between UseCases and data sources.
 
 - **Technology**: We use packages like `http` for making HTTP requests and databases like SQLite or ORM packages for local storage. The use of data sources allows us to connect with Firestore and FireStorage.
 
-### 4. Domain Layer
+#### 4. Domain Layer
 
 - **Description**: The domain layer hosts pure business logic and application business rules. It should be isolated from specific data layer or presentation layer implementations. Here, we define the core business entities.
 
 - **Technology**: This layer is generally free from external libraries and should remain technology-agnostic.
 
-## UseCases, Repositories, and Data Sources
+### UseCases, Repositories, and Data Sources
 
 In this project, we've encapsulated business requirements in **UseCases**, which are responsible for orchestrating various operations. These UseCases interact with one or more repositories, injecting them via Inversion of Control (IoC) using GetIt.
 
@@ -139,6 +141,17 @@ The user profile section is where you can view and manage your own profile. You 
 
 
 | ![User Profile Screen](screenshots/picture_21.png) | ![User Profile Screen](screenshots/picture_6.png) | ![User Profile Screen](screenshots/picture_7.png) |
+
+
+### Create Posts
+
+This section allows you to share your moments, photos, and experiences with your followers and friends. You can upload photos and videos, add descriptions, tags, and locations so that other users can discover your posts. Share your memories and special moments with the community and stay connected with your friends through your posts!
+
+| ![Create Post Screen](screenshots/picture_25.png) | ![Create Post Screen](screenshots/picture_22.png) | ![Create Post Screen](screenshots/picture_23.png) |
+
+| ![Create Post Screen](screenshots/picture_24.png) | ![Create Post Screen](screenshots/picture_8.png) | ![Create Post Screen](screenshots/picture_9.png) |
+
+| ![Create Post Screen](screenshots/picture_10.png) | ![Create Post Screen](screenshots/picture_11.png) | ![Create Post Screen](screenshots/picture_12.png) |
 
 ## Dependencies
 
