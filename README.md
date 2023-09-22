@@ -47,8 +47,6 @@ PicConnect is built using the following technologies:
 
 - **Firebase**: Firebase provides a robust backend-as-a-service (BaaS) platform, which powers PicConnect's user authentication, real-time database, and cloud storage. Firebase offers seamless integration with Flutter, making it an ideal choice for building real-time and interactive features in our app.
 
-- **SQLite**: For local data storage, we use SQLite, a lightweight and efficient database engine that is well-suited for mobile app development.
-
 - **Dart**: The Dart programming language is the backbone of Flutter, and we use it extensively to write clean and efficient code for our app.
 
 ## Why Flutter and Firebase
