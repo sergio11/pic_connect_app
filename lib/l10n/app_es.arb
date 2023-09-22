@@ -84,5 +84,16 @@
   "removePostDialogDescription": "¿Estás seguro de que quieres borrar esta publicación? La operación es irreversible.",
   "postDeletedSuccessDialogTitle": "La publicación fue borrada!",
   "postDeletedSuccessDialogDescription": "La publicación fue borrada con éxito!",
-  "editPostMainTitle": "Editar publicación"
+  "editPostMainTitle": "Editar publicación",
+  "noPublicationsFoundTextTryAgain": "No se han encontrado publicaciones! por favor, inténtalo de nuevo",
+  "publicationsFoundMainTitle": "Publicaciones (%s)",
+  "noFollowersFoundText": "No se han encontrado seguidores",
+  "noRoomsFoundText": "No se han encontrado ningún chat",
+  "createRoomNoUsersFoundText": "No se han encontrado usuarios",
+  "createRoomMainTitle": "Usuarios",
+  "onBoardingSignInText": "Iniciar Sessión",
+  "onBoardingSignUpText": "Registrarse",
+  "noPicturesFoundText": "No se han encontrado imágenes",
+  "noReelsFoundText": "No se han encontrado Reels",
+  "noBookmarksFoundText": "No dispones de ninguna publicación en tus colecciones"
 }

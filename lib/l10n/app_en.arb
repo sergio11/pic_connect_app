@@ -84,5 +84,16 @@
   "removePostDialogDescription": "Are you sure to remove this post?",
   "postDeletedSuccessDialogTitle": "Post was deleted!",
   "postDeletedSuccessDialogDescription": "The post was deleted successfully",
-  "editPostMainTitle": "Edit Post"
+  "editPostMainTitle": "Edit Post",
+  "noPublicationsFoundTextTryAgain": "No publications found! please try again",
+  "publicationsFoundMainTitle": "Publications (%s)",
+  "noFollowersFoundText": "You don't have followers",
+  "noRoomsFoundText": "You don't have any room created",
+  "createRoomNoUsersFoundText": "No users found",
+  "createRoomMainTitle": "Users",
+  "onBoardingSignInText": "Sign In",
+  "onBoardingSignUpText": "Sign Up",
+  "noPicturesFoundText": "No pictures found",
+  "noReelsFoundText": "No Reels found",
+  "noBookmarksFoundText": "No Bookmarks saved"
 }

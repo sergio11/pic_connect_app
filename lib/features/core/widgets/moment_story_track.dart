@@ -1,14 +1,18 @@
+import 'dart:async';
+
 import 'package:advstory/advstory.dart';
 import 'package:flutter/material.dart';
 import 'package:pic_connect/domain/models/moment_story_data.dart';
 import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/tags_row.dart';
+import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/date_formatter.dart';
+import 'package:provider/provider.dart';
 import 'moment_animated_tray.dart';
 
-class MomentStoryTrack extends StatelessWidget {
+class MomentStoryTrack extends StatefulWidget {
   final Color backgroundColor;
   final List<MomentStoryDataBO> momentStoryDataList;
   final EdgeInsets margin;
@@ -21,28 +25,67 @@ class MomentStoryTrack extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  MomentStoryTrackState createState() => MomentStoryTrackState();
+}
+
+class MomentStoryTrackState extends State<MomentStoryTrack> {
+  final AdvStoryController _storyController = AdvStoryController();
+  late EventController _eventController;
+  FutureOr<void> Function(
+    StoryEvent event,
+    StoryPosition position,
+  )? _storyEventCallback;
+
+  void _addStoryEventCallback() {
+    _storyEventCallback = (StoryEvent event, StoryPosition position) async {
+      if (event == StoryEvent.trayTap) {
+        _launchEvent(showBottomBar: false);
+      } else if (event == StoryEvent.close) {
+        _launchEvent(showBottomBar: true);
+      }
+    };
+    _storyController.addListener(_storyEventCallback!);
+  }
+
+  void _removeStoryEventCallback() {
+    if (_storyEventCallback != null) {
+      _storyController.removeListener(_storyEventCallback!);
+    }
+  }
+
+  void _launchEvent({required bool showBottomBar}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _eventController.launchEvent(
+          showBottomBar ? ShowBottomBarEvent() : HideBottomBarEvent());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
+      margin: widget.margin,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: widget.backgroundColor,
       ),
       child: SizedBox(
         height: 110,
         width: MediaQuery.of(context).size.width,
         child: AdvStory(
+          controller: _storyController,
           buildStoryOnTrayScroll: true,
           preloadContent: true,
           preloadStory: true,
           style: const AdvStoryStyle(
-              trayListStyle: TrayListStyle(
-                direction: Axis.horizontal,
-              ),
-              hideBars: false),
-          storyCount: momentStoryDataList.length,
+            trayListStyle: TrayListStyle(
+              direction: Axis.horizontal,
+            ),
+            hideBars: false,
+          ),
+          storyCount: widget.momentStoryDataList.length,
           storyBuilder: (index) {
-            final moments = momentStoryDataList.elementAt(index).getMoments();
+            final moments =
+                widget.momentStoryDataList.elementAt(index).getMoments();
             return Story(
               contentCount: moments.length,
               contentBuilder: (contentIndex) {
@@ -60,7 +103,7 @@ class MomentStoryTrack extends StatelessWidget {
             );
           },
           trayBuilder: (index) {
-            final momentStoryData = momentStoryDataList.elementAt(index);
+            final momentStoryData = widget.momentStoryDataList.elementAt(index);
             return MomentAnimatedTray(
               imageUrl: momentStoryData.getTrayImageUrl(),
               label: momentStoryData.getTrayTitle(),
@@ -71,8 +114,29 @@ class MomentStoryTrack extends StatelessWidget {
     );
   }
 
-  ImageContent _buildImageStoryContent(String storyContentUrl,
-      Widget storyContentHeader, Widget storyContentFooter) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _eventController = context.read<EventController>();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _addStoryEventCallback();
+  }
+
+  @override
+  void dispose() {
+    _removeStoryEventCallback();
+    super.dispose();
+  }
+
+  ImageContent _buildImageStoryContent(
+    String storyContentUrl,
+    Widget storyContentHeader,
+    Widget storyContentFooter,
+  ) {
     return ImageContent(
       url: storyContentUrl,
       duration: const Duration(seconds: 10),
@@ -81,12 +145,15 @@ class MomentStoryTrack extends StatelessWidget {
       timeout: const Duration(seconds: 5),
       errorBuilder: () => const Center(
         child: Text("An error occurred!"),
-      )
+      ),
     );
   }
 
-  VideoContent _buildVideoStoryContent(String storyContentUrl,
-      Widget storyContentHeader, Widget storyContentFooter) {
+  VideoContent _buildVideoStoryContent(
+    String storyContentUrl,
+    Widget storyContentHeader,
+    Widget storyContentFooter,
+  ) {
     return VideoContent(
       url: storyContentUrl,
       header: storyContentHeader,
@@ -122,12 +189,16 @@ class MomentStoryTrack extends StatelessWidget {
                 Text(
                   moment.username,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: primaryColor, fontWeight: FontWeight.bold),
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 Text(
                   moment.placeInfo ?? '',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: primaryColor, fontWeight: FontWeight.w400),
+                        color: primaryColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                   maxLines: 1,
                   overflow: TextOverflow.fade,
                 )
@@ -154,14 +225,17 @@ class MomentStoryTrack extends StatelessWidget {
                 TextSpan(
                   text: moment.username,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: primaryColor, fontWeight: FontWeight.bold),
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 TextSpan(
-                    text: ' ${moment.description}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: primaryColor)),
+                  text: ' ${moment.description}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(color: primaryColor),
+                ),
               ],
             ),
           ),
@@ -177,7 +251,7 @@ class MomentStoryTrack extends StatelessWidget {
           ),
           TagsRow(
             tags: moment.tags,
-          )
+          ),
         ],
       ),
     );

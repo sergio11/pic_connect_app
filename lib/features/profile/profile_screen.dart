@@ -133,11 +133,13 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
                 color: primaryColor,
                 child: TabBarView(controller: _tabController, children: [
                   _buildPostsGrid(state.picturesList,
-                      state.isPictureGridLoading, "No pictures found"),
+                      state.isPictureGridLoading, _l10n.noPicturesFoundText),
                   _buildPostsGrid(state.reelsList, state.isReelsGridLoading,
-                      "No Reels found"),
-                  _buildPostsGrid(state.bookmarkPostList,
-                      state.isBookmarkPostGridLoading, "No Bookmarks saved")
+                      _l10n.noReelsFoundText),
+                  _buildPostsGrid(
+                      state.bookmarkPostList,
+                      state.isBookmarkPostGridLoading,
+                      _l10n.noBookmarksFoundText)
                 ])),
           ),
         ));
@@ -480,8 +482,9 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
           )
         : isLoading
             ? _buildProgressIndicator()
-            : Expanded(child: EmptyStateWidget(
-        message: noDataMessage, iconData: Icons.mood_bad));
+            : Expanded(
+                child: EmptyStateWidget(
+                    message: noDataMessage, iconData: Icons.mood_bad));
   }
 
   Widget _buildPostItem(PostBO post) {

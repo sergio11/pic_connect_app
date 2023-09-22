@@ -8,7 +8,6 @@ import 'package:pic_connect/domain/models/post.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
-import 'package:pic_connect/features/core/widgets/abstract_post_form.dart';
 import 'package:pic_connect/features/core/widgets/create_post_form.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';

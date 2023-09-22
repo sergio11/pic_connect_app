@@ -8,6 +8,7 @@ import 'package:pic_connect/features/postcard/post_card_bloc.dart';
 import 'package:pic_connect/features/publications/publications_bloc.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PublicationsScreen extends StatefulWidget {
   final Function(String postId) onShowCommentsByPost;
@@ -26,6 +27,8 @@ class PublicationsScreen extends StatefulWidget {
 }
 
 class _PublicationsScreenState extends State<PublicationsScreen> {
+  late AppLocalizations _l10n;
+
   void onRefresh(PublicationsState state) async {
     context
         .read<PublicationsBloc>()
@@ -46,6 +49,12 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
+
   Widget _buildScreenContent(BuildContext context, PublicationsState state) {
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +62,9 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
           color: accentColor,
         ),
         backgroundColor: appBarBackgroundColor,
-        title: Text("Publications (${state.postLen})",
+        title: Text(
+            _l10n.publicationsFoundMainTitle
+                .replaceAll("%s", state.postLen.toString()),
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -82,7 +93,7 @@ class _PublicationsScreenState extends State<PublicationsScreen> {
   Widget _buildPostsList(PublicationsState state) {
     return state.postLen == 0
         ? EmptyStateWidget(
-            message: 'No publications found! please try again',
+            message: _l10n.noPublicationsFoundTextTryAgain,
             iconData: Icons.mood_bad,
             onRetry: () => onRefresh(state),
           )

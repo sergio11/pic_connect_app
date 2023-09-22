@@ -19,6 +19,8 @@ class FollowersScreen extends StatefulWidget {
 }
 
 class _FollowersScreen extends State<FollowersScreen> {
+  late AppLocalizations _l10n;
+
   void _onFollowUser(String userUid) {
     context.read<FollowersBloc>().add(OnFollowUserEvent(userUid));
   }
@@ -48,8 +50,13 @@ class _FollowersScreen extends State<FollowersScreen> {
         });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+  }
+
   Widget _buildScreenContent(FollowersState state) {
-    final l10n = AppLocalizations.of(context);
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(
@@ -58,8 +65,8 @@ class _FollowersScreen extends State<FollowersScreen> {
           backgroundColor: appBarBackgroundColor,
           title: Text(
               state.contentType == ContentTypeEnum.followers
-                  ? l10n.followersScreenTitle
-                  : l10n.followingScreenTitle,
+                  ? _l10n.followersScreenTitle
+                  : _l10n.followingScreenTitle,
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -117,7 +124,7 @@ class _FollowersScreen extends State<FollowersScreen> {
                   },
                 )
               : EmptyStateWidget(
-                  message: "You don't have followers",
+                  message: _l10n.noFollowersFoundText,
                   iconData: Icons.mood_bad,
                   onRetry: () => _onRefresh(),
                 ),

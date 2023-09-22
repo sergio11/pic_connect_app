@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void onLoginClicked() async {
-    debugPrint("onLoginClicked - validate: ${_formKey.currentState?.validate() == true}");
     if (_formKey.currentState?.validate() == true) {
       hideKeyboard(context);
       context.read<SignInBloc>().add(
