@@ -255,9 +255,6 @@ This section allows you to share your moments, photos, and experiences with your
 **Camera Awesomeness**
 - **camerawesome:** [![pub package](https://img.shields.io/pub/v/camerawesome.svg)](https://pub.dev/packages/camerawesome)
 
-**Auto-Scaling TabBarView**
-- **autoscale_tabbarview:** [![pub package](https://img.shields.io/pub/v/autoscale_tabbarview.svg)](https://pub.dev/packages/autoscale_tabbarview)
-
 **Geocoding**
 - **geocoding:** [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dev/packages/geocoding)
 
@@ -274,7 +271,7 @@ This section allows you to share your moments, photos, and experiences with your
 - **path_provider:** [![pub package](https://img.shields.io/pub/v/path_provider.svg)](https://pub.dev/packages/path_provider)
 
 **Visibility Detector**
-- **visibility_detector:** [![pub package](https://img.shields.io/pub/v/visibility_detector.svg)](https
+- **visibility_detector:** [![pub package](https://img.shields.io/pub/v/visibility_detector.svg)]
 
 ## Getting Started
 
