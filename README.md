@@ -1,26 +1,23 @@
 # PicConnect - Explore and connect through photography.
 
-PicConnect is a social media app for sharing photos and videos with your friends and followers. This README provides a comprehensive overview of the project, its features, and the technology stack choices.
+<img width="auto" align="left" src="screenshots/app_logo.png" />
 
-![App Logo](screenshots/app_logo.png) 
+**Pic Connect** is a dynamic social networking app that empowers users to share their life's moments through captivating stories.
 
+With a focus on multimedia content, users can post photos and videos, adding creative flair through tags and location data. The platform fosters a vibrant community, enabling likes, comments, and shares. Pic Connect isn't just about socializing; it's a canvas for visual storytelling.
 
+Whether it's a dazzling sunset or an adrenaline-pumping adventure, every moment is brought to life. Join the Pic Connect community, where moments become memories and connections go beyond the screen.
 
+This README provides a comprehensive overview of the project, its features, and the technology stack choices.
 
-| ![Preview](screenshots/preview_1.jpeg) |  ![Preview](screenshots/preview_2.jpeg) | ![Preview](screenshots/preview_3.jpeg) |
+</br>
 
-| ![Preview](screenshots/preview_4.jpeg) | ![Preview](screenshots/preview_5.jpeg) |
-
-
-## Table of Contents
-
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Why Flutter and Firebase](#why-flutter-and-firebase)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+<p align="center">
+  <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />
+  <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />
+</p>
 
 ## Features
 
@@ -37,6 +34,10 @@ PicConnect offers a wide range of features to enhance your social media experien
 - **Discovery**: Explore and discover new content through the Explore tab.
 
 - **Direct Messaging**: Chat with your friends and followers through our built-in messaging system.
+
+| ![Preview](screenshots/preview_1.jpeg) |  ![Preview](screenshots/preview_2.jpeg) | ![Preview](screenshots/preview_3.jpeg) |
+
+| ![Preview](screenshots/preview_4.jpeg) | ![Preview](screenshots/preview_5.jpeg) |
 
 ## Technology Stack
 
@@ -332,10 +333,6 @@ We welcome contributions from the community! If you'd like to contribute to PicC
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-run flutter_localizations:generate
-
-
 
 
 Imagen de <a href="https://www.freepik.es/foto-gratis/mujeres-tomando-selfie-vista-frontal_32827653.htm#page=2&query=instagram%20similar&position=41&from_view=search&track=ais#position=41&page=2&query=instagram%20similar">Freepik</a>
