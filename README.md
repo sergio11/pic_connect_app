@@ -123,7 +123,7 @@ Here are some screenshots from our app to give you a glimpse of its design and f
 
 | ![Login Screen](screenshots/picture_3.png) | ![Registration Screen](screenshots/picture_4.png) | ![Login Screen](screenshots/picture_35.png) |
 
-| ![Registration Screen](screenshots/picture_36.png) |
+| ![Registration Screen](screenshots/picture_36.png) | ![Registration Screen](screenshots/gif_4.gif) |
 
 ### Home
 
@@ -145,7 +145,7 @@ Dive into the exciting world of Reels. Discover short and entertaining content c
 
 | ![Explore Reels Screen](screenshots/picture_30.png) | ![Explore Reels Screen](screenshots/picture_31.png) | ![Explore Reels Screen](screenshots/picture_32.png) |
 
-| ![Explore Reels Screen](screenshots/gif_1.gif) |
+| ![Explore Reels Screen](screenshots/gif_1.gif) | ![Explore Reels Screen](screenshots/picture_38.png) |
 
 
 ### User Profile
@@ -156,7 +156,7 @@ The user profile section is where you can view and manage your own profile. You 
 
 | ![User Profile Screen](screenshots/picture_21.png) | ![User Profile Screen](screenshots/picture_6.png) | ![User Profile Screen](screenshots/picture_7.png) |
 
-| ![User Profile Screen](screenshots/picture_33.png) | ![User Profile Screen](screenshots/gif_3.gif) |
+| ![User Profile Screen](screenshots/picture_33.png) | ![User Profile Screen](screenshots/gif_3.gif) | ![User Profile Screen](screenshots/gif_5.gif)
 
 
 ### Create Posts
