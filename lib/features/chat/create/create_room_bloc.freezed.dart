@@ -347,7 +347,7 @@ abstract class OnCreateRoomEvent implements CreateRoomEvent {
 mixin _$CreateRoomState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get authUserUuid => throw _privateConstructorUsedError;
-  String get roomCreatedId => throw _privateConstructorUsedError;
+  RoomBO? get roomCreated => throw _privateConstructorUsedError;
   List<UserBO> get users => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -365,7 +365,7 @@ abstract class $CreateRoomStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       String authUserUuid,
-      String roomCreatedId,
+      RoomBO? roomCreated,
       List<UserBO> users,
       String? errorMessage});
 }
@@ -385,7 +385,7 @@ class _$CreateRoomStateCopyWithImpl<$Res, $Val extends CreateRoomState>
   $Res call({
     Object? isLoading = null,
     Object? authUserUuid = null,
-    Object? roomCreatedId = null,
+    Object? roomCreated = freezed,
     Object? users = null,
     Object? errorMessage = freezed,
   }) {
@@ -398,10 +398,10 @@ class _$CreateRoomStateCopyWithImpl<$Res, $Val extends CreateRoomState>
           ? _value.authUserUuid
           : authUserUuid // ignore: cast_nullable_to_non_nullable
               as String,
-      roomCreatedId: null == roomCreatedId
-          ? _value.roomCreatedId
-          : roomCreatedId // ignore: cast_nullable_to_non_nullable
-              as String,
+      roomCreated: freezed == roomCreated
+          ? _value.roomCreated
+          : roomCreated // ignore: cast_nullable_to_non_nullable
+              as RoomBO?,
       users: null == users
           ? _value.users
           : users // ignore: cast_nullable_to_non_nullable
@@ -425,7 +425,7 @@ abstract class _$$_CreateRoomStateCopyWith<$Res>
   $Res call(
       {bool isLoading,
       String authUserUuid,
-      String roomCreatedId,
+      RoomBO? roomCreated,
       List<UserBO> users,
       String? errorMessage});
 }
@@ -443,7 +443,7 @@ class __$$_CreateRoomStateCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? authUserUuid = null,
-    Object? roomCreatedId = null,
+    Object? roomCreated = freezed,
     Object? users = null,
     Object? errorMessage = freezed,
   }) {
@@ -456,10 +456,10 @@ class __$$_CreateRoomStateCopyWithImpl<$Res>
           ? _value.authUserUuid
           : authUserUuid // ignore: cast_nullable_to_non_nullable
               as String,
-      roomCreatedId: null == roomCreatedId
-          ? _value.roomCreatedId
-          : roomCreatedId // ignore: cast_nullable_to_non_nullable
-              as String,
+      roomCreated: freezed == roomCreated
+          ? _value.roomCreated
+          : roomCreated // ignore: cast_nullable_to_non_nullable
+              as RoomBO?,
       users: null == users
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
@@ -478,7 +478,7 @@ class _$_CreateRoomState implements _CreateRoomState {
   const _$_CreateRoomState(
       {this.isLoading = false,
       this.authUserUuid = "",
-      this.roomCreatedId = "",
+      this.roomCreated = null,
       final List<UserBO> users = const [],
       this.errorMessage})
       : _users = users;
@@ -491,7 +491,7 @@ class _$_CreateRoomState implements _CreateRoomState {
   final String authUserUuid;
   @override
   @JsonKey()
-  final String roomCreatedId;
+  final RoomBO? roomCreated;
   final List<UserBO> _users;
   @override
   @JsonKey()
@@ -506,7 +506,7 @@ class _$_CreateRoomState implements _CreateRoomState {
 
   @override
   String toString() {
-    return 'CreateRoomState(isLoading: $isLoading, authUserUuid: $authUserUuid, roomCreatedId: $roomCreatedId, users: $users, errorMessage: $errorMessage)';
+    return 'CreateRoomState(isLoading: $isLoading, authUserUuid: $authUserUuid, roomCreated: $roomCreated, users: $users, errorMessage: $errorMessage)';
   }
 
   @override
@@ -518,8 +518,8 @@ class _$_CreateRoomState implements _CreateRoomState {
                 other.isLoading == isLoading) &&
             (identical(other.authUserUuid, authUserUuid) ||
                 other.authUserUuid == authUserUuid) &&
-            (identical(other.roomCreatedId, roomCreatedId) ||
-                other.roomCreatedId == roomCreatedId) &&
+            (identical(other.roomCreated, roomCreated) ||
+                other.roomCreated == roomCreated) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
@@ -527,7 +527,7 @@ class _$_CreateRoomState implements _CreateRoomState {
 
   @override
   int get hashCode => Object.hash(runtimeType, isLoading, authUserUuid,
-      roomCreatedId, const DeepCollectionEquality().hash(_users), errorMessage);
+      roomCreated, const DeepCollectionEquality().hash(_users), errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -540,7 +540,7 @@ abstract class _CreateRoomState implements CreateRoomState {
   const factory _CreateRoomState(
       {final bool isLoading,
       final String authUserUuid,
-      final String roomCreatedId,
+      final RoomBO? roomCreated,
       final List<UserBO> users,
       final String? errorMessage}) = _$_CreateRoomState;
 
@@ -549,7 +549,7 @@ abstract class _CreateRoomState implements CreateRoomState {
   @override
   String get authUserUuid;
   @override
-  String get roomCreatedId;
+  RoomBO? get roomCreated;
   @override
   List<UserBO> get users;
   @override

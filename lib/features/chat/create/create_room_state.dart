@@ -5,7 +5,7 @@ class CreateRoomState with _$CreateRoomState {
   const factory CreateRoomState({
     @Default(false) final bool isLoading,
     @Default("") final String authUserUuid,
-    @Default("") final String roomCreatedId,
+    @Default(null) final RoomBO? roomCreated,
     @Default([]) final List<UserBO> users,
     final String? errorMessage
   }) = _CreateRoomState;

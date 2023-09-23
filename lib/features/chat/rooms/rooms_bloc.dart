@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pic_connect/domain/models/room.dart';
-import 'package:pic_connect/domain/usecase/base_use_case.dart';
 import 'package:pic_connect/domain/usecase/delete_room_use_case.dart';
 import 'package:pic_connect/domain/usecase/find_user_auth_rooms_use_case.dart';
 
@@ -25,7 +24,8 @@ class RoomsBloc extends Bloc<RoomsEvent, RoomsState> {
   FutureOr<void> onLoadUserRoomsEventHandler(
       OnLoadUserRoomsEvent event, Emitter<RoomsState> emit) async {
     emit(state.copyWith(isLoading: true, authUserUuid: event.authUserUuid));
-    final response = await findUserAuthRoomsUseCase(const DefaultParams());
+    final response = await findUserAuthRoomsUseCase(
+        FindUserAuthRoomsUseCaseParams(event.authUserUuid));
     response.fold(
         (error) => emit(state.copyWith(
             isLoading: false, rooms: [], errorMessage: error.message)),

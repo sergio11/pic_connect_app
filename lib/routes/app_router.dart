@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:pic_connect/di/service_locator.dart';
+import 'package:pic_connect/domain/models/room.dart';
 import 'package:pic_connect/features/add/add_post_bloc.dart';
 import 'package:pic_connect/features/add/add_post_screen.dart';
 import 'package:pic_connect/features/app/app_bloc.dart';
@@ -269,12 +270,12 @@ class AppRouter {
                     ..add(OnLoadUsersEvent(
                         context.read<AppBloc>().state.authUserUid!)),
                   child: CreateRoomScreen(
-                    onRoomCreated: (String roomId) {
+                    onRoomCreated: (RoomBO room) {
                       if (context.canPop()) {
                         context.pop();
                       }
                       context.push(AppRoutesEnum.messages.screenPath,
-                          extra: roomId);
+                          extra: room);
                     },
                   ),
                 ),
@@ -299,10 +300,10 @@ class AppRouter {
                               context.read<AppBloc>().state.authUserUid!));
                         });
                       },
-                      onOpenRoom: (String roomId) {
+                      onOpenRoom: (RoomBO room) {
                         context
                             .push(AppRoutesEnum.messages.screenPath,
-                                extra: roomId)
+                                extra: room)
                             .then((value) {
                           roomsBloc.add(OnLoadUserRoomsEvent(
                               context.read<AppBloc>().state.authUserUid!));
@@ -316,7 +317,7 @@ class AppRouter {
           pageBuilder: (context, state) => CommonTransitionPage(
               key: state.pageKey,
               child: MessagesScreen(
-                roomUuid: state.extra as String,
+                roomBO: state.extra as RoomBO,
               ))),
       GoRoute(
           path: AppRoutesEnum.imageEditor.screenPath,

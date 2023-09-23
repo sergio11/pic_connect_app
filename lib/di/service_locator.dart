@@ -134,7 +134,7 @@ setupServiceLocator() async {
   serviceLocator.registerFactory<Mapper<Room, RoomDTO>>(() => RoomDtoMapper());
   serviceLocator
       .registerFactory<FullMapper<User, UserDTO>>(() => UserChatDtoMapper());
-  serviceLocator.registerFactory<Mapper<RoomDTO, RoomBO>>(() => RoomBoMapper());
+  serviceLocator.registerFactory<Mapper<RoomBoMapperDataInput, RoomBO>>(() => RoomBoMapper());
   // DataSources //
   serviceLocator.registerLazySingleton<UserDatasource>(() => UserDatasourceImpl(
       firestore: serviceLocator(),

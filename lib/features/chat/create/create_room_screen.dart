@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pic_connect/domain/models/room.dart';
 import 'package:pic_connect/features/chat/create/create_room_bloc.dart';
-import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/features/core/widgets/user_list_tile.dart';
@@ -10,7 +10,7 @@ import 'package:pic_connect/utils/colors.dart';
 import 'package:pic_connect/utils/utils.dart';
 
 class CreateRoomScreen extends StatefulWidget {
-  final Function(String roomId) onRoomCreated;
+  final Function(RoomBO room) onRoomCreated;
 
   const CreateRoomScreen({super.key, required this.onRoomCreated});
 
@@ -39,8 +39,8 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
           showErrorSnackBar(context: context, message: state.errorMessage!);
         }
       }
-      if(state.roomCreatedId.isNotEmpty) {
-        widget.onRoomCreated(state.roomCreatedId);
+      if(state.roomCreated != null) {
+        widget.onRoomCreated(state.roomCreated!);
       }
     }, builder: (context, state) {
       return state.isLoading

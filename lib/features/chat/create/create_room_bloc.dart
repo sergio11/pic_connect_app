@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/domain/models/room.dart';
 import 'package:pic_connect/domain/models/user.dart';
 import 'package:pic_connect/domain/usecase/base_use_case.dart';
 import 'package:pic_connect/domain/usecase/create_new_roow_use_case.dart';
@@ -41,6 +42,6 @@ class CreateRoomBloc extends Bloc<CreateRoomEvent, CreateRoomState> {
             (error) =>
             emit(state.copyWith(isLoading: false, errorMessage: error.message)),
             (room) => emit(state.copyWith(
-            isLoading: false, errorMessage: null, roomCreatedId: room.uid)));
+            isLoading: false, errorMessage: null, roomCreated: room)));
   }
 }

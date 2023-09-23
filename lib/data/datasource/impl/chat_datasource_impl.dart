@@ -20,10 +20,7 @@ class ChatDatasourceImpl extends ChatDatasource {
 
   @override
   Future<RoomDTO> createRoom(UserDTO otherUser) async {
-    final roomCreated = await firebaseChatCore.createRoom(userMapper.mapToFrom(otherUser), metadata: {
-      "room_title": otherUser.username,
-      "room_image_url": otherUser.photoUrl
-    });
+    final roomCreated = await firebaseChatCore.createRoom(userMapper.mapToFrom(otherUser));
     return roomMapper(roomCreated);
   }
 

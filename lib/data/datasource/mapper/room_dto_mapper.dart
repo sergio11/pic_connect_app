@@ -12,11 +12,10 @@ class RoomDtoMapper extends Mapper<Room, RoomDTO> {
         : '';
     return RoomDTO(
         uid: object.id,
-        name: object.metadata?["room_title"],
         type: object.type?.name ?? RoomType.direct.name,
         createAt: object.createdAt,
         updatedAt: object.updatedAt,
-        imageUrl: object.metadata?["room_image_url"],
-        subtitle: subtitle);
+        subtitle: subtitle,
+        userIds: object.users.map((e) => e.id).toList());
   }
 }

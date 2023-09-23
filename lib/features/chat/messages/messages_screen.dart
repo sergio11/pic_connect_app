@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pic_connect/domain/models/room.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/utils/colors.dart';
@@ -20,10 +21,10 @@ import 'package:provider/provider.dart';
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({
     super.key,
-    required this.roomUuid,
+    required this.roomBO,
   });
 
-  final String roomUuid;
+  final RoomBO roomBO;
 
   @override
   State<MessagesScreen> createState() => MessagesScreenState();
@@ -100,7 +101,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           uri: uri,
         );
 
-        FirebaseChatCore.instance.sendMessage(message, widget.roomUuid);
+        FirebaseChatCore.instance.sendMessage(message, widget.roomBO.uid);
         _setAttachmentUploading(false);
       } finally {
         _setAttachmentUploading(false);
@@ -138,7 +139,7 @@ class MessagesScreenState extends State<MessagesScreen> {
 
         FirebaseChatCore.instance.sendMessage(
           message,
-          widget.roomUuid,
+          widget.roomBO.uid,
         );
         _setAttachmentUploading(false);
       } finally {
@@ -156,7 +157,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           final updatedMessage = message.copyWith(isLoading: true);
           FirebaseChatCore.instance.updateMessage(
             updatedMessage,
-            widget.roomUuid,
+            widget.roomBO.uid,
           );
 
           final client = http.Client();
@@ -173,7 +174,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           final updatedMessage = message.copyWith(isLoading: false);
           FirebaseChatCore.instance.updateMessage(
             updatedMessage,
-            widget.roomUuid,
+            widget.roomBO.uid,
           );
         }
       }
@@ -188,13 +189,13 @@ class MessagesScreenState extends State<MessagesScreen> {
   ) {
     final updatedMessage = message.copyWith(previewData: previewData);
 
-    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.roomUuid);
+    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.roomBO.uid);
   }
 
   void _handleSendPressed(types.PartialText message) {
     FirebaseChatCore.instance.sendMessage(
       message,
-      widget.roomUuid,
+      widget.roomBO.uid,
     );
   }
 
@@ -229,8 +230,9 @@ class MessagesScreenState extends State<MessagesScreen> {
 
   @override
   Widget build(BuildContext context) => StreamBuilder<types.Room>(
-        initialData: types.Room.fromJson({ 'id': widget.roomUuid, 'users': const [] }),
-        stream: FirebaseChatCore.instance.room(widget.roomUuid),
+        initialData:
+            types.Room.fromJson({'id': widget.roomBO.uid, 'users': const []}),
+        stream: FirebaseChatCore.instance.room(widget.roomBO.uid),
         builder: (context, snapshot) => Scaffold(
           backgroundColor: mobileBackgroundColor,
           appBar: AppBar(
@@ -241,10 +243,11 @@ class MessagesScreenState extends State<MessagesScreen> {
             title: Row(
               children: [
                 buildCircleAvatar(
-                    imageUrl: snapshot.data?.metadata?["room_image_url"] ?? '',
-                    radius: 20),
-                const SizedBox(width: 10,),
-                Text(snapshot.data?.metadata?["room_title"] ?? 'Chat',
+                    imageUrl: widget.roomBO.imageUrl ?? '', radius: 20),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(widget.roomBO.name ?? 'Chat',
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge

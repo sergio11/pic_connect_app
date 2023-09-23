@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pic_connect/domain/models/room.dart';
-import 'package:pic_connect/features/chat/create/create_room_bloc.dart';
 import 'package:pic_connect/features/chat/rooms/rooms_bloc.dart';
 import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/features/core/widgets/common_button.dart';
@@ -13,7 +12,7 @@ import 'package:pic_connect/utils/utils.dart';
 
 class RoomsScreen extends StatefulWidget {
   final Function() onCreateNewRoom;
-  final Function(String roomId) onOpenRoom;
+  final Function(RoomBO room) onOpenRoom;
 
   const RoomsScreen(
       {super.key, required this.onCreateNewRoom, required this.onOpenRoom});
@@ -109,7 +108,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
                             vertical: 4, horizontal: 4),
                         color: primaryColor,
                         child: InkWell(
-                          onTap: () => widget.onOpenRoom(room.uid),
+                          onTap: () => widget.onOpenRoom(room),
                           child: _buildRoomItem(room),
                         ));
                   },
