@@ -11,6 +11,7 @@
 migrate_working_dir/
 
 android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
 
 # IntelliJ related
 *.iml
