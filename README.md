@@ -181,7 +181,7 @@ Explore an engaging conversation about photography on PicConnect. Users share th
 
 | ![Chat Screen](screenshots/picture_39.png) | ![Chat Screen](screenshots/picture_40.png) | ![Chat Screen](screenshots/picture_41.png) |
 
-| ![Chat Screen](screenshots/picture_42.png) |
+| ![Chat Screen](screenshots/picture_42.png) | ![Chat Screen](screenshots/picture_49.png) | ![Chat Screen](screenshots/picture_50.png) |
 
 ## Dependencies
 
