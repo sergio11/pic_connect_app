@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_connect/domain/models/room.dart';
+import 'package:pic_connect/features/chat/create/create_room_bloc.dart';
 import 'package:pic_connect/features/chat/rooms/rooms_bloc.dart';
+import 'package:pic_connect/features/core/helpers.dart';
+import 'package:pic_connect/features/core/widgets/common_button.dart';
 import 'package:pic_connect/features/core/widgets/common_screen_progress_indicator.dart';
 import 'package:pic_connect/features/core/widgets/empty_state_widget.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pic_connect/utils/utils.dart';
 
 class RoomsScreen extends StatefulWidget {
-
   final Function() onCreateNewRoom;
+  final Function(String roomId) onOpenRoom;
 
-  const RoomsScreen({
-    super.key,
-    required this.onCreateNewRoom
-  });
+  const RoomsScreen(
+      {super.key, required this.onCreateNewRoom, required this.onOpenRoom});
 
   @override
   State<RoomsScreen> createState() => _RoomsScreenState();
@@ -24,6 +27,14 @@ class _RoomsScreenState extends State<RoomsScreen> {
 
   void _onRefresh(RoomsState state) {
     context.read<RoomsBloc>().add(OnLoadUserRoomsEvent(state.authUserUuid));
+  }
+
+  void _onDeleteRoom(String roomId) {
+    showAlertDialog(
+        context: context,
+        title: _l10n.deleteRoomDialogTitle,
+        description: _l10n.deleteRoomDialogDescription,
+        onAcceptPressed: () => context.read<RoomsBloc>().add(OnDeleteRoomEvent(roomId)));
   }
 
   @override
@@ -61,7 +72,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
           ),
         ],
         backgroundColor: appBarBackgroundColor,
-        title: Text("Rooms",
+        title: Text(_l10n.roomsMainTitleText,
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -92,40 +103,53 @@ class _RoomsScreenState extends State<RoomsScreen> {
                     height: 8,
                   ),
                   itemBuilder: (context, index) {
+                    final room = state.rooms[index];
                     return Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 4, horizontal: 4),
                         color: primaryColor,
                         child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            child: Row(
-                              children: [
-                                //_buildAvatar(room),
-                                Text(
-                                  'Room Text',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                          color: accentColor,
-                                          fontWeight: FontWeight.normal),
-                                ),
-                              ],
-                            ),
-                          ),
+                          onTap: () => widget.onOpenRoom(room.uid),
+                          child: _buildRoomItem(room),
                         ));
                   },
                 )
               : EmptyStateWidget(
-                  message: "You don't have any room created",
+                  message: _l10n.noRoomsFoundText,
                   iconData: Icons.mood_bad,
                   onRetry: () => _onRefresh(state),
                 ),
         ));
+  }
+
+  Widget _buildRoomItem(RoomBO room) {
+    return ListTile(
+      leading: SizedBox(
+        width: 40,
+        height: 40,
+        child: buildCircleAvatar(imageUrl: room.imageUrl ?? '', radius: 22),
+      ),
+      title: Text(
+        room.name ?? '',
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge
+            ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text("Message",
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context)
+              .textTheme
+              .labelMedium
+              ?.copyWith(color: accentColor)),
+      trailing: CommonButton(
+        text: _l10n.deleteRoomButtonText,
+        textColor: primaryColor,
+        borderColor: primaryColor,
+        onPressed: () => _onDeleteRoom(room.uid),
+        sizeType: CommonButtonSizeType.tiny,
+      ),
+    );
   }
 }

@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RoomsEvent {
-  String get authUserUuid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String authUserUuid) onLoadUserRooms,
+    required TResult Function(String roomUuid) onDeleteRoom,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String authUserUuid)? onLoadUserRooms,
+    TResult? Function(String roomUuid)? onDeleteRoom,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String authUserUuid)? onLoadUserRooms,
+    TResult Function(String roomUuid)? onDeleteRoom,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadUserRoomsEvent value) onLoadUserRooms,
+    required TResult Function(OnDeleteRoomEvent value) onDeleteRoom,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadUserRoomsEvent value)? onLoadUserRooms,
+    TResult? Function(OnDeleteRoomEvent value)? onDeleteRoom,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadUserRoomsEvent value)? onLoadUserRooms,
+    TResult Function(OnDeleteRoomEvent value)? onDeleteRoom,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $RoomsEventCopyWith<RoomsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +61,6 @@ abstract class $RoomsEventCopyWith<$Res> {
   factory $RoomsEventCopyWith(
           RoomsEvent value, $Res Function(RoomsEvent) then) =
       _$RoomsEventCopyWithImpl<$Res, RoomsEvent>;
-  @useResult
-  $Res call({String authUserUuid});
 }
 
 /// @nodoc
@@ -73,28 +72,13 @@ class _$RoomsEventCopyWithImpl<$Res, $Val extends RoomsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? authUserUuid = null,
-  }) {
-    return _then(_value.copyWith(
-      authUserUuid: null == authUserUuid
-          ? _value.authUserUuid
-          : authUserUuid // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$OnLoadUserRoomsEventCopyWith<$Res>
-    implements $RoomsEventCopyWith<$Res> {
+abstract class _$$OnLoadUserRoomsEventCopyWith<$Res> {
   factory _$$OnLoadUserRoomsEventCopyWith(_$OnLoadUserRoomsEvent value,
           $Res Function(_$OnLoadUserRoomsEvent) then) =
       __$$OnLoadUserRoomsEventCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String authUserUuid});
 }
@@ -157,6 +141,7 @@ class _$OnLoadUserRoomsEvent implements OnLoadUserRoomsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String authUserUuid) onLoadUserRooms,
+    required TResult Function(String roomUuid) onDeleteRoom,
   }) {
     return onLoadUserRooms(authUserUuid);
   }
@@ -165,6 +150,7 @@ class _$OnLoadUserRoomsEvent implements OnLoadUserRoomsEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String authUserUuid)? onLoadUserRooms,
+    TResult? Function(String roomUuid)? onDeleteRoom,
   }) {
     return onLoadUserRooms?.call(authUserUuid);
   }
@@ -173,6 +159,7 @@ class _$OnLoadUserRoomsEvent implements OnLoadUserRoomsEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String authUserUuid)? onLoadUserRooms,
+    TResult Function(String roomUuid)? onDeleteRoom,
     required TResult orElse(),
   }) {
     if (onLoadUserRooms != null) {
@@ -185,6 +172,7 @@ class _$OnLoadUserRoomsEvent implements OnLoadUserRoomsEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(OnLoadUserRoomsEvent value) onLoadUserRooms,
+    required TResult Function(OnDeleteRoomEvent value) onDeleteRoom,
   }) {
     return onLoadUserRooms(this);
   }
@@ -193,6 +181,7 @@ class _$OnLoadUserRoomsEvent implements OnLoadUserRoomsEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(OnLoadUserRoomsEvent value)? onLoadUserRooms,
+    TResult? Function(OnDeleteRoomEvent value)? onDeleteRoom,
   }) {
     return onLoadUserRooms?.call(this);
   }
@@ -201,6 +190,7 @@ class _$OnLoadUserRoomsEvent implements OnLoadUserRoomsEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(OnLoadUserRoomsEvent value)? onLoadUserRooms,
+    TResult Function(OnDeleteRoomEvent value)? onDeleteRoom,
     required TResult orElse(),
   }) {
     if (onLoadUserRooms != null) {
@@ -214,11 +204,143 @@ abstract class OnLoadUserRoomsEvent implements RoomsEvent {
   const factory OnLoadUserRoomsEvent(final String authUserUuid) =
       _$OnLoadUserRoomsEvent;
 
-  @override
   String get authUserUuid;
-  @override
   @JsonKey(ignore: true)
   _$$OnLoadUserRoomsEventCopyWith<_$OnLoadUserRoomsEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnDeleteRoomEventCopyWith<$Res> {
+  factory _$$OnDeleteRoomEventCopyWith(
+          _$OnDeleteRoomEvent value, $Res Function(_$OnDeleteRoomEvent) then) =
+      __$$OnDeleteRoomEventCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String roomUuid});
+}
+
+/// @nodoc
+class __$$OnDeleteRoomEventCopyWithImpl<$Res>
+    extends _$RoomsEventCopyWithImpl<$Res, _$OnDeleteRoomEvent>
+    implements _$$OnDeleteRoomEventCopyWith<$Res> {
+  __$$OnDeleteRoomEventCopyWithImpl(
+      _$OnDeleteRoomEvent _value, $Res Function(_$OnDeleteRoomEvent) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? roomUuid = null,
+  }) {
+    return _then(_$OnDeleteRoomEvent(
+      null == roomUuid
+          ? _value.roomUuid
+          : roomUuid // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnDeleteRoomEvent implements OnDeleteRoomEvent {
+  const _$OnDeleteRoomEvent(this.roomUuid);
+
+  @override
+  final String roomUuid;
+
+  @override
+  String toString() {
+    return 'RoomsEvent.onDeleteRoom(roomUuid: $roomUuid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnDeleteRoomEvent &&
+            (identical(other.roomUuid, roomUuid) ||
+                other.roomUuid == roomUuid));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, roomUuid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnDeleteRoomEventCopyWith<_$OnDeleteRoomEvent> get copyWith =>
+      __$$OnDeleteRoomEventCopyWithImpl<_$OnDeleteRoomEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String authUserUuid) onLoadUserRooms,
+    required TResult Function(String roomUuid) onDeleteRoom,
+  }) {
+    return onDeleteRoom(roomUuid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String authUserUuid)? onLoadUserRooms,
+    TResult? Function(String roomUuid)? onDeleteRoom,
+  }) {
+    return onDeleteRoom?.call(roomUuid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String authUserUuid)? onLoadUserRooms,
+    TResult Function(String roomUuid)? onDeleteRoom,
+    required TResult orElse(),
+  }) {
+    if (onDeleteRoom != null) {
+      return onDeleteRoom(roomUuid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(OnLoadUserRoomsEvent value) onLoadUserRooms,
+    required TResult Function(OnDeleteRoomEvent value) onDeleteRoom,
+  }) {
+    return onDeleteRoom(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(OnLoadUserRoomsEvent value)? onLoadUserRooms,
+    TResult? Function(OnDeleteRoomEvent value)? onDeleteRoom,
+  }) {
+    return onDeleteRoom?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(OnLoadUserRoomsEvent value)? onLoadUserRooms,
+    TResult Function(OnDeleteRoomEvent value)? onDeleteRoom,
+    required TResult orElse(),
+  }) {
+    if (onDeleteRoom != null) {
+      return onDeleteRoom(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnDeleteRoomEvent implements RoomsEvent {
+  const factory OnDeleteRoomEvent(final String roomUuid) = _$OnDeleteRoomEvent;
+
+  String get roomUuid;
+  @JsonKey(ignore: true)
+  _$$OnDeleteRoomEventCopyWith<_$OnDeleteRoomEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

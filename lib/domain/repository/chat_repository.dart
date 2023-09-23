@@ -6,4 +6,6 @@ abstract class ChatRepository {
   Future<Either<Failure, RoomBO>> createRoomWithUser(String userUuid);
 
   Future<Either<Failure, List<RoomBO>>> findRooms();
+
+  Future<Either<Failure, bool>> deleteRoom(String roomUuid);
 }

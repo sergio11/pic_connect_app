@@ -89,11 +89,18 @@
   "publicationsFoundMainTitle": "Publications (%s)",
   "noFollowersFoundText": "You don't have followers",
   "noRoomsFoundText": "You don't have any room created",
-  "createRoomNoUsersFoundText": "No users found",
-  "createRoomMainTitle": "Users",
+  "roomsMainTitleText": "Conversations",
+  "deleteRoomDialogTitle": "Remove this room?",
+  "deleteRoomDialogDescription": "Are you sure to remove this room? all message will be removed.",
+  "deleteRoomButtonText": "Delete",
+  "createRoomNoUsersFoundText": "No users found to create room",
+  "createRoomMainTitle": "Start conversation",
   "onBoardingSignInText": "Sign In",
   "onBoardingSignUpText": "Sign Up",
   "noPicturesFoundText": "No pictures found",
   "noReelsFoundText": "No Reels found",
-  "noBookmarksFoundText": "No Bookmarks saved"
+  "noBookmarksFoundText": "No Bookmarks saved",
+  "messagePhotoTypeText": "Photo",
+  "messageFileTypeText": "File",
+  "messageCancelText": "Cancel"
 }

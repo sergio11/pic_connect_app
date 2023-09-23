@@ -147,7 +147,6 @@ class CommonDialogBoxState extends State<CommonDialogBox> with SingleTickerProvi
       buttons.add(Flexible(
           child: CommonButton(
         text: widget.cancelledText!,
-        backgroundColor: accentColor,
         textColor: primaryColor,
         borderColor: accentColor,
         reverseStyle: true,
@@ -161,7 +160,6 @@ class CommonDialogBoxState extends State<CommonDialogBox> with SingleTickerProvi
     buttons.add(Flexible(
       child: CommonButton(
         text: widget.acceptText,
-        backgroundColor: secondaryColor,
         textColor: primaryColor,
         borderColor: secondaryColor,
         sizeType: CommonButtonSizeType.small,

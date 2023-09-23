@@ -14,7 +14,6 @@ class CommonButton extends StatelessWidget {
   static const double defaultLargeButtonHeight = 50;
 
   final Function()? onPressed;
-  final Color backgroundColor;
   final Color borderColor;
   final String text;
   final Color textColor;
@@ -24,7 +23,6 @@ class CommonButton extends StatelessWidget {
 
   const CommonButton({
     Key? key,
-    required this.backgroundColor,
     required this.borderColor,
     required this.text,
     required this.textColor,

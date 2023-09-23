@@ -89,11 +89,18 @@
   "publicationsFoundMainTitle": "Publicaciones (%s)",
   "noFollowersFoundText": "No se han encontrado seguidores",
   "noRoomsFoundText": "No se han encontrado ningún chat",
-  "createRoomNoUsersFoundText": "No se han encontrado usuarios",
-  "createRoomMainTitle": "Usuarios",
+  "createRoomNoUsersFoundText": "No se han encontrado usuarios para iniciar conversación",
+  "createRoomMainTitle": "Iniciar nueva conversación",
   "onBoardingSignInText": "Iniciar Sessión",
   "onBoardingSignUpText": "Registrarse",
   "noPicturesFoundText": "No se han encontrado imágenes",
   "noReelsFoundText": "No se han encontrado Reels",
-  "noBookmarksFoundText": "No dispones de ninguna publicación en tus colecciones"
+  "noBookmarksFoundText": "No dispones de ninguna publicación en tus colecciones",
+  "roomsMainTitleText": "Conversaciones",
+  "deleteRoomDialogTitle": "¿Eliminar esta conversación?",
+  "deleteRoomDialogDescription": "¿Estás seguro de que deseas eliminar esta conversación? Todos los mensajes serán eliminados.",
+  "deleteRoomButtonText": "Borrar",
+  "messagePhotoTypeText": "Foto",
+  "messageFileTypeText": "Fichero",
+  "messageCancelText": "Cancelar"
 }

@@ -153,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSignInButton(SignInState state) {
     return CommonButton(
       text: _l10n.signInButtonText,
-      backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: onLoginClicked,

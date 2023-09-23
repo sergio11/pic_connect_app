@@ -10,9 +10,7 @@ class RoomBoMapper extends Mapper<RoomDTO, RoomBO> {
         name: object.name,
         type: object.type,
         imageUrl: object.imageUrl,
-        users: [],
-        lastMessages: [],
         updatedAt: object.updatedAt,
-        createAt: object.createAt);
+        createAt: object.createAt, subtitle: '');
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:pic_connect/data/datasource/chat_datasource.dart';
@@ -21,8 +20,10 @@ class ChatDatasourceImpl extends ChatDatasource {
 
   @override
   Future<RoomDTO> createRoom(UserDTO otherUser) async {
-    final roomCreated =
-        await firebaseChatCore.createRoom(userMapper.mapToFrom(otherUser));
+    final roomCreated = await firebaseChatCore.createRoom(userMapper.mapToFrom(otherUser), metadata: {
+      "room_title": otherUser.username,
+      "room_image_url": otherUser.photoUrl
+    });
     return roomMapper(roomCreated);
   }
 
@@ -30,5 +31,10 @@ class ChatDatasourceImpl extends ChatDatasource {
   Future<List<RoomDTO>> findRooms() async {
     final roomList = await firebaseChatCore.rooms(orderByUpdatedAt: true).first;
     return roomList.map((room) => roomMapper(room)).toList();
+  }
+
+  @override
+  Future<void> deleteRoom(String roomUuid) async {
+    await firebaseChatCore.deleteRoom(roomUuid);
   }
 }

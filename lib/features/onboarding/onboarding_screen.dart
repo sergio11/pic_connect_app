@@ -165,7 +165,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget _buildSignInButton() {
     return CommonButton(
       text: "Sign In",
-      backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: widget.onSignInPressed,
@@ -176,7 +175,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget _buildSignUpButton() {
     return CommonButton(
       text: "Sign Up",
-      backgroundColor: accentColor,
       textColor: primaryColor,
       borderColor: accentColor,
       onPressed: widget.onSignUpPressed,

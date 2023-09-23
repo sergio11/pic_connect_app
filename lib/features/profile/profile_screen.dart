@@ -304,7 +304,6 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
   Widget _buildShareProfileButton(ProfileState state) {
     return CommonButton(
       text: _l10n.shareProfileButtonText,
-      backgroundColor: accentColor,
       textColor: primaryColor,
       borderColor: accentColor,
       reverseStyle: true,
@@ -316,7 +315,6 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
   Widget _buildEditProfileButton(ProfileState state) {
     return CommonButton(
       text: _l10n.editProfileButtonText,
-      backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: () => widget.onGoToEditProfileScreen(state.userUid),
@@ -327,7 +325,6 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
   Widget _buildUnFollowButton(ProfileState state) {
     return CommonButton(
       text: _l10n.unFollowButtonText,
-      backgroundColor: accentColor,
       textColor: primaryColor,
       borderColor: accentColor,
       onPressed: () =>
@@ -339,7 +336,6 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
   Widget _buildFollowButton(ProfileState state) {
     return CommonButton(
       text: _l10n.followButtonText,
-      backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: () =>

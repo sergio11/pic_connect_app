@@ -38,7 +38,6 @@ class EmptyStateWidget extends StatelessWidget {
           if (onRetry != null)
             CommonButton(
               text: "Retry",
-              backgroundColor: secondaryColor,
               textColor: primaryColor,
               borderColor: secondaryColor,
               onPressed: onRetry,

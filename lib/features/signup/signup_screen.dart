@@ -213,7 +213,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildSignUpButton(SignUpState state) {
     return CommonButton(
       text: _l10n.signUpButtonText,
-      backgroundColor: secondaryColor,
       textColor: primaryColor,
       borderColor: secondaryColor,
       onPressed: onSignUpUser,

@@ -10,17 +10,17 @@ class UserListTile extends StatelessWidget {
   final UserBO userBO;
   final bool isFollowedByAuthUser;
   final bool isAuthUser;
-  final VoidCallback onFollowPressed;
-  final VoidCallback onUnFollowPressed;
+  final VoidCallback? onFollowPressed;
+  final VoidCallback? onUnFollowPressed;
   final bool isDisabled;
 
   const UserListTile(
       {super.key,
       required this.userBO,
-      required this.onFollowPressed,
-      required this.onUnFollowPressed,
-      required this.isFollowedByAuthUser,
       required this.isAuthUser,
+      this.onFollowPressed,
+      this.onUnFollowPressed,
+      this.isFollowedByAuthUser = false,
       this.isDisabled = false});
 
   @override
@@ -39,28 +39,31 @@ class UserListTile extends StatelessWidget {
             .labelLarge
             ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
       ),
-      subtitle: Text(userBO.bio != null && userBO.bio!.isNotEmpty ? userBO.bio! : "No user information provided",
+      subtitle: Text(
+          userBO.bio != null && userBO.bio!.isNotEmpty
+              ? userBO.bio!
+              : "No user information provided",
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context)
               .textTheme
               .labelMedium
               ?.copyWith(color: accentColor)),
-      trailing: !isAuthUser
+      trailing: !isAuthUser &&
+              onUnFollowPressed != null &&
+              onFollowPressed != null
           ? CommonButton(
               text: isFollowedByAuthUser
                   ? l10n.unFollowButtonText
                   : l10n.followButtonText,
-              backgroundColor:
-                  isFollowedByAuthUser ? accentColor : secondaryColor,
               textColor: primaryColor,
               borderColor: isFollowedByAuthUser ? accentColor : secondaryColor,
               isDisabled: isDisabled,
               onPressed: () {
                 if (isFollowedByAuthUser) {
-                  onUnFollowPressed();
+                  onUnFollowPressed?.call();
                 } else {
-                  onFollowPressed();
+                  onFollowPressed?.call();
                 }
               },
               sizeType: CommonButtonSizeType.tiny,

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
@@ -12,15 +11,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/utils/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({
     super.key,
-    required this.room,
+    required this.roomUuid,
   });
 
-  final types.Room room;
+  final String roomUuid;
 
   @override
   State<MessagesScreen> createState() => MessagesScreenState();
@@ -28,6 +30,8 @@ class MessagesScreen extends StatefulWidget {
 
 class MessagesScreenState extends State<MessagesScreen> {
   bool _isAttachmentUploading = false;
+  late AppLocalizations _l10n;
+  late EventController _eventController;
 
   void _handleAttachmentPressed() {
     showModalBottomSheet<void>(
@@ -43,9 +47,9 @@ class MessagesScreenState extends State<MessagesScreen> {
                   Navigator.pop(context);
                   _handleImageSelection();
                 },
-                child: const Align(
+                child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Photo'),
+                  child: Text(_l10n.messagePhotoTypeText),
                 ),
               ),
               TextButton(
@@ -53,16 +57,16 @@ class MessagesScreenState extends State<MessagesScreen> {
                   Navigator.pop(context);
                   _handleFileSelection();
                 },
-                child: const Align(
+                child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('File'),
+                  child: Text(_l10n.messageFileTypeText),
                 ),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Align(
+                child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Cancel'),
+                  child: Text(_l10n.messageCancelText),
                 ),
               ),
             ],
@@ -95,7 +99,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           uri: uri,
         );
 
-        FirebaseChatCore.instance.sendMessage(message, widget.room.id);
+        FirebaseChatCore.instance.sendMessage(message, widget.roomUuid);
         _setAttachmentUploading(false);
       } finally {
         _setAttachmentUploading(false);
@@ -133,7 +137,7 @@ class MessagesScreenState extends State<MessagesScreen> {
 
         FirebaseChatCore.instance.sendMessage(
           message,
-          widget.room.id,
+          widget.roomUuid,
         );
         _setAttachmentUploading(false);
       } finally {
@@ -151,7 +155,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           final updatedMessage = message.copyWith(isLoading: true);
           FirebaseChatCore.instance.updateMessage(
             updatedMessage,
-            widget.room.id,
+            widget.roomUuid,
           );
 
           final client = http.Client();
@@ -168,7 +172,7 @@ class MessagesScreenState extends State<MessagesScreen> {
           final updatedMessage = message.copyWith(isLoading: false);
           FirebaseChatCore.instance.updateMessage(
             updatedMessage,
-            widget.room.id,
+            widget.roomUuid,
           );
         }
       }
@@ -183,13 +187,13 @@ class MessagesScreenState extends State<MessagesScreen> {
   ) {
     final updatedMessage = message.copyWith(previewData: previewData);
 
-    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.room.id);
+    FirebaseChatCore.instance.updateMessage(updatedMessage, widget.roomUuid);
   }
 
   void _handleSendPressed(types.PartialText message) {
     FirebaseChatCore.instance.sendMessage(
       message,
-      widget.room.id,
+      widget.roomUuid,
     );
   }
 
@@ -197,6 +201,29 @@ class MessagesScreenState extends State<MessagesScreen> {
     setState(() {
       _isAttachmentUploading = uploading;
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _l10n = AppLocalizations.of(context);
+    _eventController = context.read<EventController>();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _eventController.launchEvent(HideBottomBarEvent());
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _eventController.launchEvent(ShowBottomBarEvent());
+    });
+    super.dispose();
   }
 
   @override
@@ -214,8 +241,8 @@ class MessagesScreenState extends State<MessagesScreen> {
                   ?.copyWith(color: accentColor)),
         ),
         body: StreamBuilder<types.Room>(
-          initialData: widget.room,
-          stream: FirebaseChatCore.instance.room(widget.room.id),
+          initialData: null,
+          stream: FirebaseChatCore.instance.room(widget.roomUuid),
           builder: (context, snapshot) => StreamBuilder<List<types.Message>>(
             initialData: const [],
             stream: FirebaseChatCore.instance.messages(snapshot.data!),
