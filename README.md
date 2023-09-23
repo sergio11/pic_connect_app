@@ -173,6 +173,14 @@ This section allows you to share your moments, photos, and experiences with your
 
 | ![Create Post Screen](screenshots/picture_10.png) | ![Create Post Screen](screenshots/picture_11.png) | ![Create Post Screen](screenshots/picture_12.png) |
 
+### Engaging Photography Chat 📸: Explore a Conversation on Stunning Captures!
+
+Explore an engaging conversation about photography on PicConnect. Users share their thoughts on stunning imagery, photography tips, and locations for capturing unforgettable moments. Join this inspiring chat about the art of moment-capture.
+
+| ![Chat Screen](screenshots/picture_39.png) | ![Chat Screen](screenshots/picture_40.png) | ![Chat Screen](screenshots/picture_41.png) |
+
+| ![Chat Screen](screenshots/picture_42.png) |
+
 ## Dependencies
 
 **Flutter SDK**
