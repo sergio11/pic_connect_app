@@ -49,6 +49,8 @@ PicConnect is built using the following technologies:
 
 - **Dart**: The Dart programming language is the backbone of Flutter, and we use it extensively to write clean and efficient code for our app.
 
+ | ![App Preview](screenshots/app_preview_picture.png) |
+
 ## Why Flutter and Firebase
 
 We chose Flutter and Firebase for PicConnect for the following reasons:
