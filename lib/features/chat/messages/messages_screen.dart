@@ -267,7 +267,13 @@ class MessagesScreenState extends State<MessagesScreen> {
                   primaryColor: secondaryColor,
                   inputBackgroundColor: primaryColor,
                   inputTextColor: accentColor,
-                  secondaryColor: secondaryColor),
+                  receivedMessageBodyTextStyle: TextStyle(
+                    color: primaryColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                  ),
+                  secondaryColor: accentColor),
               user: types.User(
                 id: FirebaseChatCore.instance.firebaseUser?.uid ?? '',
               ),

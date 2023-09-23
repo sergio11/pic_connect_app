@@ -11,6 +11,7 @@ class RoomBoMapper extends Mapper<RoomDTO, RoomBO> {
         type: object.type,
         imageUrl: object.imageUrl,
         updatedAt: object.updatedAt,
-        createAt: object.createAt, subtitle: '');
+        createAt: object.createAt,
+        subtitle: object.subtitle);
   }
 }
