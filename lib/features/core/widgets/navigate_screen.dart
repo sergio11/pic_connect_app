@@ -113,46 +113,54 @@ class _NavigateScreenState extends LifecycleWatcherState<NavigateScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _onWillPop(),
-      child: Scaffold(
-        body: NotificationListener<UserScrollNotification>(
-            onNotification: (UserScrollNotification value) {
-              if (!freezeBottomBar) {
-                if (value.direction == ScrollDirection.forward ||
-                    value.direction == ScrollDirection.idle) {
-                  showNav();
-                } else {
-                  hideNav(keepOverlay: false);
-                }
-              }
-              return true;
-            },
-            child: widget.navigationShell),
-        extendBody: true,
-        bottomNavigationBar: AnimatedContainer(
-            duration: const Duration(milliseconds: 1000),
-            curve: Curves.fastLinearToSlowEaseIn,
-            height: isBottomBarVisible ? kBottomNavigationBarHeight : 0,
-            child: Wrap(children: [
-              FABBottomAppBar(
-                centerItemText: '',
-                color: accentColor,
-                selectedColor: secondaryColor,
-                selectedIndex: selectedIndex,
-                notchedShape: const CircularNotchedRectangle(),
-                onTabSelected: onTapSelected,
-                backgroundColor: bottomBarBackgroundColor,
-                items: [
-                  FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
-                  FABBottomAppBarItem(iconData: Icons.search, text: 'Search'),
-                  FABBottomAppBarItem(
-                      iconData: Icons.live_tv, text: 'Reels TV'),
-                  FABBottomAppBarItem(iconData: Icons.person, text: 'Profile'),
-                ],
-              )
-            ])),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: _buildFab(context),
-      ),
+      child: SafeArea(
+          bottom: true,
+          top: false,
+          left: false,
+          right: false,
+          child: Scaffold(
+            body: NotificationListener<UserScrollNotification>(
+                onNotification: (UserScrollNotification value) {
+                  if (!freezeBottomBar) {
+                    if (value.direction == ScrollDirection.forward ||
+                        value.direction == ScrollDirection.idle) {
+                      showNav();
+                    } else {
+                      hideNav(keepOverlay: false);
+                    }
+                  }
+                  return true;
+                },
+                child: widget.navigationShell),
+            extendBody: true,
+            bottomNavigationBar: AnimatedContainer(
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.fastLinearToSlowEaseIn,
+                height: isBottomBarVisible ? kBottomNavigationBarHeight : 0,
+                child: Wrap(children: [
+                  FABBottomAppBar(
+                    centerItemText: '',
+                    color: accentColor,
+                    selectedColor: secondaryColor,
+                    selectedIndex: selectedIndex,
+                    notchedShape: const CircularNotchedRectangle(),
+                    onTabSelected: onTapSelected,
+                    backgroundColor: bottomBarBackgroundColor,
+                    items: [
+                      FABBottomAppBarItem(iconData: Icons.home, text: 'Home'),
+                      FABBottomAppBarItem(
+                          iconData: Icons.search, text: 'Search'),
+                      FABBottomAppBarItem(
+                          iconData: Icons.live_tv, text: 'Reels TV'),
+                      FABBottomAppBarItem(
+                          iconData: Icons.person, text: 'Profile'),
+                    ],
+                  )
+                ])),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: _buildFab(context),
+          )),
     );
   }
 
