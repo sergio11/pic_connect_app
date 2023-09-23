@@ -342,6 +342,15 @@ We welcome contributions from the community! If you'd like to contribute to PicC
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
+ ## Visitors Count
+
+<img width="auto" src="https://profile-counter.glitch.me/pic_connect_app/count.svg" />
+ 
+ ## Please Share & Star the repository to keep me motivated.
+  <a href = "https://github.com/sergio11/pic_connect_app/stargazers">
+     <img src = "https://img.shields.io/github/stars/sergio11/pic_connect_app" />
+  </a>
+
 
 Imagen de <a href="https://www.freepik.es/foto-gratis/mujeres-tomando-selfie-vista-frontal_32827653.htm#page=2&query=instagram%20similar&position=41&from_view=search&track=ais#position=41&page=2&query=instagram%20similar">Freepik</a>
 <div> Iconos diseñados por <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
