@@ -3,6 +3,8 @@ import 'package:pic_connect/utils/colors.dart';
 
 enum CommonButtonSizeType { tiny, small, medium, large }
 
+enum CommonButtonStyleType { standard, reverse, danger }
+
 class CommonButton extends StatelessWidget {
   static const double defaultTinyButtonWidth = 120;
   static const double defaultTinyButtonHeight = 35;
@@ -18,19 +20,19 @@ class CommonButton extends StatelessWidget {
   final String text;
   final Color textColor;
   final CommonButtonSizeType sizeType;
-  final bool reverseStyle;
+  final CommonButtonStyleType styleType;
   final bool isDisabled;
 
-  const CommonButton({
-    Key? key,
-    required this.borderColor,
-    required this.text,
-    required this.textColor,
-    this.sizeType = CommonButtonSizeType.medium,
-    this.reverseStyle = false,
-    this.onPressed,
-    this.isDisabled = false
-  }) : super(key: key);
+  const CommonButton(
+      {Key? key,
+      required this.borderColor,
+      required this.text,
+      required this.textColor,
+      this.sizeType = CommonButtonSizeType.medium,
+      this.styleType = CommonButtonStyleType.standard,
+      this.onPressed,
+      this.isDisabled = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +58,29 @@ class CommonButton extends StatelessWidget {
                     offset: Offset(0, 4),
                     blurRadius: 5.0)
               ],
-              border: !isDisabled ? Border.all(color: primaryColor, width: 3) : null,
-              gradient: !isDisabled ? LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: const [0.0, 1.0],
-                colors: !reverseStyle
-                    ? [secondaryColor, secondaryColorExtraLight]
-                    : [accentColor, primaryColor],
-              ): null,
+              border: !isDisabled
+                  ? Border.all(color: primaryColor, width: 3)
+                  : null,
+              gradient: !isDisabled
+                  ? LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: const [0.0, 1.0],
+                      colors: switch (styleType) {
+                        CommonButtonStyleType.standard => [
+                            secondaryColor,
+                            secondaryColorExtraLight
+                          ],
+                        CommonButtonStyleType.reverse => [
+                            accentColor,
+                            primaryColor
+                          ],
+                        CommonButtonStyleType.danger => [
+                            Colors.redAccent,
+                            primaryColor
+                          ]
+                      })
+                  : null,
               color: secondaryColorExtraLight,
               borderRadius: BorderRadius.circular(20),
             ),

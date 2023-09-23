@@ -149,7 +149,7 @@ class CommonDialogBoxState extends State<CommonDialogBox> with SingleTickerProvi
         text: widget.cancelledText!,
         textColor: primaryColor,
         borderColor: accentColor,
-        reverseStyle: true,
+        styleType: CommonButtonStyleType.reverse,
         sizeType: CommonButtonSizeType.small,
         onPressed: () {
           widget.onCancelled?.call();

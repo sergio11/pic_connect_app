@@ -136,7 +136,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
             .labelLarge
             ?.copyWith(color: accentColor, fontWeight: FontWeight.bold),
       ),
-      subtitle: Text("Message",
+      subtitle: Text(room.subtitle ?? '',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context)
@@ -147,6 +147,7 @@ class _RoomsScreenState extends State<RoomsScreen> {
         text: _l10n.deleteRoomButtonText,
         textColor: primaryColor,
         borderColor: primaryColor,
+        styleType: CommonButtonStyleType.danger,
         onPressed: () => _onDeleteRoom(room.uid),
         sizeType: CommonButtonSizeType.tiny,
       ),

@@ -306,7 +306,7 @@ class _ProfileScreenState extends LifecycleWatcherState<ProfileScreen>
       text: _l10n.shareProfileButtonText,
       textColor: primaryColor,
       borderColor: accentColor,
-      reverseStyle: true,
+      styleType: CommonButtonStyleType.reverse,
       onPressed: () => _onShareProfile(state),
       sizeType: CommonButtonSizeType.tiny,
     );

@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pic_connect/features/core/helpers.dart';
 import 'package:pic_connect/provider/event_controller.dart';
 import 'package:pic_connect/utils/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -227,23 +228,31 @@ class MessagesScreenState extends State<MessagesScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: mobileBackgroundColor,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: accentColor, //change your color here
+  Widget build(BuildContext context) => StreamBuilder<types.Room>(
+        initialData: types.Room.fromJson({ 'id': widget.roomUuid, 'users': const [] }),
+        stream: FirebaseChatCore.instance.room(widget.roomUuid),
+        builder: (context, snapshot) => Scaffold(
+          backgroundColor: mobileBackgroundColor,
+          appBar: AppBar(
+            iconTheme: const IconThemeData(
+              color: accentColor, //change your color here
+            ),
+            backgroundColor: appBarBackgroundColor,
+            title: Row(
+              children: [
+                buildCircleAvatar(
+                    imageUrl: snapshot.data?.metadata?["room_image_url"] ?? '',
+                    radius: 20),
+                const SizedBox(width: 10,),
+                Text(snapshot.data?.metadata?["room_title"] ?? 'Chat',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: accentColor))
+              ],
+            ),
           ),
-          backgroundColor: appBarBackgroundColor,
-          title: Text("Chat",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: accentColor)),
-        ),
-        body: StreamBuilder<types.Room>(
-          initialData: null,
-          stream: FirebaseChatCore.instance.room(widget.roomUuid),
-          builder: (context, snapshot) => StreamBuilder<List<types.Message>>(
+          body: StreamBuilder<List<types.Message>>(
             initialData: const [],
             stream: FirebaseChatCore.instance.messages(snapshot.data!),
             builder: (context, snapshot) => Chat(
@@ -255,7 +264,7 @@ class MessagesScreenState extends State<MessagesScreen> {
               onSendPressed: _handleSendPressed,
               theme: const DefaultChatTheme(
                   backgroundColor: mobileBackgroundColor,
-                  primaryColor: accentColor,
+                  primaryColor: secondaryColor,
                   inputBackgroundColor: primaryColor,
                   inputTextColor: accentColor,
                   secondaryColor: secondaryColor),

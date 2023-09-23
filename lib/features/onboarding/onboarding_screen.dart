@@ -178,7 +178,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       textColor: primaryColor,
       borderColor: accentColor,
       onPressed: widget.onSignUpPressed,
-      reverseStyle: true,
+      styleType: CommonButtonStyleType.reverse,
       sizeType: CommonButtonSizeType.large,
     );
   }
