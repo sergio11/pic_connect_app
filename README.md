@@ -1,21 +1,23 @@
 # PicConnect - Explore and connect through photography.
 
-PicConnect is a social media app for sharing photos and videos with your friends and followers. This README provides a comprehensive overview of the project, its features, and the technology stack choices.
+<img width="auto" align="left" src="screenshots/app_logo.png" />
 
-![App Logo](screenshots/app_logo.png) 
+**Pic Connect** is a dynamic social networking app that empowers users to share their life's moments through captivating stories.
 
+With a focus on multimedia content, users can post photos and videos, adding creative flair through tags and location data. The platform fosters a vibrant community, enabling likes, comments, and shares. Pic Connect isn't just about socializing; it's a canvas for visual storytelling.
 
+Whether it's a dazzling sunset or an adrenaline-pumping adventure, every moment is brought to life. Join the Pic Connect community, where moments become memories and connections go beyond the screen.
 
+This README provides a comprehensive overview of the project, its features, and the technology stack choices.
 
-## Table of Contents
+</br>
 
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Why Flutter and Firebase](#why-flutter-and-firebase)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+<p align="center">
+  <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white" />
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />
+  <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" />
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />
+</p>
 
 ## Features
 
@@ -33,6 +35,10 @@ PicConnect offers a wide range of features to enhance your social media experien
 
 - **Direct Messaging**: Chat with your friends and followers through our built-in messaging system.
 
+| ![Preview](screenshots/preview_1.jpeg) |  ![Preview](screenshots/preview_2.jpeg) | ![Preview](screenshots/preview_3.jpeg) |
+
+| ![Preview](screenshots/preview_4.jpeg) | ![Preview](screenshots/preview_5.jpeg) |
+
 ## Technology Stack
 
 PicConnect is built using the following technologies:
@@ -40,8 +46,6 @@ PicConnect is built using the following technologies:
 - **Flutter**: We chose Flutter as the primary framework for developing PicConnect due to its cross-platform capabilities. With a single codebase, we can deploy our app on both Android and iOS, ensuring a consistent user experience across platforms.
 
 - **Firebase**: Firebase provides a robust backend-as-a-service (BaaS) platform, which powers PicConnect's user authentication, real-time database, and cloud storage. Firebase offers seamless integration with Flutter, making it an ideal choice for building real-time and interactive features in our app.
-
-- **SQLite**: For local data storage, we use SQLite, a lightweight and efficient database engine that is well-suited for mobile app development.
 
 - **Dart**: The Dart programming language is the backbone of Flutter, and we use it extensively to write clean and efficient code for our app.
 
@@ -250,9 +254,6 @@ This section allows you to share your moments, photos, and experiences with your
 **Camera Awesomeness**
 - **camerawesome:** [![pub package](https://img.shields.io/pub/v/camerawesome.svg)](https://pub.dev/packages/camerawesome)
 
-**Auto-Scaling TabBarView**
-- **autoscale_tabbarview:** [![pub package](https://img.shields.io/pub/v/autoscale_tabbarview.svg)](https://pub.dev/packages/autoscale_tabbarview)
-
 **Geocoding**
 - **geocoding:** [![pub package](https://img.shields.io/pub/v/geocoding.svg)](https://pub.dev/packages/geocoding)
 
@@ -269,7 +270,7 @@ This section allows you to share your moments, photos, and experiences with your
 - **path_provider:** [![pub package](https://img.shields.io/pub/v/path_provider.svg)](https://pub.dev/packages/path_provider)
 
 **Visibility Detector**
-- **visibility_detector:** [![pub package](https://img.shields.io/pub/v/visibility_detector.svg)](https
+- **visibility_detector:** [![pub package](https://img.shields.io/pub/v/visibility_detector.svg)]
 
 ## Getting Started
 
@@ -331,11 +332,10 @@ We welcome contributions from the community! If you'd like to contribute to PicC
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-run flutter_localizations:generate
-
-
-
 
 Imagen de <a href="https://www.freepik.es/foto-gratis/mujeres-tomando-selfie-vista-frontal_32827653.htm#page=2&query=instagram%20similar&position=41&from_view=search&track=ais#position=41&page=2&query=instagram%20similar">Freepik</a>
 <div> Iconos diseñados por <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
 Imagen de <a href="https://www.freepik.es/foto-gratis/dos-amigas-sonrientes-gafas-sol-tomando-selfie-telefono-movil_3492268.htm#page=7&query=instagram%20similar&position=7&from_view=search&track=ais">Freepik</a>
+
+Template mockup from https://previewed.app/template/AFC0B4CB
+
