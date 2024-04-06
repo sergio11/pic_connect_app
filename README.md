@@ -35,9 +35,15 @@ PicConnect offers a wide range of features to enhance your social media experien
 
 - **Direct Messaging**: Chat with your friends and followers through our built-in messaging system. 💬
 
-| ![Preview](screenshots/preview_1.jpeg) |  ![Preview](screenshots/preview_2.jpeg) | ![Preview](screenshots/preview_3.jpeg) |
+<p align="center">
+  <img width="250px" src="screenshots/preview_1.jpeg" />
+  <img width="250px" src="screenshots/preview_2.jpeg" />
+  <img width="250px" src="screenshots/preview_3.jpeg" />
+  <img width="250px" src="screenshots/preview_4.jpeg" />
+  <img width="250px" src="screenshots/preview_5.jpeg" />
+</p>
 
-| ![Preview](screenshots/preview_4.jpeg) | ![Preview](screenshots/preview_5.jpeg) |
+Slides are built using the  template from [Previewed](https://previewed.app/template/AFC0B4CB). I extend my gratitude to them for their remarkable work and contribution.
 
 ## Technology Stack 🛠️
 
