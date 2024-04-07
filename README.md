@@ -348,6 +348,22 @@ We welcome contributions from the community! If you'd like to contribute to PicC
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
+## Acknowledgements 🙏
+
+We extend our heartfelt gratitude to the following resources, whose contributions greatly enriched our project:
+
+- The images utilized in this project were sourced from Freepik. Specifically, we would like to thank Freepik for providing the following images:
+  - "Mujeres tomando selfie" by Freepik, available at [Freepik](https://www.freepik.es/foto-gratis/mujeres-tomando-selfie-vista-frontal_32827653.htm#page=2&query=instagram%20similar&position=41&from_view=search&track=ais#position=41&page=2&query=instagram%20similar)
+  - "Dos amigas sonrientes con gafas de sol tomando selfie con teléfono móvil" by Freepik, available at [Freepik](https://www.freepik.es/foto-gratis/dos-amigas-sonrientes-gafas-sol-tomando-selfie-telefono-movil_3492268.htm#page=7&query=instagram%20similar&position=7&from_view=search&track=ais)
+
+- The icons used in this project were designed by Freepik, available at [Flaticon](https://www.flaticon.es/), a platform owned by Freepik.
+
+- We would also like to express our gratitude to Previewed for providing the template mockup used in this project, which was instrumental in visualizing our ideas. The template mockup is available at [Previewed](https://previewed.app/template/AFC0B4CB).
+
+- We are grateful to Mixkit for providing the example video reels used in this project. Mixkit offers free assets for video projects, and their contributions were invaluable in enhancing our work. [Link to Mixkit](https://mixkit.co/)
+
+We are deeply appreciative of their generosity in sharing these resources, which significantly contributed to the success of our endeavor.
+
  ## Visitors Count
 
 <img width="auto" src="https://profile-counter.glitch.me/pic_connect_app/count.svg" />
@@ -356,11 +372,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   <a href = "https://github.com/sergio11/pic_connect_app/stargazers">
      <img src = "https://img.shields.io/github/stars/sergio11/pic_connect_app" />
   </a>
-
-
-Imagen de <a href="https://www.freepik.es/foto-gratis/mujeres-tomando-selfie-vista-frontal_32827653.htm#page=2&query=instagram%20similar&position=41&from_view=search&track=ais#position=41&page=2&query=instagram%20similar">Freepik</a>
-<div> Iconos diseñados por <a href="https://www.freepik.com" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es'</a></div>
-Imagen de <a href="https://www.freepik.es/foto-gratis/dos-amigas-sonrientes-gafas-sol-tomando-selfie-telefono-movil_3492268.htm#page=7&query=instagram%20similar&position=7&from_view=search&track=ais">Freepik</a>
-
-Template mockup from https://previewed.app/template/AFC0B4CB
 
