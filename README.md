@@ -10,6 +10,8 @@ Whether it's a dazzling sunset 🌅 or an adrenaline-pumping adventure 🚀, eve
 
 This README provides a comprehensive overview of the project, its features, and the technology stack choices ℹ️.
 
+This app, **PicConnect**, includes images and resources designed by [Freepik](https://www.freepik.com). We would like to acknowledge and thank Freepik for their incredible design assets. The images used in the app are provided with attribution, as required by Freepik's licensing terms. For more information on Freepik's resources, please visit [www.freepik.com](https://www.freepik.com).
+
 </br>
 
 <p align="center">
