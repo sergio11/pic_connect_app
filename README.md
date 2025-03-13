@@ -21,6 +21,16 @@ This app, **PicConnect**, includes images and resources designed by [Freepik](ht
   <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" />
 </p>
 
+## ⚠️ Disclaimer
+
+**PicConnect** is an **educational and experimental social networking app** developed to demonstrate how to create a dynamic platform using modern mobile development tools. The primary purpose of this project is to showcase the integration of multimedia content, user interaction features, and community-building capabilities in a social media environment.
+
+The name **"PicConnect"** and the logo were both generated as part of a **brainstorming session with AI**, and any resemblance to existing brands, services, or platforms is purely coincidental. The app is not intended for real-world social networking or data collection purposes and does not host or manage real user data. 
+
+This project is designed for **educational purposes**, focusing on app development, UI/UX design, and interaction features. It is not a commercial product and should not be used for production purposes. All content posted on this platform is simulated for demonstration purposes and does not represent actual social media interactions.
+
+The repository is intended to provide learning opportunities for developers interested in building social media platforms and multimedia-sharing apps. **PicConnect** is a **non-commercial project** meant to inspire and teach app development.
+
 ## Key Features ✨
 
 PicConnect offers a wide range of features to enhance your social media experience:
@@ -333,6 +343,16 @@ Once the app is running, you can:
 - Upload your own photos and videos.
 - Follow and message other users.
 - Like, comment, and save your favorite posts.
+
+## ⚠️ Disclaimer
+
+**PicConnect** is an **educational and experimental social networking app** developed to demonstrate how to create a dynamic platform using modern mobile development tools. The primary purpose of this project is to showcase the integration of multimedia content, user interaction features, and community-building capabilities in a social media environment.
+
+The name **"PicConnect"** and the logo were both generated as part of a **brainstorming session with AI**, and any resemblance to existing brands, services, or platforms is purely coincidental. The app is not intended for real-world social networking or data collection purposes and does not host or manage real user data. 
+
+This project is designed for **educational purposes**, focusing on app development, UI/UX design, and interaction features. It is not a commercial product and should not be used for production purposes. All content posted on this platform is simulated for demonstration purposes and does not represent actual social media interactions.
+
+The repository is intended to provide learning opportunities for developers interested in building social media platforms and multimedia-sharing apps. **PicConnect** is a **non-commercial project** meant to inspire and teach app development.
 
 ## Contributing
 
