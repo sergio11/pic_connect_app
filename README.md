@@ -1,6 +1,6 @@
 # PicConnect 📸 - Explore and connect through photography 🌟.
 
-<img width="auto" align="left" src="screenshots/app_logo.png" />
+<img width="auto" align="left" height="300" src="screenshots/pic_connect_logo.jpg" />
 
 **Pic Connect** is a dynamic social networking app that empowers users to share their life's moments through captivating stories 📖.
 
